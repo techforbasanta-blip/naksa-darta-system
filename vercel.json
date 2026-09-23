@@ -1,21 +1,14 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/admin.html",
-      "destination": "/frontend/admin.html"
-    },
-    {
       "source": "/admin",
-      "destination": "/frontend/admin.html"
+      "destination": "/admin.html"
     },
     {
-      "source": "/js/:file*",
-      "destination": "/frontend/js/:file*"
-    },
-    {
-      "source": "/css/:file*",
-      "destination": "/frontend/css/:file*"
+      "source": "/frontend/admin.html",
+      "destination": "/admin.html"
     },
     {
       "source": "/api/auth/login",
@@ -24,6 +17,26 @@
     {
       "source": "/api/:file*",
       "destination": "/api/:file*"
+    },
+    {
+      "source": "/js/:file*",
+      "destination": "/:file*"
+    },
+    {
+      "source": "/css/:file*",
+      "destination": "/:file*"
+    },
+    {
+      "source": "/assets/:file*",
+      "destination": "/:file*"
+    },
+    {
+      "source": "/logo/:file*",
+      "destination": "/:file*"
+    },
+    {
+      "source": "/",
+      "destination": "/login.html"
     }
   ]
 }
