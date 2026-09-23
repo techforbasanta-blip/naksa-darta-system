@@ -142,8 +142,8 @@
             </div>
             <div class="fiscal-badge">आ.व. २०८३/०८४</div>
 
-            <!-- Admin Button: Hamesha visible rahega -->
-            <a href="admin.html" id="adminMenuBtn" class="header-btn" style="display: inline-flex !important; align-items: center; gap: 4px; text-decoration: none; background: #2563eb; color: #ffffff; font-weight: bold; padding: 6px 12px; border-radius: 4px;" title="कर्मचारी तथा पासवर्ड व्यवस्थापन">
+            <!-- Direct staff.html Link: Always visible -->
+            <a href="staff.html" id="adminMenuBtn" class="header-btn" style="display: inline-flex !important; align-items: center; gap: 4px; text-decoration: none; background: #2563eb; color: #ffffff; font-weight: bold; padding: 6px 12px; border-radius: 4px;" title="कर्मचारी तथा पासवर्ड व्यवस्थापन">
                 ⚙️ Admin
             </a>
 
@@ -159,7 +159,7 @@
         <a href="darta.html" class="active">📝 नयाँ दर्ता</a>
         <a href="record.html">📂 पुरानो हेर्नुस्</a>
         <a href="verify.html">🔎 प्रमाणिकरण</a>
-        <a href="javascript:void(0)" onclick="openAdminModal()" style="background: #2563eb; color: #ffffff; border-radius: 4px; padding: 4px 10px; font-weight: bold; cursor: pointer;">⚙️ Admin Management</a>
+        <a href="staff.html" style="background: #1e40af; color: #ffffff; border-radius: 4px; padding: 4px 10px; text-decoration: none; font-weight: 600;">⚙️ Admin Management</a>
     </div>
 </nav>
 
@@ -180,7 +180,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="in_patra_no">पत्र संख्या</label>
-                                <input type="text" id="in_patra_no" value="०८३/८4" oninput="updateCertificateLive();">
+                                <input type="text" id="in_patra_no" value="०८३/८४" oninput="updateCertificateLive();">
                             </div>
                             <div class="form-group">
                                 <label for="in_darta_no">नक्सा दर्ता नं. *</label>
@@ -599,7 +599,7 @@
                     <div class="cert-content-top">
                         <section class="kabuliyat-section">
                             <div class="kabuliyat-head">
-                                <h2 class="kabuliyat-title">कबुलियतनमा</h2>
+                                <h2 class="kabuliyat-title">कबुलियतनामा</h2>
                                 <div class="shriman-title">श्रीमान्,</div>
                             </div>
 
@@ -691,54 +691,6 @@
     </div>
 </main>
 
-    <!-- Admin Management Modal Popup -->
-<div id="adminModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:99999; justify-content:center; align-items:center;">
-  <div style="background:#fff; width:90%; max-width:850px; border-radius:8px; padding:24px; box-shadow:0 10px 25px rgba(0,0,0,0.3); position:relative; max-height:90vh; overflow-y:auto;">
-    
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #e2e8f0; padding-bottom:12px; margin-bottom:16px;">
-      <h3 style="margin:0; color:#b91c1c; font-size:18px;">⚙️ मायादेवी गाउँपालिका — कर्मचारी तथा पासवर्ड व्यवस्थापन</h3>
-      <button onclick="closeAdminModal()" style="background:#f1f5f9; border:none; font-size:20px; font-weight:bold; cursor:pointer; border-radius:50%; width:32px; height:32px;">✕</button>
-    </div>
-
-    <table style="width:100%; border-collapse:collapse; margin-top:10px;">
-      <thead>
-        <tr style="background:#f8fafc;">
-          <th style="padding:10px; border:1px solid #cbd5e1; text-align:left;">कर्मचारीको नाम</th>
-          <th style="padding:10px; border:1px solid #cbd5e1; text-align:left;">Login ID</th>
-          <th style="padding:10px; border:1px solid #cbd5e1; text-align:left;">पासवर्ड</th>
-          <th style="padding:10px; border:1px solid #cbd5e1; text-align:center;">कार्य</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="padding:10px; border:1px solid #e2e8f0;"><input type="text" id="pop_name" value="सुपर एडमिन" style="width:95%; padding:6px; border:1px solid #cbd5e1; border-radius:4px;"></td>
-          <td style="padding:10px; border:1px solid #e2e8f0;"><input type="text" id="pop_id" value="superadmin" style="width:95%; padding:6px; border:1px solid #cbd5e1; border-radius:4px;"></td>
-          <td style="padding:10px; border:1px solid #e2e8f0; white-space:nowrap;">
-            <input type="password" id="pop_pwd" value="Admin@2083" style="width:110px; padding:6px; border:1px solid #cbd5e1; border-radius:4px;">
-            <button type="button" onclick="const p=document.getElementById('pop_pwd'); p.type=(p.type==='password'?'text':'password');" style="cursor:pointer; border:none; background:none; font-size:16px;">👁️</button>
-          </td>
-          <td style="padding:10px; border:1px solid #e2e8f0; text-align:center;">
-            <button type="button" onclick="alert('विवरण सुरक्षित भयो!')" style="background:#16a34a; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">सुरक्षित</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div style="margin-top:20px; text-align:right;">
-      <button onclick="closeAdminModal()" style="background:#64748b; color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:bold;">बन्द गर्नुहोस्</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  function openAdminModal() {
-    document.getElementById('adminModal').style.display = 'flex';
-  }
-  function closeAdminModal() {
-    document.getElementById('adminModal').style.display = 'none';
-  }
-</script>
-    
 <script src="auth.js"></script>
 <script src="certificate.js"></script>
 <script src="darta.js"></script>
