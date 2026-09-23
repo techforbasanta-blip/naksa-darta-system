@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कर्मचारी लगइन | मायादेवी गाउँपालिका, बरेवा, रुपन्देही</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #05162d, #071e3d 55%, #0b2545);
+        }
+
+        .login-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .login-header-top {
+            background: #071e3d;
+            padding: 24px 20px 20px;
+            text-align: center;
+            border-bottom: 3px solid #0284c7;
+        }
+
+        .login-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .login-logos img {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            padding: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .login-header-top h2 {
+            margin: 0;
+            font-size: 23px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .login-header-top p {
+            margin: 4px 0 0;
+            font-size: 14.5px;
+            color: #93c5fd;
+        }
+
+        .login-body {
+            padding: 28px 24px;
+        }
+
+        .login-error-alert {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1.5px solid #fca5a5;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 14.5px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        .login-btn-submit {
+            width: 100%;
+            background: #071e3d;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            font-size: 16.5px;
+            font-weight: 800;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+
+        .login-btn-submit:hover {
+            background: #0b2545;
+        }
+
+        .login-footer-copy {
+            text-align: center;
+            padding: 16px;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="login-header-top">
+            <div class="login-logos">
+                <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
+                     alt="निशान छाप" 
+                     onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
+                <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
+                     alt="पालिका लोगो" 
+                     onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';">
+            </div>
+            <h2>मायादेवी गाउँपालिका</h2>
+            <p>घर नक्सा अभिलेखीकरण प्रणाली — Staff Login</p>
+        </div>
+
+        <div class="login-body">
+            <div id="loginErrorMsg" class="login-error-alert"></div>
+
+            <form id="staffLoginForm" onsubmit="handleStaffLogin(event)" autocomplete="off">
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="loginUsername">कर्मचारी Login ID *</label>
+                    <input type="text" id="loginUsername" placeholder="उदा: superadmin वा staff001" required autofocus>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="loginPassword">पासवर्ड (Password) *</label>
+                    <input type="password" id="loginPassword" placeholder="पासवर्ड राख्नुहोस्" required>
+                </div>
+
+                <button type="submit" class="login-btn-submit">सुरक्षित लगइन गर्नुहोस्</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer class="login-footer-copy">
+    © २०८३ मायादेवी गाउँपालिका, गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही । सर्वाधिकार सुरक्षित ।
+</footer>
+
+<script src="js/auth.js"></script>
+</body>
+</html>

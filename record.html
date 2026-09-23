@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>घर नक्सा अभिलेख खाता | मायादेवी गाउँपालिका</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .record-container {
+            max-width: 1750px;
+            margin: 20px auto;
+            padding: 0 24px;
+        }
+
+        .record-card {
+            background: #ffffff;
+            border-radius: 10px;
+            border: 1.5px solid #cbd5e1;
+            box-shadow: 0 8px 24px rgba(7, 30, 61, 0.08);
+            padding: 22px;
+        }
+
+        .record-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .record-header-bar h2 {
+            margin: 0;
+            font-size: 23px;
+            font-weight: 800;
+            color: #071e3d;
+        }
+
+        .header-action-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .record-stats-badge {
+            background: #e0f2fe;
+            color: #071e3d;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 14.5px;
+            border: 1px solid #bae6fd;
+        }
+
+        .record-search-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .record-search-grid input,
+        .record-search-grid select {
+            padding: 9px 12px;
+            border: 1.5px solid #94a3b8;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #071e3d;
+            outline: none;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .record-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14.8px;
+            text-align: left;
+        }
+
+        .record-table th,
+        .record-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .record-table th {
+            background: #071e3d;
+            color: #ffffff;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .record-table tr:hover { background-color: #f8fafc; }
+
+        .record-action-btns {
+            display: flex;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13.5px;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-view { background: #0b2545; color: #ffffff; }
+        .btn-view:hover { background: #071e3d; }
+        .btn-del { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .btn-del:hover { background: #fee2e2; }
+
+        .status-pill {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .status-permanent { background: #dcfce7; color: #166534; }
+        .status-temp { background: #fef9c3; color: #854d0e; }
+
+        /* Superadmin Modal */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .admin-modal-content {
+            background: #ffffff;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 10px;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 2px solid #071e3d;
+        }
+
+        .admin-modal-header {
+            background: #071e3d;
+            color: #ffffff;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-modal-header h3 { margin: 0; font-size: 19px; }
+        .admin-modal-close { background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+        .admin-modal-body { padding: 20px; }
+
+        body.dark-mode .record-card,
+        body.dark-mode .admin-modal-content {
+            background: #0c1a30;
+            border-color: #1e3a5f;
+            color: #e2e8f0;
+        }
+        body.dark-mode .record-header-bar h2 { color: #ffffff; }
+        body.dark-mode .record-table td { border-bottom-color: #1e3a5f; color: #e2e8f0; }
+        body.dark-mode .record-table tr:hover { background-color: #112240; }
+    </style>
+</head>
+<body>
+
+<header class="system-header">
+    <div class="header-inner">
+        <div class="header-emblem">
+            <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
+                 alt="निशान छाप" 
+                 onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
+        </div>
+        <div class="header-brand">
+            <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
+            <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही <span>|</span> दर्ता अभिलेख व्यवस्थापन खाता</p>
+        </div>
+        <div class="header-tools">
+            <div class="clock-box">
+                <small id="liveNepaliDateHeader">मिति: लोड हुँदैछ...</small>
+                <div id="liveNepaliClock">समय: --:--:--</div>
+            </div>
+            <div class="user-box" id="currentUserBadge">
+                <span>👤</span>
+                <span id="loggedUserName">कर्मचारी</span>
+            </div>
+            <div class="fiscal-badge">आ.व. २०८३/०८४</div>
+            <button type="button" class="header-btn" id="themeToggle" onclick="toggleTheme()" title="Dark / Light">☾</button>
+            <button type="button" class="header-btn" onclick="logoutUser()">Logout</button>
+        </div>
+    </div>
+</header>
+
+<nav class="main-nav">
+    <div class="nav-inner">
+        <a href="darta.html">🏠 Home</a>
+        <a href="darta.html">📝 नयाँ दर्ता</a>
+        <a href="record.html" class="active">📂 पुरानो हेर्नुस्</a>
+        <a href="verify.html">🔎 प्रमाणिकरण</a>
+        <button type="button" id="navSuperadminPanel" onclick="openSuperadminModal()" style="display:none; color:var(--gov-blue-dark); font-weight:800; background:#fef08a;">
+            ⚙️ Superadmin Control
+        </button>
+    </div>
+</nav>
+
+<main class="record-container">
+    <div class="record-card">
+        
+        <div class="record-header-bar">
+            <div>
+                <h2>घर नक्सा अभिलेख सूची (Registration Records)</h2>
+                <small style="color:var(--text-muted);">सम्पूर्ण दर्ता भएका प्रमाण-पत्रहरू खोजी, पुनः प्रिन्ट वा व्यवस्थापन गर्नुहोस्</small>
+            </div>
+            <div class="header-action-group">
+                <div class="record-stats-badge">
+                    जम्मा दर्ता: <span id="totalRecordCount">०</span> वटा
+                </div>
+                <button type="button" class="btn btn-primary" onclick="exportRecordsToCSV()">📥 Excel / CSV Export</button>
+            </div>
+        </div>
+
+        <!-- Search Filters -->
+        <div class="record-search-grid">
+            <input type="text" id="filterKeyword" placeholder="दर्ता नं., घरधनीको नाम, वा कित्ता नं. बाट खोज्नुहोस्..." oninput="filterRecords()">
+            
+            <select id="filterWard" onchange="filterRecords()">
+                <option value="">सबै वडा नं.</option>
+                <option value="०१">वडा नं. ०१</option>
+                <option value="०२">वडा नं. ०२</option>
+                <option value="०३">वडा नं. ०३</option>
+                <option value="०४">वडा नं. ०४</option>
+                <option value="०५">वडा नं. ०५</option>
+                <option value="०६">वडा नं. ०६</option>
+                <option value="०७">वडा नं. ०७</option>
+                <option value="०८">वडा नं. ०८</option>
+            </select>
+
+            <select id="filterFiscal" onchange="filterRecords()">
+                <option value="">सबै आ.व.</option>
+                <option value="२०८३/०८4" selected>२०८३/०८४</option>
+                <option value="२०८२/०८३">२०८२/०८३</option>
+            </select>
+
+            <select id="filterStaff" onchange="filterRecords()">
+                <option value="">सबै कर्मचारी</option>
+            </select>
+
+            <button type="button" class="btn btn-secondary" onclick="resetFilters()">↺ Reset</button>
+        </div>
+
+        <!-- Records Table -->
+        <div class="table-responsive">
+            <table class="record-table">
+                <thead>
+                    <tr>
+                        <th style="width: 45px;">क्र.सं.</th>
+                        <th>दर्ता नं.</th>
+                        <th>प्रमाण-पत्र नं.</th>
+                        <th>दर्ता मिति</th>
+                        <th>घर / जग्गाधनीको नाम</th>
+                        <th>वडा</th>
+                        <th>कित्ता</th>
+                        <th>स्वीकृत क्षेत्रफल</th>
+                        <th>दर्ता गर्ने कर्मचारी</th>
+                        <th>स्थिति (Status)</th>
+                        <th style="text-align: center; width: 170px;">कार्य (Actions)</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsTableBody"></tbody>
+            </table>
+        </div>
+
+        <div id="emptyState" class="empty-records-box" style="display:none; text-align:center; padding:35px;">
+            <h4 style="color:#b91c1c;">कुनै पनि अभिलेख फेला परेन</h4>
+            <p>तपाईँले खोज्नुभएको फिल्टर अनुसारको नक्सा रेकर्ड भेटिएन।</p>
+        </div>
+
+    </div>
+</main>
+
+<!-- SUPERADMIN CONTROL MODAL -->
+<div id="superadminControlModal" class="admin-modal">
+    <div class="admin-modal-content">
+        <div class="admin-modal-header">
+            <h3>⚙️ Superadmin Control Panel — मायादेवी गाउँपालिका</h3>
+            <button class="admin-modal-close" onclick="closeSuperadminModal()">&times;</button>
+        </div>
+        <div class="admin-modal-body">
+            
+            <div style="display:flex; gap:8px; margin-bottom:16px; border-bottom:1.5px solid #cbd5e1; padding-bottom:8px;">
+                <button type="button" class="btn btn-primary" onclick="showAdminTab('staffListTab')">कर्मचारी व्यवस्थापन (Staff)</button>
+                <button type="button" class="btn btn-secondary" onclick="showAdminTab('addStaffTab')">+ नयाँ Staff थप्नुहोस्</button>
+                <button type="button" class="btn btn-secondary" onclick="showAdminTab('auditLogTab')">Audit Logs (गतिविधि)</button>
+            </div>
+
+            <div id="staffListTab">
+                <h4>कर्मचारीहरूको सूची</h4>
+                <div class="table-responsive">
+                    <table class="record-table" style="font-size:13.5px;">
+                        <thead>
+                            <tr>
+                                <th>नाम</th>
+                                <th>पद</th>
+                                <th>Login ID</th>
+                                <th>Gmail</th>
+                                <th>सम्पर्क</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>कार्य</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminStaffTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="addStaffTab" style="display:none;">
+                <h4>नयाँ कर्मचारी खाता सिर्जना गर्नुहोस्</h4>
+                <form onsubmit="handleCreateStaffForm(event)" autocomplete="off">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>पूरा नाम *</label>
+                            <input type="text" id="adm_name" placeholder="उदा: प्रकाश थापा" required>
+                        </div>
+                        <div class="form-group">
+                            <label>पद *</label>
+                            <input type="text" id="adm_desig" placeholder="उदा: इन्जिनियर / प्राविधिक" required>
+                        </div>
+                        <div class="form-group">
+                            <label>सम्पर्क नम्बर *</label>
+                            <input type="text" id="adm_phone" placeholder="उदा: ९८XXXXXXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gmail ID *</label>
+                            <input type="email" id="adm_email" placeholder="उदा: example@gmail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Login ID *</label>
+                            <input type="text" id="adm_login_id" placeholder="उदा: staff002" required>
+                        </div>
+                        <div class="form-group">
+                            <label>सुरुवाती Password *</label>
+                            <input type="text" id="adm_pass" placeholder="Password सेट गर्नुहोस्" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="margin-top:16px;">💾 खाता सिर्जना गर्नुहोस्</button>
+                </form>
+            </div>
+
+            <div id="auditLogTab" style="display:none;">
+                <h4>प्रणाली गतिविधि विवरण (Audit Logs)</h4>
+                <div class="table-responsive" style="max-height:350px;">
+                    <table class="record-table" style="font-size:12.5px;">
+                        <thead>
+                            <tr>
+                                <th>समय</th>
+                                <th>कर्मचारी</th>
+                                <th>कार्य (Action)</th>
+                                <th>विवरण</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminAuditTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/records.js"></script>
+</body>
+</html>

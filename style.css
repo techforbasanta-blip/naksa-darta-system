@@ -1,0 +1,500 @@
+/* ==========================================================================
+   H:\naksa-darta-system\frontend\css\style.css
+   MAYADEVI NAKSA DARTA SYSTEM - OFFICIAL GOVERNMENT UI
+   FONT: MUKTA | COLOR: ROYAL DARK BLUE & CRISP WHITE CONTRAST
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --font-primary: 'Mukta', 'Kokila', Arial, sans-serif;
+
+    /* Government Royal Dark Blue Theme */
+    --gov-blue-dark: #071e3d;
+    --gov-blue-mid: #0b2545;
+    --gov-blue-accent: #133b68;
+    --gov-blue-light: #e0f2fe;
+
+    --gov-red: #b71c1c;
+    --gov-green: #15803d;
+    --gov-amber: #b45309;
+
+    --bg-light: #f1f5f9;
+    --surface-white: #ffffff;
+    --text-main: #071e3d;
+    --text-muted: #475569;
+    --border-color: #cbd5e1;
+
+    --shadow-sm: 0 2px 8px rgba(7, 30, 61, 0.06);
+    --shadow-md: 0 8px 24px rgba(7, 30, 61, 0.1);
+    --radius-sm: 6px;
+    --radius-md: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: var(--font-primary) !important;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background: var(--bg-light);
+    color: var(--text-main);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+button, input, select, textarea {
+    font-family: var(--font-primary) !important;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   OFFICIAL SYSTEM HEADER
+   ========================================================================== */
+.system-header {
+    background: linear-gradient(135deg, #05162d, #071e3d 55%, #0b2545);
+    color: #ffffff;
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    padding: 10px 24px;
+    box-shadow: 0 4px 18px rgba(5, 22, 45, 0.35);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.header-inner {
+    width: 100%;
+    max-width: 1750px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-emblem {
+    width: 60px;
+    height: 60px;
+    flex: 0 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.header-emblem img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    display: block;
+}
+
+.header-brand {
+    min-width: 0;
+    flex: 1;
+}
+
+.header-brand h1 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.15;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.3px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.header-brand p {
+    margin: 3px 0 0;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #e2e8f0;
+}
+
+.header-tools {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.clock-box {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 5px 14px;
+    text-align: center;
+}
+
+.clock-box small {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fef08a; /* Golden for date */
+}
+
+#liveNepaliClock {
+    font-size: 15px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.user-box {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 7px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+#loggedUserName {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.fiscal-badge {
+    background: #ffffff;
+    color: var(--gov-blue-dark);
+    padding: 6px 12px;
+    border-radius: 7px;
+    font-weight: 800;
+    font-size: 14.5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.header-btn {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    padding: 7px 12px;
+    border-radius: 7px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.header-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   NAVIGATION BAR
+   ========================================================================== */
+.main-nav {
+    background: #ffffff;
+    border-bottom: 2px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-inner {
+    max-width: 1750px;
+    margin: auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.main-nav a, 
+.main-nav button {
+    border: 0;
+    background: transparent;
+    text-decoration: none;
+    color: var(--gov-blue-dark);
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 6px 6px 0 0;
+    border-bottom: 3px solid transparent;
+    transition: 0.15s ease-in-out;
+}
+
+.main-nav a:hover, 
+.main-nav button:hover {
+    color: var(--gov-blue-dark);
+    background: var(--gov-blue-light);
+    border-bottom-color: var(--gov-blue-dark);
+}
+
+.main-nav a.active {
+    background: var(--gov-blue-dark) !important;
+    color: #ffffff !important;
+    border-bottom-color: #38bdf8 !important;
+}
+
+/* ==========================================================================
+   WORKSPACES & CARDS
+   ========================================================================== */
+.main-container {
+    width: 100%;
+    max-width: 1750px;
+    margin: auto;
+    padding: 22px 24px 40px;
+}
+
+.workspace-grid {
+    display: grid;
+    grid-template-columns: minmax(480px, 640px) minmax(680px, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.entry-card, .preview-card {
+    background: var(--surface-white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.entry-card { padding: 20px; }
+.preview-card { padding: 16px; }
+
+.preview-sticky {
+    position: sticky;
+    top: 10px;
+}
+
+/* Form Styles */
+.form-section {
+    margin-bottom: 16px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.form-section-title {
+    padding: 9px 14px;
+    background: linear-gradient(90deg, var(--gov-blue-dark), var(--gov-blue-mid));
+    color: #ffffff !important;
+    font-size: 16.5px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+.form-section-body {
+    padding: 14px;
+    background: #ffffff;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 14px;
+}
+
+.form-group {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--gov-blue-dark);
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    border: 1.5px solid #94a3b8;
+    border-radius: 6px;
+    background: #ffffff;
+    color: var(--gov-blue-dark);
+    padding: 8px 11px;
+    font-size: 15.5px;
+    font-weight: 600;
+    outline: none;
+    transition: 0.15s ease;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+}
+
+.form-help {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 3px;
+}
+
+.error-message {
+    color: var(--gov-red);
+    font-size: 13.5px;
+    font-weight: 800;
+    margin-top: 4px;
+}
+
+/* Button Component */
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.btn {
+    border: 0;
+    border-radius: 7px;
+    padding: 10px 18px;
+    font-size: 15.5px;
+    font-weight: 800;
+    transition: 0.15s ease;
+}
+
+.btn-primary { 
+    background: var(--gov-blue-dark) !important; 
+    color: #ffffff !important; 
+}
+.btn-primary:hover { background: #05162d !important; }
+
+.btn-success { 
+    background: var(--gov-green) !important; 
+    color: #ffffff !important; 
+}
+.btn-danger { 
+    background: var(--gov-red) !important; 
+    color: #ffffff !important; 
+}
+.btn-secondary { 
+    background: #334155 !important; 
+    color: #ffffff !important; 
+}
+
+.btn-light { 
+    background: #ffffff !important; 
+    color: var(--gov-blue-dark) !important; 
+    border: 1.5px solid var(--gov-blue-dark) !important;
+}
+.btn-light:hover { background: var(--gov-blue-light) !important; }
+
+/* Photo Preview Small */
+.photo-upload-box {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.photo-preview-small {
+    width: 105px;
+    height: 130px;
+    border: 2px dashed #94a3b8;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #f8fafc;
+    color: var(--gov-blue-dark);
+    font-weight: 700;
+}
+
+.photo-preview-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-title {
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--gov-blue-dark);
+    margin: 0 0 10px;
+}
+
+#printAreaContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+body.dark-mode {
+    --bg-light: #071224;
+    --surface-white: #0c1a30;
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+    --border-color: #1e3a5f;
+}
+
+body.dark-mode .main-nav {
+    background: #0c1a30 !important;
+    border-bottom: 2px solid #1e3a5f !important;
+}
+
+body.dark-mode .main-nav a,
+body.dark-mode .main-nav button {
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode .main-nav a.active {
+    background: #ffffff !important;
+    color: #071e3d !important;
+    font-weight: 800 !important;
+}
+
+body.dark-mode .entry-card,
+body.dark-mode .preview-card,
+body.dark-mode .form-section-body {
+    background: #0c1a30 !important;
+}
+
+body.dark-mode .form-section {
+    border-color: #1e3a5f !important;
+}
+
+body.dark-mode .form-section-title {
+    background: linear-gradient(90deg, #05162d, #133b68) !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .form-group label {
+    color: #38bdf8 !important;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+    background: #071224 !important;
+    color: #ffffff !important;
+    border-color: #2b4c7e !important;
+}
+
+body.dark-mode .preview-title {
+    color: #38bdf8 !important;
+}
+
+body.dark-mode .a4-sheet {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}

@@ -1,0 +1,152 @@
+/* ==========================================================================
+   H:\naksa-darta-system\frontend\css\responsive.css
+   RESPONSIVE DESIGN FOR DESKTOP, TABLET & MOBILE
+   ========================================================================== */
+
+@media (max-width: 1450px) {
+  .workspace-grid {
+    grid-template-columns: minmax(460px, 1fr) minmax(580px, 1.15fr);
+    gap: 16px;
+  }
+
+  .main-container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .scaled-screen-preview {
+    transform: scale(0.78);
+    margin-bottom: -110px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .workspace-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-sticky {
+    position: static;
+    margin-top: 20px;
+  }
+
+  .preview-card {
+    overflow-x: auto;
+    padding: 16px;
+  }
+
+  .scaled-screen-preview {
+    transform: none;
+    margin-bottom: 0;
+    width: 210mm;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .system-header {
+    padding: 10px 14px;
+  }
+
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .header-brand {
+    min-width: calc(100% - 75px);
+  }
+
+  .header-brand h1 {
+    font-size: 1.2rem;
+  }
+
+  .header-tools {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .main-nav .nav-inner {
+    overflow-x: auto;
+    padding: 0 10px;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group.full {
+    grid-column: auto;
+  }
+
+  .record-search-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 15px;
+  }
+
+  .main-container {
+    padding: 8px;
+  }
+
+  .entry-card,
+  .preview-card {
+    padding: 12px;
+    border-radius: 6px;
+  }
+
+  .header-brand h1 {
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  .header-brand p {
+    font-size: 0.85rem;
+  }
+
+  .header-emblem {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+
+  .header-emblem img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .photo-upload-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  #printAreaContainer {
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+  }
+
+  .a4-sheet {
+    min-width: 210mm;
+  }
+}
