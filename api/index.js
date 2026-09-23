@@ -24,4 +24,28 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Mayadevi Naksa API Running' });
 });
 
+// कर्मचारीको नाम, लगइन आइडी र पासवर्ड अपडेट गर्ने API
+app.post('/api/admin/update-user', async (req, res) => {
+  const { id, full_name, login_id } = req.body;
+  
+  if (!id) {
+    return res.status(400).json({ error: 'प्रयोगकर्ता आईडी आवश्यक छ' });
+  }
+
+  try {
+    const { createClient } = require('@supabase/supabase-js');
+    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+    const { data, error } = await supabase
+      .from('users')
+      .update({ full_name, login_id })
+      .eq('id', id);
+
+    if (error) throw error;
+
+    res.json({ success: true, message: 'विवरण सफलतापूर्वक अद्यावधिक भयो!' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = app;
