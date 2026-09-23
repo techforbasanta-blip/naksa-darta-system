@@ -2,16 +2,20 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/admin",
-      "destination": "/frontend/admin.html"
-    },
-    {
       "source": "/admin.html",
       "destination": "/frontend/admin.html"
     },
     {
-      "source": "/frontend/:file*",
-      "destination": "/frontend/:file*"
+      "source": "/admin",
+      "destination": "/frontend/admin.html"
+    },
+    {
+      "source": "/js/:file*",
+      "destination": "/frontend/js/:file*"
+    },
+    {
+      "source": "/css/:file*",
+      "destination": "/frontend/css/:file*"
     },
     {
       "source": "/api/auth/login",
@@ -20,26 +24,6 @@
     {
       "source": "/api/:file*",
       "destination": "/api/:file*"
-    },
-    {
-      "source": "/js/:file*",
-      "destination": "/:file*"
-    },
-    {
-      "source": "/css/:file*",
-      "destination": "/:file*"
-    },
-    {
-      "source": "/assets/:file*",
-      "destination": "/:file*"
-    },
-    {
-      "source": "/logo/:file*",
-      "destination": "/:file*"
-    },
-    {
-      "source": "/",
-      "destination": "/login.html"
     }
   ]
 }
