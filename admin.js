@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Session Check
+    // सुपरएडमिन सेसन प्रमाणीकरण
     const rawUser = sessionStorage.getItem('user') || localStorage.getItem('user');
     if (!rawUser) {
         alert("कृपया पहिले लगइन गर्नुहोस्!");
@@ -9,154 +9,170 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
         const currentUser = JSON.parse(rawUser);
-        if (currentUser.role !== 'superadmin' && currentUser.login_id !== 'superadmin') {
-            alert("यो प्यानलमा पहुँचका लागि सुपरएडमिन अधिकार आवश्यक छ!");
-            window.location.href = "darta.html";
-            return;
+        const nameBadge = document.getElementById("loggedUserName");
+        if (nameBadge && currentUser.full_name) {
+            nameBadge.textContent = currentUser.full_name;
         }
     } catch (e) {
-        window.location.href = "login.html";
-        return;
+        console.error("Session parse error", e);
     }
 
-    renderUsers();
+    renderTable();
 });
 
-// सुरुवाती कर्मचारीहरूको सूची (Local Storage मा सुरक्षित हुने गरी)
-let usersList = JSON.parse(localStorage.getItem('mayadevi_staff_list')) || [
-    {
-        id: 1,
-        full_name: "सुपर एडमिन",
-        post: "प्रमुख प्रशासकीय अधिकृत",
-        phone: "९८५७०१६९३९",
-        email: "superadmin@mayadevimun.gov.np",
-        login_id: "superadmin",
-        password: "Admin@2083",
-        remarks: "मुख्य प्रणाली प्रशासक"
-    },
-    {
-        id: 2,
-        full_name: "राम बहादुर चौधरी",
-        post: "इन्जिनियर",
-        phone: "९८४७००१२३४",
-        email: "engineer.mayadevi@gmail.com",
-        login_id: "engineer1",
-        password: "User@1234",
-        remarks: "नक्सा जाँच तथा प्रमाणीकरण"
-    },
-    {
-        id: 3,
-        full_name: "सीता ज्ञवाली",
-        post: "सब-इन्जिनियर",
-        phone: "९८४७११२२३३",
-        email: "subeng.mayadevi@gmail.com",
-        login_id: "subeng1",
-        password: "User@5678",
-        remarks: "स्थलगत निरीक्षण"
-    }
-];
+// सुरुमा हजुरको मुख्य Superadmin खाता मात्र रहनेछ
+let usersList = JSON.parse(localStorage.getItem('mayadevi_staff_list'));
 
-// टेबल रेन्डर गर्ने कार्य
-function renderUsers() {
+if (!usersList || usersList.length === 0) {
+    usersList = [
+        {
+            id: 1,
+            full_name: "सुपर एडमिन",
+            post: "प्रमुख प्रशासकीय अधिकृत",
+            phone: "९८५७०१६९३९",
+            email: "mayadeviruralmun@gmail.com",
+            login_id: "superadmin",
+            password: "Admin@2083",
+            remarks: "प्रणाली व्यवस्थापक (Master Admin)"
+        }
+    ];
+    localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
+}
+
+// तालिका देखाउने (Render Table)
+function renderTable() {
     const tableBody = document.getElementById("userTableBody");
-    const countBadge = document.getElementById("userCountBadge");
+    const badge = document.getElementById("slotStatusBadge");
     if (!tableBody) return;
 
     tableBody.innerHTML = "";
-    if (countBadge) {
-        countBadge.textContent = `कुल एडमिन/कर्मचारी: ${usersList.length} / १०`;
+    if (badge) {
+        badge.textContent = `कुल एडमिन/कर्मचारी: ${usersList.length} / १०`;
     }
 
     usersList.forEach((u, index) => {
+        const isMaster = (index === 0); // पहिलो सुपरएडमिन खाता मेटाउन नमिल्ने
         const tr = document.createElement("tr");
+
         tr.innerHTML = `
             <td style="text-align: center; font-weight: bold;">${index + 1}</td>
-            <td><input type="text" id="name-${u.id}" value="${u.full_name || ''}" placeholder="कर्मचारीको नाम"></td>
-            <td><input type="text" id="post-${u.id}" value="${u.post || ''}" placeholder="पद (उदा. इन्जिनियर)"></td>
-            <td><input type="text" id="phone-${u.id}" value="${u.phone || ''}" placeholder="९८XXXXXXXX"></td>
-            <td><input type="email" id="email-${u.id}" value="${u.email || ''}" placeholder="example@gmail.com"></td>
-            <td><input type="text" id="loginid-${u.id}" value="${u.login_id || ''}" placeholder="login id"></td>
+            <td><input type="text" class="table-input" id="tbl-name-${u.id}" value="${u.full_name}"></td>
+            <td><input type="text" class="table-input" id="tbl-post-${u.id}" value="${u.post}"></td>
+            <td><input type="text" class="table-input" id="tbl-phone-${u.id}" value="${u.phone}"></td>
+            <td><input type="email" class="table-input" id="tbl-email-${u.id}" value="${u.email}"></td>
+            <td><input type="text" class="table-input" id="tbl-loginid-${u.id}" value="${u.login_id}" ${isMaster ? 'readonly style="background:#f1f5f9;"' : ''}></td>
             <td>
-                <div class="pwd-wrapper">
-                    <input type="password" id="pwd-${u.id}" value="${u.password || ''}">
-                    <span class="eye-btn" onclick="togglePasswordVisibility('pwd-${u.id}')" title="पासवर्ड हेर्नुहोस्">👁️</span>
+                <div class="pwd-td-box">
+                    <input type="password" class="table-input" id="tbl-pwd-${u.id}" value="${u.password}" style="width: 100px;">
+                    <span class="eye-icon" onclick="toggleTblPassword('tbl-pwd-${u.id}')" title="पासवर्ड हेर्नुहोस्">👁️</span>
                 </div>
             </td>
-            <td><input type="text" id="remarks-${u.id}" value="${u.remarks || ''}" placeholder="कैफियत"></td>
+            <td><input type="text" class="table-input" id="tbl-remarks-${u.id}" value="${u.remarks || ''}"></td>
             <td style="text-align: center; white-space: nowrap;">
-                <button type="button" class="btn-save" onclick="saveUser(${u.id})">सुरक्षित</button>
+                <button type="button" class="btn-update" onclick="updateExistingUser(${u.id})">अपडेट</button>
+                ${!isMaster ? `<button type="button" class="btn-del" onclick="deleteUser(${u.id})">हटाउने</button>` : ''}
             </td>
         `;
         tableBody.appendChild(tr);
     });
 }
 
-// नयाँ प्रयोगकर्ता पङ्क्ति (Row) थप्ने (अधिकतम १० जना)
-function addNewUserRow() {
+// फारामबाट नयाँ प्रयोगकर्ता सिर्जना गर्ने (Create New User)
+function createNewAdminUser() {
     if (usersList.length >= 10) {
-        alert("अधिकतम १० जना सम्म मात्र एडमिन/कर्मचारी थप्न मिल्छ!");
+        alert("अधिकतम १० जना सम्म मात्र एडमिन/कर्मचारी सिर्जना गर्न मिल्छ!");
         return;
     }
 
-    const newId = Date.now();
-    usersList.push({
-        id: newId,
-        full_name: "",
-        post: "",
-        phone: "",
-        email: "",
-        login_id: "",
-        password: "",
-        remarks: ""
-    });
+    const name = document.getElementById("new_name").value.trim();
+    const post = document.getElementById("new_post").value.trim();
+    const phone = document.getElementById("new_phone").value.trim();
+    const email = document.getElementById("new_email").value.trim();
+    const loginId = document.getElementById("new_loginid").value.trim();
+    const pwd = document.getElementById("new_password").value.trim();
+    const remarks = document.getElementById("new_remarks").value.trim();
 
-    renderUsers();
-}
-
-// पासवर्ड देखाउने/लुकाउने (Eye Toggle)
-function togglePasswordVisibility(fieldId) {
-    const field = document.getElementById(fieldId);
-    if (field) {
-        field.type = (field.type === 'password') ? 'text' : 'password';
-    }
-}
-
-// सुरक्षित गर्ने कार्य (सबै अनिवार्य फिल्ड जाँचसहित)
-function saveUser(userId) {
-    const name = document.getElementById(`name-${userId}`).value.trim();
-    const post = document.getElementById(`post-${userId}`).value.trim();
-    const phone = document.getElementById(`phone-${userId}`).value.trim();
-    const email = document.getElementById(`email-${userId}`).value.trim();
-    const loginId = document.getElementById(`loginid-${userId}`).value.trim();
-    const pwd = document.getElementById(`pwd-${userId}`).value.trim();
-    const remarks = document.getElementById(`remarks-${userId}`).value.trim();
-
-    // Compulsory Field Validation
+    // Compulsory check
     if (!name || !post || !phone || !email || !loginId || !pwd) {
-        alert("त्रुटि: कर्मचारीको नाम, पद, सम्पर्क नम्बर, Gmail, Login ID र पासवर्ड सबै अनिवार्य छन्!");
+        alert("कर्मचारीको नाम, पद, सम्पर्क नं., Gmail, Login ID र पासवर्ड सबै अनिवार्य छन्!");
         return;
     }
 
-    // Update in Array
-    const target = usersList.find(u => u.id === userId);
-    if (target) {
-        target.full_name = name;
-        target.post = post;
-        target.phone = phone;
-        target.email = email;
-        target.login_id = loginId;
-        target.password = pwd;
-        target.remarks = remarks;
+    // Login ID duplicate check
+    const duplicate = usersList.some(u => u.login_id.toLowerCase() === loginId.toLowerCase());
+    if (duplicate) {
+        alert(`यो Login ID (${loginId}) पहिले नै अर्को कर्मचारीले प्रयोग गरिसक्नुभएको छ! कृपया फरक ID राख्नुहोस्।`);
+        return;
+    }
+
+    const newUser = {
+        id: Date.now(),
+        full_name: name,
+        post: post,
+        phone: phone,
+        email: email,
+        login_id: loginId,
+        password: pwd,
+        remarks: remarks
+    };
+
+    usersList.push(newUser);
+    localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
+
+    // Reset Form
+    document.getElementById("newAdminForm").reset();
+
+    alert(`नयाँ कर्मचारी: "${name}" (${post}) सफलतापूर्वक सिर्जना भयो र तालिकामा थपियो!`);
+    renderTable();
+}
+
+// तालिकामा सिधै सम्पादन गरी अपडेट गर्ने
+function updateExistingUser(id) {
+    const name = document.getElementById(`tbl-name-${id}`).value.trim();
+    const post = document.getElementById(`tbl-post-${id}`).value.trim();
+    const phone = document.getElementById(`tbl-phone-${id}`).value.trim();
+    const email = document.getElementById(`tbl-email-${id}`).value.trim();
+    const loginId = document.getElementById(`tbl-loginid-${id}`).value.trim();
+    const pwd = document.getElementById(`tbl-pwd-${id}`).value.trim();
+    const remarks = document.getElementById(`tbl-remarks-${id}`).value.trim();
+
+    if (!name || !post || !phone || !email || !loginId || !pwd) {
+        alert("सबै अनिवार्य विवरण भरेर मात्र अपडेट गर्नुहोस्!");
+        return;
+    }
+
+    const user = usersList.find(u => u.id === id);
+    if (user) {
+        user.full_name = name;
+        user.post = post;
+        user.phone = phone;
+        user.email = email;
+        user.login_id = loginId;
+        user.password = pwd;
+        user.remarks = remarks;
 
         localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
-        alert(`कर्मचारी: "${name}" (${post}) को विवरण सफलतापूर्वक सुरक्षित गरियो!`);
+        alert(`"${name}" को विवरण अद्यावधिक (Update) भयो!`);
+        renderTable();
     }
 }
 
-// Global Logout
-window.handleLogout = function () {
-    sessionStorage.clear();
-    localStorage.clear();
-    alert('सफलतापूर्वक लगआउट भयो!');
-    window.location.href = 'login.html';
-};
+// कर्मचारी हटाउने
+function deleteUser(id) {
+    const target = usersList.find(u => u.id === id);
+    if (!target) return;
+
+    if (confirm(`के तपाईं साँच्चै कर्मचारी "${target.full_name}" लाई हटाउन चाहनुहुन्छ?`)) {
+        usersList = usersList.filter(u => u.id !== id);
+        localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
+        renderTable();
+    }
+}
+
+// पासवर्ड देखाउने/लुकाउने
+function toggleTblPassword(fieldId) {
+    const input = document.getElementById(fieldId);
+    if (input) {
+        input.type = (input.type === 'password') ? 'text' : 'password';
+    }
+}
