@@ -3,52 +3,69 @@
    MAYADEVI NAKSA DARTA SYSTEM - MAIN EXPRESS API SERVER
    ========================================================= */
 
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
-
-const authRoutes = require("./routes/authRoutes");
-const staffRoutes = require("./routes/staffRoutes");
-const recordRoutes = require("./routes/recordRoutes");
-const verifyRoutes = require("./routes/verifyRoutes");
+const express = require('express');
+const cors = require('cors');
+const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
-
-// Middleware
 app.use(cors());
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(express.json());
 
-// Static Frontend Files
-app.use(express.static(path.join(__dirname, "../frontend")));
+// Supabase Connection
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+let supabase = null;
 
-// API Endpoints
-app.use("/api/auth", authRoutes);
-app.use("/api/staff", staffRoutes);
-app.use("/api/records", recordRoutes);
-app.use("/api/verify", verifyRoutes);
-
-// Base Health Check
-app.get("/api/health", (req, res) => {
-    res.json({
-        status: "OK",
-        municipality: "मायादेवी गाउँपालिका, रुपन्देही",
-        system: "घर नक्सा दर्ता तथा अभिलेखीकरण प्रणाली API",
-        time: new Date().toISOString()
-    });
-});
-
-// Root Routing for Vercel / Local Server
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/login.html"));
-});
-
-const PORT = process.env.PORT || 5000;
-if (process.env.NODE_ENV !== "production") {
-    app.listen(PORT, () => {
-        console.log(`मायादेवी नक्सा दर्ता सर्भर http://localhost:${PORT} मा सुरु भयो।`);
-    });
+if (supabaseUrl && supabaseKey) {
+  supabase = createClient(supabaseUrl, supabaseKey);
 }
 
+// १. लगइन API
+app.post('/api/auth/login', async (req, res) => {
+  const { login_id, password } = req.body;
+
+  if (!login_id || !password) {
+    return res.status(400).json({ error: 'Login ID र Password दुवै आवश्यक छन्।' });
+  }
+
+  // सुपरएडमिनको लागि सिधै ब्याकअप जाँच
+  if (login_id === 'superadmin' && password === 'Admin@2083') {
+    return res.json({
+      success: true,
+      user: { id: 'superadmin', full_name: 'सुपर एडमिन', login_id: 'superadmin', role: 'superadmin' }
+    });
+  }
+
+  // Supabase बाट जाँच गर्ने
+  if (supabase) {
+    try {
+      const { data: user, error } = await supabase
+        .from('users')
+        .select('*')
+        .or(`login_id.eq.${login_id},username.eq.${login_id}`)
+        .single();
+
+      if (error || !user) {
+        return res.status(401).json({ error: 'Login ID वा Password मिलेन।' });
+      }
+
+      if (user.plain_password === password || user.password === password) {
+        return res.json({ success: true, user });
+      } else {
+        return res.status(401).json({ error: 'Login ID वा Password मिलेन।' });
+      }
+    } catch (err) {
+      return res.status(500).json({ error: 'डेटाबेस प्रमाणीकरण त्रुटि: ' + err.message });
+    }
+  }
+
+  return res.status(401).json({ error: 'प्रयोगकर्ता फेला परेन।' });
+});
+
+// २. स्वास्थ्य जाँच (Health Check)
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Mayadevi Server Running' });
+});
+
+// ३. Vercel Serverless Export
 module.exports = app;
