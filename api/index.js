@@ -48,4 +48,20 @@ app.post('/api/admin/update-user', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// सबै प्रयोगकर्ताहरूको विवरण ल्याउने API
+app.get('/api/admin/users', async (req, res) => {
+  try {
+    const { createClient } = require('@supabase/supabase-js');
+    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+    const { data, error } = await supabase
+      .from('users')
+      .select('id, full_name, login_id, role, plain_password');
+
+    if (error) throw error;
+    res.json({ users: data });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = app;
