@@ -13,32 +13,12 @@
   <link rel="stylesheet" href="responsive.css">
 
   <style>
-    :root {
-      --gov-blue: #1e3a8a;
-      --gov-light-blue: #2563eb;
-      --gov-bg: #f8fafc;
-      --gov-card: #ffffff;
-      --gov-border: #cbd5e1;
-      --gov-text: #0f172a;
-    }
-
-    body {
-      background-color: var(--gov-bg);
-      color: var(--gov-text);
-      font-family: 'Mukta', 'Segoe UI', Tahoma, sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* System Header Matching darta.html */
+    /* darta.html को जस्तै सरकारी निलो Header */
     .system-header {
-      background: #ffffff;
-      border-bottom: 2px solid #2563eb;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-      padding: 10px 20px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%) !important;
+      border-bottom: 3px solid #b91c1c !important;
+      padding: 12px 24px;
+      color: #ffffff;
     }
     .header-inner {
       display: flex;
@@ -46,71 +26,74 @@
       justify-content: space-between;
       max-width: 1440px;
       margin: 0 auto;
-      gap: 15px;
+      gap: 16px;
     }
     .header-emblem img {
-      height: 56px;
+      height: 60px;
       width: auto;
     }
     .header-brand h1 {
-      font-size: 20px;
-      color: #b91c1c;
+      font-size: 22px;
+      color: #ffffff !important;
       font-weight: 800;
       margin: 0;
       line-height: 1.2;
     }
     .header-brand p {
       font-size: 13px;
-      color: #334155;
-      margin: 2px 0 0 0;
+      color: #cbd5e1 !important;
+      margin: 3px 0 0 0;
       font-weight: 500;
+    }
+    .header-brand p span {
+      color: #93c5fd;
     }
     .header-tools {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .clock-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 6px;
       padding: 4px 10px;
       text-align: right;
-      color: #1e3a8a;
+      color: #ffffff;
     }
     .clock-box small {
       display: block;
       font-size: 11px;
-      font-weight: 600;
+      color: #93c5fd;
     }
     .clock-box div {
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 700;
     }
     .user-box {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 6px;
       padding: 6px 12px;
       font-size: 13px;
       font-weight: 700;
-      color: #0f172a;
+      color: #ffffff;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
     .fiscal-badge {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #b91c1c;
+      background: #b91c1c;
+      color: #ffffff;
       border-radius: 6px;
       padding: 6px 10px;
       font-size: 12px;
       font-weight: 700;
+      border: 1px solid #ef4444;
     }
     .header-btn {
       border: none;
-      padding: 7px 12px;
+      padding: 7px 14px;
       border-radius: 6px;
       font-size: 13px;
       font-weight: 700;
@@ -129,24 +112,24 @@
       background: #dc2626;
       color: #ffffff;
     }
-    .btn-logout-nav:hover { background: #b91c1c; }
+    .btn-logout-nav:hover { background: #991b1b; }
 
     /* Nav bar matching darta.html */
     .main-nav {
-      background: #1e3a8a;
-      padding: 0 20px;
-      border-bottom: 3px solid #b91c1c;
+      background: #172554;
+      padding: 0 24px;
+      border-bottom: 2px solid #1e3a8a;
     }
     .nav-inner {
       max-width: 1440px;
       margin: 0 auto;
       display: flex;
-      gap: 6px;
+      gap: 4px;
     }
     .nav-inner a {
-      color: #ffffff;
+      color: #cbd5e1;
       text-decoration: none;
-      padding: 10px 16px;
+      padding: 10px 18px;
       font-size: 14px;
       font-weight: 600;
       display: inline-block;
@@ -154,40 +137,51 @@
     }
     .nav-inner a:hover, .nav-inner a.active {
       background: #2563eb;
+      color: #ffffff;
     }
 
-    /* Main Container */
+    /* Page Body */
+    body {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-family: 'Mukta', 'Segoe UI', Tahoma, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
     .admin-main {
       max-width: 1440px;
       width: 96%;
-      margin: 20px auto;
+      margin: 22px auto;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 22px;
     }
 
-    /* Government Card Container */
+    /* Cards */
     .panel-card {
       background: #ffffff;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.04);
-      padding: 20px;
+      padding: 22px;
     }
     .panel-card-title {
       font-size: 18px;
       font-weight: 800;
       color: #1e3a8a;
       border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 8px;
+      padding-bottom: 10px;
       margin-bottom: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    /* Entry Form Grid */
+    /* Entry Form */
     .entry-form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -218,7 +212,6 @@
       outline: 2px solid #2563eb;
       border-color: transparent;
     }
-
     .form-btn-row {
       margin-top: 14px;
       display: flex;
@@ -228,7 +221,7 @@
       background: #16a34a;
       color: #ffffff;
       border: none;
-      padding: 9px 20px;
+      padding: 9px 22px;
       border-radius: 6px;
       font-size: 14px;
       font-weight: 700;
@@ -240,7 +233,7 @@
     }
     .btn-create-admin:hover { background: #15803d; }
 
-    /* Table Styling */
+    /* Table */
     .table-container {
       overflow-x: auto;
       border: 1px solid #cbd5e1;
@@ -287,7 +280,6 @@
       font-size: 15px;
       user-select: none;
     }
-
     .btn-update {
       background: #2563eb;
       color: #ffffff;
@@ -299,7 +291,6 @@
       font-size: 12px;
     }
     .btn-update:hover { background: #1d4ed8; }
-
     .btn-del {
       background: #dc2626;
       color: #ffffff;
@@ -325,7 +316,7 @@
   </style>
 
   <script>
-    // Nepali Date & Live Clock (Exact match with darta.html)
+    // नेपाली मिति तथा समय
     const nepaliMonths = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"];
     const nepaliDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
@@ -390,7 +381,7 @@
 </head>
 <body>
 
-  <!-- Darta.html जस्तै आधिकारिक हेडर -->
+  <!-- सरकारी निलो Header -->
   <header class="system-header">
     <div class="header-inner">
       <div class="header-emblem">
@@ -405,7 +396,7 @@
       </div>
 
       <div class="header-tools">
-        <div class="header-emblem" style="background:rgba(255,255,255,0.15);">
+        <div class="header-emblem" style="background:rgba(255,255,255,0.15); border-radius: 50%; padding: 2px;">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                alt="पालिका लोगो" 
                onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';">
@@ -420,7 +411,7 @@
         </div>
         <div class="fiscal-badge">आ.व. २०८३/०८४</div>
 
-        <a href="darta.html" class="header-btn btn-darta-nav" title="नक्सा दर्ता फाराममा जानुहोस्">
+        <a href="darta.html" class="header-btn btn-darta-nav" title="नक्सा दर्ता फाराममा फर्कनुहोस्">
           📝 दर्ता फाराम
         </a>
 
@@ -442,7 +433,7 @@
     </div>
   </nav>
 
-  <!-- Body Content -->
+  <!-- Main Container -->
   <main class="admin-main">
     
     <!-- १. नयाँ कर्मचारी / एडमिन इन्ट्री फाराम -->
@@ -514,7 +505,7 @@
             </tr>
           </thead>
           <tbody id="userTableBody">
-            <!-- admin.js बाट लोड हुनेछ -->
+            <!-- admin.js बाट सुरुमा हजुरको सुपरएडमिन मात्र आउनेछ -->
           </tbody>
         </table>
       </div>
