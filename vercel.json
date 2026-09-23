@@ -2,6 +2,18 @@
   "version": 2,
   "rewrites": [
     {
+      "source": "/frontend/:file*",
+      "destination": "/:file*"
+    },
+    {
+      "source": "/api/auth/login",
+      "destination": "/api/login.js"
+    },
+    {
+      "source": "/api/:file*",
+      "destination": "/api/:file*"
+    },
+    {
       "source": "/js/:file*",
       "destination": "/:file*"
     },
