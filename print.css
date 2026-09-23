@@ -582,105 +582,49 @@
    PRINT ENGINE MEDIA RULES (@media print)
    ========================================================================== */
 @media print {
-  @page {
-    size: A4 portrait;
-    margin: 0 !important;
-  }
-
-  header.system-header,
-  nav.main-nav,
-  section.entry-card,
-  h2.preview-title,
-  div.preview-controls-bar,
-  div.form-actions {
+  /* वेबसाइटको हेडर, फुटर, मेनु र बटनहरू प्रिन्टमा पूर्ण रूपमा बन्द गर्ने */
+  footer,
+  .no-print,
+  .system-header,
+  .main-nav,
+  .entry-card,
+  .form-actions,
+  .preview-title {
     display: none !important;
-  }
-
-  html, body {
-    width: 210mm !important;
-    height: 100% !important;
+    visibility: hidden !important;
+    height: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
-    background: #ffffff !important;
-    overflow: visible !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
   }
 
-  .main-container,
-  .workspace-grid,
-  .preview-card,
-  .preview-sticky,
+  /* पृष्ठभूमि सफा राख्ने */
+  body, html {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   #printAreaContainer {
     display: block !important;
-    position: static !important;
-    width: 210mm !important;
     margin: 0 !important;
     padding: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
     transform: none !important;
-    background: transparent !important;
   }
 
-  #a4CertificatePaper,
-  #certificateBackPage {
-    width: 210mm !important;
-    height: 297mm !important;
-    min-height: 297mm !important;
-    max-height: 297mm !important;
-    margin: 0 !important;
-    padding: 5mm 9mm 4mm 9mm !important;
-    border: 1.5px solid #111111 !important;
-    box-shadow: none !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-    overflow: hidden !important;
-    background-color: #ffffff !important;
-  }
-
-  #a4CertificatePaper {
+  /* पहिलो पाना (A4 Page 1) */
+  .a4-sheet {
     page-break-after: always !important;
     break-after: page !important;
+    height: 295mm !important;
+    max-height: 295mm !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    box-shadow: none !important;
   }
 
-  #certificateBackPage {
-    page-break-before: always !important;
-    break-before: page !important;
+  /* दोस्रो पानापछि तेस्रो खाली पाना आउन नदिने (A4 Page 2) */
+  .a4-sheet.back-page {
     page-break-after: avoid !important;
     break-after: avoid !important;
-  }
-
-  /* प्रिन्ट गर्दा टेबलका सम्पूर्ण सेलहरू पूर्ण पारदर्शी रहने */
-  .cert-table,
-  .floor-detail-table,
-  .namsari-table,
-  .cert-table td,
-  .cert-table th,
-  .floor-detail-table td,
-  .floor-detail-table th,
-  .namsari-table td,
-  .namsari-table th,
-  .kabuliyat-section,
-  .namsari-section {
-    background: transparent !important;
-    background-color: transparent !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* वाटरमार्क लोगो प्रिन्टमा पूर्ण रूपमा देखिने */
-  .watermark-img {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 0.22 !important;
-    mix-blend-mode: multiply !important;
-    z-index: 1 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  .bw-mode {
-    filter: grayscale(100%) contrast(120%) !important;
   }
 }
