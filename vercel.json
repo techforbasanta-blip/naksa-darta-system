@@ -2,8 +2,16 @@
   "version": 2,
   "rewrites": [
     {
+      "source": "/admin",
+      "destination": "/frontend/admin.html"
+    },
+    {
+      "source": "/admin.html",
+      "destination": "/frontend/admin.html"
+    },
+    {
       "source": "/frontend/:file*",
-      "destination": "/:file*"
+      "destination": "/frontend/:file*"
     },
     {
       "source": "/api/auth/login",
