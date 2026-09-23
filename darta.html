@@ -138,14 +138,11 @@
             </div>
             <div class="user-box" id="currentUserBadge">
                 <span>👤</span>
-                <span id="loggedUserName">कर्मचारी</span>
+                <span id="loggedUserName">सुपर एडमिन</span>
             </div>
             <div class="fiscal-badge">आ.व. २०८३/०८४</div>
 
-            <!-- Direct staff.html Link: Always visible -->
-            <a href="staff.html" id="adminMenuBtn" class="header-btn" style="display: inline-flex !important; align-items: center; gap: 4px; text-decoration: none; background: #2563eb; color: #ffffff; font-weight: bold; padding: 6px 12px; border-radius: 4px;" title="कर्मचारी तथा पासवर्ड व्यवस्थापन">
-                ⚙️ Admin
-            </a>
+            <!-- माथिल्लो Admin बटन हटाइयो (तल्लो मेनुमा मात्र राखिएको छ) -->
 
             <button type="button" class="header-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Dark / Light">☾</button>
             <button type="button" class="header-btn" style="background: #dc2626; color: #ffffff; font-weight: bold;" onclick="handleLogout()" title="Logout">🚪 Logout</button>
@@ -159,13 +156,14 @@
         <a href="darta.html" class="active">📝 नयाँ दर्ता</a>
         <a href="record.html">📂 पुरानो हेर्नुस्</a>
         <a href="verify.html">🔎 प्रमाणिकरण</a>
+        <a href="admin.html" style="background: #2563eb; color: #ffffff; border-radius: 4px; padding: 6px 12px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">⚙️ Admin Management</a>
     </div>
 </nav>
 
 <main class="main-container">
     <div class="workspace-grid">
         
-        <!-- LEFT ENTRY FORM -->
+        <!-- बायाँ फाराम -->
         <section class="entry-card">
             <form id="dartaForm" onsubmit="event.preventDefault(); saveNaksaRecord();" autocomplete="off">
                 
@@ -382,22 +380,20 @@
             </form>
         </section>
 
-        <!-- RIGHT PREVIEW CARD -->
+        <!-- दायाँ प्रमाण-पत्र Live Preview -->
         <section class="preview-card preview-sticky">
             <h2 class="preview-title">प्रमाण-पत्र Live Preview</h2>
 
             <div id="printAreaContainer" class="scaled-screen-preview">
                 
-                <!-- ================= PAGE 1 ================= -->
+                <!-- PAGE 1 -->
                 <div id="a4CertificatePaper" class="a4-sheet">
-                    
                     <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
-                         onerror="this.onerror=null; if(!this.dataset.r1){this.dataset.r1=1; this.src='assets/palika%20logo.jpg';} else if(!this.dataset.r2){this.dataset.r2=1; this.src='logo/palika%20logo.jpg';} else {this.src='assets/palika-logo.png';}" 
+                         onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';" 
                          class="watermark-img" 
                          alt="Watermark">
 
                     <div class="cert-content-top">
-                        
                         <div class="cert-top-center-motto">
                             <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
                         </div>
@@ -406,7 +402,7 @@
                             <div class="logo-box-left">
                                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
                                      alt="नेपाल निशान छाप" 
-                                     onerror="this.onerror=null; if(!this.dataset.r1){this.dataset.r1=1; this.src='assets/nishan%20chap.jpg';} else if(!this.dataset.r2){this.dataset.r2=1; this.src='logo/nishan%20chap.jpg';} else {this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Emblem_of_Nepal.svg/512px-Emblem_of_Nepal.svg.png';}">
+                                     onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
                             </div>
 
                             <div class="header-titles">
@@ -419,7 +415,7 @@
                             <div class="logo-box-right">
                                 <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                                      alt="मायादेवी गाउँपालिका लोगो" 
-                                     onerror="this.onerror=null; if(!this.dataset.r1){this.dataset.r1=1; this.src='assets/palika%20logo.jpg';} else if(!this.dataset.r2){this.dataset.r2=1; this.src='logo/palika%20logo.jpg';} else {this.src='assets/palika-logo.png';}">
+                                     onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';">
                             </div>
                         </header>
 
@@ -532,7 +528,7 @@
                             </tr>
                         </table>
 
-                        <!-- SIGNATURES BALANCED IN MIDDLE -->
+                        <!-- सहिछाप खण्ड -->
                         <div class="cert-signatures-block">
                             <div class="officers-signature-grid">
                                 <div class="sign-item">
@@ -579,7 +575,6 @@
 
                     </div>
 
-                    <!-- Page 1 Footer Original -->
                     <footer class="cert-footer">
                         सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np , mayadeviruralmun@gmail.com<br>
                         वेभ साइटः- mayadevimunrupandehi.gov.np
@@ -587,11 +582,10 @@
 
                 </div>
 
-                <!-- ================= PAGE 2 ================= -->
+                <!-- PAGE 2 -->
                 <div id="certificateBackPage" class="a4-sheet back-page">
-                    
                     <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
-                         onerror="this.onerror=null; if(!this.dataset.r1){this.dataset.r1=1; this.src='assets/palika%20logo.jpg';} else if(!this.dataset.r2){this.dataset.r2=1; this.src='logo/palika%20logo.jpg';} else {this.src='assets/palika-logo.png';}" 
+                         onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';" 
                          class="watermark-img" 
                          alt="Watermark">
 
@@ -689,6 +683,21 @@
 
     </div>
 </main>
+
+<!-- मागबमोजिम मिलाइएको आधिकारिक Footer -->
+<footer style="background: #0f172a; color: #cbd5e1; padding: 18px 24px; text-align: center; font-size: 13px; border-top: 3px solid #2563eb; margin-top: 30px;">
+  <div style="max-width: 1440px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+    <div>
+      <strong>मायादेवी गाउँपालिका</strong> — नक्सा दर्ता तथा अभिलेखीकरण प्रणाली | बरेवा, रुपन्देही
+    </div>
+    <div style="background: rgba(255,255,255,0.1); padding: 6px 16px; border-radius: 20px; font-weight: 600;">
+      📞 For More Help / WhatsApp: <a href="https://wa.me/9743653644" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: 700;">९७४३६५३६४४ (9743653644)</a>
+    </div>
+    <div style="color: #94a3b8; font-weight: 500;">
+      Developed by <span style="color: #38bdf8; font-weight: 800;">Tech for Basanta</span>
+    </div>
+  </div>
+</footer>
 
 <script src="auth.js"></script>
 <script src="certificate.js"></script>
