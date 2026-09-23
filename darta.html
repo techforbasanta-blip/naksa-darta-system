@@ -84,11 +84,40 @@
             }
         }
 
+        // विश्वव्यापी लगआउट फङ्सन
+        window.handleLogout = window.logoutUser = function () {
+            sessionStorage.clear();
+            localStorage.clear();
+            alert('सफलतापूर्वक लगआउट भयो!');
+            window.location.href = 'login.html';
+        };
+
         document.addEventListener("DOMContentLoaded", function() {
             const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
             applyTheme(saved);
             updateLiveClock();
             setInterval(updateLiveClock, 1000);
+
+            // युजर र एडमिन प्रमाणीकरण
+            const sessionUser = sessionStorage.getItem('user');
+            if (sessionUser) {
+                try {
+                    const u = JSON.parse(sessionUser);
+                    const userLabel = document.getElementById('loggedUserName');
+                    if (userLabel) userLabel.textContent = u.full_name || u.login_id || 'सुपर एडमिन';
+
+                    const adminBtn = document.getElementById('adminMenuBtn');
+                    if (adminBtn) {
+                        if (u.role === 'superadmin' || u.role === 'admin' || u.login_id === 'superadmin') {
+                            adminBtn.style.display = 'inline-flex';
+                        } else {
+                            adminBtn.style.display = 'none';
+                        }
+                    }
+                } catch (e) {
+                    console.error("User parse error", e);
+                }
+            }
         });
     </script>
 </head>
@@ -122,8 +151,14 @@
                 <span id="loggedUserName">कर्मचारी</span>
             </div>
             <div class="fiscal-badge">आ.व. २०८३/०८४</div>
+            
+            <!-- Admin Management Button (हेडरमै मिलेको) -->
+            <a href="admin.html" id="adminMenuBtn" class="header-btn" style="display:inline-flex; align-items:center; gap:4px; text-decoration:none; background:#2563eb; color:#fff; font-weight:600; padding:6px 12px; border-radius:4px;" title="कर्मचारी व्यवस्थापन">
+                ⚙️ Admin
+            </a>
+
             <button type="button" class="header-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Dark / Light">☾</button>
-            <button type="button" class="header-btn" onclick="logoutUser()">Logout</button>
+            <button type="button" class="header-btn" style="background:#dc2626; color:#fff; font-weight:600;" onclick="handleLogout()" title="लगआउट गर्नुहोस्">🚪 Logout</button>
         </div>
     </div>
 </header>
@@ -658,8 +693,6 @@
                         </section>
                     </div>
 
-                    <!-- Page 2 Footer has been completely removed -->
-
                 </div>
 
             </div>
@@ -668,17 +701,6 @@
     </div>
 </main>
 
-    <!-- एडमिन व्यवस्थापन र लगआउट खण्ड -->
-<div style="display: flex; align-items: center; gap: 12px; float: right; margin: 10px;">
-  <a href="/admin.html" id="adminMenu" style="display: inline-block; background-color: #2563eb; color: #ffffff; padding: 6px 14px; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: bold;">
-    ⚙️ Admin Management
-  </a>
-  <button type="button" onclick="handleLogout()" style="background-color: #dc2626; color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold;">
-    🚪 लगआउट
-  </button>
-</div>
-<div style="clear: both;"></div>
-    
 <script src="js/auth.js"></script>
 <script src="js/certificate.js"></script>
 <script src="js/darta.js"></script>
