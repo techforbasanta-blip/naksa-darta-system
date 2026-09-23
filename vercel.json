@@ -2,24 +2,8 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/:path*",
       "destination": "/server.js"
-    },
-    {
-      "source": "/css/(.*)",
-      "destination": "/$1"
-    },
-    {
-      "source": "/js/(.*)",
-      "destination": "/$1"
-    },
-    {
-      "source": "/assets/(.*)",
-      "destination": "/$1"
-    },
-    {
-      "source": "/logo/(.*)",
-      "destination": "/$1"
     },
     {
       "source": "/",
