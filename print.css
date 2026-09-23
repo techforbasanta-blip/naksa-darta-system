@@ -252,7 +252,7 @@
   border: 1px solid #334155;
   vertical-align: middle;
   line-height: 1.18;
-  background: transparent !important;
+  background: transparent !important; /* कुनै ब्याकग्राउन्ड रङ नराख्ने */
 }
 
 .cert-table td.lbl {
@@ -377,7 +377,7 @@
   height: 46px !important;
   border: 1px solid #94a3b8;
   border-radius: 4px;
-  background: #ffffff !important;
+  background: #ffffff !important; /* QR सजिलै स्क्यान हुन सेतो ब्याकग्राउन्ड */
   padding: 1px;
   display: flex !important;
   align-items: center !important;
@@ -406,7 +406,7 @@
   margin-top: 1px;
 }
 
-/* Footer Page 1 (Internal Certificate Footer) */
+/* Footer Page 1 */
 .cert-footer {
   border-top: 1.5px solid var(--gov-red);
   padding-top: 2px;
@@ -549,7 +549,7 @@
   border: 1px solid #475569;
   padding: 10px 8px !important;
   vertical-align: middle;
-  background: transparent !important;
+  background: transparent !important; /* पूरा पारदर्शी */
   line-height: 1.35;
 }
 
@@ -587,22 +587,13 @@
     margin: 0 !important;
   }
 
-  /* बाहिरी सबै कुरा र बाहिरको वेबसाइट फुटर पूर्ण रूपमा बन्द */
   header.system-header,
   nav.main-nav,
   section.entry-card,
   h2.preview-title,
   div.preview-controls-bar,
-  div.form-actions,
-  footer,
-  .no-print {
+  div.form-actions {
     display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    max-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
   }
 
   html, body {
