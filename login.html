@@ -146,7 +146,21 @@
 
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label for="loginPassword">पासवर्ड (Password) *</label>
-                    <input type="password" id="loginPassword" placeholder="पासवर्ड राख्नुहोस्" required>
+                    <div style="position: relative; width: 100%;">
+          <input type="password" id="password" name="password" placeholder="पासवर्ड प्रविष्ट गर्नुहोस्" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+          <span onclick="toggleLoginPassword()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px; user-select: none;">👁️</span>
+        </div>
+
+            <script>
+            function toggleLoginPassword() {
+              const pwd = document.getElementById("password");
+              if (pwd.type === "password") {
+                pwd.type = "text";
+              } else {
+                pwd.type = "password";
+              }
+            }
+            </script>
                 </div>
 
                 <button type="submit" class="login-btn-submit">सुरक्षित लगइन गर्नुहोस्</button>
