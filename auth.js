@@ -93,3 +93,56 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.addEventListener('submit', handleStaffLogin);
     }
 });
+// १. लगआउट फङ्सन (जुनसुकै ठाउँबाट लगआउट गर्न मिल्ने)
+function handleLogout() {
+    sessionStorage.clear();
+    localStorage.clear();
+    alert('सफलतापूर्वक लगआउट भयो!');
+    window.location.href = '/login.html';
+}
+
+// २. लगइन भएको प्रयोगकर्ताको भूमिका (Role) जाँच गर्ने र Admin Management देखाउने
+document.addEventListener('DOMContentLoaded', () => {
+    const userData = sessionStorage.getItem('user');
+    
+    // लगइन छैन भने लगइन पेजमा पठाउने (सुरक्षाको लागि)
+    if (!userData && !window.location.pathname.includes('login')) {
+        // window.location.href = '/login.html';
+        return;
+    }
+
+    if (userData) {
+        try {
+            const user = JSON.parse(userData);
+            
+            // यदि प्रयोगकर्ता superadmin वा admin हो भने Admin Management मेनु देखाउने
+            if (user.role === 'superadmin' || user.role === 'admin' || user.login_id === 'superadmin') {
+                const adminMenu = document.getElementById('adminMenu') || 
+                                  document.getElementById('adminNav') || 
+                                  document.querySelector('.admin-only') ||
+                                  document.querySelector('a[href*="admin"]');
+
+                if (adminMenu) {
+                    adminMenu.style.display = 'inline-block'; // वा 'block'
+                }
+            }
+
+            // प्रयोगकर्ताको नाम देखाउने ठाउँ भए त्यसमा नाम राख्ने
+            const userNameDisplay = document.getElementById('loggedInUserName') || document.getElementById('userName');
+            if (userNameDisplay) {
+                userNameDisplay.innerText = user.full_name || user.login_id || 'सुपर एडमिन';
+            }
+        } catch (e) {
+            console.error('User data parse error:', e);
+        }
+    }
+
+    // लगआउट बटनहरूमा क्लिक इभेन्ट आफैँ जोड्ने
+    const logoutBtns = document.querySelectorAll('#logoutBtn, .logout-btn, a[href*="logout"]');
+    logoutBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleLogout();
+        });
+    });
+});
