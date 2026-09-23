@@ -93,3 +93,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+// प्रयोगकर्ताको अधिकार जाँच गर्ने
+function getCurrentUserRole() {
+    const rawUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+    if (!rawUser) return { isSuperAdmin: false, role: 'guest' };
+
+    try {
+        const user = JSON.parse(rawUser);
+        const isSuperAdmin = (user.role === 'superadmin' || user.login_id === 'superadmin');
+        return { isSuperAdmin, user };
+    } catch (e) {
+        return { isSuperAdmin: false, role: 'guest' };
+    }
+}
+
+// १ हप्ता (७ दिन) सम्म वा सोही दिन सुपरएडमिनले मात्र सच्याउन पाउने नियम
+function validateEditPermission(recordCreatedDate) {
+    const { isSuperAdmin } = getCurrentUserRole();
+
+    // सामान्य कर्मचारी/एडमिनलाई सच्याउन पूर्ण रोक
+    if (!isSuperAdmin) {
+        alert("पहुँच अस्वीकृत: कर्मचारी वा सामान्य एडमिनलाई दर्ता भइसकेको विवरण सच्याउने अधिकार छैन! नयाँ दर्ता र प्रिन्ट मात्र गर्न सकिन्छ।");
+        return false;
+    }
+
+    // सुपरएडमिनको लागि १ हप्ताको समय सीमा जाँच
+    if (recordCreatedDate) {
+        const created = new Date(recordCreatedDate);
+        const now = new Date();
+        const diffDays = Math.ceil(Math.abs(now - created) / (1000 * 60 * 60 * 24));
+
+        if (diffDays > 7) {
+            alert("म्याद समाप्त: यो कागजात बनेको १ हप्ता (७ दिन) भन्दा बढी भइसकेकोले अब यसलाई सच्याउन मिल्दैन!");
+            return false;
+        }
+    }
+
+    return true; // १ हप्ता भित्र सुपरएडमिनले सच्याउन पाउने
+}
