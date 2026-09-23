@@ -9,9 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/print.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="print.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -84,7 +84,6 @@
             }
         }
 
-        // विश्वव्यापी लगआउट फङ्सन
         window.handleLogout = window.logoutUser = function () {
             sessionStorage.clear();
             localStorage.clear();
@@ -98,24 +97,15 @@
             updateLiveClock();
             setInterval(updateLiveClock, 1000);
 
-            // युजर र एडमिन प्रमाणीकरण
-            const sessionUser = sessionStorage.getItem('user');
-            if (sessionUser) {
+            // User session check
+            const rawUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+            if (rawUser) {
                 try {
-                    const u = JSON.parse(sessionUser);
+                    const u = JSON.parse(rawUser);
                     const userLabel = document.getElementById('loggedUserName');
-                    if (userLabel) userLabel.textContent = u.full_name || u.login_id || 'सुपर एडमिन';
-
-                    const adminBtn = document.getElementById('adminMenuBtn');
-                    if (adminBtn) {
-                        if (u.role === 'superadmin' || u.role === 'admin' || u.login_id === 'superadmin') {
-                            adminBtn.style.display = 'inline-flex';
-                        } else {
-                            adminBtn.style.display = 'none';
-                        }
-                    }
+                    if (userLabel) userLabel.textContent = u.full_name || u.login_id || 'कर्मचारी';
                 } catch (e) {
-                    console.error("User parse error", e);
+                    console.error("Session parse error", e);
                 }
             }
         });
@@ -151,14 +141,14 @@
                 <span id="loggedUserName">कर्मचारी</span>
             </div>
             <div class="fiscal-badge">आ.व. २०८३/०८४</div>
-            
-            <!-- Admin Management Button (हेडरमै मिलेको) -->
-            <a href="admin.html" id="adminMenuBtn" class="header-btn" style="display:inline-flex; align-items:center; gap:4px; text-decoration:none; background:#2563eb; color:#fff; font-weight:600; padding:6px 12px; border-radius:4px;">
-            ⚙️ Admin
+
+            <!-- Admin Button: Hamesha visible rahega -->
+            <a href="admin.html" id="adminMenuBtn" class="header-btn" style="display: inline-flex !important; align-items: center; gap: 4px; text-decoration: none; background: #2563eb; color: #ffffff; font-weight: bold; padding: 6px 12px; border-radius: 4px;" title="कर्मचारी तथा पासवर्ड व्यवस्थापन">
+                ⚙️ Admin
             </a>
 
             <button type="button" class="header-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Dark / Light">☾</button>
-            <button type="button" class="header-btn" style="background:#dc2626; color:#fff; font-weight:600;" onclick="handleLogout()" title="लगआउट गर्नुहोस्">🚪 Logout</button>
+            <button type="button" class="header-btn" style="background: #dc2626; color: #ffffff; font-weight: bold;" onclick="handleLogout()" title="Logout">🚪 Logout</button>
         </div>
     </div>
 </header>
@@ -189,7 +179,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="in_patra_no">पत्र संख्या</label>
-                                <input type="text" id="in_patra_no" value="०८३/८४" oninput="updateCertificateLive();">
+                                <input type="text" id="in_patra_no" value="०८३/८4" oninput="updateCertificateLive();">
                             </div>
                             <div class="form-group">
                                 <label for="in_darta_no">नक्सा दर्ता नं. *</label>
@@ -597,7 +587,7 @@
 
                 </div>
 
-                <!-- ================= PAGE 2 (EXPANDED FONTS & AUTO ROJ) ================= -->
+                <!-- ================= PAGE 2 ================= -->
                 <div id="certificateBackPage" class="a4-sheet back-page">
                     
                     <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
@@ -638,7 +628,6 @@
                                         </div>
                                         <span class="thumb-label">औंठा छाप</span>
                                     </div>
-                                    <!-- AUTO UPDATED ITI SAMBAT & ROJ -->
                                     <div class="iti-date-text">
                                         ईति सम्बत <span id="back_iti_year">२०८३</span> साल <span id="back_iti_month">०६</span> महिना <span id="back_iti_day">०७</span> गते <span id="back_iti_roj">०४</span> रोज शुभम्।
                                     </div>
@@ -701,8 +690,8 @@
     </div>
 </main>
 
-<script src="js/auth.js"></script>
-<script src="js/certificate.js"></script>
-<script src="js/darta.js"></script>
+<script src="auth.js"></script>
+<script src="certificate.js"></script>
+<script src="darta.js"></script>
 </body>
 </html>
