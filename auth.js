@@ -146,3 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+// विश्वव्यापी (Global) लगआउट फङ्सन
+window.handleLogout = function() {
+    sessionStorage.clear();
+    localStorage.clear();
+    alert('लगआउट सफल भयो!');
+    window.location.href = '/login.html';
+};
