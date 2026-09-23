@@ -1,67 +1,65 @@
 const express = require('express');
 const cors = require('cors');
+const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Auth & Other Routes
-try {
-  const authRoutes = require('../authRoutes');
-  const recordRoutes = require('../recordRoutes');
-  const staffRoutes = require('../staffRoutes');
-  const verifyRoutes = require('../verifyRoutes');
+// Supabase Connection
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+let supabase = null;
 
-  app.use('/api/auth', authRoutes);
-  app.use('/api/records', recordRoutes);
-  app.use('/api/staff', staffRoutes);
-  app.use('/api/verify', verifyRoutes);
-} catch (err) {
-  console.log("Routes loading fallback:", err.message);
+if (supabaseUrl && supabaseKey) {
+  supabase = createClient(supabaseUrl, supabaseKey);
 }
 
+// १. लगइन API
+app.post('/api/auth/login', async (req, res) => {
+  const { login_id, password } = req.body;
+
+  if (!login_id || !password) {
+    return res.status(400).json({ error: 'Login ID र Password दुवै आवश्यक छन्।' });
+  }
+
+  // सुपरएडमिनको लागि प्रत्यक्ष प्रमाणीकरण (Fail-safe)
+  if (login_id === 'superadmin' && password === 'Admin@2083') {
+    return res.json({
+      success: true,
+      user: { id: 'superadmin', full_name: 'सुपर एडमिन', login_id: 'superadmin', role: 'superadmin' }
+    });
+  }
+
+  // Supabase बाट जाँच
+  if (supabase) {
+    try {
+      const { data: user, error } = await supabase
+        .from('users')
+        .select('*')
+        .or(`login_id.eq.${login_id},username.eq.${login_id}`)
+        .single();
+
+      if (error || !user) {
+        return res.status(401).json({ error: 'Login ID वा Password मिलेन।' });
+      }
+
+      if (user.plain_password === password || user.password === password) {
+        return res.json({ success: true, user });
+      } else {
+        return res.status(401).json({ error: 'Login ID वा Password मिलेन।' });
+      }
+    } catch (err) {
+      return res.status(500).json({ error: 'डेटाबेस प्रमाणीकरण त्रुटि: ' + err.message });
+    }
+  }
+
+  return res.status(401).json({ error: 'प्रयोगकर्ता फेला परेन।' });
+});
+
+// २. स्वास्थ्य जाँच
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Mayadevi Naksa API Running' });
+  res.json({ status: 'ok', message: 'Mayadevi Server Running' });
 });
 
-// कर्मचारीको नाम, लगइन आइडी र पासवर्ड अपडेट गर्ने API
-app.post('/api/admin/update-user', async (req, res) => {
-  const { id, full_name, login_id } = req.body;
-  
-  if (!id) {
-    return res.status(400).json({ error: 'प्रयोगकर्ता आईडी आवश्यक छ' });
-  }
-
-  try {
-    const { createClient } = require('@supabase/supabase-js');
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
-
-    const { data, error } = await supabase
-      .from('users')
-      .update({ full_name, login_id })
-      .eq('id', id);
-
-    if (error) throw error;
-
-    res.json({ success: true, message: 'विवरण सफलतापूर्वक अद्यावधिक भयो!' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-// सबै प्रयोगकर्ताहरूको विवरण ल्याउने API
-app.get('/api/admin/users', async (req, res) => {
-  try {
-    const { createClient } = require('@supabase/supabase-js');
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
-
-    const { data, error } = await supabase
-      .from('users')
-      .select('id, full_name, login_id, role, plain_password');
-
-    if (error) throw error;
-    res.json({ users: data });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 module.exports = app;
