@@ -1,179 +1,278 @@
 <!DOCTYPE html>
 <html lang="ne">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>कर्मचारी लगइन | मायादेवी गाउँपालिका, बरेवा, रुपन्देही</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>कर्मचारी लगइन | मायादेवी गाउँपालिका</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gov-blue: #1e3a8a;
+      --gov-dark: #0f172a;
+      --gov-red: #b91c1c;
+      --bg: #f8fafc;
+      --border: #cbd5e1;
+    }
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="responsive.css">
+    * { box-sizing: border-box; font-family: 'Mukta', 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; }
+    body { background-color: var(--bg); min-height: 100vh; display: flex; flex-direction: column; }
 
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #05162d, #071e3d 55%, #0b2545);
-        }
+    /* Government Top Header */
+    .system-header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      border-bottom: 3px solid var(--gov-red);
+      padding: 12px 24px;
+      color: #ffffff;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-left img {
+      height: 56px;
+      width: auto;
+    }
+    .header-brand h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+    .header-brand p {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-top: 2px;
+    }
 
-        .login-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
+    /* Login Card Box */
+    .login-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .login-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 420px;
+      padding: 30px 24px;
+      text-align: center;
+    }
+    .login-card h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--gov-blue);
+      margin-bottom: 6px;
+    }
+    .login-card p {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 20px;
+    }
 
-        .login-card {
-            background: #ffffff;
-            width: 100%;
-            max-width: 450px;
-            border-radius: 12px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            overflow: hidden;
-        }
+    .form-group {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .form-group input:focus {
+      outline: 2px solid #2563eb;
+      border-color: transparent;
+    }
 
-        .login-header-top {
-            background: #071e3d;
-            padding: 24px 20px 20px;
-            text-align: center;
-            border-bottom: 3px solid #0284c7;
-        }
+    .btn-submit {
+      width: 100%;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover {
+      background: #1d4ed8;
+    }
 
-        .login-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 12px;
-        }
+    .error-alert {
+      display: none;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      text-align: left;
+    }
 
-        .login-logos img {
-            width: 56px;
-            height: 56px;
-            object-fit: contain;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            padding: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .login-header-top h2 {
-            margin: 0;
-            font-size: 23px;
-            font-weight: 800;
-            color: #ffffff;
-        }
-
-        .login-header-top p {
-            margin: 4px 0 0;
-            font-size: 14.5px;
-            color: #93c5fd;
-        }
-
-        .login-body {
-            padding: 28px 24px;
-        }
-
-        .login-error-alert {
-            background: #fef2f2;
-            color: #b91c1c;
-            border: 1.5px solid #fca5a5;
-            border-radius: 6px;
-            padding: 10px 14px;
-            font-size: 14.5px;
-            font-weight: 700;
-            margin-bottom: 18px;
-            display: none;
-        }
-
-        .login-btn-submit {
-            width: 100%;
-            background: #071e3d;
-            color: #ffffff;
-            border: none;
-            padding: 12px;
-            font-size: 16.5px;
-            font-weight: 800;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 10px;
-        }
-
-        .login-btn-submit:hover {
-            background: #0b2545;
-        }
-
-        .login-footer-copy {
-            text-align: center;
-            padding: 16px;
-            font-size: 13px;
-            color: #cbd5e1;
-        }
-    </style>
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 13px;
+      border-top: 3px solid #2563eb;
+      margin-top: auto;
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
 </head>
 <body>
 
-<div class="login-wrapper">
-    <div class="login-card">
-        <div class="login-header-top">
-            <div class="login-logos">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
-                     alt="निशान छाप" 
-                     onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
-                     alt="पालिका लोगो" 
-                     onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';">
-            </div>
-            <h2>मायादेवी गाउँपालिका</h2>
-            <p>घर नक्सा अभिलेखीकरण प्रणाली — Staff Login</p>
+  <header class="system-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
+             alt="नेपाल सरकार" 
+             onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
+        <div class="header-brand">
+          <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
+          <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही | Staff Portal</p>
         </div>
-
-        <div class="login-body">
-            <div id="loginErrorMsg" class="login-error-alert"></div>
-
-            <form id="staffLoginForm" onsubmit="handleStaffLogin(event)" autocomplete="off">
-                <div class="form-group" style="margin-bottom: 16px;">
-                    <label for="loginUsername">कर्मचारी Login ID *</label>
-                   <input type="text" id="loginId" name="loginId" placeholder="Login ID" required>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <label for="loginPassword">पासवर्ड (Password) *</label>
-                    <div style="position: relative; width: 100%;">
-             <div style="position: relative; width: 100%;">
-              <input type="password" id="password" name="password" placeholder="Password" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
-              <span onclick="toggleLoginPassword()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px; user-select: none;">👁️</span>
-            </div>
-
-            <script>
-            function toggleLoginPassword() {
-              const pwd = document.getElementById("password");
-              if (pwd.type === "password") {
-                pwd.type = "text";
-              } else {
-                pwd.type = "password";
-              }
-            }
-            </script>
-                </div>
-
-                <button type="submit" class="login-btn-submit">सुरक्षित लगइन गर्नुहोस्</button>
-            </form>
-        </div>
+      </div>
+      <div>
+        <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
+             alt="पालिका लोगो" 
+             style="height: 52px; width: auto; border-radius: 50%;"
+             onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';">
+      </div>
     </div>
-</div>
+  </header>
 
-<footer class="login-footer-copy">
-    © २०८३ मायादेवी गाउँपालिका, गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही । सर्वाधिकार सुरक्षित ।
-</footer>
+  <main class="login-container">
+    <div class="login-card">
+      <h2>कर्मचारी तथा एडमिन लगइन</h2>
+      <p>आफ्नो Login ID र पासवर्ड प्रविष्ट गर्नुहोस्</p>
 
-<script src="auth.js"></script>
+      <div id="loginErrorMsg" class="error-alert"></div>
+
+      <form id="customLoginForm" onsubmit="event.preventDefault(); processUserLogin();" autocomplete="off">
+        <div class="form-group">
+          <label for="u_login_id">प्रयोगकर्ता आइडी (Login ID) *</label>
+          <input type="text" id="u_login_id" placeholder="Login ID लेख्नुहोस्" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label for="u_password">पासवर्ड (Password) *</label>
+          <input type="password" id="u_password" placeholder="पासवर्ड लेख्नुहोस्" required>
+        </div>
+
+        <button type="submit" class="btn-submit">🔑 लगइन गर्नुहोस्</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>मायादेवी गाउँपालिका</strong> — नक्सा दर्ता तथा अभिलेखीकरण प्रणाली</div>
+      <div style="background: rgba(255,255,255,0.1); padding: 4px 14px; border-radius: 20px;">
+        📞 For More Help / WhatsApp: <a href="https://wa.me/9743653644" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: 700;">९७४३६५३६४४</a>
+      </div>
+      <div>Developed by <span style="color: #38bdf8; font-weight: 800;">Tech for Basanta</span></div>
+    </div>
+  </footer>
+
+  <script>
+    function processUserLogin() {
+      const loginIdInput = document.getElementById("u_login_id");
+      const pwdInput = document.getElementById("u_password");
+      const errBox = document.getElementById("loginErrorMsg");
+
+      const enteredId = loginIdInput.value.trim();
+      const enteredPwd = pwdInput.value.trim();
+
+      errBox.style.display = "none";
+      errBox.textContent = "";
+
+      // १. सुपरएडमिन खाता प्रमाणीकरण
+      if (enteredId.toLowerCase() === "superadmin" && enteredPwd === "Admin@2083") {
+        const superUser = {
+          id: 1,
+          full_name: "सुपर एडमिन",
+          login_id: "superadmin",
+          role: "superadmin"
+        };
+        sessionStorage.setItem("user", JSON.stringify(superUser));
+        localStorage.setItem("user", JSON.stringify(superUser));
+        alert("सुपरएडमिन लगइन सफल भयो!");
+        window.location.href = "darta.html";
+        return;
+      }
+
+      // २. एडमिन प्यानलबाट बनाइएका अन्य कर्मचारीहरूको प्रमाणीकरण
+      try {
+        const staffList = JSON.parse(localStorage.getItem("mayadevi_staff_list")) || [];
+        const matched = staffList.find(
+          u => u.login_id.toLowerCase() === enteredId.toLowerCase() && u.password === enteredPwd
+        );
+
+        if (matched) {
+          const sessionUser = {
+            id: matched.id,
+            full_name: matched.full_name,
+            post: matched.post,
+            login_id: matched.login_id,
+            role: (matched.login_id.toLowerCase() === "superadmin") ? "superadmin" : "staff"
+          };
+
+          sessionStorage.setItem("user", JSON.stringify(sessionUser));
+          localStorage.setItem("user", JSON.stringify(sessionUser));
+
+          alert(`स्वागत छ, ${matched.full_name}! लगइन सफल भयो।`);
+          window.location.href = "darta.html";
+          return;
+        }
+      } catch (err) {
+        console.error("Local data read error:", err);
+      }
+
+      // विवरण नमिलेमा
+      errBox.textContent = "प्रयोगकर्ता आइडी वा पासवर्ड मिलेन! कृपया सही विवरण राख्नुहोस्।";
+      errBox.style.display = "block";
+    }
+  </script>
 </body>
 </html>
