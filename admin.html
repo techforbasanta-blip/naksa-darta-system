@@ -367,12 +367,12 @@
     }
 
     window.handleLogout = function () {
-      sessionStorage.clear();
-      localStorage.clear();
-      alert('सफलतापूर्वक लगआउट भयो!');
-      window.location.href = 'login.html';
-    };
-
+    // केवल हालको लगइन सेसन मात्र मेटाउने, सेभ भएका कर्मचारीको डाटा नमेटाउने!
+    sessionStorage.clear();
+    localStorage.removeItem('user'); // केवल प्रयोगकर्ता सेसन हटाउने
+    alert('सफलतापूर्वक लगआउट भयो!');
+    window.location.href = 'login.html';
+};
     document.addEventListener("DOMContentLoaded", () => {
       updateLiveClock();
       setInterval(updateLiveClock, 1000);
