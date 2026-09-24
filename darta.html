@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>घर नक्सा दर्ता तथा Live A4 Preview | मायादेवी गाउँपालिका</title>
 
-  <!-- Google Fonts: Mukta -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- QR Code Generator -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
@@ -186,7 +184,7 @@
       min-height: 294mm !important;
       max-height: 294mm !important;
       margin: 0 auto 15px auto !important;
-      /* पञ्चिङका लागि देब्रेपट्टी १३mm र माथि ८mm खाली गरिएको */
+      /* पञ्चिङका लागि देब्रेपट्टी १३mm र माथि ८mm */
       padding: 8mm 6mm 4mm 13mm !important;
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
@@ -222,7 +220,6 @@
     .cert-top-center-motto { text-align: center; margin-bottom: 3px; }
     .cert-motto { font-size: 15px; font-weight: 800; line-height: 1; }
 
-    /* लेटरहेड अझै ठूलो र भव्य */
     .cert-header {
       display: flex; align-items: center; justify-content: space-between;
       border-bottom: 2.2px solid var(--gov-crimson); padding-bottom: 3px; margin-bottom: 3px;
@@ -255,7 +252,6 @@
     }
     .cert-intro { font-size: 16px !important; line-height: 1.35; text-align: justify; margin-bottom: 4px; font-weight: 600; }
 
-    /* Tables: फन्ट ठूलो (16px) र पानाभरी भरिएको */
     .cert-table, .floor-detail-table {
       width: 100%; border-collapse: collapse; font-size: 16px !important; margin-bottom: 3px; table-layout: fixed; background: transparent !important;
     }
@@ -280,7 +276,6 @@
       padding: 4px 6px !important;
     }
 
-    /* हस्ताक्षर ब्लक */
     .cert-signatures-block {
       margin-top: 18px !important;
       margin-bottom: 2px !important;
@@ -310,11 +305,11 @@
     .owner-label { font-size: 15px !important; font-weight: 800; }
 
     #cert_qr_div {
-      width: 64px !important; height: 64px !important; border: 1px solid #94a3b8;
+      width: 68px !important; height: 68px !important; border: 1px solid #94a3b8;
       border-radius: 4px; background: #fff !important; display: flex !important;
       align-items: center !important; justify-content: center !important; overflow: hidden !important;
     }
-    #cert_qr_div img { width: 60px !important; height: 60px !important; }
+    #cert_qr_div img { width: 64px !important; height: 64px !important; }
     .qr-caption { font-size: 8.5px; font-weight: 700; text-align: center; margin-top: 2px; }
 
     .cert-footer {
@@ -350,7 +345,6 @@
     .kabuliyat-sign-grid { display: grid; grid-template-columns: 52% 48%; gap: 6px; align-items: flex-end; border-top: 1.2px dotted #64748b; padding-top: 4px; }
     .sign-left .sign-field { font-size: 14.5px; line-height: 1.45; margin-bottom: 2px; }
 
-    /* ईति सम्बत सम्पर्क नम्बरको ठीक मुनि */
     .iti-date-text-left {
       font-size: 14.5px;
       font-weight: 800;
@@ -359,7 +353,6 @@
       line-height: 1.35;
     }
 
-    /* हातको औंला मज्जाले अटाउने ठूलो बक्स */
     .sign-right-centered {
       display: flex;
       flex-direction: column;
@@ -387,7 +380,6 @@
     }
     .thumb-label { font-size: 14.5px; font-weight: 800; margin-top: 2px; letter-spacing: 0.5px; }
 
-    /* नामसारी तालिका ५ वटा फराकिला बक्स */
     .namsari-section {
       border: 1.2px solid #334155;
       padding: 5px 8px;
@@ -627,7 +619,7 @@
 
       <div id="printAreaContainer">
         
-        <!-- PAGE 1 (Font Enlarged: 16px & Punching Margin Shifted) -->
+        <!-- PAGE 1 -->
         <div class="a4-sheet" id="a4CertificatePaper">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -637,7 +629,6 @@
               <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
             </div>
 
-            <!-- लेटरहेड फन्ट ठूलो र १ स्टेप तल -->
             <header class="cert-header">
               <div class="logo-box-left">
                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल निशान छाप" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -674,7 +665,6 @@
               श्री <strong id="out_intro_name">....................</strong> ले मायादेवी गा.पा. वडा नं. <strong id="out_intro_ward">०१</strong> मा तपसिल बमोजिमको घर सँरचना निर्माण गर्नु भएकोले घर नक्सा अभिलेखिकरण प्रमाण पत्र प्रदान गरीएको छ।
             </div>
 
-            <!-- मुख्य तालिका: फन्ट साइज १६px मा फिट गरिएको -->
             <table class="cert-table">
               <tr>
                 <td class="lbl">१) जग्गा धनीको नामथर</td>
@@ -767,7 +757,6 @@
               </tr>
             </table>
 
-            <!-- हस्ताक्षर ब्लक -->
             <div class="cert-signatures-block">
               <div class="officers-signature-grid">
                 <div class="sign-item">
@@ -819,7 +808,7 @@
           </footer>
         </div>
 
-        <!-- PAGE 2 (ईति सम्बत सम्पर्क नम्बर मुनि र ५ वटा ठूला नामसारी बक्स) -->
+        <!-- PAGE 2 -->
         <div class="a4-sheet back-page" id="certificateBackPage">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -837,7 +826,6 @@
               </p>
 
               <div class="kabuliyat-sign-grid">
-                <!-- देब्रेपट्टि: दस्तखत, नामथर, नागरिकता, जिल्ला, फोन र मुनि ईति सम्बत -->
                 <div class="sign-left">
                   <div class="sign-field">दस्तखतः ........</div>
                   <div class="sign-field">नामथरः <strong id="back_name">....................</strong></div>
@@ -849,7 +837,6 @@
                   </div>
                 </div>
 
-                <!-- दायाँपट्टि: हातको औंला र मसी छाप मज्जाले अटाउने ठूलो बक्स -->
                 <div class="sign-right-centered">
                   <div class="thumb-frame-wrapper">
                     <div class="thumb-frame">दायाँ</div>
@@ -860,7 +847,6 @@
               </div>
             </section>
 
-            <!-- नामसारी तालिका: ५ वटा फराकिला र ठूला बक्सहरू -->
             <section class="namsari-section">
               <div class="namsari-header-title">नामसारी विवरण</div>
               <table class="namsari-table">
@@ -1101,16 +1087,15 @@
       document.getElementById("out_third").textContent = f3 > 0 ? toNepNum(f3.toFixed(2)) : "-";
     }
 
+    // QR स्क्यान गर्दा verify.html मा सिधै जाने आधिकारिक लिङ्क
     function generateQR() {
       const qrDiv = document.getElementById("cert_qr_div");
       if (!qrDiv) return;
 
       const darta = document.getElementById("in_darta").value || '२८/२०८३/०८४';
-      const owner = document.getElementById("in_house_owner").value || 'घरधनी';
-      const kitta = document.getElementById("in_kitta").value || '१२३';
-      const qrData = encodeURIComponent(`मायादेवी गाउँपालिका\nनक्सा दर्ता नं: ${darta}\nघरधनी: ${owner}\nकित्ता: ${kitta}`);
+      const verifyUrl = `${window.location.origin}${window.location.pathname.replace('darta.html', 'verify.html')}?darta=${encodeURIComponent(darta)}`;
 
-      qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${qrData}" alt="QR Code" style="width:60px; height:60px; display:block;">`;
+      qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(verifyUrl)}" alt="QR Code" style="width:64px; height:64px; display:block;">`;
     }
 
     function loadPhoto(e) {
@@ -1128,6 +1113,7 @@
       }
     }
 
+    // दर्ता तथा भेरिफाइ दुवैमा १००% भेटिने वास्तविक सेभ इन्जिन
     function saveRecordToDatabase() {
       const dartaNo = document.getElementById("in_darta").value.trim();
       const houseOwner = document.getElementById("in_house_owner").value.trim() || document.getElementById("in_owner_name").value.trim();
@@ -1200,7 +1186,9 @@
         }
 
         localStorage.setItem("naksa_records", JSON.stringify(records));
-        alert(`नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) सफलतापूर्वक सुरक्षित भयो!\nअब "पुरानो हेर्नुस्" (record.html) मा सुरक्षित रूपमा हेर्न सकिनेछ।`);
+        localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
+
+        alert(`नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) सफलतापूर्वक सुरक्षित भयो!\nअब "पुरानो हेर्नुस्" र "भेरिफाइ" दुवैमा सुरक्षित रूपमा देखिनेछ।`);
       } catch (err) {
         console.error(err);
         alert("रेकर्ड सुरक्षित गर्दा त्रुटि भयो!");
@@ -1265,7 +1253,7 @@
           document.getElementById("in_eng1_role").value = item.eng1_role || "इन्जिनियर";
           document.getElementById("in_eng2").value = item.eng2 || "";
           document.getElementById("in_eng2_role").value = item.eng2_role || "इन्जिनियर";
-          document.getElementById("in_officer").value = item.officer || "";
+          document.getElementById("officer" in item ? "in_officer" : "in_officer").value = item.officer || "";
           document.getElementById("in_officer_role").value = item.officer_role || "प्रमुख प्रशासकीय अधिकृत";
 
           if (item.photo) {
