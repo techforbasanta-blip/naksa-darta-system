@@ -3,20 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>कर्मचारी तथा प्रयोगकर्ता व्यवस्थापन | मायादेवी गाउँपालिका</title>
-
+  <title>कर्मचारी तथा एडमिन व्यवस्थापन | मायादेवी गाउँपालिका</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="responsive.css">
-
   <style>
-    /* darta.html को जस्तै सरकारी निलो Header */
+    :root {
+      --gov-blue: #0b2545;
+      --gov-red: #b71c1c;
+      --primary: #2563eb;
+      --bg: #f1f5f9;
+      --border: #cbd5e1;
+    }
+
+    * { box-sizing: border-box; font-family: 'Mukta', sans-serif; margin: 0; padding: 0; }
+    body { background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; color: #1e293b; }
+
+    /* Header */
     .system-header {
-      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%) !important;
-      border-bottom: 3px solid #b91c1c !important;
+      background: linear-gradient(135deg, #0b2545 0%, #1e3a8a 100%);
+      border-bottom: 3px solid var(--gov-red);
       padding: 12px 24px;
       color: #ffffff;
     }
@@ -26,508 +34,439 @@
       justify-content: space-between;
       max-width: 1440px;
       margin: 0 auto;
-      gap: 16px;
     }
-    .header-emblem img {
-      height: 60px;
-      width: auto;
-    }
-    .header-brand h1 {
-      font-size: 22px;
-      color: #ffffff !important;
-      font-weight: 800;
-      margin: 0;
-      line-height: 1.2;
-    }
-    .header-brand p {
-      font-size: 13px;
-      color: #cbd5e1 !important;
-      margin: 3px 0 0 0;
-      font-weight: 500;
-    }
-    .header-brand p span {
-      color: #93c5fd;
-    }
-    .header-tools {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .clock-box {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 6px;
-      padding: 4px 10px;
-      text-align: right;
-      color: #ffffff;
-    }
-    .clock-box small {
-      display: block;
-      font-size: 11px;
-      color: #93c5fd;
-    }
-    .clock-box div {
-      font-size: 13px;
-      font-weight: 700;
-    }
-    .user-box {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 6px;
-      padding: 6px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .fiscal-badge {
-      background: #b91c1c;
-      color: #ffffff;
-      border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      border: 1px solid #ef4444;
-    }
-    .header-btn {
-      border: none;
-      padding: 7px 14px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .btn-darta-nav {
-      background: #2563eb;
-      color: #ffffff;
-    }
-    .btn-darta-nav:hover { background: #1d4ed8; }
-    .btn-logout-nav {
-      background: #dc2626;
-      color: #ffffff;
-    }
-    .btn-logout-nav:hover { background: #991b1b; }
+    .header-left { display: flex; align-items: center; gap: 14px; }
+    .header-left img { height: 55px; }
+    .header-brand h1 { font-size: 20px; font-weight: 800; color: #ffffff; }
+    .header-brand p { font-size: 13px; color: #cbd5e1; }
 
-    /* Nav bar matching darta.html */
+    /* Nav Bar */
     .main-nav {
-      background: #172554;
-      padding: 0 24px;
-      border-bottom: 2px solid #1e3a8a;
+      background: #0f172a;
+      padding: 8px 24px;
+      border-bottom: 1px solid #334155;
     }
     .nav-inner {
       max-width: 1440px;
       margin: 0 auto;
       display: flex;
-      gap: 4px;
+      justify-content: space-between;
+      align-items: center;
     }
-    .nav-inner a {
-      color: #cbd5e1;
+    .nav-links { display: flex; gap: 12px; }
+    .nav-links a {
+      color: #f8fafc;
       text-decoration: none;
-      padding: 10px 18px;
       font-size: 14px;
       font-weight: 600;
-      display: inline-block;
-      transition: background 0.2s;
+      padding: 6px 14px;
+      border-radius: 4px;
+      background: #1e293b;
     }
-    .nav-inner a:hover, .nav-inner a.active {
-      background: #2563eb;
-      color: #ffffff;
+    .nav-links a:hover, .nav-links a.active { background: var(--primary); }
+
+    .nav-user { display: flex; align-items: center; gap: 12px; color: #fff; font-size: 14px; }
+    .btn-logout {
+      background: var(--gov-red);
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
     }
 
-    /* Page Body */
-    body {
-      background-color: #f1f5f9;
-      color: #0f172a;
-      font-family: 'Mukta', 'Segoe UI', Tahoma, sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .admin-main {
+    /* Container */
+    .container {
       max-width: 1440px;
-      width: 96%;
-      margin: 22px auto;
+      width: 100%;
+      margin: 20px auto;
+      padding: 0 20px;
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
     }
 
-    /* Cards */
-    .panel-card {
+    .card {
       background: #ffffff;
-      border: 1px solid #cbd5e1;
+      border: 1px solid var(--border);
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
-      padding: 22px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
-    .panel-card-title {
+    .card-title {
       font-size: 18px;
       font-weight: 800;
-      color: #1e3a8a;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 10px;
+      color: var(--gov-blue);
       margin-bottom: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
     }
 
-    /* Entry Form */
-    .entry-form-grid {
+    /* Form Grid */
+    .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 12px;
-      background: #f8fafc;
-      padding: 16px;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
+      align-items: flex-end;
     }
-    .form-field {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .form-field label {
-      font-size: 13px;
-      font-weight: 700;
-      color: #334155;
-    }
-    .form-field input {
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group label { font-size: 13px; font-weight: 700; color: #334155; }
+    .form-group input {
       padding: 8px 10px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid var(--border);
       border-radius: 4px;
       font-size: 13px;
-      background: #ffffff;
     }
-    .form-field input:focus {
-      outline: 2px solid #2563eb;
-      border-color: transparent;
-    }
-    .form-btn-row {
-      margin-top: 14px;
-      display: flex;
-      justify-content: flex-end;
-    }
-    .btn-create-admin {
+
+    .btn-add {
       background: #16a34a;
-      color: #ffffff;
+      color: #fff;
       border: none;
-      padding: 9px 22px;
-      border-radius: 6px;
-      font-size: 14px;
+      padding: 9px 16px;
+      border-radius: 4px;
       font-weight: 700;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .btn-create-admin:hover { background: #15803d; }
+    .btn-add:hover { background: #15803d; }
 
     /* Table */
-    .table-container {
-      overflow-x: auto;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      margin-top: 10px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-    th {
-      background: #1e3a8a;
-      color: #ffffff;
-      padding: 10px 10px;
-      text-align: left;
-      font-weight: 700;
-      border-right: 1px solid #3b82f6;
-    }
-    td {
-      padding: 8px 10px;
-      border-bottom: 1px solid #e2e8f0;
-      border-right: 1px solid #f1f5f9;
-      background: #ffffff;
-    }
-    tr:nth-child(even) td { background: #f8fafc; }
-    tr:hover td { background: #eff6ff; }
-
+    .table-responsive { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { border: 1px solid var(--border); padding: 8px 6px; text-align: left; }
+    th { background: #f8fafc; font-weight: 800; color: var(--gov-blue); }
     .table-input {
-      padding: 5px 8px;
+      width: 100%;
+      padding: 5px 6px;
       border: 1px solid #cbd5e1;
       border-radius: 4px;
       font-size: 13px;
-      width: 95%;
     }
-    .pwd-td-box {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .eye-icon {
-      cursor: pointer;
-      font-size: 15px;
-      user-select: none;
-    }
+
     .btn-update {
-      background: #2563eb;
-      color: #ffffff;
+      background: var(--primary);
+      color: #fff;
       border: none;
-      padding: 5px 10px;
+      padding: 4px 10px;
       border-radius: 4px;
-      font-weight: 700;
       cursor: pointer;
+      font-weight: 600;
       font-size: 12px;
     }
-    .btn-update:hover { background: #1d4ed8; }
     .btn-del {
-      background: #dc2626;
-      color: #ffffff;
+      background: var(--gov-red);
+      color: #fff;
       border: none;
-      padding: 5px 8px;
+      padding: 4px 10px;
       border-radius: 4px;
-      font-weight: 700;
       cursor: pointer;
+      font-weight: 600;
       font-size: 12px;
       margin-left: 4px;
     }
-    .btn-del:hover { background: #b91c1c; }
 
     footer {
-      background: #ffffff;
-      border-top: 1px solid #cbd5e1;
-      text-align: center;
-      padding: 12px;
-      font-size: 12px;
-      color: #475569;
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 14px 24px;
+      font-size: 13px;
+      border-top: 3px solid var(--primary);
       margin-top: auto;
     }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
   </style>
-
-  <script>
-    // नेपाली मिति तथा समय
-    const nepaliMonths = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"];
-    const nepaliDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
-    const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
-
-    function toNepNum(num) {
-      if (num === null || num === undefined) return "";
-      return num.toString().replace(/\d/g, d => nepDigits[d]);
-    }
-
-    function updateLiveClock() {
-      const now = new Date();
-      const ref = new Date(2026, 3, 14); // 2083 Baisakh 01 = 2026-04-14
-      const diff = Math.floor((now - ref) / (1000 * 60 * 60 * 24));
-      const bsDays = [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30];
-
-      let rem = diff;
-      let y = 2083, m = 0, d = 1;
-      if (rem >= 0) {
-        for (let i = 0; i < 12; i++) {
-          if (rem < bsDays[i]) {
-            m = i;
-            d = rem + 1;
-            break;
-          }
-          rem -= bsDays[i];
-        }
-      } else {
-        y = 2082;
-        m = 11;
-        d = 30 + rem;
-      }
-
-      let hrs = now.getHours();
-      const mins = String(now.getMinutes()).padStart(2, "0");
-      const secs = String(now.getSeconds()).padStart(2, "0");
-      const ampm = hrs >= 12 ? "PM" : "AM";
-      hrs = hrs % 12 || 12;
-
-      const dateEl = document.getElementById("liveNepaliDateHeader");
-      const clockEl = document.getElementById("liveNepaliClock");
-
-      if (dateEl) {
-        dateEl.textContent = `मिति: ${toNepNum(y)} ${nepaliMonths[m]} ${toNepNum(String(d).padStart(2, '0'))} (${nepaliDays[now.getDay()]})`;
-      }
-      if (clockEl) {
-        clockEl.textContent = `समय: ${toNepNum(String(hrs).padStart(2, '0'))}:${toNepNum(mins)}:${toNepNum(secs)} ${ampm}`;
-      }
-    }
-
-    window.handleLogout = function () {
-    // केवल हालको लगइन सेसन मात्र मेटाउने, सेभ भएका कर्मचारीको डाटा नमेटाउने!
-    sessionStorage.clear();
-    localStorage.removeItem('user'); // केवल प्रयोगकर्ता सेसन हटाउने
-    alert('सफलतापूर्वक लगआउट भयो!');
-    window.location.href = 'login.html';
-};
-    document.addEventListener("DOMContentLoaded", () => {
-      updateLiveClock();
-      setInterval(updateLiveClock, 1000);
-    });
-  </script>
 </head>
 <body>
 
-  <!-- सरकारी निलो Header -->
   <header class="system-header">
     <div class="header-inner">
-      <div class="header-emblem">
-        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
-             alt="नेपाल सरकार" 
-             onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
+      <div class="header-left">
+        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo">
+        <div class="header-brand">
+          <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
+          <p>कर्मचारी तथा एडमिन व्यवस्थापन प्यानल (Admin Dashboard)</p>
+        </div>
       </div>
-
-      <div class="header-brand">
-        <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
-        <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही <span>|</span> सुपरएडमिन तथा कर्मचारी व्यवस्थापन प्यानल</p>
-      </div>
-
-      <div class="header-tools">
-        <div class="header-emblem" style="background:rgba(255,255,255,0.15); border-radius: 50%; padding: 2px;">
-          <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
-               alt="पालिका लोगो" 
-               onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';">
-        </div>
-        <div class="clock-box">
-          <small id="liveNepaliDateHeader">मिति: लोड हुँदैछ...</small>
-          <div id="liveNepaliClock">समय: --:--:--</div>
-        </div>
-        <div class="user-box" id="currentUserBadge">
-          <span>👤</span>
-          <span id="loggedUserName">सुपर एडमिन</span>
-        </div>
-        <div class="fiscal-badge">आ.व. २०८३/०८४</div>
-
-        <a href="darta.html" class="header-btn btn-darta-nav" title="नक्सा दर्ता फाराममा फर्कनुहोस्">
-          📝 दर्ता फाराम
-        </a>
-
-        <button type="button" class="header-btn btn-logout-nav" onclick="handleLogout()" title="Logout">
-          🚪 Logout
-        </button>
+      <div>
+        <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Palika Logo" style="height: 52px; border-radius: 50%;">
       </div>
     </div>
   </header>
 
-  <!-- Navigation Bar -->
   <nav class="main-nav">
     <div class="nav-inner">
-      <a href="darta.html">🏠 Home</a>
-      <a href="darta.html">📝 नयाँ दर्ता</a>
-      <a href="record.html">📂 पुरानो हेर्नुस्</a>
-      <a href="verify.html">🔎 प्रमाणिकरण</a>
-      <a href="admin.html" class="active">⚙️ Admin Management</a>
+      <div class="nav-links">
+        <a href="darta.html">📋 नक्सा दर्ता (Entry Page)</a>
+        <a href="admin.html" class="active">⚙️ Admin Panel</a>
+      </div>
+      <div class="nav-user">
+        <span id="loggedUserName">सुपर एडमिन (कम्प्युटर अपरेटर)</span>
+        <button type="button" class="btn-logout" onclick="safeAdminLogout()">🚪 लगआउट</button>
+      </div>
     </div>
   </nav>
 
-  <!-- Main Container -->
-  <main class="admin-main">
-    
-    <!-- १. नयाँ कर्मचारी / एडमिन इन्ट्री फाराम -->
-    <section class="panel-card">
-      <div class="panel-card-title">
-        <span>➕ नयाँ कर्मचारी / एडमिन दर्ता फाराम (Entry Form)</span>
-        <span style="font-size: 13px; font-weight: 700; color: #2563eb;" id="slotStatusBadge">दर्ता सिट: १ / १०</span>
+  <div class="container">
+    <!-- Naya Staff Form -->
+    <div class="card">
+      <div class="card-title">
+        <span>➕ नयाँ एडमिन / कर्मचारी दर्ता फाराम</span>
       </div>
-      
-      <form id="newAdminForm" onsubmit="event.preventDefault(); createNewAdminUser();" autocomplete="off">
-        <div class="entry-form-grid">
-          <div class="form-field">
-            <label for="new_name">१) कर्मचारीको पूरा नाम *</label>
-            <input type="text" id="new_name" placeholder="नाम र थर" required>
+      <form id="newAdminForm" onsubmit="event.preventDefault(); addNewStaff();">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>कर्मचारीको पूरा नाम *</label>
+            <input type="text" id="add_name" placeholder="नाम थर" required>
           </div>
-          <div class="form-field">
-            <label for="new_post">२) पद (Post) *</label>
-            <input type="text" id="new_post" placeholder="उदा. इन्जिनियर / सब-इन्जिनियर" required>
+          <div class="form-group">
+            <label>पद *</label>
+            <input type="text" id="add_post" placeholder="पद (उदा: अमिन)" required>
           </div>
-          <div class="form-field">
-            <label for="new_phone">३) सम्पर्क नम्बर *</label>
-            <input type="text" id="new_phone" placeholder="९८XXXXXXXX" required>
+          <div class="form-group">
+            <label>सम्पर्क नं. *</label>
+            <input type="text" id="add_phone" placeholder="९८xxxxxxxx" required>
           </div>
-          <div class="form-field">
-            <label for="new_email">४) Gmail / Email *</label>
-            <input type="email" id="new_email" placeholder="staff@gmail.com" required>
+          <div class="form-group">
+            <label>Gmail / इमेल *</label>
+            <input type="email" id="add_email" placeholder="example@gmail.com" required>
           </div>
-          <div class="form-field">
-            <label for="new_loginid">५) Login ID *</label>
-            <input type="text" id="new_loginid" placeholder="नयाँ login id" required>
+          <div class="form-group">
+            <label>प्रयोगकर्ता आइडी (Login ID) *</label>
+            <input type="text" id="add_loginid" placeholder="Login ID" required>
           </div>
-          <div class="form-field">
-            <label for="new_password">६) पासवर्ड *</label>
-            <input type="password" id="new_password" placeholder="बलियो पासवर्ड" required>
+          <div class="form-group">
+            <label>पासवर्ड (Password) *</label>
+            <input type="password" id="add_password" placeholder="Password" required>
           </div>
-          <div class="form-field" style="grid-column: span 2;">
-            <label for="new_remarks">७) कैफियत (Remarks)</label>
-            <input type="text" id="new_remarks" placeholder="शाखा, वडा वा तोकिएको जिम्मेवारी...">
+          <div class="form-group">
+            <label>कैफियत (Remarks)</label>
+            <input type="text" id="add_remarks" placeholder="कैफियत">
           </div>
-        </div>
-
-        <div class="form-btn-row">
-          <button type="submit" class="btn-create-admin">
-            ➕ नयाँ कर्मचारी / एडमिन दर्ता गर्नुहोस्
-          </button>
+          <button type="submit" class="btn-add">💾 सुरक्षित गर्नुहोस्</button>
         </div>
       </form>
-    </section>
+    </div>
 
-    <!-- २. सक्रिय कर्मचारी तथा एडमिनहरूको सूची तालिका -->
-    <section class="panel-card">
-      <div class="panel-card-title">
-        <span>📋 सक्रिय कर्मचारी तथा एडमिनहरूको विवरण सूची</span>
+    <!-- Staff List Table -->
+    <div class="card">
+      <div class="card-title">
+        <span>👥 दर्ता भएका एडमिन तथा कर्मचारीहरूको सूची</span>
+        <span id="slotStatusBadge" style="font-size: 14px; background: #e2e8f0; padding: 3px 10px; border-radius: 20px;">कुल: 1 / 10</span>
       </div>
-
-      <div class="table-container">
+      <div class="table-responsive">
         <table>
           <thead>
             <tr>
               <th style="width: 40px; text-align: center;">क्र.सं.</th>
-              <th style="min-width: 150px;">कर्मचारीको पूरा नाम *</th>
-              <th style="min-width: 130px;">पद (Post) *</th>
-              <th style="min-width: 110px;">सम्पर्क नं. *</th>
-              <th style="min-width: 160px;">Gmail / Email *</th>
-              <th style="min-width: 110px;">Login ID *</th>
-              <th style="min-width: 130px;">पासवर्ड *</th>
-              <th style="min-width: 140px;">कैफियत</th>
-              <th style="width: 120px; text-align: center;">कार्य</th>
+              <th>कर्मचारीको नाम</th>
+              <th>पद</th>
+              <th>सम्पर्क नं.</th>
+              <th>इमेल (Gmail)</th>
+              <th>Login ID</th>
+              <th>पासवर्ड</th>
+              <th>कैफियत</th>
+              <th style="width: 140px; text-align: center;">कार्य (Action)</th>
             </tr>
           </thead>
-          <tbody id="userTableBody">
-            <!-- admin.js बाट सुरुमा हजुरको सुपरएडमिन मात्र आउनेछ -->
-          </tbody>
+          <tbody id="userTableBody"></tbody>
         </table>
       </div>
-    </section>
-
-  </main>
-
- <footer style="background: #0f172a; color: #cbd5e1; padding: 18px 24px; text-align: center; font-size: 13px; border-top: 3px solid #2563eb; margin-top: auto;">
-  <div style="max-width: 1440px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
-    <div>
-      <strong>मायादेवी गाउँपालिका</strong> — सुपरएडमिन प्यानल
-    </div>
-    <div style="background: rgba(255,255,255,0.1); padding: 6px 16px; border-radius: 20px; font-weight: 600;">
-      📞 For More Help / WhatsApp: <a href="https://wa.me/9743653644" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: 700;">९७४३६५३६४४ (9743653644)</a>
-    </div>
-    <div style="color: #94a3b8; font-weight: 500;">
-      Developed by <span style="color: #38bdf8; font-weight: 800;">Tech for Basanta</span>
     </div>
   </div>
-</footer>
 
-  <script src="auth.js"></script>
-  <script src="admin.js"></script>
+  <footer>
+    <div class="footer-inner">
+      <div><strong>मायादेवी गाउँपालिका</strong> — नक्सा दर्ता प्रणाली</div>
+      <div>📞 WhatsApp: <strong>९७४३६५३६४४</strong></div>
+      <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
+    </div>
+  </footer>
+
+  <script>
+    const defaultSuperAdmin = {
+      id: 1,
+      full_name: "सुपर एडमिन",
+      post: "कम्प्युटर अपरेटर",
+      phone: "९७४३६५३६४४",
+      email: "basantabashyalo@gmail.com",
+      login_id: "superadmin",
+      password: "Admin@2083",
+      remarks: "Master Admin"
+    };
+
+    function fetchStaffData() {
+      let data = [];
+      try {
+        const stored = localStorage.getItem("mayadevi_staff_list");
+        if (stored) data = JSON.parse(stored);
+      } catch (e) {
+        console.error(e);
+      }
+
+      if (!Array.isArray(data) || data.length === 0) {
+        data = [defaultSuperAdmin];
+      } else {
+        const idx = data.findIndex(u => u.login_id && u.login_id.toLowerCase() === "superadmin");
+        if (idx !== -1) {
+          data[idx].post = "कम्प्युटर अपरेटर";
+          data[idx].email = "basantabashyalo@gmail.com";
+          data[idx].phone = "९७४३६५३६४४";
+        } else {
+          data.unshift(defaultSuperAdmin);
+        }
+      }
+      localStorage.setItem("mayadevi_staff_list", JSON.stringify(data));
+      return data;
+    }
+
+    let staffList = fetchStaffData();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Superadmin Auth Check
+      const rawUser = sessionStorage.getItem('user') || localStorage.getItem('user');
+      if (!rawUser) {
+        alert("कृपया पहिले सुपरएडमिन लगइन गर्नुहोस्!");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const user = JSON.parse(rawUser);
+      if (user.login_id.toLowerCase() !== "superadmin") {
+        alert("एडमिन प्यानल व्यवस्थापन गर्ने अधिकार केवल सुपरएडमिनलाई मात्र छ!");
+        window.location.href = "darta.html";
+        return;
+      }
+
+      staffList = fetchStaffData();
+      renderStaffTable();
+    });
+
+    function renderStaffTable() {
+      const tbody = document.getElementById("userTableBody");
+      const badge = document.getElementById("slotStatusBadge");
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+      if (badge) badge.textContent = `कुल एडमिन/कर्मचारी: ${staffList.length} / १०`;
+
+      staffList.forEach((u, i) => {
+        const isMaster = (u.login_id.toLowerCase() === "superadmin");
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td style="text-align: center; font-weight: bold;">${i + 1}</td>
+          <td><input type="text" class="table-input" id="tbl-name-${u.id}" value="${u.full_name}"></td>
+          <td><input type="text" class="table-input" id="tbl-post-${u.id}" value="${u.post}"></td>
+          <td><input type="text" class="table-input" id="tbl-phone-${u.id}" value="${u.phone}"></td>
+          <td><input type="email" class="table-input" id="tbl-email-${u.id}" value="${u.email}"></td>
+          <td><input type="text" class="table-input" id="tbl-loginid-${u.id}" value="${u.login_id}" ${isMaster ? 'readonly style="background:#f1f5f9;"' : ''}></td>
+          <td>
+            <div style="display:flex; align-items:center; gap:4px;">
+              <input type="password" class="table-input" id="tbl-pwd-${u.id}" value="${u.password}" style="width: 100px;">
+              <span style="cursor:pointer;" onclick="togglePwd('tbl-pwd-${u.id}')">👁️</span>
+            </div>
+          </td>
+          <td><input type="text" class="table-input" id="tbl-remarks-${u.id}" value="${u.remarks || ''}"></td>
+          <td style="text-align: center; white-space: nowrap;">
+            <button type="button" class="btn-update" onclick="updateStaff(${u.id})">अपडेट</button>
+            ${!isMaster ? `<button type="button" class="btn-del" onclick="deleteStaff(${u.id})">हटाउने</button>` : ''}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function addNewStaff() {
+      staffList = fetchStaffData();
+      if (staffList.length >= 10) {
+        alert("अधिकतम १० जना सम्म मात्र एडमिन/कर्मचारी थप्न मिल्छ!");
+        return;
+      }
+
+      const name = document.getElementById("add_name").value.trim();
+      const post = document.getElementById("add_post").value.trim();
+      const phone = document.getElementById("add_phone").value.trim();
+      const email = document.getElementById("add_email").value.trim();
+      const loginId = document.getElementById("add_loginid").value.trim();
+      const pwd = document.getElementById("add_password").value.trim();
+      const remarks = document.getElementById("add_remarks").value.trim();
+
+      if (staffList.some(u => u.login_id.toLowerCase() === loginId.toLowerCase())) {
+        alert("यो Login ID पहिले नै प्रयोगमा छ! कृपया फरक ID राख्नुहोस्।");
+        return;
+      }
+
+      const newMember = {
+        id: Date.now(),
+        full_name: name,
+        post: post,
+        phone: phone,
+        email: email,
+        login_id: loginId,
+        password: pwd,
+        remarks: remarks
+      };
+
+      staffList.push(newMember);
+      localStorage.setItem("mayadevi_staff_list", JSON.stringify(staffList));
+
+      document.getElementById("newAdminForm").reset();
+      alert(`कर्मचारी "${name}" सुरक्षित भयो!`);
+      renderStaffTable();
+    }
+
+    function updateStaff(id) {
+      staffList = fetchStaffData();
+      const target = staffList.find(u => u.id === id);
+      if (target) {
+        target.full_name = document.getElementById(`tbl-name-${id}`).value.trim();
+        target.post = document.getElementById(`tbl-post-${id}`).value.trim();
+        target.phone = document.getElementById(`tbl-phone-${id}`).value.trim();
+        target.email = document.getElementById(`tbl-email-${id}`).value.trim();
+        target.login_id = document.getElementById(`tbl-loginid-${id}`).value.trim();
+        target.password = document.getElementById(`tbl-pwd-${id}`).value.trim();
+        target.remarks = document.getElementById(`tbl-remarks-${id}`).value.trim();
+
+        localStorage.setItem("mayadevi_staff_list", JSON.stringify(staffList));
+        alert("विवरण सुरक्षित (Update) भयो!");
+        renderStaffTable();
+      }
+    }
+
+    function deleteStaff(id) {
+      staffList = fetchStaffData();
+      const target = staffList.find(u => u.id === id);
+      if (!target) return;
+
+      if (confirm(`के तपाईं "${target.full_name}" लाई हटाउन निश्चित हुनुहुन्छ?`)) {
+        staffList = staffList.filter(u => u.id !== id);
+        localStorage.setItem("mayadevi_staff_list", JSON.stringify(staffList));
+        renderStaffTable();
+      }
+    }
+
+    function togglePwd(id) {
+      const el = document.getElementById(id);
+      if (el) el.type = (el.type === 'password') ? 'text' : 'password';
+    }
+
+    // Safe Logout (Data delete hou det nahi)
+    function safeAdminLogout() {
+      sessionStorage.clear();
+      localStorage.removeItem("user");
+      alert("लगआउट सफल भयो!");
+      window.location.href = "login.html";
+    }
+  </script>
 </body>
 </html>
