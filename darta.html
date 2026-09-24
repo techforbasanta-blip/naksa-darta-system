@@ -85,11 +85,11 @@
         }
 
         window.handleLogout = window.logoutUser = function () {
-            sessionStorage.clear();
-            localStorage.clear();
-            alert('सफलतापूर्वक लगआउट भयो!');
-            window.location.href = 'login.html';
-        };
+    sessionStorage.clear();
+    localStorage.removeItem('user'); // केवल लगइन सेसन हटाउने
+    alert('सफलतापूर्वक लगआउट भयो!');
+    window.location.href = 'login.html';
+};
 
         document.addEventListener("DOMContentLoaded", function() {
             const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
