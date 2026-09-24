@@ -1,747 +1,772 @@
 <!DOCTYPE html>
 <html lang="ne">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>घर नक्सा दर्ता प्रणाली | मायादेवी गाउँपालिका</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>घर नक्सा दर्ता तथा Live A4 Preview | मायादेवी गाउँपालिका</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="print.css?v=7.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --gov-blue: #0b2545;
-      --gov-red: #b71c1c;
-      --primary: #2563eb;
-      --bg: #f8fafc;
-      --border: #cbd5e1;
-    }
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/print.css?v=8.0">
 
-    * { box-sizing: border-box; font-family: 'Mukta', sans-serif; margin: 0; padding: 0; }
-    body { background: var(--bg); color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    /* Header */
-    .system-header {
-      background: linear-gradient(135deg, #0b2545 0%, #1e3a8a 100%);
-      border-bottom: 3px solid var(--gov-red);
-      padding: 8px 20px;
-      color: #ffffff;
-    }
-    .header-inner {
-      max-width: 1560px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .header-left { display: flex; align-items: center; gap: 12px; }
-    .header-left img { height: 50px; width: auto; }
-    .header-brand h1 { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.2; }
-    .header-brand p { font-size: 12px; color: #cbd5e1; }
+    <style>
+        /* प्रिन्ट गर्दा A4 पानामा १ इन्च पनि यताउति नजाने र २ पेजमा लक हुने नियम */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0mm !important;
+            }
+            html, body {
+                width: 210mm !important;
+                height: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .system-header, .main-nav, .entry-card, .preview-title, .form-actions, #themeToggleBtn, .no-print {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .main-container, .workspace-grid, .preview-card {
+                display: block !important;
+                width: 210mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+                background: transparent !important;
+            }
+            #printAreaContainer {
+                display: block !important;
+                width: 210mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                transform: none !important;
+            }
+            .a4-sheet {
+                width: 210mm !important;
+                height: 295mm !important;
+                max-height: 295mm !important;
+                margin: 0 auto !important;
+                padding: 5mm 8mm 4mm 8mm !important;
+                border: 1.5px solid #000000 !important;
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            #a4CertificatePaper {
+                page-break-after: always !important;
+                break-after: page !important;
+            }
+            #certificateBackPage {
+                page-break-before: always !important;
+                break-before: page !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+        }
+    </style>
 
-    /* Nav Bar */
-    .main-nav {
-      background: #0f172a;
-      border-bottom: 1px solid #334155;
-      padding: 6px 20px;
-    }
-    .nav-inner {
-      max-width: 1560px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .nav-links { display: flex; gap: 10px; }
-    .nav-links a {
-      color: #f8fafc;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 4px;
-      background: #1e293b;
-    }
-    .nav-links a.active, .nav-links a:hover { background: var(--primary); }
+    <script>
+        function applyTheme(theme) {
+            if (theme === "dark") {
+                document.body.classList.add("dark-mode");
+                document.documentElement.classList.add("dark-mode");
+            } else {
+                document.body.classList.remove("dark-mode");
+                document.documentElement.classList.remove("dark-mode");
+            }
+            const btn = document.getElementById("themeToggleBtn");
+            if (btn) btn.textContent = (theme === "dark") ? "☀" : "☾";
+        }
 
-    .nav-user { display: flex; align-items: center; gap: 12px; color: #fff; font-size: 13px; font-weight: 600; }
-    .btn-logout {
-      background: var(--gov-red);
-      color: #fff;
-      border: none;
-      padding: 4px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 12.5px;
-    }
+        window.toggleTheme = function () {
+            const isDark = document.body.classList.contains("dark-mode");
+            const nextTheme = isDark ? "light" : "dark";
+            localStorage.setItem("mayadevi_naksa_theme", nextTheme);
+            applyTheme(nextTheme);
+        };
 
-    /* Workspace 2-Column Grid */
-    .workspace-grid {
-      max-width: 1600px;
-      width: 100%;
-      margin: 12px auto;
-      padding: 0 14px;
-      display: grid;
-      grid-template-columns: 520px 1fr;
-      gap: 16px;
-      flex: 1;
-    }
+        const nepaliMonths = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"];
+        const nepaliDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
+        const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
 
-    /* Entry Form Styling */
-    .entry-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      max-height: 88vh;
-      overflow-y: auto;
-    }
-    .entry-title {
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--gov-blue);
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 6px;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        function toNepNum(num) {
+            if (num === null || num === undefined) return "";
+            return num.toString().replace(/\d/g, d => nepDigits[d]);
+        }
 
-    .form-section-title {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: var(--gov-red);
-      background: #f1f5f9;
-      padding: 4px 8px;
-      border-left: 3px solid var(--gov-red);
-      margin: 12px 0 8px 0;
-      border-radius: 2px;
-    }
+        function updateLiveClock() {
+            const now = new Date();
+            const ref = new Date(2026, 3, 14); // 2083 Baisakh 01 = 2026-04-14
+            const diff = Math.floor((now - ref) / (1000 * 60 * 60 * 24));
+            const bsDays = [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30];
 
-    .form-grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-    .form-grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-bottom: 6px;
-    }
-    .form-row { margin-bottom: 8px; }
-    .form-row label { display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 2px; }
-    .form-row input, .form-row select {
-      width: 100%;
-      padding: 6px 8px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-size: 13px;
-    }
-    .form-row input:focus, .form-row select:focus {
-      outline: 2px solid var(--primary);
-      border-color: transparent;
-    }
+            let rem = diff;
+            let y = 2083, m = 0, d = 1;
+            if (rem >= 0) {
+                for (let i = 0; i < 12; i++) {
+                    if (rem < bsDays[i]) {
+                        m = i;
+                        d = rem + 1;
+                        break;
+                    }
+                    rem -= bsDays[i];
+                }
+            } else {
+                y = 2082;
+                m = 11;
+                d = 30 + rem;
+            }
 
-    .form-actions { display: flex; gap: 8px; margin-top: 14px; position: sticky; bottom: 0; background: #fff; padding-top: 8px; }
-    .btn-action {
-      flex: 1;
-      padding: 9px;
-      border: none;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    .btn-print { background: var(--primary); color: #fff; }
-    .btn-print:hover { background: #1d4ed8; }
-    .btn-reset { background: #64748b; color: #fff; }
+            let hrs = now.getHours();
+            const mins = String(now.getMinutes()).padStart(2, "0");
+            const secs = String(now.getSeconds()).padStart(2, "0");
+            const ampm = hrs >= 12 ? "PM" : "AM";
+            hrs = hrs % 12 || 12;
 
-    /* Live Preview Section */
-    .preview-card {
-      background: #64748b;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-      overflow-x: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-height: 88vh;
-      overflow-y: auto;
-    }
-    .preview-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 10px;
-      width: 100%;
-      max-width: 210mm;
-      text-align: left;
-    }
+            const dateEl = document.getElementById("liveNepaliDateHeader");
+            const clockEl = document.getElementById("liveNepaliClock");
 
-    /* Print Screen Suppression */
-    @media print {
-      body, html {
-        background: #ffffff !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      .no-print, header, nav, .entry-card, .preview-title, footer {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      .workspace-grid {
-        display: block !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      .preview-card {
-        background: transparent !important;
-        border: none !important;
-        padding: 0 !important;
-        overflow: visible !important;
-        max-height: none !important;
-      }
-      #a4CertificatePaper {
-        page-break-after: always !important;
-        break-after: page !important;
-      }
-      #certificateBackPage {
-        page-break-before: always !important;
-        break-before: page !important;
-        page-break-after: avoid !important;
-        break-after: avoid !important;
-      }
-    }
+            if (dateEl) {
+                dateEl.textContent = `मिति: ${toNepNum(y)} ${nepaliMonths[m]} ${toNepNum(String(d).padStart(2, '0'))} (${nepaliDays[now.getDay()]})`;
+            }
+            if (clockEl) {
+                clockEl.textContent = `समय: ${toNepNum(String(hrs).padStart(2, '0'))}:${toNepNum(mins)}:${toNepNum(secs)} ${ampm}`;
+            }
+        }
 
-    footer {
-      background: #0f172a;
-      color: #cbd5e1;
-      padding: 10px 20px;
-      font-size: 12.5px;
-      border-top: 3px solid var(--primary);
-      margin-top: auto;
-    }
-    .footer-inner {
-      max-width: 1560px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-  </style>
+        // सुरक्षित लगआउट फङ्सन (यसले कर्मचारीको डाटा मेटाउँदैन, सेसन मात्र हटाउँछ)
+        window.handleLogout = window.logoutUser = function () {
+            sessionStorage.clear();
+            localStorage.removeItem('user'); 
+            alert('सफलतापूर्वक लगआउट भयो!');
+            window.location.href = 'login.html';
+        };
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
+            applyTheme(saved);
+            updateLiveClock();
+            setInterval(updateLiveClock, 1000);
+
+            // युजर र एडमिन प्रमाणीकरण
+            const raw = sessionStorage.getItem('user') || localStorage.getItem('user');
+            if (raw) {
+                try {
+                    const u = JSON.parse(raw);
+                    const userLabel = document.getElementById('loggedUserName');
+                    if (userLabel) userLabel.textContent = u.full_name || u.login_id || 'कर्मचारी';
+
+                    const adminBtn = document.getElementById('adminMenuBtn');
+                    if (adminBtn) {
+                        // केवल सुपरएडमिनले मात्र एडमिन प्यानल बटन देख्न पाउने
+                        if (u.login_id && u.login_id.toLowerCase() === 'superadmin') {
+                            adminBtn.style.display = 'inline-flex';
+                        } else {
+                            adminBtn.style.display = 'none';
+                        }
+                    }
+                } catch (e) {
+                    console.error("User parse error", e);
+                }
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="system-header no-print">
+<header class="system-header">
     <div class="header-inner">
-      <div class="header-left">
-        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
+        <div class="header-emblem">
+            <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
+                 alt="नेपाल सरकार" 
+                 onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
+        </div>
+
         <div class="header-brand">
-          <h1>मायादेवी गाउँपालिका — नक्सा दर्ता तथा अभिलेखीकरण प्रणाली</h1>
-          <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही</p>
+            <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
+            <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही <span>|</span> Staff Portal</p>
         </div>
-      </div>
-      <div>
-        <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Palika Logo" style="height: 48px; border-radius: 50%;" onerror="this.src='assets/palika%20logo.jpg';">
-      </div>
-    </div>
-  </header>
 
-  <!-- Nav -->
-  <nav class="main-nav no-print">
+        <div class="header-tools">
+            <div class="header-emblem" style="background:rgba(255,255,255,0.15);">
+                <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
+                     alt="पालिका लोगो" 
+                     onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';">
+            </div>
+            <div class="clock-box">
+                <small id="liveNepaliDateHeader">मिति: लोड हुँदैछ...</small>
+                <div id="liveNepaliClock">समय: --:--:--</div>
+            </div>
+            <div class="user-box" id="currentUserBadge">
+                <span>👤</span>
+                <span id="loggedUserName">कर्मचारी</span>
+            </div>
+            <div class="fiscal-badge">आ.व. २०८३/०८४</div>
+            
+            <!-- Admin Management Button (सुपरएडमिनलाई मात्र देखिने) -->
+            <a href="admin.html" id="adminMenuBtn" class="header-btn" style="display:none; align-items:center; gap:4px; text-decoration:none; background:#2563eb; color:#fff; font-weight:600; padding:6px 12px; border-radius:4px;" title="कर्मचारी व्यवस्थापन">
+                ⚙️ Admin
+            </a>
+
+            <button type="button" class="header-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Dark / Light">☾</button>
+            <button type="button" class="header-btn" style="background:#dc2626; color:#fff; font-weight:600;" onclick="handleLogout()" title="लगआउट गर्नुहोस्">🚪 Logout</button>
+        </div>
+    </div>
+</header>
+
+<nav class="main-nav">
     <div class="nav-inner">
-      <div class="nav-links">
-        <a href="darta.html" class="active">📋 नक्सा दर्ता (Entry)</a>
-        <a id="adminNavBtn" href="admin.html">⚙️ Admin Panel</a>
-      </div>
-      <div class="nav-user">
-        <span id="headerUserDisplay">लोड हुँदैछ...</span>
-        <button type="button" class="btn-logout" onclick="handleSafeAppLogout()">🚪 लगआउट</button>
-      </div>
+        <a href="darta.html" class="active">🏠 Home</a>
+        <a href="darta.html" class="active">📝 नयाँ दर्ता</a>
+        <a href="record.html">📂 पुरानो हेर्नुस्</a>
+        <a href="verify.html">🔎 प्रमाणिकरण</a>
     </div>
-  </nav>
+</nav>
 
-  <!-- Workspace -->
-  <div class="workspace-grid">
-    
-    <!-- FULL ENTRY FORM -->
-    <section class="entry-card no-print">
-      <h2 class="entry-title">
-        <span>📝 नक्सा विवरण फाराम (Full Entry)</span>
-      </h2>
-
-      <!-- १. प्रशासनिक विवरण -->
-      <div class="form-section-title">१. प्रशासनिक तथा पत्र विवरण</div>
-      <div class="form-grid-2">
-        <div class="form-row">
-          <label>पत्र संख्या *</label>
-          <input type="text" id="in_patra" value="०८३/८४" oninput="syncLiveCertificate()">
-        </div>
-        <div class="form-row">
-          <label>चलानी / दर्ता मिति *</label>
-          <input type="text" id="in_date" value="२०८३/०६/०७" oninput="syncLiveCertificate()">
-        </div>
-      </div>
-      <div class="form-grid-2">
-        <div class="form-row">
-          <label>नक्सा दर्ता नं. *</label>
-          <input type="text" id="in_darta" placeholder="उदा: २८/२०८३/०८४" oninput="syncLiveCertificate()">
-        </div>
-        <div class="form-row">
-          <label>प्रमाण पत्र नं. *</label>
-          <input type="text" id="in_praman" placeholder="उदा: १०१" oninput="syncLiveCertificate()">
-        </div>
-      </div>
-
-      <!-- २. जग्गाधनी र घरधनीको विवरण -->
-      <div class="form-section-title">२. जग्गाधनी तथा घरधनीको विवरण</div>
-      <div class="form-grid-2">
-        <div class="form-row">
-          <label>जग्गा धनीको नामथर *</label>
-          <input type="text" id="in_owner_name" placeholder="जग्गाधनीको पूरा नाम" oninput="syncLiveCertificate()">
-        </div>
-        <div class="form-row">
-          <label>जग्गा धनीको ना.प्र.प.नं.</label>
-          <input type="text" id="in_owner_cit" placeholder="नागरिकता नं." oninput="syncLiveCertificate()">
-        </div>
-      </div>
-      <div class="form-grid-2">
-        <div class="form-row">
-          <label>घर धनीको नामथर *</label>
-          <input type="text" id="in_house_owner" placeholder="घरधनीको पूरा नाम" oninput="syncLiveCertificate()">
-        </div>
-        <div class="form-row">
-          <label>घर धनीको ना.प्र.प.नं.</label>
-          <input type="text" id="in_house_cit" placeholder="नागरिकता नं." oninput="syncLiveCertificate()">
-        </div>
-      </div>
-      <div class="form-grid-2">
-        <div class="form-row">
-          <label>सम्पर्क फोन नं.</label>
-          <input type="text" id="in_phone" placeholder="९८xxxxxxxx" oninput="syncLiveCertificate()">
-        </div>
-        <div class="form-row">
-          <label>ना.प्र.प. जारी जिल्ला</label>
-          <input type="text" id="in_cit_dist" value="रुपन्देही" oninput="syncLiveCertificate()">
-        </div>
-      </div>
-
-      <!-- ३. जग्गा तथा स्थान विवरण -->
-      <div class="form-section-title">३. जग्गाको ठेगाना तथा कित्ता विवरण</div>
-      <div class="form-grid-2">
-        <div class="form-row">
-          <label>वडा नं. *</label>
-          <input type="text" id="in_ward" value="०१" oninput="syncLiveCertificate()">
-        </div>
-        <div class="form-row">
-          <label>कित्ता नं. *</label>
-          <input type="text" id="in_kitta" placeholder="उदा: १२३" oninput="syncLiveCertificate()">
-        </div>
-      </div>
-      <div class="form-grid-2">
-        <div class="form-row">
-          <label>जग्गाको कुल क्षेत्रफल *</label>
-          <input type="text" id="in_land_area" placeholder="उदा: ०-१-०-० वा ५०० वर्गफिट" oninput="syncLiveCertificate()">
-        </div>
-        <div class="form-row">
-          <label>निर्माण भएको वर्ष (वि.सं.)</label>
-          <input type="text" id="in_const_year" placeholder="उदा: २०८०" oninput="syncLiveCertificate()">
-        </div>
-      </div>
-
-      <!-- चारकिल्ला -->
-      <label style="font-size: 12px; font-weight: bold; color: #475569;">जग्गाको चारकिल्ला विवरण:</label>
-      <div class="form-grid-4">
-        <div class="form-row"><input type="text" id="in_killa_e" placeholder="पूर्व" oninput="syncLiveCertificate()"></div>
-        <div class="form-row"><input type="text" id="in_killa_w" placeholder="पश्चिम" oninput="syncLiveCertificate()"></div>
-        <div class="form-row"><input type="text" id="in_killa_n" placeholder="उत्तर" oninput="syncLiveCertificate()"></div>
-        <div class="form-row"><input type="text" id="in_killa_s" placeholder="दक्षिण" oninput="syncLiveCertificate()"></div>
-      </div>
-
-      <!-- ४. तलागत निर्माण क्षेत्रफल -->
-      <div class="form-section-title">४. तलागत निर्माण क्षेत्रफल (वर्गफिट)</div>
-      <div class="form-grid-2">
-        <div class="form-row">
-          <label>(क) जमिन तला (Ground Floor)</label>
-          <input type="number" id="in_f_ground" placeholder="0.00" oninput="calculateTotalArea()">
-        </div>
-        <div class="form-row">
-          <label>(ख) पहिलो तला (1st Floor)</label>
-          <input type="number" id="in_f_first" placeholder="0.00" oninput="calculateTotalArea()">
-        </div>
-      </div>
-      <div class="form-grid-2">
-        <div class="form-row">
-          <label>(ग) दोस्रो तला (2nd Floor)</label>
-          <input type="number" id="in_f_second" placeholder="0.00" oninput="calculateTotalArea()">
-        </div>
-        <div class="form-row">
-          <label>(घ) अन्य / सिँढी कोठा (Top/Stair)</label>
-          <input type="number" id="in_f_other" placeholder="0.00" oninput="calculateTotalArea()">
-        </div>
-      </div>
-      <div class="form-row">
-        <label><strong>जम्मा निर्माण क्षेत्रफल (Total Area):</strong></label>
-        <input type="text" id="in_total_area" value="0.00" readonly style="background:#e2e8f0; font-weight:bold;">
-      </div>
-
-      <div class="form-actions">
-        <button type="button" class="btn-action btn-print" onclick="window.print()">🖨 प्रिन्ट गर्नुहोस्</button>
-        <button type="button" class="btn-action btn-reset" onclick="location.reload()">🔄 रिसेट</button>
-      </div>
-    </section>
-
-    <!-- LIVE A4 PREVIEW -->
-    <section class="preview-card">
-      <div class="preview-title no-print">📄 आधिकारिक A4 प्रमाण-पत्र पूर्वावलोकन (Live 2-Page Strict Fit)</div>
-
-      <div id="printAreaContainer">
+<main class="main-container">
+    <div class="workspace-grid">
         
-        <!-- PAGE 1: CERTIFICATE -->
-        <div class="a4-sheet" id="a4CertificatePaper">
-          <img src="assets/palika%20logo.jpg" class="watermark-img" alt="Watermark">
-
-          <div class="cert-content-top">
-            <div class="cert-top-center-motto">
-              <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
-            </div>
-
-            <div class="cert-header">
-              <div class="logo-box-left">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
-              </div>
-              <div class="header-titles">
-                <div class="gov-sub">स्थानीय सरकार</div>
-                <div class="palika-title">मायादेवी गाउँपालिका</div>
-                <div class="office-title">गाउँ कार्यपालिकाको कार्यालय</div>
-                <div class="address-text">बरेवा, रुपन्देही, लुम्बिनी प्रदेश, नेपाल ।</div>
-              </div>
-              <div class="logo-box-right">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Palika Logo" onerror="this.src='assets/palika%20logo.jpg';">
-              </div>
-            </div>
-
-            <div class="ref-photo-row">
-              <div class="ref-col">
-                <div>पत्र संख्या:- <span id="pv_patra">०८३/८४</span></div>
-                <div>नक्सा दर्ता नं. <span id="pv_darta">२८/२०८३/०८४</span></div>
-                <div>प्रमाण पत्र नं. <span id="pv_praman">१०१</span></div>
-              </div>
-              <div class="ref-col" style="text-align: right;">
-                <div>मितिः <span id="pv_date">२०८३/०६/०७</span></div>
-                <div class="passport-frame" style="margin-top: 4px;">
-                  <span style="font-size: 11px; color:#64748b; font-weight: bold;">फोटो</span>
+        <!-- LEFT ENTRY FORM (१ देखि १८ सम्मका सबै फिल्डहरू) -->
+        <section class="entry-card">
+            <form id="dartaForm" onsubmit="event.preventDefault(); saveNaksaRecord();" autocomplete="off">
+                
+                <div class="form-section">
+                    <div class="form-section-title">दर्ता तथा प्रमाण-पत्र विवरण</div>
+                    <div class="form-section-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="in_fiscal_year">आर्थिक वर्ष</label>
+                                <input type="text" id="in_fiscal_year" value="२०८३/०८४" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_patra_no">पत्र संख्या</label>
+                                <input type="text" id="in_patra_no" value="०८३/८४" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_darta_no">नक्सा दर्ता नं. *</label>
+                                <input type="text" id="in_darta_no" value="२८/२०८३/०८४" required oninput="validateDuplicate(); updateCertificateLive();">
+                                <div id="duplicateError" class="error-message" style="display:none;">यो नक्सा दर्ता नं. प्रयोग भइसकेको छ।</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="in_cert_no">प्रमाण-पत्र नं.</label>
+                                <input type="text" id="in_cert_no" value="१०१" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_darta_date">दर्ता मिति *</label>
+                                <input type="text" id="in_darta_date" value="२०८३/०६/०७" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_record_status">रेकर्ड प्रकार</label>
+                                <select id="in_record_status" onchange="updateCertificateLive();">
+                                    <option value="PERMANENT" selected>स्थायी (Permanent)</option>
+                                    <option value="TEMPORARY">अस्थायी / ड्राफ्ट (७ दिनमा स्वतः सफा हुने)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
 
-            <div class="cert-title-container">
-              <span class="cert-title-text">घर नक्सा अभिलेखीकरण प्रमाण-पत्र</span>
-            </div>
-
-            <div class="cert-intro">
-              श्री <strong id="pv_intro_owner">................</strong> ले मायादेवी गा.पा. वडा नं. <span id="pv_intro_ward">०१</span> मा तपसिल बमोजिमको घर सँरचना निर्माण गर्नु भएकोले घर नक्सा अभिलेखिकरण प्रमाण पत्र प्रदान गरीएको छ।
-            </div>
-
-            <!-- विवरण तालिका -->
-            <table class="cert-table">
-              <tr>
-                <td class="lbl">१) जग्गा धनीको नामथर</td>
-                <td class="val" id="pv_tb_owner">................</td>
-                <td class="lbl">२) जग्गा धनीको ना.प्र.प.नं.</td>
-                <td class="val" id="pv_tb_owner_cit">................</td>
-              </tr>
-              <tr>
-                <td class="lbl">३) घर धनीको नामथर</td>
-                <td class="val" id="pv_tb_house_owner">................</td>
-                <td class="lbl">४) घर धनीको ना.प्र.प.नं.</td>
-                <td class="val" id="pv_tb_house_cit">................</td>
-              </tr>
-              <tr>
-                <td class="lbl">५) जग्गाको विवरण</td>
-                <td class="val" colspan="3">
-                  हाल मायादेवी गा.पा. वडा नं. <span id="pv_tb_ward">०१</span> कि.नं. <span id="pv_tb_kitta">....</span> क्षेत्रफल <span id="pv_tb_area">....</span> वर्गफिट
-                </td>
-              </tr>
-              <tr>
-                <td class="lbl">६) चारकिल्ला विवरण</td>
-                <td class="val" colspan="3" id="pv_tb_killa">
-                  पूर्व: .... | पश्चिम: .... | उत्तर: .... | दक्षिण: ....
-                </td>
-              </tr>
-            </table>
-
-            <!-- तलागत तालिका -->
-            <table class="floor-detail-table" style="margin-top: 4px;">
-              <thead>
-                <tr>
-                  <th style="width: 40%;">तला</th>
-                  <th style="width: 25%;">निर्माण भएको क्षेत्रफल (वर्गफिट)</th>
-                  <th style="width: 15%;">मिति / वर्ष</th>
-                  <th style="width: 20%;">कैफियत</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>(क) जमिन तला</td>
-                  <td id="pv_f_ground">-</td>
-                  <td id="pv_yr_1">-</td>
-                  <td>-</td>
-                </tr>
-                <tr>
-                  <td>(ख) पहिलो तला</td>
-                  <td id="pv_f_first">-</td>
-                  <td id="pv_yr_2">-</td>
-                  <td>-</td>
-                </tr>
-                <tr>
-                  <td>(ग) दोस्रो तला</td>
-                  <td id="pv_f_second">-</td>
-                  <td>-</td>
-                  <td>-</td>
-                </tr>
-                <tr>
-                  <td>(घ) अन्य / सिँढी कोठा</td>
-                  <td id="pv_f_other">-</td>
-                  <td>-</td>
-                  <td>-</td>
-                </tr>
-                <tr class="total-row">
-                  <td>जम्मा निर्माण क्षेत्रफलः</td>
-                  <td id="pv_total_area">0.00</td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-
-            <!-- हस्ताक्षर ब्लक -->
-            <div class="cert-signatures-block">
-              <div class="officers-signature-grid">
-                <div class="sign-item">
-                  <div class="sign-space-area"></div>
-                  <div class="sign-dotted-line"></div>
-                  <div class="sign-title-text">स्थलगत निरिक्षण तथा रुजु गर्ने<br><strong>इन्जिनियर</strong></div>
+                <div class="form-section">
+                    <div class="form-section-title">१ देखि ९ सम्मका विवरणहरू</div>
+                    <div class="form-section-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="in_landowner_name">१) जग्गा धनीको नामथर *</label>
+                                <input type="text" id="in_landowner_name" value="" placeholder="जग्गा धनीको नामथर" required oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_landowner_cit">२) जग्गा धनीको ना.प्र.प.नं./जारी मिति र जिल्ला</label>
+                                <input type="text" id="in_landowner_cit" value="" placeholder="ना.प्र.प.नं. जारी मिति र जिल्ला" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_homeowner_name">३) घर धनीको नामथर *</label>
+                                <input type="text" id="in_homeowner_name" value="" placeholder="घर धनीको नामथर" required oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_homeowner_cit">४) घर धनीको ना.प्र.प.नं./जारी मिति र जिल्ला</label>
+                                <input type="text" id="in_homeowner_cit" value="" placeholder="ना.प्र.प.नं. जारी मिति र जिल्ला" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group full">
+                                <label for="in_sabik_address">५) जग्गाको विवरण: साविक ठेगाना</label>
+                                <input type="text" id="in_sabik_address" value="" placeholder="साविक ठेगाना" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_ward">हाल वडा नं. *</label>
+                                <input type="text" id="in_ward" value="०१" required oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_kitta">कित्ता नं. *</label>
+                                <input type="text" id="in_kitta" value="" placeholder="कित्ता नं." required oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_land_area">क्षेत्रफल (वि-क-ध)</label>
+                                <input type="text" id="in_land_area" value="" placeholder="जग्गाको क्षेत्रफल" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_approved_area">६) स्विकृत क्षेत्रफल (वर्गफिट)</label>
+                                <input type="text" id="in_approved_area" value="" placeholder="स्विकृत क्षेत्रफल" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group full">
+                                <label for="in_land_use">भु-उपयोग क्षेत्र</label>
+                                <input type="text" id="in_land_use" value="आवासीय / संस्थागत" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label>७) पूर्व चारकिल्ला</label>
+                                <input type="text" id="in_east" value="" placeholder="पूर्व" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label>७) पश्चिम चारकिल्ला</label>
+                                <input type="text" id="in_west" value="" placeholder="पश्चिम" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label>७) उत्तर चारकिल्ला</label>
+                                <input type="text" id="in_north" value="" placeholder="उत्तर" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label>७) दक्षिण चारकिल्ला</label>
+                                <input type="text" id="in_south" value="" placeholder="दक्षिण" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_building_class">८) भवनको वर्गिकरण</label>
+                                <input type="text" id="in_building_class" value="(ख)" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group">
+                                <label for="in_struct_system">स्ट्रक्चरल सिस्टम</label>
+                                <input type="text" id="in_struct_system" value="फ्रेम स्ट्रक्चर" oninput="updateCertificateLive();">
+                            </div>
+                            <div class="form-group full">
+                                <label for="in_completion_date">९) घर निर्माण सम्पन्न गरेको मिति</label>
+                                <input type="text" id="in_completion_date" value="" placeholder="सम्पन्न मिति" oninput="updateCertificateLive();">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="sign-item">
-                  <div class="sign-space-area"></div>
-                  <div class="sign-dotted-line"></div>
-                  <div class="sign-title-text">चेक जाँच गर्ने<br><strong>इन्जिनियर</strong></div>
-                </div>
-                <div class="sign-item">
-                  <div class="sign-space-area"></div>
-                  <div class="sign-dotted-line"></div>
-                  <div class="sign-title-text">प्रमाणित गर्ने<br><strong>प्रमुख प्रशासकीय अधिकृत</strong></div>
-                </div>
-              </div>
 
-              <div class="bottom-owner-qr-flex">
-                <div class="owner-sign-container">
-                  <div class="owner-dots">....................................</div>
-                  <div class="owner-label">घरधनी / प्रतिनिधिको सहिः</div>
+                <div class="form-section">
+                    <div class="form-section-title">१०) तलागत निर्माण क्षेत्रफल (वर्गफिट)</div>
+                    <div class="form-section-body">
+                        <div class="form-grid">
+                            <div class="form-group"><label>(क) भुमिगत १</label><input type="number" step="any" id="in_b1_area" value="0" oninput="autoSumFloors();"></div>
+                            <div class="form-group"><label>भुमिगत २</label><input type="number" step="any" id="in_b2_area" value="0" oninput="autoSumFloors();"></div>
+                            <div class="form-group"><label>(ख) जमिन तला</label><input type="number" step="any" id="in_ground_area" value="0" oninput="autoSumFloors();"></div>
+                            <div class="form-group"><label>(ग) पहिलो तला</label><input type="number" step="any" id="in_first_area" value="0" oninput="autoSumFloors();"></div>
+                            <div class="form-group"><label>(घ) दोश्रो तला</label><input type="number" step="any" id="in_second_area" value="0" oninput="autoSumFloors();"></div>
+                            <div class="form-group"><label>(ङ) तेश्रो तला</label><input type="number" step="any" id="in_third_area" value="0" oninput="autoSumFloors();"></div>
+                            <div class="form-group"><label>(च) चौथो तला</label><input type="number" step="any" id="in_fourth_area" value="0" oninput="autoSumFloors();"></div>
+                            <div class="form-group"><label>(छ) पाँचौ तला</label><input type="number" step="any" id="in_fifth_area" value="0" oninput="autoSumFloors();"></div>
+                            <div class="form-group full"><label>१०) जम्मा क्षेत्रफल</label><input type="text" id="in_total_area" value="०.००" readonly style="background:#e2e8f0; font-weight:bold;"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="qr-code-container" style="display:flex; flex-direction:column; align-items:center;">
-                  <div id="cert_qr_div">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=Mayadevi-Rural-Mun" alt="QR">
-                  </div>
-                  <div class="qr-caption">QR Scan गरी प्रमाणिकरण गर्नुहोस्</div>
+
+                <div class="form-section">
+                    <div class="form-section-title">११ देखि १८ सम्मका अन्य विवरणहरू</div>
+                    <div class="form-section-body">
+                        <div class="form-grid">
+                            <div class="form-group"><label>११) प्लिन्थ क्षेत्रफल</label><input type="text" id="in_plinth" value="" placeholder="प्लिन्थ क्षेत्रफल" oninput="updateCertificateLive();"></div>
+                            <div class="form-group"><label>१२) भवनको उचाई / तला</label><input type="text" id="in_height_floor" value="" placeholder="भवनको उचाई" oninput="updateCertificateLive();"></div>
+                            <div class="form-group"><label>१३) सडक केन्द्र रेखा दुरी</label><input type="text" id="in_road_dist" value="" placeholder="सडक रेखा दुरी" oninput="updateCertificateLive();"></div>
+                            <div class="form-group"><label>१४) बिजुलीको तार दुरी</label><input type="text" id="in_electric_dist" value="" placeholder="तार दुरी" oninput="updateCertificateLive();"></div>
+                            <div class="form-group"><label>१५) नदी कुलो किनार दुरी</label><input type="text" id="in_river_dist" value="" placeholder="नदी दुरी" oninput="updateCertificateLive();"></div>
+                            <div class="form-group"><label>१६) ढल, सेप्टिक ट्याङ्क, सोकपिट</label><input type="text" id="in_septic" value="भएको" oninput="updateCertificateLive();"></div>
+                            <div class="form-group full"><label>१८) निर्णय मिति</label><input type="text" id="in_decision_date" value="२०८३/०६/०६" oninput="updateCertificateLive();"></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">प्राविधिक तथा प्रशासनिक अधिकारीहरू</div>
+                    <div class="form-section-body">
+                        <div class="form-group full" style="margin-bottom:8px;">
+                            <label>स्थलगत निरिक्षण गर्ने तथा रुजु गर्ने</label>
+                            <div style="display:flex; gap:6px;">
+                                <select id="in_eng1_role" style="width:40%;" onchange="updateCertificateLive();">
+                                    <option value="इन्जिनियर" selected>इन्जिनियर</option>
+                                    <option value="सब-इन्जिनियर">सब-इन्जिनियर</option>
+                                    <option value="असिस्टेन्ट सब-इन्जिनियर">असिस्टेन्ट सब-इन्जिनियर</option>
+                                    <option value="अमिन">अमिन</option>
+                                </select>
+                                <input type="text" id="in_eng1" value="" placeholder="नाम लेख्नुहोस्..." style="flex:1;" oninput="updateCertificateLive();">
+                            </div>
+                        </div>
+                        <div class="form-group full" style="margin-bottom:8px;">
+                            <label>चेक जाँच गर्ने</label>
+                            <div style="display:flex; gap:6px;">
+                                <select id="in_eng2_role" style="width:40%;" onchange="updateCertificateLive();">
+                                    <option value="इन्जिनियर" selected>इन्जिनियर</option>
+                                    <option value="सब-इन्जिनियर">सब-इन्जिनियर</option>
+                                    <option value="वरिष्ठ इन्जिनियर">वरिष्ठ इन्जिनियर</option>
+                                </select>
+                                <input type="text" id="in_eng2" value="" placeholder="नाम लेख्नुहोस्..." style="flex:1;" oninput="updateCertificateLive();">
+                            </div>
+                        </div>
+                        <div class="form-group full">
+                            <label>प्रमाणित गर्ने प्रमुख प्रशासकीय अधिकृत</label>
+                            <input type="text" id="in_officer" value="" placeholder="अधिकृतको नाम लेख्नुहोस्..." oninput="updateCertificateLive();">
+                        </div>
+                        <div class="form-group full" style="margin-top:8px;">
+                            <label>नाता / सम्बन्ध (दा.)</label>
+                            <input type="text" id="in_relation" value="" placeholder="नाता वा सम्बन्ध" oninput="updateCertificateLive();">
+                        </div>
+                        <div class="form-group full">
+                            <label>सम्पर्क फोन नं.</label>
+                            <input type="text" id="in_phone" value="" placeholder="सम्पर्क फोन नं." oninput="updateCertificateLive();">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">पासपोर्ट फोटो</div>
+                    <div class="form-section-body">
+                        <div class="photo-upload-box">
+                            <div class="photo-preview-small" id="passportPhotoPreview">
+                                <img id="passportPhotoPreviewImg" src="" alt="" style="display:none;">
+                                <span>फोटो</span>
+                            </div>
+                            <div>
+                                <input type="file" id="passportPhotoInput" accept="image/*">
+                                <div class="form-help">अधिकतम 3 MB सम्मको JPG / PNG।</div>
+                                <button type="button" class="btn btn-danger" style="margin-top:6px;" onclick="removePassportPhoto()">फोटो हटाउनुहोस्</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success">💾 दर्ता सुरक्षित गर्नुहोस्</button>
+                    <button type="button" class="btn btn-primary" onclick="updateCertificateLive()">👁 प्रमाण-पत्र अपडेट</button>
+                    <button type="button" class="btn btn-light" onclick="resetDartaForm()">↺ Reset</button>
+                    <button type="button" class="btn btn-secondary" onclick="triggerPrint('color')">🖨 Color Print</button>
+                    <button type="button" class="btn btn-secondary" onclick="triggerPrint('bw')">🖨 B/W Print</button>
+                </div>
+
+            </form>
+        </section>
+
+        <!-- RIGHT PREVIEW CARD (A4 Sheet 1 & 2) -->
+        <section class="preview-card preview-sticky">
+            <h2 class="preview-title">प्रमाण-पत्र Live Preview</h2>
+
+            <div id="printAreaContainer" class="scaled-screen-preview">
+                
+                <!-- ================= PAGE 1 ================= -->
+                <div id="a4CertificatePaper" class="a4-sheet">
+                    
+                    <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
+                         onerror="this.onerror=null; if(!this.dataset.r1){this.dataset.r1=1; this.src='assets/palika%20logo.jpg';} else if(!this.dataset.r2){this.dataset.r2=1; this.src='logo/palika%20logo.jpg';} else {this.src='assets/palika-logo.png';}" 
+                         class="watermark-img" 
+                         alt="Watermark">
+
+                    <div class="cert-content-top">
+                        
+                        <div class="cert-top-center-motto">
+                            <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
+                        </div>
+
+                        <header class="cert-header">
+                            <div class="logo-box-left">
+                                <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
+                                     alt="नेपाल निशान छाप" 
+                                     onerror="this.onerror=null; if(!this.dataset.r1){this.dataset.r1=1; this.src='assets/nishan%20chap.jpg';} else if(!this.dataset.r2){this.dataset.r2=1; this.src='logo/nishan%20chap.jpg';} else {this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Emblem_of_Nepal.svg/512px-Emblem_of_Nepal.svg.png';}">
+                            </div>
+
+                            <div class="header-titles">
+                                <div class="gov-sub">स्थानीय सरकार</div>
+                                <div class="palika-title">मायादेवी गाउँपालिका</div>
+                                <div class="office-title">गाउँ कार्यपालिकाको कार्यालय</div>
+                                <div class="address-text">बरेवा, रुपन्देही, लुम्बिनी प्रदेश, नेपाल ।</div>
+                            </div>
+
+                            <div class="logo-box-right">
+                                <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
+                                     alt="मायादेवी गाउँपालिका लोगो" 
+                                     onerror="this.onerror=null; if(!this.dataset.r1){this.dataset.r1=1; this.src='assets/palika%20logo.jpg';} else if(!this.dataset.r2){this.dataset.r2=1; this.src='logo/palika%20logo.jpg';} else {this.src='assets/palika-logo.png';}">
+                            </div>
+                        </header>
+
+                        <div class="ref-photo-row">
+                            <div class="ref-col">
+                                <div>पत्र संख्या:- <span id="out_patra">०८३/८४</span></div>
+                                <div>नक्सा दर्ता नं. <strong id="out_darta_no" class="bold-highlight">२८/२०८३/०८४</strong></div>
+                                <div>प्रमाण पत्र नं. <span id="out_cert_no">१०१</span></div>
+                                <div>मितिः <span id="out_date">२०८३/०६/०७</span></div>
+                            </div>
+
+                            <div class="passport-photo-wrapper">
+                                <div class="passport-frame">
+                                    <img id="certPassportImg" src="" alt="फोटो">
+                                    <div id="certPassportPh" class="photo-placeholder">फोटो</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cert-title-container">
+                            <span class="cert-title-text">घर नक्सा अभिलेखीकरण प्रमाण-पत्र</span>
+                        </div>
+
+                        <div class="cert-intro">
+                            श्री <strong id="out_cert_name">....................</strong> ले मायादेवी गा.पा. वडा नं. <strong id="out_cert_ward">०१</strong> मा तपसिल बमोजिमको घर सँरचना निर्माण गर्नु भएकोले घर नक्सा अभिलेखिकरण प्रमाण पत्र प्रदान गरीएको छ।
+                        </div>
+
+                        <table class="cert-table">
+                            <tr>
+                                <td class="lbl">१) जग्गा धनीको नामथर</td>
+                                <td class="val" id="out_landowner">....................</td>
+                                <td class="lbl">२) जग्गा धनीको ना.प्र.प.नं.</td>
+                                <td class="val" id="out_landowner_cit">....................</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">३) घर धनीको नामथर-</td>
+                                <td class="val" id="out_homeowner">....................</td>
+                                <td class="lbl">४) घर धनीको ना.प्र.प.नं.</td>
+                                <td class="val" id="out_homeowner_cit">....................</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">५) जग्गाको विवरण-</td>
+                                <td colspan="3" class="val">
+                                    साविक <span id="out_sabik">....................</span> हाल मायादेवी गा.पा. वडा नं. <span id="out_ward_tbl">०१</span> कि.नं. <span id="out_kitta_tbl">....</span> क्षेत्रफल <span id="out_land_area_tbl">....</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">६) स्विकृत क्षेत्रफलः</td>
+                                <td class="val">कि.नं. <span id="out_kitta_tbl2">....</span> क्षेत्रफलः <span id="out_appr_area">....</span> वर्गफिट</td>
+                                <td class="lbl">भु-उपयोग क्षेत्रः</td>
+                                <td class="val" id="out_land_use">आवासीय / संस्थागत</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">७) जग्गाको चारकिल्लाः</td>
+                                <td colspan="3" class="val four-killa-box">
+                                    पूर्वः <span id="out_east">....</span> &nbsp;|&nbsp; पश्चिमः <span id="out_west">....</span> &nbsp;|&nbsp; उत्तरः <span id="out_north">....</span> &nbsp;|&nbsp; दक्षिणः <span id="out_south">....</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">८) भवनको वर्गिकरणः</td>
+                                <td class="val"><span id="out_b_class">(ख)</span> &nbsp;|&nbsp; स्ट्रक्चरलः <span id="out_struct">फ्रेम स्ट्रक्चर</span></td>
+                                <td class="lbl">९) निर्माण सम्पन्न मितिः</td>
+                                <td class="val" id="out_comp_date">....</td>
+                            </tr>
+                        </table>
+
+                        <table class="cert-table floor-detail-table">
+                            <thead>
+                                <tr class="th-row">
+                                    <th style="width: 40%; text-align: left !important;">१०) तला</th>
+                                    <th style="width: 26%; text-align: center;">निर्माण भएको क्षेत्रफल</th>
+                                    <th style="width: 18%; text-align: center;">मिति</th>
+                                    <th style="width: 16%; text-align: center;">कैफियत</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="t-left">(क) भुमिगत वा अर्ध भुमिगत तला १</td><td class="t-center" id="out_b1">-</td><td class="t-center">-</td><td class="t-center">-</td></tr>
+                                <tr><td class="t-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;भुमिगत वा अर्ध भुमिगत तला २</td><td class="t-center" id="out_b2">-</td><td class="t-center">-</td><td class="t-center">-</td></tr>
+                                <tr><td class="t-left">(ख) जमिन तला</td><td class="t-center" id="out_ground">-</td><td class="t-center">-</td><td class="t-center">-</td></tr>
+                                <tr><td class="t-left">(ग) पहिलो तला</td><td class="t-center" id="out_first">-</td><td class="t-center">-</td><td class="t-center">-</td></tr>
+                                <tr><td class="t-left">(घ) दोश्रो तला</td><td class="t-center" id="out_second">-</td><td class="t-center">-</td><td class="t-center">-</td></tr>
+                                <tr><td class="t-left">(ङ) तेश्रो तला</td><td class="t-center" id="out_third">-</td><td class="t-center">-</td><td class="t-center">-</td></tr>
+                                <tr><td class="t-left">(च) चौथो तला</td><td class="t-center" id="out_fourth">-</td><td class="t-center">-</td><td class="t-center">-</td></tr>
+                                <tr><td class="t-left">(छ) पाँचौ तला</td><td class="t-center" id="out_fifth">-</td><td class="t-center">-</td><td class="t-center">-</td></tr>
+                                <tr class="total-row"><td class="t-left"><strong>जम्मा क्षेत्रफलः</strong></td><td class="t-center"><strong id="out_total">०.००</strong></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+
+                        <table class="cert-table">
+                            <tr>
+                                <td class="lbl">११) प्लिन्थ क्षेत्रफलः</td><td class="val" id="out_plinth">....</td>
+                                <td class="lbl">कभरेज प्रतिशतः</td><td class="val" id="out_coverage">....</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">१२) भवनको उचाईः</td><td class="val" id="out_height_floor">....</td>
+                                <td class="lbl">१३) सडक केन्द्र दुरीः</td><td class="val" id="out_rd_dist">....</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">१४) बिजुलीको तार दुरीः</td><td class="val" id="out_elec_dist">....</td>
+                                <td class="lbl">१५) नदी किनार दुरीः</td><td class="val" id="out_riv_dist">....</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">१६) ढल, सेप्टिक ट्याङ्क, सोकपिटः</td><td colspan="3" class="val" id="out_sep">भएको</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="legal-notice-cell">
+                                    १७) उल्लेखित सँरचना निर्माण भएको जग्गामा कुनैपनि किसिमको खरखिचोला, दावीविरोध आदी भएगरेमा सोको जवाफदेही स्वयम् घरधनी हुने।<br>
+                                    १८) मिति <strong id="out_decision_date">२०८३/०६/०६</strong> को निर्णयानुसार सँरचनागत सुरक्षाको जिम्मेवारी स्वयम् घरधनीमा रहनेगरी घर नक्सा अभिलेखिकरण गरीएको।
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- SIGNATURES BALANCED IN MIDDLE -->
+                        <div class="cert-signatures-block">
+                            <div class="officers-signature-grid">
+                                <div class="sign-item">
+                                    <div class="sign-space-area"></div>
+                                    <div class="sign-dotted-line"></div>
+                                    <div class="sign-title-text">
+                                        स्थलगत निरिक्षण तथा रुजु गर्ने<br>
+                                        <strong id="out_eng1">............................</strong><br>
+                                        <span id="out_eng1_lbl">इन्जिनियर</span>
+                                    </div>
+                                </div>
+                                <div class="sign-item">
+                                    <div class="sign-space-area"></div>
+                                    <div class="sign-dotted-line"></div>
+                                    <div class="sign-title-text">
+                                        चेक जाँच गर्ने<br>
+                                        <strong id="out_eng2">............................</strong><br>
+                                        <span id="out_eng2_lbl">इन्जिनियर</span>
+                                    </div>
+                                </div>
+                                <div class="sign-item">
+                                    <div class="sign-space-area"></div>
+                                    <div class="sign-dotted-line"></div>
+                                    <div class="sign-title-text">
+                                        प्रमाणित गर्ने<br>
+                                        <strong id="out_off">............................</strong><br>
+                                        <span>प्रमुख प्रशासकीय अधिकृत</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bottom-owner-qr-flex">
+                                <div class="owner-sign-container">
+                                    <div class="owner-space-area"></div>
+                                    <div class="owner-dots">................................................</div>
+                                    <div class="owner-label">घरधनी / प्रतिनिधिको सहिः</div>
+                                </div>
+                                <div class="qr-code-container">
+                                    <div id="cert_qr_div"></div>
+                                    <div class="qr-caption">QR Scan गरी प्रमाणिकरण गर्नुहोस्</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <footer class="cert-footer">
+                        सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np , mayadeviruralmun@gmail.com<br>
+                        वेभ साइटः- mayadevimunrupandehi.gov.np
+                    </footer>
+
+                </div>
+
+                <!-- ================= PAGE 2 ================= -->
+                <div id="certificateBackPage" class="a4-sheet back-page">
+                    
+                    <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
+                         onerror="this.onerror=null; if(!this.dataset.r1){this.dataset.r1=1; this.src='assets/palika%20logo.jpg';} else if(!this.dataset.r2){this.dataset.r2=1; this.src='logo/palika%20logo.jpg';} else {this.src='assets/palika-logo.png';}" 
+                         class="watermark-img" 
+                         alt="Watermark">
+
+                    <div class="cert-content-top">
+                        <section class="kabuliyat-section">
+                            <div class="kabuliyat-head">
+                                <h2 class="kabuliyat-title">कबुलियतनमा</h2>
+                                <div class="shriman-title">श्रीमान्,</div>
+                            </div>
+
+                            <p class="kabuliyat-body">
+                                मैले/हामिले बनाएको घर सँरचना ठिक साँचो छ, कानुन विपरित भए गरेमा वा सरकारी, सार्वजनिक वा व्यक्ति विशेषको
+                                जग्गा अतिक्रमण गरी बनाएको ठहरिएमा, बाटो, कुलो वा नदीको अधिकार क्षेत्रमा निर्माण भएको ठहर भएमा वा कानुन
+                                बमोजिम सरकार वा गाउँपालिकाले भत्काउन वा हटाउन आवश्यक ठानेमा जुनसुकै बखत भत्काउन वा हटाउन मञ्जुर
+                                छु/छौं । पछि कुनै किसिमको मुआब्जा माग तथा उजुर-वाजुर, खर-खिचोला, दावि-विरोध हुने गर्ने छैन/छैनौ। भए गरेमा
+                                यसै कबुलियतनामाले प्रमाण लागि बदर होस भनी मेरो/हाम्रो पूर्ण मनोमान राजी खुशीका साथ सहिछाप गरिदिए/गरीदियौं।
+                            </p>
+
+                            <div class="kabuliyat-sign-grid">
+                                <div class="sign-left">
+                                    <div class="sign-field">दस्तखतः ........</div>
+                                    <div class="sign-field">नामथरः <strong id="back_applicant_name">....................</strong></div>
+                                    <div class="sign-field">ना.प्र.प.नंः <span id="back_cit_no">....................</span></div>
+                                    <div class="sign-field">बाबु/पति/पत्नीको नाम (दा.): <span id="back_relation_name">....................</span></div>
+                                    <div class="sign-field">जारी मिति र जिल्लाः <span id="back_cit_issue">....................</span></div>
+                                    <div class="sign-field">सम्पर्क नंः <span id="back_phone">....................</span></div>
+                                </div>
+
+                                <div class="sign-right">
+                                    <div class="thumb-box-container">
+                                        <div class="thumb-box">
+                                            <div class="thumb-frame">दायाँ</div>
+                                            <div class="thumb-frame">बायाँ</div>
+                                        </div>
+                                        <span class="thumb-label">औंठा छाप</span>
+                                    </div>
+                                    <div class="iti-date-text">
+                                        ईति सम्बत <span id="back_iti_year">२०८३</span> साल <span id="back_iti_month">०६</span> महिना <span id="back_iti_day">०७</span> गते <span id="back_iti_roj">०४</span> रोज शुभम्।
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="namsari-section">
+                            <div class="namsari-header-title">नामसारी विवरण</div>
+
+                            <table class="namsari-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 18%;">मितिको निर्णय अनुसार</th>
+                                        <th style="width: 32%;">नामथर</th>
+                                        <th style="width: 16%;">नामसारी लिनेको फोटो</th>
+                                        <th style="width: 17%;">सिफारिस गर्ने</th>
+                                        <th style="width: 17%;">स्विकृत गर्ने</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="col-center">मितिः ....<br>निर्णय अनुसार</td>
+                                        <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                                        <td class="col-center"><div class="namsari-photo-box">फोटो</div></td>
+                                        <td>नामथर :<br>दस्तखतः</td>
+                                        <td>नामथर :<br>दस्तखतः</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-center">मितिः ....<br>निर्णय अनुसार</td>
+                                        <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                                        <td class="col-center"><div class="namsari-photo-box">फोटो</div></td>
+                                        <td>नामथर :<br>दस्तखतः</td>
+                                        <td>नामथर :<br>दस्तखतः</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-center">मितिः ....<br>निर्णय अनुसार</td>
+                                        <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                                        <td class="col-center"><div class="namsari-photo-box">फोटो</div></td>
+                                        <td>नामथर :<br>दस्तखतः</td>
+                                        <td>नामथर :<br>दस्तखतः</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-center">मितिः ....<br>निर्णय अनुसार</td>
+                                        <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                                        <td class="col-center"><div class="namsari-photo-box">फोटो</div></td>
+                                        <td>नामथर :<br>दस्तखतः</td>
+                                        <td>नामथर :<br>दस्तखतः</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                </div>
+
             </div>
-          </div>
+        </section>
 
-          <div class="cert-footer">
-            सम्पर्क नं. ०७१-५९२२२२, ९८५७०१६९३९ | ईमेलः info@mayadevimunrupandehi.gov.np | वेभ साइट:- mayadevimunrupandehi.gov.np
-          </div>
-        </div>
-
-        <!-- PAGE 2: KABULIYATNAMA & NAMSARI -->
-        <div class="a4-sheet back-page" id="certificateBackPage">
-          <img src="assets/palika%20logo.jpg" class="watermark-img" alt="Watermark">
-
-          <div class="kabuliyat-section">
-            <div class="kabuliyat-title">कबुलियतनामा</div>
-            <div class="shriman-title">श्रीमान्,</div>
-            <div class="kabuliyat-body">
-              मैले/हामिले बनाएको घर सँरचना ठिक साँचो छ, कानुन विपरित भए गरेमा वा सरकारी, सार्वजनिक वा व्यक्ति विशेषको जग्गा अतिक्रमण गरी बनाएको ठहरिएमा, बाटो, कुलो वा नदीको अधिकार क्षेत्रमा निर्माण भएको ठहर भएमा वा कानुन बमोजिम सरकार वा गाउँपालिकाले भत्काउन वा हटाउन आवश्यक ठानेमा जुनसुकै बखत भत्काउन वा हटाउन मञ्जुर छु/छौं। पछि कुनै किसिमको मुआब्जा माग तथा उजुर-वाजुर, खर-खिचोला, दावि-विरोध हुने गर्ने छैन/छैनौ। भए गरेमा यसै कबुलियतनामाले प्रमाण लागि बदर होस भनी मेरो/हाम्रो पूर्ण मनोमान राजी खुशीका साथ सहिछाप गरिदिए/गरीदियौं।
-            </div>
-
-            <div class="kabuliyat-sign-grid">
-              <div class="sign-left">
-                <div class="sign-field">दस्तखतः .................................................</div>
-                <div class="sign-field">नामथरः <strong id="pv_kabu_owner">................</strong></div>
-                <div class="sign-field">ना.प्र.प.नंः <span id="pv_kabu_cit">................</span></div>
-                <div class="sign-field">जारी जिल्लाः <span id="pv_kabu_dist">रुपन्देही</span></div>
-                <div class="sign-field">सम्पर्क नंः <span id="pv_kabu_phone">................</span></div>
-              </div>
-              <div class="sign-right">
-                <div class="thumb-box-container" style="display:flex; flex-direction:column; align-items:center;">
-                  <div class="thumb-box" style="display:flex; gap:6px;">
-                    <div class="thumb-frame">दायाँ</div>
-                    <div class="thumb-frame">बायाँ</div>
-                  </div>
-                  <div class="thumb-label">औंठा छाप</div>
-                </div>
-                <div class="iti-date-text">मितिः <span id="pv_kabu_date">२०८३ साल ........ महिना ........ गते</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="namsari-section">
-            <div class="namsari-header-title">नामसारी विवरण</div>
-            <table class="namsari-table">
-              <thead>
-                <tr>
-                  <th style="width: 15%;">निर्णय मिति</th>
-                  <th style="width: 35%;">नामसारी विवरण</th>
-                  <th style="width: 25%;">फोटो</th>
-                  <th style="width: 25%;">सिफारिस / प्रमाणित गर्ने</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="text-align:center;">............</td>
-                  <td>श्री ................................. बाट<br>श्री ................................. मा नामसारी गरीएको।</td>
-                  <td><div class="namsari-photo-box">फोटो</div></td>
-                  <td>नामथर: ....................<br>दस्तखतः ...................</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;">............</td>
-                  <td>श्री ................................. बाट<br>श्री ................................. मा नामसारी गरीएको।</td>
-                  <td><div class="namsari-photo-box">फोटो</div></td>
-                  <td>नामथर: ....................<br>दस्तखतः ...................</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  </div>
-
-  <footer class="no-print">
-    <div class="footer-inner">
-      <div><strong>मायादेवी गाउँपालिका</strong> — नक्सा दर्ता तथा अभिलेखीकरण प्रणाली | बरेवा, रुपन्देही</div>
-      <div style="background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px;">
-        📞 WhatsApp: <strong style="color:#60a5fa;">९७४३६५३६४४</strong>
-      </div>
-      <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
     </div>
-  </footer>
+</main>
 
-  <script>
-    // Session Validation
-    document.addEventListener("DOMContentLoaded", function() {
-      const rawUser = sessionStorage.getItem("user") || localStorage.getItem("user");
-      if (!rawUser) {
-        window.location.href = "login.html";
-        return;
-      }
-
-      try {
-        const u = JSON.parse(rawUser);
-        const nameDisplay = document.getElementById("headerUserDisplay");
-        if (nameDisplay) {
-          nameDisplay.textContent = `${u.full_name} (${u.post || 'कर्मचारी'})`;
-        }
-
-        const adminBtn = document.getElementById("adminNavBtn");
-        if (adminBtn && u.login_id.toLowerCase() !== "superadmin") {
-          adminBtn.style.display = "none";
-        }
-      } catch (e) {
-        console.error("Session error:", e);
-      }
-    });
-
-    // Live Data Binding
-    function syncLiveCertificate() {
-      document.getElementById("pv_patra").textContent = document.getElementById("in_patra").value || "०८३/८४";
-      document.getElementById("pv_darta").textContent = document.getElementById("in_darta").value || "२८/२०८३/०८४";
-      document.getElementById("pv_praman").textContent = document.getElementById("in_praman").value || "१०१";
-      
-      const dateVal = document.getElementById("in_date").value || "२०८३/०६/०७";
-      document.getElementById("pv_date").textContent = dateVal;
-      document.getElementById("pv_kabu_date").textContent = dateVal;
-
-      const owner = document.getElementById("in_owner_name").value || "................";
-      document.getElementById("pv_intro_owner").textContent = owner;
-      document.getElementById("pv_tb_owner").textContent = owner;
-
-      const houseOwner = document.getElementById("in_house_owner").value || owner;
-      document.getElementById("pv_tb_house_owner").textContent = houseOwner;
-      document.getElementById("pv_kabu_owner").textContent = houseOwner;
-
-      const ownerCit = document.getElementById("in_owner_cit").value || "................";
-      document.getElementById("pv_tb_owner_cit").textContent = ownerCit;
-
-      const houseCit = document.getElementById("in_house_cit").value || ownerCit;
-      document.getElementById("pv_tb_house_cit").textContent = houseCit;
-      document.getElementById("pv_kabu_cit").textContent = houseCit;
-
-      const ward = document.getElementById("in_ward").value || "०१";
-      document.getElementById("pv_intro_ward").textContent = ward;
-      document.getElementById("pv_tb_ward").textContent = ward;
-
-      document.getElementById("pv_tb_kitta").textContent = document.getElementById("in_kitta").value || "....";
-      document.getElementById("pv_tb_area").textContent = document.getElementById("in_land_area").value || "....";
-
-      // चारकिल्ला
-      const e = document.getElementById("in_killa_e").value || "....";
-      const w = document.getElementById("in_killa_w").value || "....";
-      const n = document.getElementById("in_killa_n").value || "....";
-      const s = document.getElementById("in_killa_s").value || "....";
-      document.getElementById("pv_tb_killa").textContent = `पूर्व: ${e} | पश्चिम: ${w} | उत्तर: ${n} | दक्षिण: ${s}`;
-
-      document.getElementById("pv_kabu_dist").textContent = document.getElementById("in_cit_dist").value || "रुपन्देही";
-      document.getElementById("pv_kabu_phone").textContent = document.getElementById("in_phone").value || "................";
-
-      const yr = document.getElementById("in_const_year").value;
-      if (yr) {
-        document.getElementById("pv_yr_1").textContent = yr;
-        document.getElementById("pv_yr_2").textContent = yr;
-      }
-    }
-
-    // कुल क्षेत्रफल हिसाब गर्ने
-    function calculateTotalArea() {
-      const g = parseFloat(document.getElementById("in_f_ground").value) || 0;
-      const f = parseFloat(document.getElementById("in_f_first").value) || 0;
-      const s = parseFloat(document.getElementById("in_f_second").value) || 0;
-      const o = parseFloat(document.getElementById("in_f_other").value) || 0;
-
-      const total = g + f + s + o;
-      document.getElementById("in_total_area").value = total.toFixed(2);
-      document.getElementById("pv_total_area").textContent = total.toFixed(2);
-
-      document.getElementById("pv_f_ground").textContent = g > 0 ? g.toFixed(2) : "-";
-      document.getElementById("pv_f_first").textContent = f > 0 ? f.toFixed(2) : "-";
-      document.getElementById("pv_f_second").textContent = s > 0 ? s.toFixed(2) : "-";
-      document.getElementById("pv_f_other").textContent = o > 0 ? o.toFixed(2) : "-";
-    }
-
-    // सुरक्षित लगआउट
-    function handleSafeAppLogout() {
-      sessionStorage.clear();
-      localStorage.removeItem("user");
-      alert("सफलतापूर्वक लगआउट भयो!");
-      window.location.href = "login.html";
-    }
-  </script>
+<script src="js/auth.js"></script>
+<script src="js/certificate.js"></script>
+<script src="js/darta.js"></script>
 </body>
 </html>
