@@ -44,6 +44,28 @@
     .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
     .form-group input:focus { border-color: #2563eb; ring: 2px solid #93c5fd; }
 
+    /* पासवर्ड र आँखा आइकनको र्यापर */
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .password-wrapper input {
+      padding-right: 40px;
+    }
+    .password-toggle-btn {
+      position: absolute;
+      right: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #64748b;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    .password-toggle-btn:hover {
+      color: #1e3a8a;
+    }
+
     .btn-submit {
       width: 100%; background: #1e3a8a; color: #ffffff; border: none;
       padding: 11px; border-radius: 6px; font-size: 15px; font-weight: 700;
@@ -99,7 +121,10 @@
 
         <div class="form-group">
           <label>पासवर्ड (Password) *</label>
-          <input type="password" id="input_password" placeholder="Password" required>
+          <div class="password-wrapper">
+            <input type="password" id="input_password" placeholder="Password" required>
+            <span class="password-toggle-btn" id="eyeIcon" onclick="togglePasswordVisibility()" title="पासवर्ड देखाउनुहोस् / लुकाउनुहोस्">👁️</span>
+          </div>
         </div>
 
         <button type="submit" class="btn-submit">🔑 लगइन गर्नुहोस्</button>
@@ -116,8 +141,7 @@
 
   <script>
     // =========================================================================
-    // १. सबै कम्प्युटरमा स्वतः चल्ने स्थायी खाता सूची (Universal Staff Accounts)
-    // यहाँ तपाईंले जुनसुकै कर्मचारीको ID/Password थपिदिनुभयो भने त्यो सबै कम्प्युटरमा चल्छ
+    // सबै कम्प्युटरमा स्वतः चल्ने स्थायी खाता सूची (Universal Global Accounts)
     // =========================================================================
     const globalStaffList = [
       {
@@ -149,6 +173,20 @@
       }
     ];
 
+    // पासवर्ड हेर्ने/लुकाउने फंक्शन
+    function togglePasswordVisibility() {
+      const pwdField = document.getElementById("input_password");
+      const eyeIcon = document.getElementById("eyeIcon");
+
+      if (pwdField.type === "password") {
+        pwdField.type = "text";
+        eyeIcon.textContent = "🙈";
+      } else {
+        pwdField.type = "password";
+        eyeIcon.textContent = "👁️";
+      }
+    }
+
     function handleUserLogin() {
       const idInput = document.getElementById("input_login_id");
       const pwdInput = document.getElementById("input_password");
@@ -159,7 +197,7 @@
 
       errBox.style.display = "none";
 
-      // १. पहिले जुनसुकै कम्प्युटरमा चल्ने ग्लोबल खाता जाँच गर्ने
+      // १. जुनसुकै कम्प्युटरमा चल्ने ग्लोबल खाता जाँच गर्ने
       const matchedGlobal = globalStaffList.find(u => 
         u.login_id.toLowerCase() === id && u.password === pwd
       );
@@ -172,7 +210,7 @@
         return;
       }
 
-      // २. एडमिन प्यानलबाट त्यसै कम्प्युटरमा थपिएका स्थानीय कर्मचारी जाँच गर्ने
+      // २. एडमिन प्यानलबाट स्थानीय कम्प्युटरमा थपिएका कर्मचारी जाँच गर्ने
       try {
         const rawStaff = localStorage.getItem("mayadevi_staff_list");
         const localList = rawStaff ? JSON.parse(rawStaff) : [];
