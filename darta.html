@@ -19,7 +19,7 @@
       --gov-blue: #07192f;
       --gov-navy: #1e3a8a;
       
-      /* Light Mode: Clean White & Royal Blue */
+      /* Light Mode */
       --bg: #f1f5f9;
       --card-bg: #ffffff;
       --input-bg: #ffffff;
@@ -29,7 +29,7 @@
       --print-font: 'Kokila', 'Kalimati', 'Mukta', serif;
     }
 
-    /* Dark Mode: Royal Deep Navy Blue & Clean White */
+    /* Dark Mode (शाही नेवी ब्लू और सफेद) */
     body.dark-mode {
       --bg: #07192f;
       --card-bg: #0d233e;
@@ -62,7 +62,6 @@
 
     .header-controls { display: flex; align-items: center; gap: 10px; }
     
-    /* नेपाली घडी तथा मिति बक्स (विहान/दिउँसो/साँझ/राती सहित) */
     .header-clock-box {
       text-align: right;
       background: rgba(255, 255, 255, 0.1);
@@ -103,7 +102,7 @@
       flex: 1;
     }
 
-    /* Left Input Card (Royal Dark Blue & Clean White) */
+    /* Left Input Card */
     .entry-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -182,7 +181,7 @@
     .preview-title { font-size: 13.5px; font-weight: 800; color: #ffffff; margin-bottom: 8px; width: 100%; max-width: 210mm; }
 
     /* ==========================================================================
-       A4 CERTIFICATE ENGINE (FIT TO PAGE & AUTO CALIBRATED)
+       A4 CERTIFICATE ENGINE
        ========================================================================== */
     .a4-sheet {
       background-color: #ffffff !important;
@@ -235,21 +234,22 @@
     .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
     .cert-motto { font-size: 13.5px; font-weight: 800; line-height: 1; }
 
+    /* बड़ा लोगो और बड़ा कार्यालय हेडर */
     .cert-header {
       display: flex; align-items: center; justify-content: space-between;
       border-bottom: 2px solid var(--gov-crimson); padding-bottom: 2px; margin-bottom: 2px;
     }
     .logo-box-left, .logo-box-right {
-      width: 46px !important; height: 46px !important; flex: 0 0 46px !important;
+      width: 58px !important; height: 58px !important; flex: 0 0 58px !important;
       display: flex; align-items: center; justify-content: center;
     }
     .logo-box-left img, .logo-box-right img {
-      width: 46px !important; height: 46px !important; max-width: 46px !important; max-height: 46px !important; object-fit: contain !important;
+      width: 58px !important; height: 58px !important; max-width: 58px !important; max-height: 58px !important; object-fit: contain !important;
     }
     .header-titles { text-align: center; flex: 1; }
-    .header-titles .gov-sub { font-size: 13.5px; font-weight: 700; line-height: 1; }
-    .header-titles .palika-title { font-size: 24px; font-weight: 800; line-height: 1.1; }
-    .header-titles .office-title { font-size: 17px; font-weight: 800; line-height: 1; }
+    .header-titles .gov-sub { font-size: 13px; font-weight: 700; line-height: 1; }
+    .header-titles .palika-title { font-size: 21px; font-weight: 800; line-height: 1.1; }
+    .header-titles .office-title { font-size: 26px !important; font-weight: 900 !important; line-height: 1.15; }
     .header-titles .address-text { font-size: 13.5px; font-weight: 700; margin-top: 1px; }
 
     .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 2px 0; }
@@ -267,7 +267,7 @@
     }
     .cert-intro { font-size: 13.5px; line-height: 1.3; text-align: justify; margin-bottom: 3px; font-weight: 600; }
 
-    /* Page 1 Tables (१०–११pt / १३.५px ठूलो फन्ट) */
+    /* Table Styles */
     .cert-table, .floor-detail-table {
       width: 100%; border-collapse: collapse; font-size: 13.5px !important; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
     }
@@ -292,9 +292,9 @@
       padding: 4px 6px !important;
     }
 
-    /* हस्ताक्षर ब्लक ३ स्टेप तल (28px) */
+    /* Signatures: 2/3 Steps Down */
     .cert-signatures-block {
-      margin-top: 28px !important;
+      margin-top: 26px !important;
       margin-bottom: 2px !important;
     }
     .officers-signature-grid {
@@ -302,7 +302,7 @@
       grid-template-columns: 32% 32% 36%;
       gap: 6px;
       align-items: flex-end;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .sign-item { text-align: center; }
     .sign-space-area { height: 20px; }
@@ -321,15 +321,16 @@
     .owner-dots { font-size: 13px; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: bold; }
     .owner-label { font-size: 13.5px !important; font-weight: 800; }
 
+    /* बड़ा QR कोड (64px) */
     #cert_qr_div {
-      width: 46px !important; height: 46px !important; border: 1px solid #94a3b8;
+      width: 64px !important; height: 64px !important; border: 1px solid #94a3b8;
       border-radius: 4px; background: #fff !important; display: flex !important;
       align-items: center !important; justify-content: center !important; overflow: hidden !important;
     }
-    #cert_qr_div img { width: 42px !important; height: 42px !important; }
-    .qr-caption { font-size: 8px; font-weight: 700; text-align: center; }
+    #cert_qr_div img { width: 60px !important; height: 60px !important; }
+    .qr-caption { font-size: 8.5px; font-weight: 700; text-align: center; margin-top: 2px; }
 
-    /* Official Clean Footer */
+    /* Official Footer */
     .cert-footer {
       border-top: 1.5px solid var(--gov-crimson) !important;
       padding-top: 3px !important;
@@ -341,7 +342,7 @@
     }
 
     /* ==========================================================================
-       PAGE 2: KABULIYAT (२ स्टेप ठूलो) & 6-ROW NAMSARI TABLE
+       PAGE 2: KABULIYAT & 6-ROW NAMSARI TABLE
        ========================================================================== */
     .a4-sheet.back-page {
       page-break-before: always !important;
@@ -352,7 +353,6 @@
     .kabuliyat-title { text-align: center; font-size: 18px; font-weight: 800; text-decoration: underline; margin-bottom: 2px; }
     .shriman-title { text-align: left; font-size: 15px; font-weight: 800; margin-bottom: 2px; }
     
-    /* कबुलियतनामा २ स्टेप ठूलो (15.5px) */
     .kabuliyat-body {
       font-size: 15.5px !important;
       line-height: 1.55 !important;
@@ -370,7 +370,7 @@
     .thumb-label { font-size: 11.5px; font-weight: 800; margin-top: 1px; }
     .iti-date-text { font-size: 13px; font-weight: 800; margin-top: 2px; }
 
-    /* Namsari Section (पूरा ६ वटा बक्सहरू) */
+    /* Namsari 6 Rows */
     .namsari-section {
       border: 1.2px solid #334155;
       padding: 5px 8px;
@@ -384,7 +384,7 @@
     .namsari-photo-box { width: 22mm; height: 23mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #64748b; }
 
     /* ==========================================================================
-       PRINT MEDIA RULES (KOKILA FONT & STRICT 2-PAGE LOCK)
+       PRINT MEDIA RULES
        ========================================================================== */
     @media print {
       @page {
@@ -469,7 +469,6 @@
         </div>
       </div>
       <div class="header-controls">
-        <!-- नेपाली समय (विहान, दिउँसो, साँझ, राती सहित) -->
         <div class="header-clock-box">
           <div class="h-date" id="liveNepaliHeaderDate">मिति: लोड हुँदैछ...</div>
           <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
@@ -479,8 +478,7 @@
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
         
-        <!-- Dark / Light Theme Toggle -->
-        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="डार्क (शाही निलो) / लाइट मोड">☾</button>
+        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="डार्क / लाइट मोड बदल्नुहोस्">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
       </div>
     </div>
@@ -489,7 +487,7 @@
   <!-- Workspace Grid -->
   <main class="workspace-grid">
     
-    <!-- LEFT INPUT SECTION (Royal Dark Blue & Clean White) -->
+    <!-- LEFT INPUT SECTION -->
     <section class="entry-card no-print">
       <h2 class="entry-title">📝 नक्सा विवरण फाराम (१ देखि १८ पूर्ण प्रविष्टि)</h2>
 
@@ -521,7 +519,7 @@
         <div class="form-row"><label>जग्गाको कुल क्षेत्रफल</label><input type="text" id="in_land_area" placeholder="क्षेत्रफल" oninput="updateLivePreview()"></div>
       </div>
 
-      <!-- ६ देखि ९ सम्मका विवरण: ६ नं. लाई लामो खुलाउन मिल्ने गरी मिलाइएको -->
+      <!-- ६ देखि ९ सम्मका विवरण -->
       <div class="form-section-title">६ देखि ९ सम्मका विवरण</div>
       <div class="form-row">
         <label>६) स्विकृत क्षेत्रफल तथा कित्ता विवरण (लामो खुलाउन मिल्ने) *</label>
@@ -661,6 +659,7 @@
               <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
             </div>
 
+            <!-- बड़ा लोगो और बड़ा कार्यालय हेडर -->
             <header class="cert-header">
               <div class="logo-box-left">
                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल निशान छाप" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -697,7 +696,7 @@
               श्री <strong id="out_intro_name">....................</strong> ले मायादेवी गा.पा. वडा नं. <strong id="out_intro_ward">०१</strong> मा तपसिल बमोजिमको घर सँरचना निर्माण गर्नु भएकोले घर नक्सा अभिलेखिकरण प्रमाण पत्र प्रदान गरीएको छ।
             </div>
 
-            <!-- १ देखि ९ सम्मको मुख्य विवरण तालिका (६ नं. लाई छुट्टै फराकिलो रो सहित) -->
+            <!-- १ देखि ९ सम्मको मुख्य तालिका (६ नं. छुट्टै फराकिलो रो) -->
             <table class="cert-table">
               <tr>
                 <td class="lbl">१) जग्गा धनीको नामथर</td>
@@ -717,7 +716,6 @@
                   साविक <span id="out_sabik">....................</span> हाल मायादेवी गा.पा. वडा नं. <span id="out_ward">०१</span> कि.नं. <span id="out_kitta">....</span> क्षेत्रफल <span id="out_area">....</span>
                 </td>
               </tr>
-              <!-- ६ नम्बर: धेरै विवरण अटाउने गरी पूरै ३ वटा कोलम ओगट्ने छुट्टै रो -->
               <tr>
                 <td class="lbl">६) स्विकृत क्षेत्रफलः</td>
                 <td colspan="3" class="val" id="out_approved_area_full" style="line-height: 1.35; padding: 3px 5px !important;">
@@ -742,7 +740,7 @@
               </tr>
             </table>
 
-            <!-- १० नम्बर: तलागत निर्माण क्षेत्रफल तालिका -->
+            <!-- १० नम्बर: तलागत तालिका -->
             <table class="floor-detail-table">
               <thead>
                 <tr>
@@ -792,7 +790,7 @@
               </tr>
             </table>
 
-            <!-- SIGNATURES (२/३ स्टेप तल झारिएको) -->
+            <!-- हस्ताक्षर ब्लक (२/३ स्टेप तल) -->
             <div class="cert-signatures-block">
               <div class="officers-signature-grid">
                 <div class="sign-item">
@@ -824,6 +822,7 @@
                 </div>
               </div>
 
+              <!-- बड़ा QR कोड सहित बायाँ-दायाँ अलाइनमेन्ट -->
               <div class="bottom-owner-qr-flex">
                 <div class="owner-sign-container">
                   <div class="owner-space-area"></div>
@@ -838,7 +837,6 @@
             </div>
           </div>
 
-          <!-- Official Clean Footer -->
           <footer class="cert-footer">
             सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
             वेभ साइटः- mayadevimunrupandehi.gov.np
@@ -854,7 +852,6 @@
             <section class="kabuliyat-section">
               <h2 class="kabuliyat-title">कबुलियतनामा</h2>
               <div class="shriman-title">श्रीमान्,</div>
-              <!-- कबुलियतनामा: २ स्टेप ठूलो -->
               <p class="kabuliyat-body">
                 मैले/हामिले बनाएको घर सँरचना ठिक साँचो छ, कानुन विपरित भए गरेमा वा सरकारी, सार्वजनिक वा व्यक्ति विशेषको
                 जग्गा अतिक्रमण गरी बनाएको ठहरिएमा, बाटो, कुलो वा नदीको अधिकार क्षेत्रमा निर्माण भएको ठहर भएमा वा कानुन
@@ -880,7 +877,6 @@
                     </div>
                     <span class="thumb-label">औंठा छाप</span>
                   </div>
-                  <!-- अटोमेटिक मिति र रोज (वि.सं. अनुसार असोज महिना र ५ रोज) -->
                   <div class="iti-date-text">
                     ईति सम्बत <span id="iti_year">२०८३</span> साल <span id="iti_month">असोज</span> महिना <span id="iti_day">०८</span> गते <span id="iti_roj">५</span> रोज शुभम्।
                   </div>
@@ -888,7 +884,7 @@
               </div>
             </section>
 
-            <!-- नामसारी विवरण: पूरा ६ वटा बक्सहरू (Fit to Page) -->
+            <!-- 6 Rows Namsari Table -->
             <section class="namsari-section">
               <div class="namsari-header-title">नामसारी विवरण</div>
               <table class="namsari-table">
@@ -902,7 +898,6 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Row 1 -->
                   <tr>
                     <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
                     <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
@@ -910,7 +905,6 @@
                     <td>नामथर :<br>दस्तखतः</td>
                     <td>नामथर :<br>दस्तखतः</td>
                   </tr>
-                  <!-- Row 2 -->
                   <tr>
                     <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
                     <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
@@ -918,7 +912,6 @@
                     <td>नामथर :<br>दस्तखतः</td>
                     <td>नामथर :<br>दस्तखतः</td>
                   </tr>
-                  <!-- Row 3 -->
                   <tr>
                     <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
                     <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
@@ -926,7 +919,6 @@
                     <td>नामथर :<br>दस्तखतः</td>
                     <td>नामथर :<br>दस्तखतः</td>
                   </tr>
-                  <!-- Row 4 -->
                   <tr>
                     <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
                     <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
@@ -934,7 +926,6 @@
                     <td>नामथर :<br>दस्तखतः</td>
                     <td>नामथर :<br>दस्तखतः</td>
                   </tr>
-                  <!-- Row 5 -->
                   <tr>
                     <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
                     <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
@@ -942,7 +933,6 @@
                     <td>नामथर :<br>दस्तखतः</td>
                     <td>नामथर :<br>दस्तखतः</td>
                   </tr>
-                  <!-- Row 6 -->
                   <tr>
                     <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
                     <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
@@ -977,7 +967,6 @@
       "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"
     ];
 
-    // Live Clock with Nepali Periods (विहान, दिउँसो, साँझ, राती)
     function updateClock() {
       const now = new Date();
       const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
@@ -1003,7 +992,6 @@
       document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(displayHours).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
     }
 
-    // Auto calculate Nepali Iti Date and Roj
     function calculateNepaliItiDate(bsDateStr) {
       if (!bsDateStr) return;
 
@@ -1030,7 +1018,6 @@
         const dayEl = document.getElementById("iti_day");
         if (dayEl) dayEl.textContent = toNepNum(String(d).padStart(2, '0'));
 
-        // Reference Base: 2083-06-08 = बिहीबार (५ रोज)
         const bsDaysInMonth = [0, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30];
         const refY = 2083, refM = 6, refD = 8, refRoj = 5;
         let diffDays = (y - refY) * 365 + (d - refD);
@@ -1046,7 +1033,6 @@
       }
     }
 
-    // Theme Toggle (Royal Navy Blue & Clean White)
     function toggleTheme() {
       document.body.classList.toggle("dark-mode");
       const isDark = document.body.classList.contains("dark-mode");
@@ -1075,7 +1061,6 @@
       const inDate = getVal("in_date", "२०८३/०६/०८");
       document.getElementById("out_date").textContent = inDate;
 
-      // Auto calculate Iti Date on Back Page
       calculateNepaliItiDate(inDate);
 
       const owner = getVal("in_owner_name", "....................");
@@ -1101,7 +1086,6 @@
       document.getElementById("out_sabik").textContent = getVal("in_sabik");
       document.getElementById("out_area").textContent = getVal("in_land_area");
 
-      // ६ नम्बर: लामो खुलाउन मिल्ने स्विकृत क्षेत्रफल तथा कित्ता विवरण
       const inAppr = document.getElementById("in_approved_area").value.trim();
       if (inAppr) {
         document.getElementById("out_approved_area_full").textContent = inAppr;
@@ -1127,7 +1111,6 @@
       document.getElementById("out_septic").textContent = getVal("in_septic", "भएको");
       document.getElementById("out_dec_date").textContent = getVal("in_dec_date", "२०८३/०६/०६");
 
-      // Staff Roles
       document.getElementById("out_eng1").textContent = getVal("in_eng1", "....................");
       document.getElementById("out_eng1_role").textContent = document.getElementById("in_eng1_role").value;
 
@@ -1140,7 +1123,6 @@
       generateQR();
     }
 
-    // 10 Number Total Area
     function calcTotalArea() {
       const b1 = parseFloat(document.getElementById("in_b1").value) || 0;
       const b2 = parseFloat(document.getElementById("in_b2").value) || 0;
@@ -1163,6 +1145,7 @@
       document.getElementById("out_third").textContent = f3 > 0 ? toNepNum(f3.toFixed(2)) : "-";
     }
 
+    // बड़ा QR कोड जनरेटर (60px)
     function generateQR() {
       const qrDiv = document.getElementById("cert_qr_div");
       if (!qrDiv) return;
@@ -1172,7 +1155,7 @@
       const kitta = document.getElementById("in_kitta").value || '१२३';
       const qrData = encodeURIComponent(`मायादेवी गाउँपालिका\nनक्सा दर्ता नं: ${darta}\nघरधनी: ${owner}\nकित्ता: ${kitta}`);
 
-      qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrData}" alt="QR Code" style="width:42px; height:42px; display:block;">`;
+      qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${qrData}" alt="QR Code" style="width:60px; height:60px; display:block;">`;
     }
 
     function loadPhoto(e) {
