@@ -19,7 +19,7 @@
       --gov-blue: #07192f;
       --gov-navy: #1e3a8a;
       
-      /* Light Mode: Clean White & Royal Blue */
+      /* Light Mode */
       --bg: #f1f5f9;
       --card-bg: #ffffff;
       --input-bg: #ffffff;
@@ -29,7 +29,7 @@
       --print-font: 'Kokila', 'Kalimati', 'Mukta', serif;
     }
 
-    /* Dark Mode: Royal Deep Navy Blue & Clean White */
+    /* Dark Mode (शाही निलो र सेतो) */
     body.dark-mode {
       --bg: #07192f;
       --card-bg: #0d233e;
@@ -41,23 +41,11 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
-    /* Top Strip */
-    .gov-top-bar {
-      background: var(--gov-crimson);
-      color: #ffffff;
-      padding: 3px 20px;
-      font-size: 11.5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 600;
-    }
-
-    /* Single Header */
+    /* Single Government Header */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
-      border-bottom: 2px solid var(--gov-crimson);
-      padding: 8px 20px;
+      border-bottom: 3px solid var(--gov-crimson);
+      padding: 10px 20px;
       color: #ffffff;
     }
     .header-inner {
@@ -68,18 +56,31 @@
       justify-content: space-between;
     }
     .brand-left { display: flex; align-items: center; gap: 12px; }
-    .brand-left img { height: 48px !important; width: auto !important; }
-    .brand-text h1 { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.15; }
-    .brand-text p { font-size: 12px; color: #cbd5e1; }
+    .brand-left img { height: 50px !important; width: auto !important; }
+    .brand-text h1 { font-size: 19px; font-weight: 800; color: #fff; line-height: 1.2; }
+    .brand-text p { font-size: 12.5px; color: #cbd5e1; }
 
-    .header-controls { display: flex; align-items: center; gap: 8px; }
+    .header-controls { display: flex; align-items: center; gap: 10px; }
+    
+    /* हेडरभित्रको नेपाली घडी तथा मिति बक्स */
+    .header-clock-box {
+      text-align: right;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      line-height: 1.25;
+    }
+    .header-clock-box .h-date { font-size: 11.5px; color: #cbd5e1; font-weight: 600; }
+    .header-clock-box .h-time { font-size: 13px; color: #ffffff; font-weight: 800; }
+
     .nav-btn {
       background: #0d233e;
       color: #ffffff;
       text-decoration: none;
       font-size: 12.5px;
       font-weight: 700;
-      padding: 5px 12px;
+      padding: 6px 12px;
       border-radius: 4px;
       border: 1px solid #1e3a8a;
       display: inline-flex;
@@ -87,7 +88,7 @@
       cursor: pointer;
     }
     .nav-btn:hover, .nav-btn.active { background: #2563eb; border-color: #3b82f6; }
-    .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 14px !important; padding: 4px 10px !important; }
+    .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 14px !important; padding: 5px 10px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
     /* Workspace */
@@ -102,7 +103,7 @@
       flex: 1;
     }
 
-    /* Left Input Card (Royal Dark Blue & Clean White) */
+    /* Left Input Card */
     .entry-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -266,28 +267,34 @@
     }
     .cert-intro { font-size: 13.5px; line-height: 1.3; text-align: justify; margin-bottom: 3px; font-weight: 600; }
 
-    /* Page 1 Tables */
+    /* Page 1 Tables (१०–११pt / १३.५px ठूलो फन्ट) */
     .cert-table, .floor-detail-table {
-      width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
+      width: 100%; border-collapse: collapse; font-size: 13.5px !important; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
     }
     .cert-table td, .cert-table th, .floor-detail-table td, .floor-detail-table th {
-      padding: 2px 4px; border: 1px solid #334155; vertical-align: middle; line-height: 1.18; background: transparent !important;
+      padding: 2.5px 5px !important; border: 1.2px solid #1e293b !important; vertical-align: middle; line-height: 1.22; background: transparent !important; color: #000000 !important;
     }
-    .cert-table td.lbl { font-weight: 800; width: 25%; }
-    .cert-table td.val { font-weight: 700; width: 25%; }
+    .cert-table td.lbl { font-weight: 800; width: 26%; }
+    .cert-table td.val { font-weight: 700; width: 24%; }
     .floor-detail-table th { font-weight: 800; text-align: left; }
     
-    /* 10 Number Total Area */
     .total-row td {
       font-weight: 800 !important;
-      font-size: 13.5px !important;
+      font-size: 14px !important;
       background: #f1f5f9 !important;
       color: #000000 !important;
     }
 
-    /* Signatures: 2 Steps Down */
+    .legal-notice-cell {
+      font-size: 12.5px !important;
+      line-height: 1.35 !important;
+      font-weight: 700 !important;
+      padding: 4px 6px !important;
+    }
+
+    /* हस्ताक्षर ब्लक ३ स्टेप तल (28px) */
     .cert-signatures-block {
-      margin-top: 18px !important;
+      margin-top: 28px !important;
       margin-bottom: 2px !important;
     }
     .officers-signature-grid {
@@ -295,39 +302,46 @@
       grid-template-columns: 32% 32% 36%;
       gap: 6px;
       align-items: flex-end;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
     .sign-item { text-align: center; }
-    .sign-space-area { height: 16px; }
-    .sign-dotted-line { border-top: 1px dotted #1e293b; width: 75%; margin: 0 auto 3px auto; }
-    .sign-title-text { font-size: 12.5px; font-weight: 700; line-height: 1.25; }
-    .sign-title-text strong { font-size: 13.5px; font-weight: 800; }
+    .sign-space-area { height: 20px; }
+    .sign-dotted-line { border-top: 1.2px dotted #1e293b; width: 75%; margin: 0 auto 3px auto; }
+    .sign-title-text { font-size: 13px !important; font-weight: 700; line-height: 1.3; }
+    .sign-title-text strong { font-size: 14px !important; font-weight: 800; }
 
-    .bottom-owner-qr-flex { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #cbd5e1; padding-top: 3px; }
-    .owner-dots { font-size: 12px; letter-spacing: 0.5px; margin-bottom: 1px; font-weight: bold; }
-    .owner-label { font-size: 13px; font-weight: 800; }
+    .bottom-owner-qr-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid #cbd5e1;
+      padding-top: 4px;
+    }
+    .owner-space-area { height: 10px; }
+    .owner-dots { font-size: 13px; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: bold; }
+    .owner-label { font-size: 13.5px !important; font-weight: 800; }
 
     #cert_qr_div {
-      width: 44px !important; height: 44px !important; border: 1px solid #94a3b8;
+      width: 46px !important; height: 46px !important; border: 1px solid #94a3b8;
       border-radius: 4px; background: #fff !important; display: flex !important;
       align-items: center !important; justify-content: center !important; overflow: hidden !important;
     }
-    #cert_qr_div img { width: 40px !important; height: 40px !important; }
+    #cert_qr_div img { width: 42px !important; height: 42px !important; }
     .qr-caption { font-size: 8px; font-weight: 700; text-align: center; }
 
-    /* Official Footer */
+    /* Official Clean Footer */
     .cert-footer {
       border-top: 1.5px solid var(--gov-crimson) !important;
-      padding-top: 2px !important;
+      padding-top: 3px !important;
       text-align: center !important;
       font-size: 11px !important;
       font-weight: 700 !important;
       background: transparent !important;
-      line-height: 1.2 !important;
+      line-height: 1.25 !important;
     }
 
     /* ==========================================================================
-       PAGE 2: KABULIYAT (2 STEPS LARGER) & 6-ROW EXPANDED NAMSARI TABLE
+       PAGE 2: KABULIYAT (२ स्टेप ठूलो) & 6-ROW NAMSARI TABLE
        ========================================================================== */
     .a4-sheet.back-page {
       page-break-before: always !important;
@@ -338,7 +352,7 @@
     .kabuliyat-title { text-align: center; font-size: 18px; font-weight: 800; text-decoration: underline; margin-bottom: 2px; }
     .shriman-title { text-align: left; font-size: 15px; font-weight: 800; margin-bottom: 2px; }
     
-    /* कबुलियतनामा: 2 स्टेप बड़ा */
+    /* कबुलियतनामा २ स्टेप ठूलो (15.5px) */
     .kabuliyat-body {
       font-size: 15.5px !important;
       line-height: 1.55 !important;
@@ -356,7 +370,7 @@
     .thumb-label { font-size: 11.5px; font-weight: 800; margin-top: 1px; }
     .iti-date-text { font-size: 13px; font-weight: 800; margin-top: 2px; }
 
-    /* Namsari Section: 6 Rows */
+    /* Namsari Section (पूरा ६ वटा बक्सहरू) */
     .namsari-section {
       border: 1.2px solid #334155;
       padding: 5px 8px;
@@ -388,7 +402,7 @@
         -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
       }
 
-      .gov-top-bar, .gov-header, .entry-card, .preview-title, .form-actions, .site-footer, .no-print {
+      .gov-header, .entry-card, .preview-title, .form-actions, .site-footer, .no-print {
         display: none !important; visibility: hidden !important; height: 0 !important;
       }
 
@@ -444,13 +458,7 @@
 </head>
 <body>
 
-  <!-- Top Nepal Gov Strip -->
-  <div class="gov-top-bar no-print">
-    <div>नेपाल सरकार | स्थानीय सरकार कार्यप्रणाली (GWIMS / e-BPS Portal)</div>
-    <div id="liveNepaliClock">लोड हुँदैछ...</div>
-  </div>
-
-  <!-- Single Government Header -->
+  <!-- Single Government Header (रातो अतिरिक्त स्ट्रिप हटाइयो) -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
@@ -461,12 +469,18 @@
         </div>
       </div>
       <div class="header-controls">
+        <!-- नेपाली समय (विहान, दिउँसो, साँझ, राती सहित) -->
+        <div class="header-clock-box">
+          <div class="h-date" id="liveNepaliHeaderDate">मिति: लोड हुँदैछ...</div>
+          <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
+        </div>
+
         <a href="darta.html" class="nav-btn active">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
         
         <!-- Dark / Light Theme Toggle -->
-        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="डार्क / लाइट मोड बदल्नुहोस्">☾</button>
+        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="डार्क (शाही निलो) / लाइट मोड">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
       </div>
     </div>
@@ -699,7 +713,7 @@
               </tr>
               <tr>
                 <td class="lbl">८) भवनको वर्गिकरणः</td>
-                <td class="val"><span id="out_b_class">(ख)</span> | स्ट्रक्चरलः <span id="out_struct">फ्रेम स्ट्रक्चर</span></td>
+                <td class="val"><span id="out_b_class">(ख)</span> &nbsp;|&nbsp; स्ट्रक्चरलः <span id="out_struct">फ्रेम स्ट्रक्चर</span></td>
                 <td class="lbl">९) निर्माण सम्पन्न मितिः</td>
                 <td class="val" id="out_comp_date">....</td>
               </tr>
@@ -721,7 +735,6 @@
                 <tr><td>(ग) पहिलो तला</td><td style="text-align:center;" id="out_first">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
                 <tr><td>(घ) दोश्रो तला</td><td style="text-align:center;" id="out_second">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
                 <tr><td>(ङ) तेश्रो तला</td><td style="text-align:center;" id="out_third">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
-                <!-- १० Number Total Area -->
                 <tr class="total-row">
                   <td>१०) जम्मा क्षेत्रफलः</td>
                   <td style="text-align:center;"><strong id="out_total">०.००</strong></td>
@@ -748,14 +761,14 @@
                 <td class="lbl">१६) ढल, सेप्टिक ट्याङ्कः</td><td colspan="3" class="val" id="out_septic">भएको</td>
               </tr>
               <tr>
-                <td colspan="4" style="font-size:12.5px; line-height:1.28; font-weight:700;">
+                <td colspan="4" class="legal-notice-cell">
                   १७) उल्लेखित सँरचना निर्माण भएको जग्गामा कुनैपनि किसिमको खरखिचोला, दावीविरोध आदी भएगरेमा सोको जवाफदेही स्वयम् घरधनी हुने।<br>
                   १८) मिति <strong id="out_dec_date">२०८३/०६/०६</strong> को निर्णयानुसार सँरचनागत सुरक्षाको जिम्मेवारी स्वयम् घरधनीमा रहनेगरी घर नक्सा अभिलेखिकरण गरीएको।
                 </td>
               </tr>
             </table>
 
-            <!-- SIGNATURES (2 Steps Down) -->
+            <!-- SIGNATURES (२/३ स्टेप तल झारिएको) -->
             <div class="cert-signatures-block">
               <div class="officers-signature-grid">
                 <div class="sign-item">
@@ -789,6 +802,7 @@
 
               <div class="bottom-owner-qr-flex">
                 <div class="owner-sign-container">
+                  <div class="owner-space-area"></div>
                   <div class="owner-dots">................................................</div>
                   <div class="owner-label">घरधनी / प्रतिनिधिको सहिः</div>
                 </div>
@@ -816,7 +830,7 @@
             <section class="kabuliyat-section">
               <h2 class="kabuliyat-title">कबुलियतनामा</h2>
               <div class="shriman-title">श्रीमान्,</div>
-              <!-- कबुलियतनामा: 2 स्टेप बड़ा -->
+              <!-- कबुलियतनामा: २ स्टेप ठूलो -->
               <p class="kabuliyat-body">
                 मैले/हामिले बनाएको घर सँरचना ठिक साँचो छ, कानुन विपरित भए गरेमा वा सरकारी, सार्वजनिक वा व्यक्ति विशेषको
                 जग्गा अतिक्रमण गरी बनाएको ठहरिएमा, बाटो, कुलो वा नदीको अधिकार क्षेत्रमा निर्माण भएको ठहर भएमा वा कानुन
@@ -842,7 +856,7 @@
                     </div>
                     <span class="thumb-label">औंठा छाप</span>
                   </div>
-                  <!-- ऑटोमेटिक मिति और रोज (असोज महिना र ५ रोज) -->
+                  <!-- अटोमेटिक मिति र रोज (वि.सं. अनुसार असोज महिना र ५ रोज) -->
                   <div class="iti-date-text">
                     ईति सम्बत <span id="iti_year">२०८३</span> साल <span id="iti_month">असोज</span> महिना <span id="iti_day">०८</span> गते <span id="iti_roj">५</span> रोज शुभम्।
                   </div>
@@ -850,7 +864,7 @@
               </div>
             </section>
 
-            <!-- नामसारी विवरण: 6 बॉक्स (Fit to Page) -->
+            <!-- नामसारी विवरण: पूरा ६ वटा बक्सहरू (Fit to Page) -->
             <section class="namsari-section">
               <div class="namsari-header-title">नामसारी विवरण</div>
               <table class="namsari-table">
@@ -939,14 +953,31 @@
       "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"
     ];
 
-    // Live Clock
+    // Live Clock with Nepali Periods (विहान, दिउँसो, साँझ, राती)
     function updateClock() {
       const now = new Date();
       const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
-      let h = now.getHours(); const m = String(now.getMinutes()).padStart(2,"0"); const s = String(now.getSeconds()).padStart(2,"0");
-      const ampm = h >= 12 ? "PM" : "AM"; h = h % 12 || 12;
+      
+      let h = now.getHours();
+      const m = String(now.getMinutes()).padStart(2, "0");
+      const s = String(now.getSeconds()).padStart(2, "0");
 
-      document.getElementById("liveNepaliClock").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]}) | समय: ${toNepNum(String(h).padStart(2,"0"))}:${toNepNum(m)}:${toNepNum(s)} ${ampm}`;
+      // नेपाली प्रहर निर्धारण
+      let nepPeriod = "विहान";
+      if (h >= 12 && h < 17) {
+        nepPeriod = "दिउँसो";
+      } else if (h >= 17 && h < 20) {
+        nepPeriod = "साँझ";
+      } else if (h >= 20 || h < 4) {
+        nepPeriod = "राती";
+      } else {
+        nepPeriod = "विहान";
+      }
+
+      const displayHours = h % 12 || 12;
+
+      document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
+      document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(displayHours).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
     }
 
     // Auto calculate Nepali Iti Date and Roj
@@ -976,7 +1007,7 @@
         const dayEl = document.getElementById("iti_day");
         if (dayEl) dayEl.textContent = toNepNum(String(d).padStart(2, '0'));
 
-        // Reference Base: 2083-06-08 = Thursday (Roj 5)
+        // Reference Base: 2083-06-08 = बिहीबार (५ रोज)
         const bsDaysInMonth = [0, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30];
         const refY = 2083, refM = 6, refD = 8, refRoj = 5;
         let diffDays = (y - refY) * 365 + (d - refD);
@@ -992,7 +1023,7 @@
       }
     }
 
-    // Theme Toggle
+    // Theme Toggle (Royal Navy Blue & Clean White)
     function toggleTheme() {
       document.body.classList.toggle("dark-mode");
       const isDark = document.body.classList.contains("dark-mode");
@@ -1111,7 +1142,7 @@
       const kitta = document.getElementById("in_kitta").value || '१२३';
       const qrData = encodeURIComponent(`मायादेवी गाउँपालिका\nनक्सा दर्ता नं: ${darta}\nघरधनी: ${owner}\nकित्ता: ${kitta}`);
 
-      qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrData}" alt="QR Code" style="width:40px; height:40px; display:block;">`;
+      qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrData}" alt="QR Code" style="width:42px; height:42px; display:block;">`;
     }
 
     function loadPhoto(e) {
