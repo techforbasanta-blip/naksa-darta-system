@@ -156,15 +156,20 @@
 
   <script>
     function handleUserLogin() {
-      const id = document.getElementById("input_login_id").value.trim();
-      const pwd = document.getElementById("input_password").value.trim();
+      const idInput = document.getElementById("input_login_id");
+      const pwdInput = document.getElementById("input_password");
       const errBox = document.getElementById("loginErrorMsg");
+
+      if (!idInput || !pwdInput) return;
+
+      const id = idInput.value.trim().toLowerCase();
+      const pwd = pwdInput.value.trim();
 
       errBox.style.display = "none";
       errBox.textContent = "";
 
-      // १. सुपरएडमिन खाता प्रमाणीकरण
-      if (id.toLowerCase() === "superadmin" && pwd === "Admin@2083") {
+      // १. सुपरएडमिन सिधै लगइन
+      if (id === "superadmin" && pwd === "Admin@2083") {
         const superUser = {
           id: 1,
           full_name: "सुपर एडमिन",
@@ -179,30 +184,34 @@
         return;
       }
 
-      // २. एडमिन प्यानलबाट थपिएका कर्मचारीहरूको प्रमाणीकरण
+      // २. एडमिन प्यानलबाट बनाइएका कर्मचारीहरू लगइन
       try {
-        const staffList = JSON.parse(localStorage.getItem("mayadevi_staff_list")) || [];
-        const user = staffList.find(u => 
-          u.login_id && u.login_id.toString().trim().toLowerCase() === id.toLowerCase() &&
-          u.password && u.password.toString().trim() === pwd
+        const rawStaff = localStorage.getItem("mayadevi_staff_list");
+        const staffList = rawStaff ? JSON.parse(rawStaff) : [];
+
+        const matched = staffList.find(u => 
+          u.login_id && 
+          u.login_id.toString().trim().toLowerCase() === id && 
+          u.password && 
+          u.password.toString().trim() === pwd
         );
 
-        if (user) {
+        if (matched) {
           const sessionUser = {
-            id: user.id,
-            full_name: user.full_name,
-            post: user.post,
-            login_id: user.login_id,
-            role: (user.login_id.toLowerCase() === "superadmin") ? "superadmin" : "staff"
+            id: matched.id,
+            full_name: matched.full_name,
+            post: matched.post,
+            login_id: matched.login_id,
+            role: (matched.login_id.toLowerCase() === "superadmin") ? "superadmin" : "staff"
           };
           sessionStorage.setItem("user", JSON.stringify(sessionUser));
           localStorage.setItem("user", JSON.stringify(sessionUser));
-          alert(`स्वागत छ, ${user.full_name}! लगइन सफल भयो।`);
+          alert("स्वागत छ, " + matched.full_name + "! लगइन सफल भयो।");
           window.location.href = "darta.html";
           return;
         }
       } catch (e) {
-        console.error("लगइन प्रक्रियामा त्रुटि:", e);
+        console.error("Login verification error:", e);
       }
 
       // विवरण नमिलेमा
