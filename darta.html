@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>घर नक्सा दर्ता तथा Live A4 Preview | मायादेवी गाउँपालिका</title>
 
-  <!-- Google Fonts Mukta -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -18,13 +17,22 @@
       --gov-red: #b71c1c;
       --primary: #2563eb;
       --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
       --border: #cbd5e1;
       --screen-font: 'Mukta', sans-serif;
       --print-font: 'Kokila', 'Kalimati', 'Mukta', serif;
     }
 
+    body.dark-mode {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --border: #334155;
+    }
+
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
-    body { background: var(--bg); color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; }
+    body { background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.2s, color 0.2s; }
 
     /* Header Styling */
     .system-header {
@@ -41,22 +49,22 @@
       justify-content: space-between;
     }
     .header-left { display: flex; align-items: center; gap: 12px; }
-    .header-left img { height: 48px !important; width: auto !important; max-width: 60px !important; }
+    .header-left img { height: 48px !important; width: auto !important; max-width: 55px !important; }
     .header-brand h1 { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.2; }
     .header-brand p { font-size: 12px; color: #cbd5e1; }
 
-    .header-tools { display: flex; align-items: center; gap: 10px; }
+    .header-tools { display: flex; align-items: center; gap: 8px; }
     .clock-box { text-align: right; font-size: 11.5px; color: #f1f5f9; line-height: 1.2; }
-    .fiscal-badge { background: rgba(255,255,255,0.15); padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; color: #fff; }
+    .fiscal-badge { background: rgba(255,255,255,0.15); padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; color: #fff; }
 
     .header-btn {
       background: #1e293b; color: #fff; border: 1px solid #475569;
-      padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700;
-      cursor: pointer; text-decoration: none; display: inline-flex; align-items: center;
+      padding: 5px 10px; border-radius: 4px; font-size: 12.5px; font-weight: 700;
+      cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
     }
     .header-btn:hover { background: var(--primary); }
 
-    /* Nav Bar */
+    /* Navigation Bar */
     .main-nav { background: #0f172a; border-bottom: 1px solid #334155; padding: 5px 20px; }
     .nav-inner { max-width: 1560px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
     .nav-links { display: flex; gap: 8px; }
@@ -66,51 +74,55 @@
     }
     .nav-links a.active, .nav-links a:hover { background: var(--primary); }
 
-    /* Workspace 2 Column */
+    /* Workspace 2 Column Grid */
     .workspace-grid {
       max-width: 1600px; width: 100%; margin: 10px auto; padding: 0 12px;
       display: grid; grid-template-columns: 480px 1fr; gap: 14px; flex: 1;
     }
 
-    /* Left Entry Card */
+    /* Left Form */
     .entry-card {
-      background: #ffffff; border: 1px solid var(--border); border-radius: 6px;
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px;
       padding: 14px; max-height: 88vh; overflow-y: auto; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     }
     .entry-title {
       font-size: 16px; font-weight: 800; color: var(--gov-blue);
-      border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 10px;
+      border-bottom: 2px solid var(--border); padding-bottom: 4px; margin-bottom: 10px;
     }
+    body.dark-mode .entry-title { color: #60a5fa; }
+
     .form-section-title {
       font-size: 13px; font-weight: 800; color: var(--gov-red);
-      background: #f1f5f9; padding: 3px 6px; border-left: 3px solid var(--gov-red);
+      background: rgba(183, 28, 28, 0.08); padding: 4px 8px; border-left: 3px solid var(--gov-red);
       margin: 10px 0 6px 0; border-radius: 2px;
     }
+    body.dark-mode .form-section-title { color: #f87171; background: rgba(248, 113, 113, 0.12); }
+
     .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px; }
     .form-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 4px; }
     .form-row { margin-bottom: 6px; }
-    .form-row label { display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 2px; }
+    .form-row label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 2px; }
     .form-row input, .form-row select {
-      width: 100%; padding: 5px 8px; border: 1px solid var(--border);
-      border-radius: 4px; font-size: 12.5px; background: #fff;
+      width: 100%; padding: 6px 8px; border: 1px solid var(--border);
+      border-radius: 4px; font-size: 12.5px; background: var(--bg); color: var(--text-main);
     }
 
-    .form-actions { display: flex; gap: 6px; margin-top: 10px; position: sticky; bottom: 0; background: #fff; padding-top: 6px; }
+    .form-actions { display: flex; gap: 6px; margin-top: 10px; position: sticky; bottom: 0; background: var(--card-bg); padding-top: 6px; }
     .btn-act { flex: 1; padding: 8px; border: none; border-radius: 4px; font-weight: 700; font-size: 13px; cursor: pointer; }
     .btn-save { background: #16a34a; color: #fff; }
     .btn-print { background: var(--primary); color: #fff; }
     .btn-reset { background: #64748b; color: #fff; }
 
-    /* Right Preview Wrapper */
+    /* Right Preview Section */
     .preview-card {
-      background: #64748b; border: 1px solid var(--border); border-radius: 6px;
+      background: #475569; border: 1px solid var(--border); border-radius: 6px;
       padding: 14px; overflow-x: auto; display: flex; flex-direction: column;
       align-items: center; max-height: 88vh; overflow-y: auto;
     }
     .preview-title { font-size: 13.5px; font-weight: 800; color: #ffffff; margin-bottom: 8px; width: 100%; max-width: 210mm; }
 
     /* ==========================================================================
-       A4 PAPER CSS (SCREEN & PRINT FIXED TO EXACT SIZE)
+       A4 PAPERS (WATERMARK STRICTLY CONTROLLED)
        ========================================================================== */
     .a4-sheet {
       background-color: #ffffff !important;
@@ -132,18 +144,18 @@
       justify-content: space-between !important;
     }
 
-    /* Fixed Watermark strictly limited in center */
+    /* Watermark Controlled */
     .watermark-img {
       position: absolute !important;
       left: 50% !important;
       top: 50% !important;
       transform: translate(-50%, -50%) !important;
-      width: 130mm !important;
-      height: 130mm !important;
-      max-width: 130mm !important;
-      max-height: 130mm !important;
+      width: 125mm !important;
+      height: 125mm !important;
+      max-width: 125mm !important;
+      max-height: 125mm !important;
       object-fit: contain !important;
-      opacity: 0.16 !important;
+      opacity: 0.15 !important;
       pointer-events: none !important;
       z-index: 1 !important;
       mix-blend-mode: multiply !important;
@@ -282,7 +294,7 @@
 </head>
 <body>
 
-  <!-- Top Header -->
+  <!-- Header Banner -->
   <header class="system-header no-print">
     <div class="header-inner">
       <div class="header-left">
@@ -299,6 +311,8 @@
         </div>
         <div class="fiscal-badge">आ.व. २०८३/०८४</div>
         <a href="admin.html" id="adminMenuBtn" class="header-btn" style="display:none; background:#2563eb;">⚙️ Admin</a>
+        <!-- Dark / Light Button -->
+        <button type="button" class="header-btn" id="themeToggleBtn" onclick="toggleTheme()" title="डार्क / लाइट मोड बदल्नुहोस्">☾</button>
         <button type="button" class="header-btn" style="background:#dc2626;" onclick="handleSafeLogout()">🚪 Logout</button>
       </div>
     </div>
@@ -312,14 +326,14 @@
         <a href="darta.html" class="active">📝 नयाँ दर्ता</a>
         <a href="record.html">📂 पुरानो हेर्नुस्</a>
       </div>
-      <span id="headerUserDisplay" style="color:#fff; font-size:13px; font-weight:700;">अपरेटर: सुपर एडमिन</span>
+      <span id="headerUserDisplay" style="color:#fff; font-size:13px; font-weight:700;">अपरेटर: सुपर एडमिन (कम्प्युटर अपरेटर)</span>
     </div>
   </nav>
 
-  <!-- Workspace Grid -->
+  <!-- Workspace -->
   <main class="workspace-grid">
     
-    <!-- LEFT INPUT FORM (1 to 18) -->
+    <!-- LEFT INPUT SECTION (1 देखि 18) -->
     <section class="entry-card no-print">
       <h2 class="entry-title">📝 नक्सा विवरण फाराम (१ देखि १८ पूर्ण प्रविष्टि)</h2>
 
@@ -424,7 +438,7 @@
       </div>
     </section>
 
-    <!-- RIGHT PREVIEW SECTION -->
+    <!-- RIGHT LIVE PREVIEW -->
     <section class="preview-card">
       <div class="preview-title no-print">📄 आधिकारिक प्रमाण-पत्र Live A4 Preview</div>
 
@@ -687,6 +701,7 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
+    // Live Clock
     function updateClock() {
       const now = new Date();
       const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
@@ -695,6 +710,25 @@
 
       document.getElementById("liveNepaliDateHeader").textContent = `मिति: २०८३ असोज ०७ (${nepDays[now.getDay()]})`;
       document.getElementById("liveNepaliClock").textContent = `समय: ${toNepNum(String(h).padStart(2,"0"))}:${toNepNum(m)}:${toNepNum(s)} ${ampm}`;
+    }
+
+    // Dark / Light Mode Toggle
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      localStorage.setItem("mayadevi_naksa_theme", isDark ? "dark" : "light");
+      document.getElementById("themeToggleBtn").textContent = isDark ? "☀" : "☾";
+    }
+
+    function applySavedTheme() {
+      const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
+      if (saved === "dark") {
+        document.body.classList.add("dark-mode");
+        document.getElementById("themeToggleBtn").textContent = "☀";
+      } else {
+        document.body.classList.remove("dark-mode");
+        document.getElementById("themeToggleBtn").textContent = "☾";
+      }
     }
 
     function updateLivePreview() {
@@ -819,6 +853,7 @@
         }
       } catch(e) {}
 
+      applySavedTheme();
       setInterval(updateClock, 1000);
       updateClock();
       calcTotalArea();
