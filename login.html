@@ -33,11 +33,11 @@
     }
     .login-card {
       background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%; max-width: 420px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%; max-width: 440px;
       padding: 32px 28px; text-align: center;
     }
     .login-card h2 { font-size: 22px; font-weight: 800; color: #07192f; margin-bottom: 4px; }
-    .login-card p { font-size: 13.5px; color: #64748b; margin-bottom: 20px; }
+    .login-card p { font-size: 13.5px; color: #64748b; margin-bottom: 16px; }
 
     .form-group { text-align: left; margin-bottom: 16px; }
     .form-group label { display: block; font-size: 13.5px; font-weight: 700; color: #334155; margin-bottom: 4px; }
@@ -50,15 +50,21 @@
 
     .btn-submit {
       width: 100%; background: #1e3a8a; color: #ffffff; border: none;
-      padding: 11px; border-radius: 6px; font-size: 15px; font-weight: 700;
+      padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 700;
       cursor: pointer; margin-top: 6px; transition: background 0.2s;
     }
     .btn-submit:hover { background: #2563eb; }
 
     .error-alert {
       display: none; background: #fef2f2; border: 1px solid #fecaca;
-      color: #b91c1c; padding: 8px 12px; border-radius: 6px;
+      color: #b91c1c; padding: 10px 12px; border-radius: 6px;
       font-size: 13px; font-weight: 700; margin-bottom: 14px; text-align: left;
+    }
+
+    .credential-hint {
+      margin-top: 16px; padding: 10px; background: #f8fafc;
+      border: 1px dashed #94a3b8; border-radius: 6px; font-size: 12px;
+      color: #475569; text-align: left; line-height: 1.6;
     }
 
     footer {
@@ -91,7 +97,7 @@
   <main class="login-container">
     <div class="login-card">
       <h2>कर्मचारी लगइन</h2>
-      <p>तपाईंले एडमिनबाट बनाएको आइडी र पासवर्ड राख्नुहोस्</p>
+      <p>प्रयोगकर्ता आइडी र पासवर्ड राखेर लगइन गर्नुहोस्</p>
 
       <div id="loginErrorMsg" class="error-alert"></div>
 
@@ -109,7 +115,15 @@
           </div>
         </div>
 
-        <button type="submit" id="loginBtn" class="btn-submit">🔑 लगइन गर्नुहोस्</button>
+        <button type="submit" class="btn-submit">🔑 लगइन गर्नुहोस्</button>
+
+        <div class="credential-hint">
+          <strong>जुनसुकै कम्प्युटरमा चल्ने मास्टर खाताहरू:</strong><br>
+          • <strong>सुपरएडमिन:</strong> <code>superadmin</code> / <code>Admin@2083</code><br>
+          • <strong>एडमिन:</strong> <code>admin</code> / <code>Admin@2083</code><br>
+          • <strong>अपरेटर:</strong> <code>operator</code> / <code>User@2083</code><br>
+          • <strong>अमिन:</strong> <code>amin</code> / <code>Amin@2083</code>
+        </div>
       </form>
     </div>
   </main>
@@ -122,9 +136,13 @@
   </footer>
 
   <script>
-    // अनलाइन केन्द्रीय सिंक एपीआई (जहाँबाट थपे पनि सबै PC मा चल्छ)
-    const SYNC_API_URL = "https://api.jsonbin.io/v3/b/66ebbd2ce41b4d34e433db9b"; 
-    const SYNC_MASTER_KEY = "$2a$10$X87mPqGz7Fk6E7s.JqXw2.0N5qO8Yl1w2sVp/4pDfxoYhX6k/nFqm";
+    // १. सबै कम्प्युटरमा स्वतः चल्ने स्थायी खाता सूची
+    const universalAccounts = [
+      { id: 1, full_name: "सुपर एडमिन", post: "कम्प्युटर अपरेटर", login_id: "superadmin", password: "Admin@2083", role: "superadmin" },
+      { id: 2, full_name: "एडमिन अधिकृत", post: "कम्प्युटर अपरेटर", login_id: "admin", password: "Admin@2083", role: "superadmin" },
+      { id: 3, full_name: "कम्प्युटर अपरेटर", post: "कम्प्युटर अपरेटर", login_id: "operator", password: "User@2083", role: "staff" },
+      { id: 4, full_name: "प्राविधिक अमिन", post: "अमिन", login_id: "amin", password: "Amin@2083", role: "staff" }
+    ];
 
     function togglePasswordVisibility() {
       const pwd = document.getElementById("input_password");
@@ -138,76 +156,56 @@
       }
     }
 
-    async function handleUserLogin() {
-      const idInput = document.getElementById("input_login_id");
-      const pwdInput = document.getElementById("input_password");
+    function handleUserLogin() {
+      const idEl = document.getElementById("input_login_id");
+      const pwdEl = document.getElementById("input_password");
       const errBox = document.getElementById("loginErrorMsg");
-      const btn = document.getElementById("loginBtn");
 
-      const id = idInput.value.trim().toLowerCase();
-      const pwd = pwdInput.value.trim();
+      const enteredId = idEl.value.trim().toLowerCase();
+      const enteredPwd = pwdEl.value.trim();
 
       errBox.style.display = "none";
-      btn.textContent = "जाँच गर्दैछ...";
-      btn.disabled = true;
 
-      // १. पहिलो पटक खोल्दा काम लाग्ने मूल मास्टर आइडी (सुपरएडमिन)
-      if (id === "superadmin" && pwd === "Admin@2083") {
-        const masterUser = { id: 1, full_name: "सुपर एडमिन", login_id: "superadmin", role: "superadmin" };
-        sessionStorage.setItem("user", JSON.stringify(masterUser));
-        localStorage.setItem("user", JSON.stringify(masterUser));
-        window.location.href = "darta.html";
-        return;
-      }
-
-      // २. अनलाइन क्लाउड डाटाबेसबाट तपाईंले जुनसुकै कम्प्युटरमा थपेका आइडीहरू तान्ने
-      let staffList = [];
-      try {
-        const res = await fetch(SYNC_API_URL + "/latest", {
-          headers: { "X-Master-Key": SYNC_MASTER_KEY }
-        });
-        if (res.ok) {
-          const json = await res.json();
-          staffList = json.record && Array.isArray(json.record) ? json.record : [];
-          localStorage.setItem("mayadevi_staff_list", JSON.stringify(staffList));
-        }
-      } catch(e) {
-        console.warn("Online fetch error, checking local copy:", e);
-      }
-
-      // यदि अनलाइन नभेटिए लोकल पनि जाँच्ने
-      if (staffList.length === 0) {
-        try {
-          const local = localStorage.getItem("mayadevi_staff_list");
-          if (local) staffList = JSON.parse(local);
-        } catch(e) {}
-      }
-
-      btn.textContent = "🔑 लगइन गर्नुहोस्";
-      btn.disabled = false;
-
-      // तपाईंले थप्नुभएको आइडी र पासवर्ड म्याच गर्ने
-      const matched = staffList.find(u => 
-        u.login_id && u.login_id.toString().trim().toLowerCase() === id &&
-        u.password && u.password.toString().trim() === pwd
+      // १. पहिले युनिभर्सल मास्टर खाता सूचीमा जाँच्ने
+      const masterMatch = universalAccounts.find(u => 
+        u.login_id.toLowerCase() === enteredId && u.password === enteredPwd
       );
 
-      if (matched) {
-        const sessionUser = {
-          id: matched.id,
-          full_name: matched.full_name,
-          post: matched.post,
-          login_id: matched.login_id,
-          role: (matched.login_id.toLowerCase() === "superadmin" || matched.role === "superadmin") ? "superadmin" : "staff"
-        };
-        sessionStorage.setItem("user", JSON.stringify(sessionUser));
-        localStorage.setItem("user", JSON.stringify(sessionUser));
-        alert("स्वागत छ, " + matched.full_name + "! लगइन सफल भयो।");
+      if (masterMatch) {
+        sessionStorage.setItem("user", JSON.stringify(masterMatch));
+        localStorage.setItem("user", JSON.stringify(masterMatch));
+        alert("स्वागत छ, " + masterMatch.full_name + "! लगइन सफल भयो।");
         window.location.href = "darta.html";
         return;
       }
 
-      errBox.textContent = "प्रयोगकर्ता आइडी वा पासवर्ड मिलेन! तपाईंले एडमिनबाट बनाएको सही आइडी राख्नुहोस्।";
+      // २. एडमिन प्यानलबाट त्यस ब्राउजरमा थपिएका कर्मचारीहरू जाँच्ने
+      try {
+        const raw = localStorage.getItem("mayadevi_staff_list");
+        const list = raw ? JSON.parse(raw) : [];
+
+        const localMatch = list.find(u => 
+          u.login_id && u.login_id.toString().trim().toLowerCase() === enteredId &&
+          u.password && u.password.toString().trim() === enteredPwd
+        );
+
+        if (localMatch) {
+          const sessionUser = {
+            id: localMatch.id,
+            full_name: localMatch.full_name,
+            post: localMatch.post,
+            login_id: localMatch.login_id,
+            role: (localMatch.login_id.toLowerCase() === "superadmin" || localMatch.login_id.toLowerCase() === "admin") ? "superadmin" : "staff"
+          };
+          sessionStorage.setItem("user", JSON.stringify(sessionUser));
+          localStorage.setItem("user", JSON.stringify(sessionUser));
+          alert("स्वागत छ, " + localMatch.full_name + "! लगइन सफल भयो।");
+          window.location.href = "darta.html";
+          return;
+        }
+      } catch(e) {}
+
+      errBox.textContent = "प्रयोगकर्ता आइडी वा पासवर्ड मिलेन! कृपया सही विवरण राख्नुहोस्।";
       errBox.style.display = "block";
     }
   </script>
