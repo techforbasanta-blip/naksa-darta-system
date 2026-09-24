@@ -1,5 +1,47 @@
+// मास्टर सुपरएडमिन खाता विवरण (अपडेट गरिएको)
+const defaultMasterAdmin = {
+    id: 1,
+    full_name: "सुपर एडमिन",
+    post: "कम्प्युटर अपरेटर",
+    phone: "९७४३६५३६४४",
+    email: "basantabashyalo@gmail.com",
+    login_id: "superadmin",
+    password: "Admin@2083",
+    remarks: "प्रणाली व्यवस्थापक (Master Admin)"
+};
+
+// लोकल स्टोरेजबाट कर्मचारीहरूको सूची सुरक्षित लोड गर्ने
+function getStoredStaffList() {
+    try {
+        const stored = localStorage.getItem('mayadevi_staff_list');
+        if (stored) {
+            let parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                // सुपरएडमिनको पद र इमेल स्वतः नयाँ विवरण अनुसार अपडेट गर्ने
+                const superIdx = parsed.findIndex(u => u.login_id && u.login_id.toLowerCase() === "superadmin");
+                if (superIdx !== -1) {
+                    parsed[superIdx].post = "कम्प्युटर अपरेटर";
+                    parsed[superIdx].email = "basantabashyalo@gmail.com";
+                    parsed[superIdx].phone = "९७४३६५३६४४";
+                } else {
+                    parsed.unshift(defaultMasterAdmin);
+                }
+                localStorage.setItem('mayadevi_staff_list', JSON.stringify(parsed));
+                return parsed;
+            }
+        }
+    } catch (e) {
+        console.error("डेटा लोड गर्न समस्या:", e);
+    }
+
+    localStorage.setItem('mayadevi_staff_list', JSON.stringify([defaultMasterAdmin]));
+    return [defaultMasterAdmin];
+}
+
+let usersList = getStoredStaffList();
+
 document.addEventListener("DOMContentLoaded", () => {
-    // सुपरएडमिन सेसन प्रमाणीकरण
+    // सेसन प्रमाणीकरण
     const rawUser = sessionStorage.getItem('user') || localStorage.getItem('user');
     if (!rawUser) {
         alert("कृपया पहिले लगइन गर्नुहोस्!");
@@ -14,32 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
             nameBadge.textContent = currentUser.full_name;
         }
     } catch (e) {
-        console.error("Session parse error", e);
+        console.error("सेसन त्रुटि:", e);
     }
 
+    usersList = getStoredStaffList();
     renderTable();
 });
 
-// सुरुमा हजुरको मुख्य Superadmin खाता मात्र रहनेछ
-let usersList = JSON.parse(localStorage.getItem('mayadevi_staff_list'));
-
-if (!usersList || usersList.length === 0) {
-    usersList = [
-        {
-            id: 1,
-            full_name: "सुपर एडमिन",
-            post: "प्रमुख प्रशासकीय अधिकृत",
-            phone: "९८५७०१६९३९",
-            email: "mayadeviruralmun@gmail.com",
-            login_id: "superadmin",
-            password: "Admin@2083",
-            remarks: "प्रणाली व्यवस्थापक (Master Admin)"
-        }
-    ];
-    localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
-}
-
-// तालिका देखाउने (Render Table)
+// तालिका देखाउने (Render गर्ने)
 function renderTable() {
     const tableBody = document.getElementById("userTableBody");
     const badge = document.getElementById("slotStatusBadge");
@@ -51,7 +75,7 @@ function renderTable() {
     }
 
     usersList.forEach((u, index) => {
-        const isMaster = (index === 0); // पहिलो सुपरएडमिन खाता मेटाउन नमिल्ने
+        const isMaster = (u.login_id.toLowerCase() === "superadmin");
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
@@ -77,8 +101,10 @@ function renderTable() {
     });
 }
 
-// फारामबाट नयाँ प्रयोगकर्ता सिर्जना गर्ने (Create New User)
+// नयाँ कर्मचारी थप्ने
 function createNewAdminUser() {
+    usersList = getStoredStaffList();
+
     if (usersList.length >= 10) {
         alert("अधिकतम १० जना सम्म मात्र एडमिन/कर्मचारी सिर्जना गर्न मिल्छ!");
         return;
@@ -92,16 +118,14 @@ function createNewAdminUser() {
     const pwd = document.getElementById("new_password").value.trim();
     const remarks = document.getElementById("new_remarks").value.trim();
 
-    // Compulsory check
     if (!name || !post || !phone || !email || !loginId || !pwd) {
         alert("कर्मचारीको नाम, पद, सम्पर्क नं., Gmail, Login ID र पासवर्ड सबै अनिवार्य छन्!");
         return;
     }
 
-    // Login ID duplicate check
     const duplicate = usersList.some(u => u.login_id.toLowerCase() === loginId.toLowerCase());
     if (duplicate) {
-        alert(`यो Login ID (${loginId}) पहिले नै अर्को कर्मचारीले प्रयोग गरिसक्नुभएको छ! कृपया फरक ID राख्नुहोस्।`);
+        alert(`यो Login ID (${loginId}) पहिले नै प्रयोग भइसकेको छ!`);
         return;
     }
 
@@ -119,14 +143,12 @@ function createNewAdminUser() {
     usersList.push(newUser);
     localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
 
-    // Reset Form
     document.getElementById("newAdminForm").reset();
-
-    alert(`नयाँ कर्मचारी: "${name}" (${post}) सफलतापूर्वक सिर्जना भयो र तालिकामा थपियो!`);
+    alert(`कर्मचारी "${name}" सफलतापूर्वक सिर्जना भयो र सुरक्षित गरियो!`);
     renderTable();
 }
 
-// तालिकामा सिधै सम्पादन गरी अपडेट गर्ने
+// तालिकाबाट विवरण अद्यावधिक गर्ने
 function updateExistingUser(id) {
     const name = document.getElementById(`tbl-name-${id}`).value.trim();
     const post = document.getElementById(`tbl-post-${id}`).value.trim();
@@ -136,11 +158,7 @@ function updateExistingUser(id) {
     const pwd = document.getElementById(`tbl-pwd-${id}`).value.trim();
     const remarks = document.getElementById(`tbl-remarks-${id}`).value.trim();
 
-    if (!name || !post || !phone || !email || !loginId || !pwd) {
-        alert("सबै अनिवार्य विवरण भरेर मात्र अपडेट गर्नुहोस्!");
-        return;
-    }
-
+    usersList = getStoredStaffList();
     const user = usersList.find(u => u.id === id);
     if (user) {
         user.full_name = name;
@@ -152,24 +170,25 @@ function updateExistingUser(id) {
         user.remarks = remarks;
 
         localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
-        alert(`"${name}" को विवरण अद्यावधिक (Update) भयो!`);
+        alert("विवरण सफलतापूर्वक अद्यावधिक भयो!");
         renderTable();
     }
 }
 
 // कर्मचारी हटाउने
 function deleteUser(id) {
+    usersList = getStoredStaffList();
     const target = usersList.find(u => u.id === id);
     if (!target) return;
 
-    if (confirm(`के तपाईं साँच्चै कर्मचारी "${target.full_name}" लाई हटाउन चाहनुहुन्छ?`)) {
+    if (confirm(`के तपाईं "${target.full_name}" लाई हटाउन चाहनुहुन्छ?`)) {
         usersList = usersList.filter(u => u.id !== id);
         localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
         renderTable();
     }
 }
 
-// पासवर्ड देखाउने/लुकाउने
+// पासवर्ड देखाउने वा लुकाउने
 function toggleTblPassword(fieldId) {
     const input = document.getElementById(fieldId);
     if (input) {
