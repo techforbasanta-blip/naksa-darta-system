@@ -44,7 +44,7 @@
     .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
     .form-group input:focus { border-color: #2563eb; ring: 2px solid #93c5fd; }
 
-    /* पासवर्ड र आँखा आइकनको र्यापर */
+    /* पासवर्ड र आँखा आइकन */
     .password-wrapper {
       position: relative;
       display: flex;
@@ -77,6 +77,19 @@
       display: none; background: #fef2f2; border: 1px solid #fecaca;
       color: #b91c1c; padding: 8px 12px; border-radius: 6px;
       font-size: 13px; font-weight: 700; margin-bottom: 14px; text-align: left;
+    }
+
+    /* जानकारी बक्स */
+    .credential-hint {
+      margin-top: 18px;
+      padding: 10px;
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #475569;
+      text-align: left;
+      line-height: 1.5;
     }
 
     footer {
@@ -116,7 +129,7 @@
       <form onsubmit="event.preventDefault(); handleUserLogin();" autocomplete="off">
         <div class="form-group">
           <label>प्रयोगकर्ता आइडी (Login ID) *</label>
-          <input type="text" id="input_login_id" placeholder="Login ID" required autofocus>
+          <input type="text" id="input_login_id" placeholder="उदा: superadmin वा admin" required autofocus>
         </div>
 
         <div class="form-group">
@@ -128,6 +141,14 @@
         </div>
 
         <button type="submit" class="btn-submit">🔑 लगइन गर्नुहोस्</button>
+
+        <div class="credential-hint">
+          <strong>स्वीकृत खाताहरू (जुनसुकै डिभाइसमा चल्ने):</strong><br>
+          • <strong>सुपरएडमिन:</strong> <code>superadmin</code> | <code>Admin@2083</code><br>
+          • <strong>एडमिन:</strong> <code>admin</code> | <code>Admin@2083</code><br>
+          • <strong>अपरेटर:</strong> <code>operator</code> | <code>User@2083</code><br>
+          • <strong>अमिन:</strong> <code>amin</code> | <code>Amin@2083</code>
+        </div>
       </form>
     </div>
   </main>
@@ -141,7 +162,7 @@
 
   <script>
     // =========================================================================
-    // सबै कम्प्युटरमा स्वतः चल्ने स्थायी खाता सूची (Universal Global Accounts)
+    // संसारको जुनसुकै कम्प्युटर, ल्यापटप वा मोबाइलमा १००% खुल्ने स्थायी खाता सूची
     // =========================================================================
     const globalStaffList = [
       {
@@ -155,15 +176,24 @@
       },
       {
         id: 2,
-        full_name: "कम्प्युटर अपरेटर",
-        post: "कम्प्युटर अपरेटर",
-        email: "operator@gmail.com",
-        login_id: "operator",
-        password: "User@2083",
+        full_name: "तिर्थराज पन्थी",
+        post: "सब-इन्जिनियर",
+        email: "t83panthi@gmail.com",
+        login_id: "Tirtha86059",
+        password: "Tirtha@059",
         role: "staff"
       },
       {
         id: 3,
+        full_name: "लक्ष्मण घिमिरे",
+        post: "अमिन",
+        email: "ghimire.laxman508@gmail.com",
+        login_id: "Laxman27508",
+        password: "Laxman@508",
+        role: "staff"
+      },
+      {
+        id: 4,
         full_name: "प्राविधिक अमिन",
         post: "अमिन",
         email: "amin@gmail.com",
@@ -197,7 +227,7 @@
 
       errBox.style.display = "none";
 
-      // १. जुनसुकै कम्प्युटरमा चल्ने ग्लोबल खाता जाँच गर्ने
+      // १. पहिले जुनसुकै कम्प्युटरमा चल्ने ग्लोबल खातामा जाँच्ने
       const matchedGlobal = globalStaffList.find(u => 
         u.login_id.toLowerCase() === id && u.password === pwd
       );
@@ -210,7 +240,7 @@
         return;
       }
 
-      // २. एडमिन प्यानलबाट स्थानीय कम्प्युटरमा थपिएका कर्मचारी जाँच गर्ने
+      // २. स्थानीय कम्प्युटरको मेमोरीमा थपिएको खाता जाँच्ने
       try {
         const rawStaff = localStorage.getItem("mayadevi_staff_list");
         const localList = rawStaff ? JSON.parse(rawStaff) : [];
@@ -228,7 +258,7 @@
             full_name: matchedLocal.full_name,
             post: matchedLocal.post,
             login_id: matchedLocal.login_id,
-            role: "staff"
+            role: (matchedLocal.login_id.toLowerCase() === "superadmin" || matchedLocal.login_id.toLowerCase() === "admin") ? "superadmin" : "staff"
           };
           sessionStorage.setItem("user", JSON.stringify(sessionUser));
           localStorage.setItem("user", JSON.stringify(sessionUser));
