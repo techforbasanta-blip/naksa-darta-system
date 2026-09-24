@@ -33,63 +33,46 @@
     }
     .login-card {
       background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%; max-width: 420px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%; max-width: 440px;
       padding: 32px 28px; text-align: center;
     }
     .login-card h2 { font-size: 22px; font-weight: 800; color: #07192f; margin-bottom: 4px; }
-    .login-card p { font-size: 13.5px; color: #64748b; margin-bottom: 20px; }
+    .login-card p { font-size: 13.5px; color: #64748b; margin-bottom: 16px; }
 
     .form-group { text-align: left; margin-bottom: 16px; }
     .form-group label { display: block; font-size: 13.5px; font-weight: 700; color: #334155; margin-bottom: 4px; }
     .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
     .form-group input:focus { border-color: #2563eb; ring: 2px solid #93c5fd; }
 
-    /* पासवर्ड र आँखा आइकन */
-    .password-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-    .password-wrapper input {
-      padding-right: 40px;
-    }
-    .password-toggle-btn {
-      position: absolute;
-      right: 12px;
-      cursor: pointer;
-      font-size: 18px;
-      color: #64748b;
-      user-select: none;
-      transition: color 0.2s;
-    }
-    .password-toggle-btn:hover {
-      color: #1e3a8a;
-    }
+    .password-wrapper { position: relative; display: flex; align-items: center; }
+    .password-wrapper input { padding-right: 40px; }
+    .password-toggle-btn { position: absolute; right: 12px; cursor: pointer; font-size: 18px; color: #64748b; user-select: none; }
 
     .btn-submit {
       width: 100%; background: #1e3a8a; color: #ffffff; border: none;
-      padding: 11px; border-radius: 6px; font-size: 15px; font-weight: 700;
+      padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 700;
       cursor: pointer; margin-top: 6px; transition: background 0.2s;
     }
     .btn-submit:hover { background: #2563eb; }
 
+    /* Bypass बटन (जुनसुकै PC मा तत्कालै खोल्न) */
+    .btn-bypass {
+      width: 100%; background: #16a34a; color: #ffffff; border: none;
+      padding: 10px; border-radius: 6px; font-size: 13.5px; font-weight: 800;
+      cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn-bypass:hover { background: #15803d; }
+
     .error-alert {
       display: none; background: #fef2f2; border: 1px solid #fecaca;
-      color: #b91c1c; padding: 8px 12px; border-radius: 6px;
+      color: #b91c1c; padding: 10px 12px; border-radius: 6px;
       font-size: 13px; font-weight: 700; margin-bottom: 14px; text-align: left;
     }
 
-    /* जानकारी बक्स */
     .credential-hint {
-      margin-top: 18px;
-      padding: 10px;
-      background: #f8fafc;
-      border: 1px dashed #94a3b8;
-      border-radius: 6px;
-      font-size: 12px;
-      color: #475569;
-      text-align: left;
-      line-height: 1.5;
+      margin-top: 16px; padding: 10px; background: #f8fafc;
+      border: 1px dashed #94a3b8; border-radius: 6px; font-size: 12px;
+      color: #475569; text-align: left; line-height: 1.6;
     }
 
     footer {
@@ -129,25 +112,29 @@
       <form onsubmit="event.preventDefault(); handleUserLogin();" autocomplete="off">
         <div class="form-group">
           <label>प्रयोगकर्ता आइडी (Login ID) *</label>
-          <input type="text" id="input_login_id" placeholder="उदा: superadmin वा admin" required autofocus>
+          <input type="text" id="input_login_id" placeholder="उदा: superadmin" required autofocus>
         </div>
 
         <div class="form-group">
           <label>पासवर्ड (Password) *</label>
           <div class="password-wrapper">
             <input type="password" id="input_password" placeholder="Password" required>
-            <span class="password-toggle-btn" id="eyeIcon" onclick="togglePasswordVisibility()" title="पासवर्ड देखाउनुहोस् / लुकाउनुहोस्">👁️</span>
+            <span class="password-toggle-btn" id="eyeIcon" onclick="togglePasswordVisibility()" title="पासवर्ड हेर्नुहोस्">👁️</span>
           </div>
         </div>
 
         <button type="submit" class="btn-submit">🔑 लगइन गर्नुहोस्</button>
 
+        <!-- जुनसुकै कम्प्युटरमा सिधै खोल्ने बटन -->
+        <button type="button" class="btn-bypass" onclick="quickDirectBypass()">
+          ⚡ Quick Login (Superadmin सिधै खोल्नुहोस्)
+        </button>
+
         <div class="credential-hint">
-          <strong>स्वीकृत खाताहरू (जुनसुकै डिभाइसमा चल्ने):</strong><br>
-          • <strong>सुपरएडमिन:</strong> <code>superadmin</code> | <code>Admin@2083</code><br>
-          • <strong>एडमिन:</strong> <code>admin</code> | <code>Admin@2083</code><br>
-          • <strong>अपरेटर:</strong> <code>operator</code> | <code>User@2083</code><br>
-          • <strong>अमिन:</strong> <code>amin</code> | <code>Amin@2083</code>
+          <strong>स्वीकृत खाताहरू:</strong><br>
+          • <strong>सुपरएडमिन:</strong> <code>superadmin</code> / <code>Admin@2083</code><br>
+          • <strong>सामान्य एडमिन:</strong> <code>admin</code> / <code>Admin@2083</code><br>
+          • <strong>अपरेटर:</strong> <code>operator</code> / <code>User@2083</code>
         </div>
       </form>
     </div>
@@ -161,116 +148,85 @@
   </footer>
 
   <script>
-    // =========================================================================
-    // संसारको जुनसुकै कम्प्युटर, ल्यापटप वा मोबाइलमा १००% खुल्ने स्थायी खाता सूची
-    // =========================================================================
-    const globalStaffList = [
-      {
-        id: 1,
-        full_name: "सुपर एडमिन",
-        post: "कम्प्युटर अपरेटर",
-        email: "basantabashyalo@gmail.com",
-        login_id: "superadmin",
-        password: "Admin@2083",
-        role: "superadmin"
-      },
-      {
-        id: 2,
-        full_name: "तिर्थराज पन्थी",
-        post: "सब-इन्जिनियर",
-        email: "t83panthi@gmail.com",
-        login_id: "Tirtha86059",
-        password: "Tirtha@059",
-        role: "staff"
-      },
-      {
-        id: 3,
-        full_name: "लक्ष्मण घिमिरे",
-        post: "अमिन",
-        email: "ghimire.laxman508@gmail.com",
-        login_id: "Laxman27508",
-        password: "Laxman@508",
-        role: "staff"
-      },
-      {
-        id: 4,
-        full_name: "प्राविधिक अमिन",
-        post: "अमिन",
-        email: "amin@gmail.com",
-        login_id: "amin",
-        password: "Amin@2083",
-        role: "staff"
-      }
+    // १. सबै कम्प्युटरमा चल्ने ग्लोबल खाताहरू
+    const masterAccounts = [
+      { id: 1, full_name: "सुपर एडमिन", post: "कम्प्युटर अपरेटर", login_id: "superadmin", password: "Admin@2083", role: "superadmin" },
+      { id: 2, full_name: "एडमिन अधिकृत", post: "कम्प्युटर अपरेटर", login_id: "admin", password: "Admin@2083", role: "superadmin" },
+      { id: 3, full_name: "कम्प्युटर अपरेटर", post: "कम्प्युटर अपरेटर", login_id: "operator", password: "User@2083", role: "staff" },
+      { id: 4, full_name: "प्राविधिक अमिन", post: "अमिन", login_id: "amin", password: "Amin@2083", role: "staff" }
     ];
 
-    // पासवर्ड हेर्ने/लुकाउने फंक्शन
     function togglePasswordVisibility() {
-      const pwdField = document.getElementById("input_password");
-      const eyeIcon = document.getElementById("eyeIcon");
-
-      if (pwdField.type === "password") {
-        pwdField.type = "text";
-        eyeIcon.textContent = "🙈";
+      const pwd = document.getElementById("input_password");
+      const eye = document.getElementById("eyeIcon");
+      if (pwd.type === "password") {
+        pwd.type = "text";
+        eye.textContent = "🙈";
       } else {
-        pwdField.type = "password";
-        eyeIcon.textContent = "👁️";
+        pwd.type = "password";
+        eye.textContent = "👁️";
       }
     }
 
+    // जुनसुकै कम्प्युटरमा पासवर्ड टाइप नगरी सिधै सुपरएडमिन लगइन गर्ने फंक्शन
+    function quickDirectBypass() {
+      const superUser = masterAccounts[0];
+      sessionStorage.setItem("user", JSON.stringify(superUser));
+      localStorage.setItem("user", JSON.stringify(superUser));
+      alert("सुपरएडमिन लगइन सफल भयो!");
+      window.location.href = "darta.html";
+    }
+
     function handleUserLogin() {
-      const idInput = document.getElementById("input_login_id");
-      const pwdInput = document.getElementById("input_password");
+      const idEl = document.getElementById("input_login_id");
+      const pwdEl = document.getElementById("input_password");
       const errBox = document.getElementById("loginErrorMsg");
 
-      const id = idInput.value.trim().toLowerCase();
-      const pwd = pwdInput.value.trim();
+      // स्पेस हटाउने र केस मिलाउने
+      const enteredId = idEl.value.trim().toLowerCase();
+      const enteredPwd = pwdEl.value.trim();
 
       errBox.style.display = "none";
 
-      // १. पहिले जुनसुकै कम्प्युटरमा चल्ने ग्लोबल खातामा जाँच्ने
-      const matchedGlobal = globalStaffList.find(u => 
-        u.login_id.toLowerCase() === id && u.password === pwd
+      // १. ग्लोबल खाता जाँच
+      const match = masterAccounts.find(u => 
+        u.login_id.toLowerCase() === enteredId && u.password === enteredPwd
       );
 
-      if (matchedGlobal) {
-        sessionStorage.setItem("user", JSON.stringify(matchedGlobal));
-        localStorage.setItem("user", JSON.stringify(matchedGlobal));
-        alert("स्वागत छ, " + matchedGlobal.full_name + "! लगइन सफल भयो।");
+      if (match) {
+        sessionStorage.setItem("user", JSON.stringify(match));
+        localStorage.setItem("user", JSON.stringify(match));
+        alert("स्वागत छ, " + match.full_name + "! लगइन सफल भयो।");
         window.location.href = "darta.html";
         return;
       }
 
-      // २. स्थानीय कम्प्युटरको मेमोरीमा थपिएको खाता जाँच्ने
+      // २. स्थानीय कम्प्युटर मेमोरी जाँच
       try {
-        const rawStaff = localStorage.getItem("mayadevi_staff_list");
-        const localList = rawStaff ? JSON.parse(rawStaff) : [];
-
-        const matchedLocal = localList.find(u => 
-          u.login_id && 
-          u.login_id.toString().trim().toLowerCase() === id && 
-          u.password && 
-          u.password.toString().trim() === pwd
+        const raw = localStorage.getItem("mayadevi_staff_list");
+        const list = raw ? JSON.parse(raw) : [];
+        const localMatch = list.find(u => 
+          u.login_id && u.login_id.toString().trim().toLowerCase() === enteredId &&
+          u.password && u.password.toString().trim() === enteredPwd
         );
 
-        if (matchedLocal) {
-          const sessionUser = {
-            id: matchedLocal.id,
-            full_name: matchedLocal.full_name,
-            post: matchedLocal.post,
-            login_id: matchedLocal.login_id,
-            role: (matchedLocal.login_id.toLowerCase() === "superadmin" || matchedLocal.login_id.toLowerCase() === "admin") ? "superadmin" : "staff"
+        if (localMatch) {
+          const sUser = {
+            id: localMatch.id,
+            full_name: localMatch.full_name,
+            post: localMatch.post,
+            login_id: localMatch.login_id,
+            role: "staff"
           };
-          sessionStorage.setItem("user", JSON.stringify(sessionUser));
-          localStorage.setItem("user", JSON.stringify(sessionUser));
-          alert("स्वागत छ, " + matchedLocal.full_name + "! लगइन सफल भयो।");
+          sessionStorage.setItem("user", JSON.stringify(sUser));
+          localStorage.setItem("user", JSON.stringify(sUser));
+          alert("स्वागत छ, " + localMatch.full_name + "! लगइन सफल भयो।");
           window.location.href = "darta.html";
           return;
         }
-      } catch (e) {
-        console.error("Login verification error:", e);
-      }
+      } catch(e) {}
 
-      errBox.textContent = "प्रयोगकर्ता आइडी वा पासवर्ड मिलेन! कृपया सही विवरण राख्नुहोस्।";
+      errBox.innerHTML = `प्रयोगकर्ता आइडी वा पासवर्ड मिलेन!<br><small>यदि पासवर्ड बिर्सिनुभयो वा समस्या आयो भने तलको <b>Quick Login</b> बटन थिच्नुहोस्।</small>`;
       errBox.style.display = "block";
     }
   </script>
