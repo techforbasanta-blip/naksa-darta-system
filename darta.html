@@ -84,9 +84,9 @@
             }
         }
 
-        window.handleLogout = window.logoutUser = function () {
+       window.handleLogout = window.logoutUser = function () {
     sessionStorage.clear();
-    localStorage.removeItem('user'); // केवल लगइन सेसन हटाउने
+    localStorage.removeItem('user'); // केवल प्रयोगकर्ताको लगइन सेसन हटाउने (कर्मचारीको लिस्ट कहिल्यै नछुने)
     alert('सफलतापूर्वक लगआउट भयो!');
     window.location.href = 'login.html';
 };
