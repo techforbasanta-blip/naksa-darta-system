@@ -173,7 +173,9 @@
     }
     .preview-title { font-size: 13.5px; font-weight: 800; color: #ffffff; margin-bottom: 8px; width: 100%; max-width: 210mm; }
 
-    /* A4 CERTIFICATE ENGINE */
+    /* ==========================================================================
+       A4 CERTIFICATE ENGINE (FIT TO PAGE & ENHANCED FONTS)
+       ========================================================================== */
     .a4-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -230,13 +232,13 @@
       width: 68px !important; height: 68px !important; max-width: 68px !important; max-height: 68px !important; object-fit: contain !important;
     }
     .header-titles { text-align: center; flex: 1; padding: 0 6px; }
-    .header-titles .gov-sub { font-size: 13px; font-weight: 700; line-height: 1; }
+    .header-titles .gov-sub { font-size: 13.5px; font-weight: 700; line-height: 1; }
     .header-titles .palika-title { font-size: 21px; font-weight: 800; line-height: 1.1; }
     .header-titles .office-title { font-size: 26px !important; font-weight: 900 !important; line-height: 1.15; }
     .header-titles .address-text { font-size: 13.5px; font-weight: 700; margin-top: 1px; }
 
     .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 2px 0; }
-    .ref-col { font-size: 13.5px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
+    .ref-col { font-size: 14px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
     .passport-frame {
       width: 23mm !important; height: 26mm !important; border: 1.2px solid #334155;
       background: rgba(255, 255, 255, 0.45); display: flex; align-items: center; justify-content: center; overflow: hidden;
@@ -245,37 +247,39 @@
 
     .cert-title-container { text-align: center; margin: 2px 0; }
     .cert-title-text {
-      display: inline-block; font-size: 18px; font-weight: 800;
+      display: inline-block; font-size: 19px; font-weight: 800;
       border-bottom: 1.8px solid #000; padding: 0 10px; line-height: 1.15;
     }
-    .cert-intro { font-size: 13.5px; line-height: 1.3; text-align: justify; margin-bottom: 3px; font-weight: 600; }
+    .cert-intro { font-size: 14.2px; line-height: 1.35; text-align: justify; margin-bottom: 3px; font-weight: 600; }
 
+    /* Tables: ठूलो फन्ट र व्यवस्थित लाइन स्पेस */
     .cert-table, .floor-detail-table {
-      width: 100%; border-collapse: collapse; font-size: 13.5px !important; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
+      width: 100%; border-collapse: collapse; font-size: 14px !important; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
     }
     .cert-table td, .cert-table th, .floor-detail-table td, .floor-detail-table th {
-      padding: 2.5px 5px !important; border: 1.2px solid #1e293b !important; vertical-align: middle; line-height: 1.22; background: transparent !important; color: #000000 !important;
+      padding: 2.2px 5px !important; border: 1.2px solid #1e293b !important; vertical-align: middle; line-height: 1.22; background: transparent !important; color: #000000 !important;
     }
-    .cert-table td.lbl { font-weight: 800; width: 26%; }
-    .cert-table td.val { font-weight: 700; width: 24%; }
-    .floor-detail-table th { font-weight: 800; text-align: left; }
+    .cert-table td.lbl { font-weight: 800; width: 26%; font-size: 14px !important; }
+    .cert-table td.val { font-weight: 700; width: 24%; font-size: 14px !important; }
+    .floor-detail-table th { font-weight: 800; text-align: left; font-size: 14px !important; }
     
     .total-row td {
       font-weight: 800 !important;
-      font-size: 14px !important;
+      font-size: 14.5px !important;
       background: #f1f5f9 !important;
       color: #000000 !important;
     }
 
     .legal-notice-cell {
-      font-size: 12.5px !important;
+      font-size: 13px !important;
       line-height: 1.35 !important;
       font-weight: 700 !important;
       padding: 4px 6px !important;
     }
 
+    /* हस्ताक्षर ब्लक (ठूलो फन्ट) */
     .cert-signatures-block {
-      margin-top: 26px !important;
+      margin-top: 24px !important;
       margin-bottom: 2px !important;
     }
     .officers-signature-grid {
@@ -286,10 +290,10 @@
       margin-bottom: 12px;
     }
     .sign-item { text-align: center; }
-    .sign-space-area { height: 20px; }
+    .sign-space-area { height: 18px; }
     .sign-dotted-line { border-top: 1.2px dotted #1e293b; width: 75%; margin: 0 auto 3px auto; }
-    .sign-title-text { font-size: 13px !important; font-weight: 700; line-height: 1.3; }
-    .sign-title-text strong { font-size: 14px !important; font-weight: 800; }
+    .sign-title-text { font-size: 13.5px !important; font-weight: 700; line-height: 1.3; }
+    .sign-title-text strong { font-size: 14.5px !important; font-weight: 800; }
 
     .bottom-owner-qr-flex {
       display: flex;
@@ -298,9 +302,9 @@
       border-top: 1px solid #cbd5e1;
       padding-top: 4px;
     }
-    .owner-space-area { height: 10px; }
-    .owner-dots { font-size: 13px; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: bold; }
-    .owner-label { font-size: 13.5px !important; font-weight: 800; }
+    .owner-space-area { height: 8px; }
+    .owner-dots { font-size: 13.5px; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: bold; }
+    .owner-label { font-size: 14px !important; font-weight: 800; }
 
     #cert_qr_div {
       width: 64px !important; height: 64px !important; border: 1px solid #94a3b8;
@@ -320,7 +324,9 @@
       line-height: 1.25 !important;
     }
 
-    /* PAGE 2 */
+    /* ==========================================================================
+       PAGE 2: KABULIYAT & CENTERED LARGE THUMB FRAME
+       ========================================================================== */
     .a4-sheet.back-page {
       page-break-before: always !important;
       justify-content: flex-start !important;
@@ -328,7 +334,7 @@
     }
     .kabuliyat-section { border: 1.2px solid #334155; padding: 6px 8px; background: transparent; }
     .kabuliyat-title { text-align: center; font-size: 18px; font-weight: 800; text-decoration: underline; margin-bottom: 2px; }
-    .shriman-title { text-align: left; font-size: 15px; font-weight: 800; margin-bottom: 2px; }
+    .shriman-title { text-align: left; font-size: 15.5px; font-weight: 800; margin-bottom: 2px; }
     
     .kabuliyat-body {
       font-size: 15.5px !important;
@@ -337,15 +343,36 @@
       margin-bottom: 6px;
       font-weight: 600;
     }
-    .kabuliyat-sign-grid { display: grid; grid-template-columns: 58% 42%; gap: 6px; align-items: flex-end; border-top: 1.2px dotted #64748b; padding-top: 4px; }
-    .sign-left .sign-field { font-size: 13.5px; line-height: 1.4; margin-bottom: 2px; }
+    .kabuliyat-sign-grid { display: grid; grid-template-columns: 52% 48%; gap: 6px; align-items: flex-end; border-top: 1.2px dotted #64748b; padding-top: 4px; }
+    .sign-left .sign-field { font-size: 14px; line-height: 1.45; margin-bottom: 2px; }
 
-    .thumb-frame {
-      width: 46px; height: 50px; border: 1.2px dashed #334155; display: flex;
-      align-items: center; justify-content: center; font-size: 11px; font-weight: 800; background: rgba(255, 255, 255, 0.45);
+    /* औंठा छाप बक्स ठूलो र ठ्याक्कै बीचमा (Centered) */
+    .sign-right-centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
-    .thumb-label { font-size: 11.5px; font-weight: 800; margin-top: 1px; }
-    .iti-date-text { font-size: 13px; font-weight: 800; margin-top: 2px; }
+    .thumb-frame-wrapper {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 2px;
+    }
+    .thumb-frame {
+      width: 54px !important;
+      height: 64px !important;
+      border: 1.5px dashed #1e293b !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13.5px;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.45);
+    }
+    .thumb-label { font-size: 12.5px; font-weight: 800; margin-top: 2px; }
+    .iti-date-text { font-size: 13.5px; font-weight: 800; margin-top: 4px; text-align: center; }
 
     .namsari-section {
       border: 1.2px solid #334155;
@@ -445,6 +472,7 @@
         <div class="form-row"><label>४) घर धनी ना.प्र.प.नं.</label><input type="text" id="in_house_cit" placeholder="नागरिकता नं." oninput="updateLivePreview()"></div>
       </div>
 
+      <!-- नयाँ थपिएको: जारी जिल्ला र सम्पर्क नं. आफैं इन्ट्री गर्न मिल्ने -->
       <div class="form-grid-2">
         <div class="form-row"><label>ना.प्र.प. जारी जिल्ला</label><input type="text" id="in_cit_district" value="रुपन्देही" placeholder="जारी जिल्ला" oninput="updateLivePreview()"></div>
         <div class="form-row"><label>सम्पर्क नं.</label><input type="text" id="in_phone" placeholder="सम्पर्क नम्बर" oninput="updateLivePreview()"></div>
@@ -467,7 +495,7 @@
       <div class="form-grid-2">
         <div class="form-row">
           <label>भु-उपयोग क्षेत्र</label>
-          <input type="text" id="in_land_use" value="आवासीय / संस्थागत" oninput="updateLivePreview()">
+          <input type="text" id="in_land_use" value="आवासीय" oninput="updateLivePreview()">
         </div>
         <div class="form-row">
           <label>८) भवनको वर्गिकरण</label>
@@ -573,7 +601,6 @@
         <input type="file" id="passportInput" accept="image/*" onchange="loadPhoto(event)">
       </div>
 
-      <!-- सेभ इन्जिन जोडिएको बटन -->
       <div class="form-actions">
         <button type="button" class="btn-act btn-save" onclick="saveRecordToDatabase()">💾 सुरक्षित गर्नुहोस्</button>
         <button type="button" class="btn-act btn-print" onclick="window.print()">🖨 प्रिन्ट गर्नुहोस्</button>
@@ -587,7 +614,7 @@
 
       <div id="printAreaContainer">
         
-        <!-- PAGE 1 -->
+        <!-- PAGE 1 (Font Enlarged & Perfectly Fitted) -->
         <div class="a4-sheet" id="a4CertificatePaper">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -638,18 +665,18 @@
                 <td class="lbl">१) जग्गा धनीको नामथर</td>
                 <td class="val" id="out_owner">....................</td>
                 <td class="lbl">२) जग्गा धनीको ना.प्र.प.नं.</td>
-                <td class="val" id="out_owner_cit">....................</td>
+                <td class="val" id="out_owner_cit">....</td>
               </tr>
               <tr>
                 <td class="lbl">३) घर धनीको नामथर-</td>
                 <td class="val" id="out_house_owner">....................</td>
                 <td class="lbl">४) घर धनीको ना.प्र.प.नं.</td>
-                <td class="val" id="out_house_cit">....................</td>
+                <td class="val" id="out_house_cit">....</td>
               </tr>
               <tr>
                 <td class="lbl">५) जग्गाको विवरण-</td>
                 <td colspan="3" class="val">
-                  साविक <span id="out_sabik">....................</span> हाल मायादेवी गा.पा. वडा नं. <span id="out_ward">०१</span> कि.नं. <span id="out_kitta">....</span> क्षेत्रफल <span id="out_area">....</span>
+                  साविक <span id="out_sabik">....</span> हाल मायादेवी गा.पा. वडा नं. <span id="out_ward">०१</span> कि.नं. <span id="out_kitta">....</span> क्षेत्रफल <span id="out_area">....</span>
                 </td>
               </tr>
               <tr>
@@ -660,7 +687,7 @@
               </tr>
               <tr>
                 <td class="lbl">भु-उपयोग क्षेत्रः</td>
-                <td class="val" id="out_land_use">आवासीय / संस्थागत</td>
+                <td class="val" id="out_land_use">आवासीय</td>
                 <td class="lbl">भवनको वर्गिकरणः</td>
                 <td class="val"><span id="out_b_class">(ख)</span> &nbsp;|&nbsp; स्ट्रक्चरलः <span id="out_struct">फ्रेम स्ट्रक्चर</span></td>
               </tr>
@@ -776,7 +803,7 @@
           </footer>
         </div>
 
-        <!-- PAGE 2 -->
+        <!-- PAGE 2 (औंठा छाप बक्स ठूलो र ठ्याक्कै बीचमा) -->
         <div class="a4-sheet back-page" id="certificateBackPage">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -797,19 +824,18 @@
                 <div class="sign-left">
                   <div class="sign-field">दस्तखतः ........</div>
                   <div class="sign-field">नामथरः <strong id="back_name">....................</strong></div>
-                  <div class="sign-field">ना.प्र.प.नंः <span id="back_cit">....................</span></div>
+                  <div class="sign-field">ना.प्र.प.नंः <span id="back_cit">....</span></div>
                   <div class="sign-field">जारी जिल्लाः <span id="back_cit_district">रुपन्देही</span></div>
                   <div class="sign-field">सम्पर्क नंः <span id="back_phone">....................</span></div>
                 </div>
 
-                <div class="sign-right">
-                  <div style="display:flex; flex-direction:column; align-items:center;">
-                    <div style="display:flex; gap:6px;">
-                      <div class="thumb-frame">दायाँ</div>
-                      <div class="thumb-frame">बायाँ</div>
-                    </div>
-                    <span class="thumb-label">औंठा छाप</span>
+                <!-- ठूलो बक्स र सिधै बीचमा केन्द्रित (Centered) -->
+                <div class="sign-right-centered">
+                  <div class="thumb-frame-wrapper">
+                    <div class="thumb-frame">दायाँ</div>
+                    <div class="thumb-frame">बायाँ</div>
                   </div>
+                  <span class="thumb-label">औंठा छाप</span>
                   <div class="iti-date-text">
                     ईति सम्बत <span id="iti_year">२०८३</span> साल <span id="iti_month">असोज</span> महिना <span id="iti_day">०८</span> गते <span id="iti_roj">५</span> रोज शुभम्।
                   </div>
@@ -903,21 +929,16 @@
     function updateClock() {
       const now = new Date();
       const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
-      
       let h = now.getHours();
       const m = String(now.getMinutes()).padStart(2, "0");
       const s = String(now.getSeconds()).padStart(2, "0");
-
       let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
-      const displayHours = h % 12 || 12;
-
       document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
-      document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(displayHours).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+      document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
     }
 
     function calculateNepaliItiDate(bsDateStr) {
       if (!bsDateStr) return;
-
       const engDate = bsDateStr.toString()
         .replace(/०/g, '0').replace(/१/g, '1').replace(/२/g, '2')
         .replace(/३/g, '3').replace(/४/g, '4').replace(/५/g, '5')
@@ -1004,6 +1025,7 @@
       document.getElementById("out_house_cit").textContent = houseCit;
       document.getElementById("back_cit").textContent = houseCit;
 
+      // कबुलियतनामाका लागि डाइनामिक जारी जिल्ला र सम्पर्क नं.
       document.getElementById("back_cit_district").textContent = getVal("in_cit_district", "रुपन्देही");
       document.getElementById("back_phone").textContent = getVal("in_phone", "....................");
 
@@ -1017,7 +1039,7 @@
         document.getElementById("out_approved_area_full").innerHTML = `कि.नं. <span id="out_kitta2">${kitta}</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट`;
       }
 
-      document.getElementById("out_land_use").textContent = getVal("in_land_use", "आवासीय / संस्थागत");
+      document.getElementById("out_land_use").textContent = getVal("in_land_use", "आवासीय");
 
       const e = getVal("in_east"), w = getVal("in_west"), n = getVal("in_north"), s = getVal("in_south");
       document.getElementById("out_killa").textContent = `पूर्वः ${e} | पश्चिमः ${w} | उत्तरः ${n} | दक्षिणः ${s}`;
@@ -1096,7 +1118,7 @@
       }
     }
 
-    // record.html ले भेट्ने गरी डाटा सेभ गर्ने पूर्ण फङ्सन
+    // record.html सँग १००% सिंक हुने वास्तविक सेभ इन्जिन
     function saveRecordToDatabase() {
       const dartaNo = document.getElementById("in_darta").value.trim();
       const houseOwner = document.getElementById("in_house_owner").value.trim() || document.getElementById("in_owner_name").value.trim();
@@ -1136,6 +1158,12 @@
         north: document.getElementById("in_north").value.trim(),
         south: document.getElementById("in_south").value.trim(),
         total_area: document.getElementById("in_total_area").value.trim(),
+        b1: document.getElementById("in_b1").value.trim(),
+        b2: document.getElementById("in_b2").value.trim(),
+        ground: document.getElementById("in_ground").value.trim(),
+        first: document.getElementById("in_first").value.trim(),
+        second: document.getElementById("in_second").value.trim(),
+        third: document.getElementById("in_third").value.trim(),
         plinth: document.getElementById("in_plinth").value.trim(),
         coverage: document.getElementById("in_coverage").value.trim(),
         height: document.getElementById("in_height").value.trim(),
@@ -1155,7 +1183,6 @@
 
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
-        // यदि सोही दर्ता नं. छ भने अपडेट गर्ने नभए नयाँ थप्ने
         const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
         if (existingIdx !== -1) {
           records[existingIdx] = recordItem;
@@ -1164,7 +1191,7 @@
         }
 
         localStorage.setItem("naksa_records", JSON.stringify(records));
-        alert(`नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) को विवरण सफलतापूर्वक सुरक्षित भयो!\nअब "पुरानो हेर्नुस्" (record.html) मा गएर हेर्न सक्नुहुन्छ।`);
+        alert(`नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) सफलतापूर्वक सुरक्षित भयो!\nअब "पुरानो हेर्नुस्" (record.html) मा सुरक्षित रूपमा हेर्न सकिनेछ।`);
       } catch (err) {
         console.error(err);
         alert("रेकर्ड सुरक्षित गर्दा त्रुटि भयो!");
@@ -1178,7 +1205,7 @@
       window.location.href = "login.html";
     }
 
-    // record.html बाट "हेर्नुहोस्" वा "सम्पादन" थिचेर आएको भए डाटा स्वतः भर्ने
+    // record.html बाट "हेर्नुस् / Print" थिचेर आएको भए सबै विवरण लोड गर्ने
     function checkEditMode() {
       const editId = sessionStorage.getItem("view_record_id");
       if (!editId) return;
@@ -1202,7 +1229,7 @@
           document.getElementById("in_kitta").value = item.kitta || "";
           document.getElementById("in_land_area").value = item.land_area || "";
           document.getElementById("in_approved_area").value = item.approved_area || "";
-          document.getElementById("in_land_use").value = item.land_use || "आवासीय / संस्थागत";
+          document.getElementById("in_land_use").value = item.land_use || "आवासीय";
           document.getElementById("in_b_class").value = item.b_class || "(ख)";
           document.getElementById("in_struct").value = item.struct || "फ्रेम स्ट्रक्चर";
           document.getElementById("in_comp_date").value = item.comp_date || "";
@@ -1210,6 +1237,14 @@
           document.getElementById("in_west").value = item.west || "";
           document.getElementById("in_north").value = item.north || "";
           document.getElementById("in_south").value = item.south || "";
+
+          document.getElementById("in_b1").value = item.b1 || 0;
+          document.getElementById("in_b2").value = item.b2 || 0;
+          document.getElementById("in_ground").value = item.ground || 0;
+          document.getElementById("in_first").value = item.first || 0;
+          document.getElementById("in_second").value = item.second || 0;
+          document.getElementById("in_third").value = item.third || 0;
+
           document.getElementById("in_plinth").value = item.plinth || "";
           document.getElementById("in_coverage").value = item.coverage || "";
           document.getElementById("in_height").value = item.height || "";
