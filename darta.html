@@ -29,7 +29,7 @@
       --print-font: 'Kokila', 'Kalimati', 'Mukta', serif;
     }
 
-    /* Dark Mode (शाही नेवी ब्लू और सफेद) */
+    /* Dark Mode (शाही नेवी ब्लू र सेतो) */
     body.dark-mode {
       --bg: #07192f;
       --card-bg: #0d233e;
@@ -55,8 +55,8 @@
       align-items: center;
       justify-content: space-between;
     }
-    .brand-left { display: flex; align-items: center; gap: 12px; }
-    .brand-left img { height: 50px !important; width: auto !important; }
+    .brand-left { display: flex; align-items: center; gap: 14px; }
+    .brand-left img { height: 58px !important; width: auto !important; }
     .brand-text h1 { font-size: 19px; font-weight: 800; color: #fff; line-height: 1.2; }
     .brand-text p { font-size: 12.5px; color: #cbd5e1; }
 
@@ -234,19 +234,19 @@
     .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
     .cert-motto { font-size: 13.5px; font-weight: 800; line-height: 1; }
 
-    /* बड़ा लोगो और बड़ा कार्यालय हेडर */
+    /* २/४ स्टेप अझै ठूलो बनाइएको लोगो (68px) र ठूलो कार्यालय हेडर */
     .cert-header {
       display: flex; align-items: center; justify-content: space-between;
       border-bottom: 2px solid var(--gov-crimson); padding-bottom: 2px; margin-bottom: 2px;
     }
     .logo-box-left, .logo-box-right {
-      width: 58px !important; height: 58px !important; flex: 0 0 58px !important;
+      width: 68px !important; height: 68px !important; flex: 0 0 68px !important;
       display: flex; align-items: center; justify-content: center;
     }
     .logo-box-left img, .logo-box-right img {
-      width: 58px !important; height: 58px !important; max-width: 58px !important; max-height: 58px !important; object-fit: contain !important;
+      width: 68px !important; height: 68px !important; max-width: 68px !important; max-height: 68px !important; object-fit: contain !important;
     }
-    .header-titles { text-align: center; flex: 1; }
+    .header-titles { text-align: center; flex: 1; padding: 0 6px; }
     .header-titles .gov-sub { font-size: 13px; font-weight: 700; line-height: 1; }
     .header-titles .palika-title { font-size: 21px; font-weight: 800; line-height: 1.1; }
     .header-titles .office-title { font-size: 26px !important; font-weight: 900 !important; line-height: 1.15; }
@@ -321,7 +321,7 @@
     .owner-dots { font-size: 13px; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: bold; }
     .owner-label { font-size: 13.5px !important; font-weight: 800; }
 
-    /* बड़ा QR कोड (64px) */
+    /* ठूलो QR कोड (64px) */
     #cert_qr_div {
       width: 64px !important; height: 64px !important; border: 1px solid #94a3b8;
       border-radius: 4px; background: #fff !important; display: flex !important;
@@ -659,7 +659,7 @@
               <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
             </div>
 
-            <!-- बड़ा लोगो और बड़ा कार्यालय हेडर -->
+            <!-- २/४ स्टेप अझै ठूलो बनाइएको लोगो (68px) र ठूलो कार्यालय हेडर -->
             <header class="cert-header">
               <div class="logo-box-left">
                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल निशान छाप" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -677,7 +677,7 @@
 
             <div class="ref-photo-row">
               <div class="ref-col">
-                <div>पत्र संख्या:- <span id="out_patra">०८३/८४</span></div>
+                <div>पत्र संख्या:- <span id="out_patra">०८३/८4</span></div>
                 <div>नक्सा दर्ता नं. <strong id="out_darta">२८/२०८३/०८४</strong></div>
                 <div>प्रमाण पत्र नं. <span id="out_praman">१०१</span></div>
                 <div>मितिः <span id="out_date">२०८३/०६/०८</span></div>
@@ -822,7 +822,7 @@
                 </div>
               </div>
 
-              <!-- बड़ा QR कोड सहित बायाँ-दायाँ अलाइनमेन्ट -->
+              <!-- ठूलो QR कोड सहित बायाँ-दायाँ अलाइनमेन्ट -->
               <div class="bottom-owner-qr-flex">
                 <div class="owner-sign-container">
                   <div class="owner-space-area"></div>
@@ -1145,7 +1145,6 @@
       document.getElementById("out_third").textContent = f3 > 0 ? toNepNum(f3.toFixed(2)) : "-";
     }
 
-    // बड़ा QR कोड जनरेटर (60px)
     function generateQR() {
       const qrDiv = document.getElementById("cert_qr_div");
       if (!qrDiv) return;
