@@ -234,7 +234,7 @@
     .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
     .cert-motto { font-size: 13.5px; font-weight: 800; line-height: 1; }
 
-    /* २/४ स्टेप अझै ठूलो बनाइएको लोगो (68px) र ठूलो कार्यालय हेडर */
+    /* २/४ स्टेप ठूला लोगोहरू (68px) र ठूलो कार्यालय हेडर */
     .cert-header {
       display: flex; align-items: center; justify-content: space-between;
       border-bottom: 2px solid var(--gov-crimson); padding-bottom: 2px; margin-bottom: 2px;
@@ -342,7 +342,7 @@
     }
 
     /* ==========================================================================
-       PAGE 2: KABULIYAT & 6-ROW NAMSARI TABLE
+       PAGE 2: KABULIYAT (२ स्टेप ठूलो) & 6-ROW NAMSARI TABLE
        ========================================================================== */
     .a4-sheet.back-page {
       page-break-before: always !important;
@@ -361,7 +361,7 @@
       font-weight: 600;
     }
     .kabuliyat-sign-grid { display: grid; grid-template-columns: 58% 42%; gap: 6px; align-items: flex-end; border-top: 1.2px dotted #64748b; padding-top: 4px; }
-    .sign-left .sign-field { font-size: 13px; line-height: 1.35; margin-bottom: 2px; }
+    .sign-left .sign-field { font-size: 13.5px; line-height: 1.4; margin-bottom: 2px; }
 
     .thumb-frame {
       width: 46px; height: 50px; border: 1.2px dashed #334155; display: flex;
@@ -384,7 +384,7 @@
     .namsari-photo-box { width: 22mm; height: 23mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #64748b; }
 
     /* ==========================================================================
-       PRINT MEDIA RULES
+       PRINT MEDIA RULES (KOKILA FONT & STRICT 2-PAGE LOCK)
        ========================================================================== */
     @media print {
       @page {
@@ -510,6 +510,13 @@
         <div class="form-row"><label>३) घर धनीको नामथर *</label><input type="text" id="in_house_owner" placeholder="घर धनीको नामथर" oninput="updateLivePreview()"></div>
         <div class="form-row"><label>४) घर धनी ना.प्र.प.नं.</label><input type="text" id="in_house_cit" placeholder="नागरिकता नं." oninput="updateLivePreview()"></div>
       </div>
+
+      <!-- नयाँ थपिएको: कबुलियतनामाका लागि जारी जिल्ला र सम्पर्क नं. इनपुट -->
+      <div class="form-grid-2">
+        <div class="form-row"><label>ना.प्र.प. जारी जिल्ला</label><input type="text" id="in_cit_district" value="रुपन्देही" placeholder="जारी जिल्ला" oninput="updateLivePreview()"></div>
+        <div class="form-row"><label>सम्पर्क नं.</label><input type="text" id="in_phone" placeholder="सम्पर्क नम्बर" oninput="updateLivePreview()"></div>
+      </div>
+
       <div class="form-grid-2">
         <div class="form-row"><label>५) साविक ठेगाना</label><input type="text" id="in_sabik" placeholder="साविक ठेगाना" oninput="updateLivePreview()"></div>
         <div class="form-row"><label>हाल वडा नं. *</label><input type="text" id="in_ward" value="०१" oninput="updateLivePreview()"></div>
@@ -659,7 +666,7 @@
               <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
             </div>
 
-            <!-- २/४ स्टेप अझै ठूलो बनाइएको लोगो (68px) र ठूलो कार्यालय हेडर -->
+            <!-- २/४ स्टेप ठूला लोगोहरू (68px) र ठूलो कार्यालय हेडर -->
             <header class="cert-header">
               <div class="logo-box-left">
                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल निशान छाप" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -677,7 +684,7 @@
 
             <div class="ref-photo-row">
               <div class="ref-col">
-                <div>पत्र संख्या:- <span id="out_patra">०८३/८4</span></div>
+                <div>पत्र संख्या:- <span id="out_patra">०८३/८४</span></div>
                 <div>नक्सा दर्ता नं. <strong id="out_darta">२८/२०८३/०८४</strong></div>
                 <div>प्रमाण पत्र नं. <span id="out_praman">१०१</span></div>
                 <div>मितिः <span id="out_date">२०८३/०६/०८</span></div>
@@ -861,12 +868,13 @@
               </p>
 
               <div class="kabuliyat-sign-grid">
+                <!-- जारी जिल्ला र सम्पर्क नम्बर आफैं भर्न मिल्ने गरी डाइनामिक बनाइएको -->
                 <div class="sign-left">
                   <div class="sign-field">दस्तखतः ........</div>
                   <div class="sign-field">नामथरः <strong id="back_name">....................</strong></div>
                   <div class="sign-field">ना.प्र.प.नंः <span id="back_cit">....................</span></div>
-                  <div class="sign-field">जारी जिल्लाः रुपन्देही</div>
-                  <div class="sign-field">सम्पर्क नंः ....................</div>
+                  <div class="sign-field">जारी जिल्लाः <span id="back_cit_district">रुपन्देही</span></div>
+                  <div class="sign-field">सम्पर्क नंः <span id="back_phone">....................</span></div>
                 </div>
 
                 <div class="sign-right">
@@ -1082,6 +1090,10 @@
       const houseCit = getVal("in_house_cit", getVal("in_owner_cit"));
       document.getElementById("out_house_cit").textContent = houseCit;
       document.getElementById("back_cit").textContent = houseCit;
+
+      // कबुलियतनामाका लागि डाइनामिक जारी जिल्ला र सम्पर्क नं.
+      document.getElementById("back_cit_district").textContent = getVal("in_cit_district", "रुपन्देही");
+      document.getElementById("back_phone").textContent = getVal("in_phone", "....................");
 
       document.getElementById("out_sabik").textContent = getVal("in_sabik");
       document.getElementById("out_area").textContent = getVal("in_land_area");
