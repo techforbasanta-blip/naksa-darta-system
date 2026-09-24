@@ -8,7 +8,7 @@
   <!-- Google Fonts: Mukta -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- QR Code Generator -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -173,7 +173,9 @@
     }
     .preview-title { font-size: 13.5px; font-weight: 800; color: #ffffff; margin-bottom: 8px; width: 100%; max-width: 210mm; }
 
-    /* A4 CERTIFICATE ENGINE */
+    /* ==========================================================================
+       A4 CERTIFICATE ENGINE (PUNCHING MARGIN + FIT TO PAGE + BIGGER FONTS)
+       ========================================================================== */
     .a4-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -184,7 +186,8 @@
       min-height: 294mm !important;
       max-height: 294mm !important;
       margin: 0 auto 15px auto !important;
-      padding: 4mm 8mm 3mm 8mm !important;
+      /* पञ्चिङका लागि देब्रेपट्टी १३mm र माथि ८mm खाली गरिएको */
+      padding: 8mm 6mm 4mm 13mm !important;
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
       position: relative !important;
@@ -200,13 +203,13 @@
 
     .watermark-img {
       position: absolute !important;
-      left: 50% !important;
+      left: 52% !important;
       top: 50% !important;
       transform: translate(-50%, -50%) !important;
-      width: 120mm !important;
-      height: 120mm !important;
-      max-width: 120mm !important;
-      max-height: 120mm !important;
+      width: 125mm !important;
+      height: 125mm !important;
+      max-width: 125mm !important;
+      max-height: 125mm !important;
       object-fit: contain !important;
       opacity: 0.15 !important;
       pointer-events: none !important;
@@ -215,65 +218,69 @@
     }
 
     .cert-content-top { position: relative !important; z-index: 2 !important; display: flex; flex-direction: column; flex: 1 1 auto; background: transparent; }
-    .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
-    .cert-motto { font-size: 14px; font-weight: 800; line-height: 1; }
+    
+    .cert-top-center-motto { text-align: center; margin-bottom: 3px; }
+    .cert-motto { font-size: 15px; font-weight: 800; line-height: 1; }
 
+    /* लेटरहेड अझै ठूलो र भव्य */
     .cert-header {
       display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 2px solid var(--gov-crimson); padding-bottom: 2px; margin-bottom: 2px;
+      border-bottom: 2.2px solid var(--gov-crimson); padding-bottom: 3px; margin-bottom: 3px;
     }
     .logo-box-left, .logo-box-right {
-      width: 68px !important; height: 68px !important; flex: 0 0 68px !important;
+      width: 72px !important; height: 72px !important; flex: 0 0 72px !important;
       display: flex; align-items: center; justify-content: center;
     }
     .logo-box-left img, .logo-box-right img {
-      width: 68px !important; height: 68px !important; max-width: 68px !important; max-height: 68px !important; object-fit: contain !important;
+      width: 72px !important; height: 72px !important; max-width: 72px !important; max-height: 72px !important; object-fit: contain !important;
     }
     .header-titles { text-align: center; flex: 1; padding: 0 6px; }
-    .header-titles .gov-sub { font-size: 14px; font-weight: 700; line-height: 1; }
-    .header-titles .palika-title { font-size: 21px; font-weight: 800; line-height: 1.1; }
-    .header-titles .office-title { font-size: 27px !important; font-weight: 900 !important; line-height: 1.15; }
-    .header-titles .address-text { font-size: 14px; font-weight: 700; margin-top: 1px; }
+    .header-titles .gov-sub { font-size: 15px; font-weight: 800; line-height: 1; }
+    .header-titles .palika-title { font-size: 23px; font-weight: 900; line-height: 1.1; }
+    .header-titles .office-title { font-size: 29px !important; font-weight: 900 !important; line-height: 1.15; }
+    .header-titles .address-text { font-size: 15px; font-weight: 700; margin-top: 1px; }
 
-    .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 2px 0; }
-    .ref-col { font-size: 15px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
+    .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 3px 0; }
+    .ref-col { font-size: 15.5px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
     .passport-frame {
-      width: 24mm !important; height: 27mm !important; border: 1.2px solid #334155;
+      width: 25mm !important; height: 28mm !important; border: 1.2px solid #334155;
       background: rgba(255, 255, 255, 0.45); display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
     .passport-frame img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
 
-    .cert-title-container { text-align: center; margin: 2px 0; }
+    .cert-title-container { text-align: center; margin: 3px 0; }
     .cert-title-text {
-      display: inline-block; font-size: 20px; font-weight: 900;
-      border-bottom: 2px solid #000; padding: 0 12px; line-height: 1.15;
+      display: inline-block; font-size: 21px; font-weight: 900;
+      border-bottom: 2.2px solid #000; padding: 0 14px; line-height: 1.15;
     }
-    .cert-intro { font-size: 15.5px !important; line-height: 1.35; text-align: justify; margin-bottom: 4px; font-weight: 600; }
+    .cert-intro { font-size: 16px !important; line-height: 1.35; text-align: justify; margin-bottom: 4px; font-weight: 600; }
 
+    /* Tables: फन्ट ठूलो (16px) र पानाभरी भरिएको */
     .cert-table, .floor-detail-table {
-      width: 100%; border-collapse: collapse; font-size: 15px !important; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
+      width: 100%; border-collapse: collapse; font-size: 16px !important; margin-bottom: 3px; table-layout: fixed; background: transparent !important;
     }
     .cert-table td, .cert-table th, .floor-detail-table td, .floor-detail-table th {
-      padding: 2.2px 6px !important; border: 1.2px solid #0f172a !important; vertical-align: middle; line-height: 1.22; background: transparent !important; color: #000000 !important;
+      padding: 3px 6px !important; border: 1.2px solid #0f172a !important; vertical-align: middle; line-height: 1.22; background: transparent !important; color: #000000 !important;
     }
-    .cert-table td.lbl { font-weight: 800; width: 27%; font-size: 15px !important; }
-    .cert-table td.val { font-weight: 700; width: 23%; font-size: 15px !important; }
-    .floor-detail-table th { font-weight: 800; text-align: left; font-size: 15px !important; }
+    .cert-table td.lbl { font-weight: 800; width: 27%; font-size: 16px !important; }
+    .cert-table td.val { font-weight: 700; width: 23%; font-size: 16px !important; }
+    .floor-detail-table th { font-weight: 800; text-align: left; font-size: 16px !important; }
     
     .total-row td {
       font-weight: 900 !important;
-      font-size: 15.5px !important;
+      font-size: 16.5px !important;
       background: #f1f5f9 !important;
       color: #000000 !important;
     }
 
     .legal-notice-cell {
-      font-size: 13.5px !important;
-      line-height: 1.35 !important;
+      font-size: 14px !important;
+      line-height: 1.38 !important;
       font-weight: 700 !important;
-      padding: 3px 6px !important;
+      padding: 4px 6px !important;
     }
 
+    /* हस्ताक्षर ब्लक */
     .cert-signatures-block {
       margin-top: 18px !important;
       margin-bottom: 2px !important;
@@ -288,19 +295,19 @@
     .sign-item { text-align: center; }
     .sign-space-area { height: 16px; }
     .sign-dotted-line { border-top: 1.2px dotted #1e293b; width: 75%; margin: 0 auto 3px auto; }
-    .sign-title-text { font-size: 14px !important; font-weight: 700; line-height: 1.3; }
-    .sign-title-text strong { font-size: 15px !important; font-weight: 800; }
+    .sign-title-text { font-size: 14.5px !important; font-weight: 700; line-height: 1.3; }
+    .sign-title-text strong { font-size: 15.5px !important; font-weight: 800; }
 
     .bottom-owner-qr-flex {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       border-top: 1px solid #cbd5e1;
-      padding-top: 3px;
+      padding-top: 4px;
     }
     .owner-space-area { height: 6px; }
-    .owner-dots { font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: bold; }
-    .owner-label { font-size: 14.5px !important; font-weight: 800; }
+    .owner-dots { font-size: 14.5px; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: bold; }
+    .owner-label { font-size: 15px !important; font-weight: 800; }
 
     #cert_qr_div {
       width: 64px !important; height: 64px !important; border: 1px solid #94a3b8;
@@ -312,20 +319,22 @@
 
     .cert-footer {
       border-top: 1.5px solid var(--gov-crimson) !important;
-      padding-top: 2px !important;
+      padding-top: 3px !important;
       text-align: center !important;
-      font-size: 11px !important;
+      font-size: 11.5px !important;
       font-weight: 700 !important;
       background: transparent !important;
       line-height: 1.25 !important;
     }
 
-    /* PAGE 2 */
+    /* ==========================================================================
+       PAGE 2: KABULIYAT & 5 LARGE NAMSARI ROWS (फराकिला ५ बक्सहरू)
+       ========================================================================== */
     .a4-sheet.back-page {
       page-break-before: always !important;
       justify-content: flex-start !important;
-      gap: 5px !important;
-      padding-top: 4mm !important;
+      gap: 6px !important;
+      padding-top: 7mm !important;
     }
     .kabuliyat-section { border: 1.2px solid #334155; padding: 6px 8px; background: transparent; }
     .kabuliyat-title { text-align: center; font-size: 19px; font-weight: 800; text-decoration: underline; margin-bottom: 2px; }
@@ -338,10 +347,19 @@
       margin-bottom: 5px;
       font-weight: 600;
     }
-    .kabuliyat-sign-grid { display: grid; grid-template-columns: 46% 54%; gap: 6px; align-items: flex-end; border-top: 1.2px dotted #64748b; padding-top: 4px; }
+    .kabuliyat-sign-grid { display: grid; grid-template-columns: 52% 48%; gap: 6px; align-items: flex-end; border-top: 1.2px dotted #64748b; padding-top: 4px; }
     .sign-left .sign-field { font-size: 14.5px; line-height: 1.45; margin-bottom: 2px; }
 
-    /* हातको औंला तथा मसी छाप (Stamp) मज्जाले अटाउने ठूलो बक्स */
+    /* ईति सम्बत सम्पर्क नम्बरको ठीक मुनि */
+    .iti-date-text-left {
+      font-size: 14.5px;
+      font-weight: 800;
+      margin-top: 5px;
+      color: #0f172a;
+      line-height: 1.35;
+    }
+
+    /* हातको औंला मज्जाले अटाउने ठूलो बक्स */
     .sign-right-centered {
       display: flex;
       flex-direction: column;
@@ -356,31 +374,31 @@
       margin-bottom: 3px;
     }
     .thumb-frame {
-      width: 88px !important;
-      height: 108px !important;
+      width: 90px !important;
+      height: 110px !important;
       border: 1.8px dashed #0f172a !important;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px !important;
+      font-size: 17px !important;
       font-weight: 900 !important;
       background: rgba(255, 255, 255, 0.65);
       border-radius: 5px;
     }
-    .thumb-label { font-size: 14px; font-weight: 800; margin-top: 2px; letter-spacing: 0.5px; }
-    .iti-date-text { font-size: 14px; font-weight: 800; margin-top: 4px; text-align: center; line-height: 1.3; }
+    .thumb-label { font-size: 14.5px; font-weight: 800; margin-top: 2px; letter-spacing: 0.5px; }
 
+    /* नामसारी तालिका ५ वटा फराकिला बक्स */
     .namsari-section {
       border: 1.2px solid #334155;
-      padding: 4px 8px;
+      padding: 5px 8px;
       background: transparent;
-      margin-top: 2px;
+      margin-top: 4px;
     }
-    .namsari-header-title { text-align: center; font-size: 16px; font-weight: 800; margin-bottom: 3px; text-decoration: underline; }
-    .namsari-table { width: 100%; border-collapse: collapse; font-size: 12px; background: transparent; }
-    .namsari-table th, .namsari-table td { border: 1px solid #475569; padding: 2.5px 5px; vertical-align: middle; background: transparent; line-height: 1.2; }
-    .namsari-table th { font-weight: 800; text-align: center; font-size: 12.5px; }
-    .namsari-photo-box { width: 22mm; height: 23mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #64748b; }
+    .namsari-header-title { text-align: center; font-size: 16.5px; font-weight: 800; margin-bottom: 3px; text-decoration: underline; }
+    .namsari-table { width: 100%; border-collapse: collapse; font-size: 13px; background: transparent; }
+    .namsari-table th, .namsari-table td { border: 1.2px solid #475569; padding: 4px 6px; vertical-align: middle; background: transparent; line-height: 1.25; }
+    .namsari-table th { font-weight: 800; text-align: center; font-size: 13.5px; background: rgba(0,0,0,0.03); }
+    .namsari-photo-box { width: 23mm; height: 26mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #64748b; font-weight: bold; }
 
     @media print {
       @page { size: A4 portrait; margin: 0mm !important; }
@@ -400,7 +418,7 @@
       #printAreaContainer { display: block !important; width: 210mm !important; margin: 0 !important; padding: 0 !important; }
       .a4-sheet {
         width: 210mm !important; height: 294mm !important; max-height: 294mm !important;
-        margin: 0 auto !important; padding: 4mm 8mm 3mm 8mm !important;
+        margin: 0 auto !important; padding: 8mm 6mm 4mm 13mm !important;
         border: 1.5px solid #000000 !important; box-shadow: none !important; overflow: hidden !important; display: flex !important;
       }
       #a4CertificatePaper { page-break-after: always !important; break-after: page !important; }
@@ -609,7 +627,7 @@
 
       <div id="printAreaContainer">
         
-        <!-- PAGE 1 (Font Enlarged: 15px - 15.5px) -->
+        <!-- PAGE 1 (Font Enlarged: 16px & Punching Margin Shifted) -->
         <div class="a4-sheet" id="a4CertificatePaper">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -619,6 +637,7 @@
               <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
             </div>
 
+            <!-- लेटरहेड फन्ट ठूलो र १ स्टेप तल -->
             <header class="cert-header">
               <div class="logo-box-left">
                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल निशान छाप" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -643,7 +662,7 @@
               </div>
               <div class="passport-frame">
                 <img id="certPhoto" src="" alt="" style="display:none;">
-                <span id="photoText" style="font-size:12px; color:#64748b; font-weight:bold;">फोटो</span>
+                <span id="photoText" style="font-size:12.5px; color:#64748b; font-weight:bold;">फोटो</span>
               </div>
             </div>
 
@@ -655,6 +674,7 @@
               श्री <strong id="out_intro_name">....................</strong> ले मायादेवी गा.पा. वडा नं. <strong id="out_intro_ward">०१</strong> मा तपसिल बमोजिमको घर सँरचना निर्माण गर्नु भएकोले घर नक्सा अभिलेखिकरण प्रमाण पत्र प्रदान गरीएको छ।
             </div>
 
+            <!-- मुख्य तालिका: फन्ट साइज १६px मा फिट गरिएको -->
             <table class="cert-table">
               <tr>
                 <td class="lbl">१) जग्गा धनीको नामथर</td>
@@ -676,7 +696,7 @@
               </tr>
               <tr>
                 <td class="lbl">६) स्विकृत क्षेत्रफलः</td>
-                <td colspan="3" class="val" id="out_approved_area_full" style="line-height: 1.35; padding: 3px 6px !important;">
+                <td colspan="3" class="val" id="out_approved_area_full" style="line-height: 1.35; padding: 4px 6px !important;">
                   कि.नं. <span id="out_kitta2">....</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट
                 </td>
               </tr>
@@ -747,6 +767,7 @@
               </tr>
             </table>
 
+            <!-- हस्ताक्षर ब्लक -->
             <div class="cert-signatures-block">
               <div class="officers-signature-grid">
                 <div class="sign-item">
@@ -798,7 +819,7 @@
           </footer>
         </div>
 
-        <!-- PAGE 2 (हातको औंलाको ल्याप्चे मज्जाले अटाउने 88px × 108px बक्स) -->
+        <!-- PAGE 2 (ईति सम्बत सम्पर्क नम्बर मुनि र ५ वटा ठूला नामसारी बक्स) -->
         <div class="a4-sheet back-page" id="certificateBackPage">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -816,48 +837,43 @@
               </p>
 
               <div class="kabuliyat-sign-grid">
+                <!-- देब्रेपट्टि: दस्तखत, नामथर, नागरिकता, जिल्ला, फोन र मुनि ईति सम्बत -->
                 <div class="sign-left">
                   <div class="sign-field">दस्तखतः ........</div>
                   <div class="sign-field">नामथरः <strong id="back_name">....................</strong></div>
                   <div class="sign-field">ना.प्र.प.नंः <span id="back_cit">....</span></div>
                   <div class="sign-field">जारी जिल्लाः <span id="back_cit_district">रुपन्देही</span></div>
                   <div class="sign-field">सम्पर्क नंः <span id="back_phone">....................</span></div>
+                  <div class="iti-date-text-left">
+                    ईति सम्बत <span id="iti_year">२०८३</span> साल <span id="iti_month">असोज</span> महिना <span id="iti_day">०८</span> गते <span id="iti_roj">५</span> रोज शुभम्।
+                  </div>
                 </div>
 
-                <!-- हातको औंला तथा मसी छाप (Stamp) मज्जाले अटाउने 88px × 108px बक्स -->
+                <!-- दायाँपट्टि: हातको औंला र मसी छाप मज्जाले अटाउने ठूलो बक्स -->
                 <div class="sign-right-centered">
                   <div class="thumb-frame-wrapper">
                     <div class="thumb-frame">दायाँ</div>
                     <div class="thumb-frame">बायाँ</div>
                   </div>
                   <span class="thumb-label">औंठा छाप</span>
-                  <div class="iti-date-text">
-                    ईति सम्बत <span id="iti_year">२०८३</span> साल <span id="iti_month">असोज</span> महिना <span id="iti_day">०८</span> गते <span id="iti_roj">५</span> रोज शुभम्।
-                  </div>
                 </div>
               </div>
             </section>
 
+            <!-- नामसारी तालिका: ५ वटा फराकिला र ठूला बक्सहरू -->
             <section class="namsari-section">
               <div class="namsari-header-title">नामसारी विवरण</div>
               <table class="namsari-table">
                 <thead>
                   <tr>
-                    <th style="width: 18%;">मितिको निर्णय अनुसार</th>
-                    <th style="width: 32%;">नामथर</th>
+                    <th style="width: 19%;">मितिको निर्णय अनुसार</th>
+                    <th style="width: 33%;">नामथर</th>
                     <th style="width: 16%;">नामसारी लिनेको फोटो</th>
-                    <th style="width: 17%;">सिफारिस गर्ने</th>
-                    <th style="width: 17%;">स्विकृत गर्ने</th>
+                    <th style="width: 16%;">सिफारिस गर्ने</th>
+                    <th style="width: 16%;">स्विकृत गर्ने</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
-                    <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
-                    <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>
-                    <td>नामथर :<br>दस्तखतः</td>
-                    <td>नामथर :<br>दस्तखतः</td>
-                  </tr>
                   <tr>
                     <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
                     <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
