@@ -19,7 +19,7 @@
       --gov-blue: #07192f;
       --gov-navy: #1e3a8a;
       
-      /* Light Mode */
+      /* Light Mode: Clean White & Royal Blue */
       --bg: #f1f5f9;
       --card-bg: #ffffff;
       --input-bg: #ffffff;
@@ -29,7 +29,7 @@
       --print-font: 'Kokila', 'Kalimati', 'Mukta', serif;
     }
 
-    /* Dark Mode (शाही निलो र सेतो) */
+    /* Dark Mode: Royal Deep Navy Blue & Clean White */
     body.dark-mode {
       --bg: #07192f;
       --card-bg: #0d233e;
@@ -62,7 +62,7 @@
 
     .header-controls { display: flex; align-items: center; gap: 10px; }
     
-    /* हेडरभित्रको नेपाली घडी तथा मिति बक्स */
+    /* नेपाली घडी तथा मिति बक्स (विहान/दिउँसो/साँझ/राती सहित) */
     .header-clock-box {
       text-align: right;
       background: rgba(255, 255, 255, 0.1);
@@ -103,7 +103,7 @@
       flex: 1;
     }
 
-    /* Left Input Card */
+    /* Left Input Card (Royal Dark Blue & Clean White) */
     .entry-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -458,7 +458,7 @@
 </head>
 <body>
 
-  <!-- Single Government Header (रातो अतिरिक्त स्ट्रिप हटाइयो) -->
+  <!-- Single Government Header -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
@@ -521,23 +521,40 @@
         <div class="form-row"><label>जग्गाको कुल क्षेत्रफल</label><input type="text" id="in_land_area" placeholder="क्षेत्रफल" oninput="updateLivePreview()"></div>
       </div>
 
+      <!-- ६ देखि ९ सम्मका विवरण: ६ नं. लाई लामो खुलाउन मिल्ने गरी मिलाइएको -->
       <div class="form-section-title">६ देखि ९ सम्मका विवरण</div>
-      <div class="form-grid-2">
-        <div class="form-row"><label>६) स्विकृत क्षेत्रफल (वर्गफिट)</label><input type="text" id="in_approved_area" placeholder="स्विकृत क्षेत्रफल" oninput="updateLivePreview()"></div>
-        <div class="form-row"><label>भु-उपयोग क्षेत्र</label><input type="text" id="in_land_use" value="आवासीय / संस्थागत" oninput="updateLivePreview()"></div>
+      <div class="form-row">
+        <label>६) स्विकृत क्षेत्रफल तथा कित्ता विवरण (लामो खुलाउन मिल्ने) *</label>
+        <input type="text" id="in_approved_area" placeholder="उदा: कि.नं. १२३, १२४ क्षेत्रफलः १५०० वर्गफिट, तलागत..." oninput="updateLivePreview()">
       </div>
-      <label style="font-size: 12px; font-weight: bold; color: #475569;">७) चारकिल्ला विवरण:</label>
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>भु-उपयोग क्षेत्र</label>
+          <input type="text" id="in_land_use" value="आवासीय / संस्थागत" oninput="updateLivePreview()">
+        </div>
+        <div class="form-row">
+          <label>८) भवनको वर्गिकरण</label>
+          <input type="text" id="in_b_class" value="(ख)" oninput="updateLivePreview()">
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>स्ट्रक्चरल सिस्टम</label>
+          <input type="text" id="in_struct" value="फ्रेम स्ट्रक्चर" oninput="updateLivePreview()">
+        </div>
+        <div class="form-row">
+          <label>९) घर निर्माण सम्पन्न मिति</label>
+          <input type="text" id="in_comp_date" placeholder="सम्पन्न मिति" oninput="updateLivePreview()">
+        </div>
+      </div>
+
+      <label style="font-size: 12px; font-weight: bold; color: var(--text-dark); margin-top: 4px; display: block;">७) चारकिल्ला विवरण:</label>
       <div class="form-grid-4">
         <div class="form-row"><input type="text" id="in_east" placeholder="पूर्व" oninput="updateLivePreview()"></div>
         <div class="form-row"><input type="text" id="in_west" placeholder="पश्चिम" oninput="updateLivePreview()"></div>
         <div class="form-row"><input type="text" id="in_north" placeholder="उत्तर" oninput="updateLivePreview()"></div>
         <div class="form-row"><input type="text" id="in_south" placeholder="दक्षिण" oninput="updateLivePreview()"></div>
       </div>
-      <div class="form-grid-2">
-        <div class="form-row"><label>८) भवनको वर्गिकरण</label><input type="text" id="in_b_class" value="(ख)" oninput="updateLivePreview()"></div>
-        <div class="form-row"><label>स्ट्रक्चरल सिस्टम</label><input type="text" id="in_struct" value="फ्रेम स्ट्रक्चर" oninput="updateLivePreview()"></div>
-      </div>
-      <div class="form-row"><label>९) घर निर्माण सम्पन्न मिति</label><input type="text" id="in_comp_date" placeholder="सम्पन्न मिति" oninput="updateLivePreview()"></div>
 
       <div class="form-section-title">१०) तलागत निर्माण क्षेत्रफल (वर्गफिट)</div>
       <div class="form-grid-2">
@@ -680,6 +697,7 @@
               श्री <strong id="out_intro_name">....................</strong> ले मायादेवी गा.पा. वडा नं. <strong id="out_intro_ward">०१</strong> मा तपसिल बमोजिमको घर सँरचना निर्माण गर्नु भएकोले घर नक्सा अभिलेखिकरण प्रमाण पत्र प्रदान गरीएको छ।
             </div>
 
+            <!-- १ देखि ९ सम्मको मुख्य विवरण तालिका (६ नं. लाई छुट्टै फराकिलो रो सहित) -->
             <table class="cert-table">
               <tr>
                 <td class="lbl">१) जग्गा धनीको नामथर</td>
@@ -699,11 +717,18 @@
                   साविक <span id="out_sabik">....................</span> हाल मायादेवी गा.पा. वडा नं. <span id="out_ward">०१</span> कि.नं. <span id="out_kitta">....</span> क्षेत्रफल <span id="out_area">....</span>
                 </td>
               </tr>
+              <!-- ६ नम्बर: धेरै विवरण अटाउने गरी पूरै ३ वटा कोलम ओगट्ने छुट्टै रो -->
               <tr>
                 <td class="lbl">६) स्विकृत क्षेत्रफलः</td>
-                <td class="val">कि.नं. <span id="out_kitta2">....</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट</td>
+                <td colspan="3" class="val" id="out_approved_area_full" style="line-height: 1.35; padding: 3px 5px !important;">
+                  कि.नं. <span id="out_kitta2">....</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट
+                </td>
+              </tr>
+              <tr>
                 <td class="lbl">भु-उपयोग क्षेत्रः</td>
                 <td class="val" id="out_land_use">आवासीय / संस्थागत</td>
+                <td class="lbl">भवनको वर्गिकरणः</td>
+                <td class="val"><span id="out_b_class">(ख)</span> &nbsp;|&nbsp; स्ट्रक्चरलः <span id="out_struct">फ्रेम स्ट्रक्चर</span></td>
               </tr>
               <tr>
                 <td class="lbl">७) जग्गाको चारकिल्लाः</td>
@@ -712,13 +737,12 @@
                 </td>
               </tr>
               <tr>
-                <td class="lbl">८) भवनको वर्गिकरणः</td>
-                <td class="val"><span id="out_b_class">(ख)</span> &nbsp;|&nbsp; स्ट्रक्चरलः <span id="out_struct">फ्रेम स्ट्रक्चर</span></td>
-                <td class="lbl">९) निर्माण सम्पन्न मितिः</td>
-                <td class="val" id="out_comp_date">....</td>
+                <td class="lbl">८) निर्माण सम्पन्न मितिः</td>
+                <td colspan="3" class="val" id="out_comp_date">....</td>
               </tr>
             </table>
 
+            <!-- १० नम्बर: तलागत निर्माण क्षेत्रफल तालिका -->
             <table class="floor-detail-table">
               <thead>
                 <tr>
@@ -962,7 +986,6 @@
       const m = String(now.getMinutes()).padStart(2, "0");
       const s = String(now.getSeconds()).padStart(2, "0");
 
-      // नेपाली प्रहर निर्धारण
       let nepPeriod = "विहान";
       if (h >= 12 && h < 17) {
         nepPeriod = "दिउँसो";
@@ -1069,7 +1092,6 @@
 
       const kitta = getVal("in_kitta", "....");
       document.getElementById("out_kitta").textContent = kitta;
-      document.getElementById("out_kitta2").textContent = kitta;
 
       document.getElementById("out_owner_cit").textContent = getVal("in_owner_cit");
       const houseCit = getVal("in_house_cit", getVal("in_owner_cit"));
@@ -1078,7 +1100,15 @@
 
       document.getElementById("out_sabik").textContent = getVal("in_sabik");
       document.getElementById("out_area").textContent = getVal("in_land_area");
-      document.getElementById("out_approved_area").textContent = getVal("in_approved_area");
+
+      // ६ नम्बर: लामो खुलाउन मिल्ने स्विकृत क्षेत्रफल तथा कित्ता विवरण
+      const inAppr = document.getElementById("in_approved_area").value.trim();
+      if (inAppr) {
+        document.getElementById("out_approved_area_full").textContent = inAppr;
+      } else {
+        document.getElementById("out_approved_area_full").innerHTML = `कि.नं. <span id="out_kitta2">${kitta}</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट`;
+      }
+
       document.getElementById("out_land_use").textContent = getVal("in_land_use", "आवासीय / संस्थागत");
 
       const e = getVal("in_east"), w = getVal("in_west"), n = getVal("in_north"), s = getVal("in_south");
