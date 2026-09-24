@@ -132,6 +132,11 @@
     }
     .btn-add:hover { background: #15803d; }
 
+    .sync-tools {
+      display: flex; gap: 8px; margin-top: 10px; padding: 10px; background: rgba(30, 58, 138, 0.05); border-radius: 4px; border: 1px dashed var(--border-color);
+    }
+    .btn-sync { background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 12px; }
+
     .table-responsive { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px; }
     th, td { border: 1px solid var(--border-color); padding: 8px 6px; text-align: left; }
@@ -171,7 +176,7 @@
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल सरकार" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
           <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
-          <p>कर्मचारी तथा एडमिन व्यवस्थापन प्यानल | Cloud Sync Active</p>
+          <p>कर्मचारी तथा एडमिन व्यवस्थापन प्यानल | Admin Dashboard</p>
         </div>
       </div>
       <div class="header-controls">
@@ -193,7 +198,7 @@
   <div class="container">
     <div class="card">
       <div class="card-title">
-        <span>➕ नयाँ एडमिन / कर्मचारी दर्ता (सबै कम्प्युटरमा तुरुन्त सिंक हुने)</span>
+        <span>➕ नयाँ एडमिन / कर्मचारी दर्ता फाराम</span>
       </div>
       <form id="newAdminForm" onsubmit="event.preventDefault(); createNewAdminUser();" autocomplete="off">
         <div class="form-grid">
@@ -225,16 +230,23 @@
             <label>कैफियत (Remarks)</label>
             <input type="text" id="new_remarks" placeholder="कैफियत">
           </div>
-          <button type="submit" id="saveBtn" class="btn-add">💾 सुरक्षित गर्नुहोस्</button>
+          <button type="submit" class="btn-add">💾 सुरक्षित गर्नुहोस्</button>
         </div>
       </form>
     </div>
 
     <div class="card">
       <div class="card-title">
-        <span>👥 दर्ता भएका कर्मचारीहरूको सूची (Cloud Storage)</span>
-        <span id="slotStatusBadge" style="font-size: 13px; background: rgba(30, 58, 138, 0.2); padding: 3px 10px; border-radius: 20px; font-weight: bold;">लोड हुँदैछ...</span>
+        <span>👥 दर्ता भएका एडमिन तथा कर्मचारीहरूको सूची</span>
+        <span id="slotStatusBadge" style="font-size: 13px; background: rgba(30, 58, 138, 0.2); padding: 3px 10px; border-radius: 20px; font-weight: bold;">कुल: १ / १०</span>
       </div>
+
+      <!-- अन्य कम्प्युटरमा सजिलै डाटा ट्रान्सफर गर्ने टूल -->
+      <div class="sync-tools">
+        <button type="button" class="btn-sync" onclick="exportStaffData()">📤 यो PC को डाटा कोड कपि गर्नुहोस् (Export)</button>
+        <button type="button" class="btn-sync" onclick="importStaffData()">📥 अर्को PC मा डाटा पेस गर्नुहोस् (Import)</button>
+      </div>
+
       <div class="table-responsive">
         <table>
           <thead>
@@ -267,44 +279,41 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
-    // Cloud Database API
-    const SYNC_API_URL = "https://api.jsonbin.io/v3/b/66ebbd2ce41b4d34e433db9b"; 
-    const SYNC_MASTER_KEY = "$2a$10$X87mPqGz7Fk6E7s.JqXw2.0N5qO8Yl1w2sVp/4pDfxoYhX6k/nFqm";
+    const defaultMasterAdmin = {
+      id: 1,
+      full_name: "सुपर एडमिन",
+      post: "कम्प्युटर अपरेटर",
+      phone: "९७४३६५३६४४",
+      email: "basantabashyalo@gmail.com",
+      login_id: "superadmin",
+      password: "Admin@2083",
+      remarks: "प्रणाली व्यवस्थापक (Master Account)"
+    };
 
-    let usersList = [];
-
-    async function fetchCloudUsers() {
+    function getStoredStaffList() {
       try {
-        const res = await fetch(SYNC_API_URL + "/latest", {
-          headers: { "X-Master-Key": SYNC_MASTER_KEY }
-        });
-        if (res.ok) {
-          const json = await res.json();
-          usersList = json.record && Array.isArray(json.record) ? json.record : [];
-          localStorage.setItem("mayadevi_staff_list", JSON.stringify(usersList));
+        const stored = localStorage.getItem('mayadevi_staff_list');
+        if (stored) {
+          let list = JSON.parse(stored);
+          if (Array.isArray(list) && list.length > 0) {
+            const sIdx = list.findIndex(u => u.login_id && u.login_id.toLowerCase() === 'superadmin');
+            if (sIdx !== -1) {
+              list[sIdx].post = "कम्प्युटर अपरेटर";
+              list[sIdx].email = "basantabashyalo@gmail.com";
+              list[sIdx].phone = "९७४३६५३६४४";
+            } else {
+              list.unshift(defaultMasterAdmin);
+            }
+            return list;
+          }
         }
-      } catch(e) {
-        const local = localStorage.getItem("mayadevi_staff_list");
-        if (local) usersList = JSON.parse(local);
-      }
-      renderTable();
+      } catch (e) {}
+
+      localStorage.setItem('mayadevi_staff_list', JSON.stringify([defaultMasterAdmin]));
+      return [defaultMasterAdmin];
     }
 
-    async function syncToCloud() {
-      try {
-        localStorage.setItem("mayadevi_staff_list", JSON.stringify(usersList));
-        await fetch(SYNC_API_URL, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Master-Key": SYNC_MASTER_KEY
-          },
-          body: JSON.stringify(usersList)
-        });
-      } catch(e) {
-        console.error("Cloud sync failed:", e);
-      }
-    }
+    let usersList = getStoredStaffList();
 
     function renderTable() {
       const tbody = document.getElementById("userTableBody");
@@ -312,35 +321,37 @@
       if (!tbody) return;
 
       tbody.innerHTML = "";
-      if (badge) badge.textContent = `कुल कर्मचारी: ${usersList.length}`;
-
-      if (usersList.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:15px; color:#64748b;">कुनै कर्मचारी थपिएको छैन। माथिको फारामबाट थप्नुहोस्।</td></tr>`;
-        return;
-      }
+      if (badge) badge.textContent = `कुल एडमिन/कर्मचारी: ${usersList.length} / १०`;
 
       usersList.forEach((u, idx) => {
+        const isMaster = (u.login_id && u.login_id.toLowerCase() === "superadmin");
         const tr = document.createElement("tr");
+
         tr.innerHTML = `
           <td style="text-align:center; font-weight:bold;">${toNepNum(idx + 1)}</td>
           <td><input type="text" class="table-input" id="tbl-name-${u.id}" value="${u.full_name}"></td>
           <td><input type="text" class="table-input" id="tbl-post-${u.id}" value="${u.post}"></td>
           <td><input type="text" class="table-input" id="tbl-phone-${u.id}" value="${u.phone}"></td>
           <td><input type="email" class="table-input" id="tbl-email-${u.id}" value="${u.email}"></td>
-          <td><input type="text" class="table-input" id="tbl-loginid-${u.id}" value="${u.login_id}"></td>
-          <td><input type="text" class="table-input" id="tbl-pwd-${u.id}" value="${u.password}" style="width: 110px;"></td>
+          <td><input type="text" class="table-input" id="tbl-loginid-${u.id}" value="${u.login_id}" ${isMaster ? 'readonly style="background:rgba(0,0,0,0.06);"' : ''}></td>
+          <td><input type="text" class="table-input" id="tbl-pwd-${u.id}" value="${u.password}" style="width: 100px;"></td>
           <td><input type="text" class="table-input" id="tbl-remarks-${u.id}" value="${u.remarks || ''}"></td>
           <td style="text-align: center; white-space: nowrap;">
             <button type="button" class="btn-update" onclick="updateExistingUser(${u.id})">अपडेट</button>
-            <button type="button" class="btn-del" onclick="deleteUser(${u.id})">हटाउने</button>
+            ${!isMaster ? `<button type="button" class="btn-del" onclick="deleteUser(${u.id})">हटाउने</button>` : ''}
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    async function createNewAdminUser() {
-      const btn = document.getElementById("saveBtn");
+    function createNewAdminUser() {
+      usersList = getStoredStaffList();
+      if (usersList.length >= 10) {
+        alert("अधिकतम १० जना सम्म मात्र एडमिन/कर्मचारी राख्न मिल्छ!");
+        return;
+      }
+
       const name = document.getElementById("new_name").value.trim();
       const post = document.getElementById("new_post").value.trim();
       const phone = document.getElementById("new_phone").value.trim();
@@ -351,12 +362,9 @@
 
       const exists = usersList.some(u => u.login_id && u.login_id.toLowerCase() === loginId.toLowerCase());
       if (exists) {
-        alert("यो Login ID पहिले नै छ! फरक राख्नुहोस्।");
+        alert(`यो Login ID (${loginId}) पहिले नै दर्ता भइसकेको छ। फरक ID राख्नुहोस्!`);
         return;
       }
-
-      btn.textContent = "क्लाउडमा सेभ हुँदैछ...";
-      btn.disabled = true;
 
       const newUser = {
         id: Date.now(),
@@ -366,21 +374,19 @@
         email: email,
         login_id: loginId,
         password: pwd,
-        remarks: remarks,
-        role: "admin"
+        remarks: remarks
       };
 
       usersList.push(newUser);
-      await syncToCloud();
+      localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
 
-      btn.textContent = "💾 सुरक्षित गर्नुहोस्";
-      btn.disabled = false;
       document.getElementById("newAdminForm").reset();
-      alert(`कर्मचारी "${name}" (Login ID: ${loginId}) सफलतापूर्वक क्लाउडमा सुरक्षित भयो! अब यो आइडी जुनसुकै कम्प्युटरबाट तुरुन्त खुल्छ।`);
+      alert(`कर्मचारी "${name}" सुरक्षित भयो!`);
       renderTable();
     }
 
-    async function updateExistingUser(id) {
+    function updateExistingUser(id) {
+      usersList = getStoredStaffList();
       const user = usersList.find(u => u.id === id);
       if (user) {
         user.full_name = document.getElementById(`tbl-name-${id}`).value.trim();
@@ -391,17 +397,48 @@
         user.password = document.getElementById(`tbl-pwd-${id}`).value.trim();
         user.remarks = document.getElementById(`tbl-remarks-${id}`).value.trim();
 
-        await syncToCloud();
-        alert("विवरण क्लाउडमा अपडेट भयो!");
+        localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
+        alert("विवरण सफलतापूर्वक अद्यावधिक भयो!");
         renderTable();
       }
     }
 
-    async function deleteUser(id) {
-      if (confirm("के तपाईं यो कर्मचारी हटाउन चाहनुहुन्छ?")) {
+    function deleteUser(id) {
+      usersList = getStoredStaffList();
+      const target = usersList.find(u => u.id === id);
+      if (!target) return;
+
+      if (confirm(`के तपाईं "${target.full_name}" लाई सूचीबाट हटाउन चाहनुहुन्छ?`)) {
         usersList = usersList.filter(u => u.id !== id);
-        await syncToCloud();
+        localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
         renderTable();
+      }
+    }
+
+    // १-क्लिकमा अर्को कम्प्युटरमा डाटा लैजाने प्रणाली
+    function exportStaffData() {
+      const dataStr = JSON.stringify(usersList);
+      navigator.clipboard.writeText(dataStr).then(() => {
+        alert("सबै कर्मचारी डाटा कपि भयो! अब अर्को कम्प्युटरमा admin.html खोलेर '📥 Import' बटन थिची यो कोड पेस्ट गर्नुहोस्।");
+      }).catch(() => {
+        prompt("यो कोड कपि गर्नुहोस्:", dataStr);
+      });
+    }
+
+    function importStaffData() {
+      const pasteData = prompt("अघिल्लो कम्प्युटरबाट कपि गरेको डाटा कोड यहाँ पेस्ट गर्नुहोस्:");
+      if (pasteData) {
+        try {
+          const parsed = JSON.parse(pasteData);
+          if (Array.isArray(parsed)) {
+            localStorage.setItem('mayadevi_staff_list', JSON.stringify(parsed));
+            usersList = parsed;
+            renderTable();
+            alert("बधाई छ! सबै कर्मचारी डाटा यो नयाँ कम्प्युटरमा तुरुन्तै सुरक्षित भयो। अब सबै आइडी खुल्नेछ!");
+          }
+        } catch(e) {
+          alert("अमान्य डाटा कोड!");
+        }
       }
     }
 
@@ -430,9 +467,14 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
+      if (!raw) {
+        window.location.href = "login.html";
+        return;
+      }
       setInterval(updateClock, 1000);
       updateClock();
-      fetchCloudUsers();
+      renderTable();
     });
   </script>
 </body>
