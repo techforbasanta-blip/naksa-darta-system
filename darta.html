@@ -16,18 +16,30 @@
   <style>
     :root {
       --gov-crimson: #b71c1c;
-      --gov-blue: #0b2545;
+      --gov-blue: #07192f;
       --gov-navy: #1e3a8a;
-      --gov-bg: #e2e8f0;
+      
+      /* Light Mode: Clean White & Royal Blue */
+      --bg: #f1f5f9;
       --card-bg: #ffffff;
+      --input-bg: #ffffff;
       --text-dark: #0f172a;
       --border-color: #cbd5e1;
       --screen-font: 'Mukta', sans-serif;
       --print-font: 'Kokila', 'Kalimati', 'Mukta', serif;
     }
 
+    /* Dark Mode: Royal Deep Navy Blue & Clean White */
+    body.dark-mode {
+      --bg: #07192f;
+      --card-bg: #0d233e;
+      --input-bg: #07192f;
+      --text-dark: #ffffff;
+      --border-color: #1e3a8a;
+    }
+
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
-    body { background: var(--gov-bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; }
+    body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
     /* Top Strip */
     .gov-top-bar {
@@ -41,7 +53,7 @@
       font-weight: 600;
     }
 
-    /* Header */
+    /* Single Header */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 2px solid var(--gov-crimson);
@@ -60,21 +72,22 @@
     .brand-text h1 { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.15; }
     .brand-text p { font-size: 12px; color: #cbd5e1; }
 
-    .header-controls { display: flex; align-items: center; gap: 10px; }
+    .header-controls { display: flex; align-items: center; gap: 8px; }
     .nav-btn {
-      background: #132743;
+      background: #0d233e;
       color: #ffffff;
       text-decoration: none;
       font-size: 12.5px;
       font-weight: 700;
       padding: 5px 12px;
       border-radius: 4px;
-      border: 1px solid #234169;
+      border: 1px solid #1e3a8a;
       display: inline-flex;
       align-items: center;
       cursor: pointer;
     }
     .nav-btn:hover, .nav-btn.active { background: #2563eb; border-color: #3b82f6; }
+    .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 14px !important; padding: 4px 10px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
     /* Workspace */
@@ -89,46 +102,52 @@
       flex: 1;
     }
 
-    /* Left Input Card */
+    /* Left Input Card (Royal Dark Blue & Clean White) */
     .entry-card {
-      background: #ffffff;
+      background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 6px;
       padding: 14px;
       max-height: 88vh;
       overflow-y: auto;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: background 0.25s, border-color 0.25s;
     }
     .entry-title {
       font-size: 16px;
       font-weight: 800;
-      color: var(--gov-blue);
-      border-bottom: 2px solid #e2e8f0;
+      color: #1e3a8a;
+      border-bottom: 2px solid var(--border-color);
       padding-bottom: 4px;
       margin-bottom: 10px;
     }
+    body.dark-mode .entry-title { color: #60a5fa; }
+
     .form-section-title {
       font-size: 13px;
       font-weight: 800;
       color: var(--gov-crimson);
-      background: #fef2f2;
+      background: rgba(183, 28, 28, 0.08);
       padding: 4px 8px;
       border-left: 3px solid var(--gov-crimson);
       margin: 10px 0 6px 0;
       border-radius: 2px;
     }
+    body.dark-mode .form-section-title { color: #fca5a5; background: rgba(220, 38, 38, 0.22); }
+
     .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px; }
     .form-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 4px; }
     .form-row { margin-bottom: 6px; }
-    .form-row label { display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 2px; }
+    .form-row label { display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
     .form-row input, .form-row select {
       width: 100%;
       padding: 6px 8px;
       border: 1px solid var(--border-color);
       border-radius: 4px;
       font-size: 12.5px;
-      background: #ffffff;
-      color: #0f172a;
+      background: var(--input-bg);
+      color: var(--text-dark);
+      transition: background 0.25s, color 0.25s;
     }
 
     .form-actions {
@@ -137,18 +156,18 @@
       margin-top: 10px;
       position: sticky;
       bottom: 0;
-      background: #ffffff;
+      background: var(--card-bg);
       padding-top: 6px;
     }
     .btn-act { flex: 1; padding: 8px; border: none; border-radius: 4px; font-weight: 700; font-size: 13px; cursor: pointer; }
     .btn-save { background: #16a34a; color: #fff; }
-    .btn-print { background: var(--gov-navy); color: #fff; }
+    .btn-print { background: #1e3a8a; color: #fff; }
     .btn-print:hover { background: #2563eb; }
     .btn-reset { background: #64748b; color: #fff; }
 
     /* Right Preview Container */
     .preview-card {
-      background: #334155;
+      background: #0f1e33;
       border: 1px solid var(--border-color);
       border-radius: 6px;
       padding: 14px;
@@ -162,7 +181,7 @@
     .preview-title { font-size: 13.5px; font-weight: 800; color: #ffffff; margin-bottom: 8px; width: 100%; max-width: 210mm; }
 
     /* ==========================================================================
-       A4 CERTIFICATE ENGINE (CALIBRATED TO EXACT FIT)
+       A4 CERTIFICATE ENGINE (FIT TO PAGE & AUTO CALIBRATED)
        ========================================================================== */
     .a4-sheet {
       background-color: #ffffff !important;
@@ -174,7 +193,7 @@
       min-height: 294mm !important;
       max-height: 294mm !important;
       margin: 0 auto 15px auto !important;
-      padding: 5mm 8mm 4mm 8mm !important; /* फिट टु पेजको लागि प्याडिङ मिलाइएको */
+      padding: 5mm 8mm 4mm 8mm !important;
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
       position: relative !important;
@@ -184,6 +203,7 @@
       justify-content: space-between !important;
     }
 
+    /* सबै अक्षर कालो र स्पष्ट */
     .a4-sheet, .a4-sheet * {
       color: #000000 !important;
     }
@@ -191,7 +211,7 @@
       color: var(--gov-crimson) !important;
     }
     .address-text {
-      color: var(--gov-navy) !important;
+      color: #1e3a8a !important;
     }
 
     .watermark-img {
@@ -213,7 +233,7 @@
     .cert-content-top { position: relative !important; z-index: 2 !important; display: flex; flex-direction: column; flex: 1 1 auto; background: transparent; }
 
     .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
-    .cert-motto { font-size: 13px; font-weight: 800; line-height: 1; }
+    .cert-motto { font-size: 13.5px; font-weight: 800; line-height: 1; }
 
     .cert-header {
       display: flex; align-items: center; justify-content: space-between;
@@ -227,13 +247,13 @@
       width: 46px !important; height: 46px !important; max-width: 46px !important; max-height: 46px !important; object-fit: contain !important;
     }
     .header-titles { text-align: center; flex: 1; }
-    .header-titles .gov-sub { font-size: 13px; font-weight: 700; line-height: 1; }
-    .header-titles .palika-title { font-size: 23px; font-weight: 800; line-height: 1.1; }
-    .header-titles .office-title { font-size: 16px; font-weight: 800; line-height: 1; }
-    .header-titles .address-text { font-size: 13px; font-weight: 700; margin-top: 1px; }
+    .header-titles .gov-sub { font-size: 13.5px; font-weight: 700; line-height: 1; }
+    .header-titles .palika-title { font-size: 24px; font-weight: 800; line-height: 1.1; }
+    .header-titles .office-title { font-size: 17px; font-weight: 800; line-height: 1; }
+    .header-titles .address-text { font-size: 13.5px; font-weight: 700; margin-top: 1px; }
 
     .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 2px 0; }
-    .ref-col { font-size: 13px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
+    .ref-col { font-size: 13.5px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
     .passport-frame {
       width: 23mm !important; height: 26mm !important; border: 1.2px solid #334155;
       background: rgba(255, 255, 255, 0.45); display: flex; align-items: center; justify-content: center; overflow: hidden;
@@ -242,26 +262,26 @@
 
     .cert-title-container { text-align: center; margin: 2px 0; }
     .cert-title-text {
-      display: inline-block; font-size: 17.5px; font-weight: 800;
+      display: inline-block; font-size: 18px; font-weight: 800;
       border-bottom: 1.8px solid #000; padding: 0 10px; line-height: 1.15;
     }
-    .cert-intro { font-size: 13px; line-height: 1.3; text-align: justify; margin-bottom: 3px; font-weight: 600; }
+    .cert-intro { font-size: 13.5px; line-height: 1.3; text-align: justify; margin-bottom: 3px; font-weight: 600; }
 
-    /* Page 1 Tables (Fit to page calibrated) */
+    /* Page 1 Tables (८ बाट १० मा बढाइएको, Fit to Page) */
     .cert-table, .floor-detail-table {
-      width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
+      width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
     }
     .cert-table td, .cert-table th, .floor-detail-table td, .floor-detail-table th {
-      padding: 1.8px 4px; border: 1px solid #334155; vertical-align: middle; line-height: 1.15; background: transparent !important;
+      padding: 2px 4px; border: 1px solid #334155; vertical-align: middle; line-height: 1.18; background: transparent !important;
     }
     .cert-table td.lbl { font-weight: 800; width: 25%; }
     .cert-table td.val { font-weight: 700; width: 25%; }
     .floor-detail-table th { font-weight: 800; text-align: left; }
     
-    /* १० नम्बरको जम्मा क्षेत्रफल */
+    /* १० नम्बरको जम्मा क्षेत्रफल (प्रस्ट र कालो) */
     .total-row td {
       font-weight: 800 !important;
-      font-size: 13px !important;
+      font-size: 13.5px !important;
       background: #f1f5f9 !important;
       color: #000000 !important;
     }
@@ -281,8 +301,8 @@
     .sign-item { text-align: center; }
     .sign-space-area { height: 16px; }
     .sign-dotted-line { border-top: 1px dotted #1e293b; width: 75%; margin: 0 auto 3px auto; }
-    .sign-title-text { font-size: 12px; font-weight: 700; line-height: 1.25; }
-    .sign-title-text strong { font-size: 13px; font-weight: 800; }
+    .sign-title-text { font-size: 12.5px; font-weight: 700; line-height: 1.25; }
+    .sign-title-text strong { font-size: 13.5px; font-weight: 800; }
 
     .bottom-owner-qr-flex { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #cbd5e1; padding-top: 3px; }
     .owner-dots { font-size: 12px; letter-spacing: 0.5px; margin-bottom: 1px; font-weight: bold; }
@@ -301,14 +321,14 @@
       border-top: 1.5px solid var(--gov-crimson) !important;
       padding-top: 2px !important;
       text-align: center !important;
-      font-size: 10.5px !important;
+      font-size: 11px !important;
       font-weight: 700 !important;
       background: transparent !important;
       line-height: 1.2 !important;
     }
 
     /* ==========================================================================
-       PAGE 2: KABULIYAT & 4-ROW EXPANDED NAMSARI TABLE
+       PAGE 2: KABULIYAT (२ स्टेप ठूलो) & 6-ROW EXPANDED NAMSARI TABLE
        ========================================================================== */
     .a4-sheet.back-page {
       page-break-before: always !important;
@@ -316,27 +336,35 @@
       gap: 6px !important;
     }
     .kabuliyat-section { border: 1.2px solid #334155; padding: 6px 8px; background: transparent; }
-    .kabuliyat-title { text-align: center; font-size: 17px; font-weight: 800; text-decoration: underline; margin-bottom: 2px; }
-    .shriman-title { text-align: left; font-size: 14px; font-weight: 800; margin-bottom: 2px; }
-    .kabuliyat-body { font-size: 12.5px; line-height: 1.35; text-align: justify; margin-bottom: 4px; }
+    .kabuliyat-title { text-align: center; font-size: 18px; font-weight: 800; text-decoration: underline; margin-bottom: 2px; }
+    .shriman-title { text-align: left; font-size: 15px; font-weight: 800; margin-bottom: 2px; }
+    
+    /* कबुलियतनामा २ स्टेप ठूलो (पढ्न एकदम सजिलो) */
+    .kabuliyat-body {
+      font-size: 15.5px !important;
+      line-height: 1.55 !important;
+      text-align: justify;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
     .kabuliyat-sign-grid { display: grid; grid-template-columns: 58% 42%; gap: 6px; align-items: flex-end; border-top: 1.2px dotted #64748b; padding-top: 4px; }
-    .sign-left .sign-field { font-size: 12.5px; line-height: 1.3; margin-bottom: 2px; }
+    .sign-left .sign-field { font-size: 13px; line-height: 1.35; margin-bottom: 2px; }
 
     .thumb-frame {
       width: 46px; height: 50px; border: 1.2px dashed #334155; display: flex;
       align-items: center; justify-content: center; font-size: 11px; font-weight: 800; background: rgba(255, 255, 255, 0.45);
     }
     .thumb-label { font-size: 11.5px; font-weight: 800; margin-top: 1px; }
-    .iti-date-text { font-size: 12.5px; font-weight: 800; margin-top: 2px; }
+    .iti-date-text { font-size: 13px; font-weight: 800; margin-top: 2px; }
 
-    /* Namsari Section (थप ४ वटा बक्सहरू सहित) */
+    /* Namsari Section (तलसम्म अटाउने गरी पूरा ६ वटा बक्सहरू) */
     .namsari-section {
       border: 1.2px solid #334155;
       padding: 5px 8px;
       background: transparent;
       margin-top: 4px;
     }
-    .namsari-header-title { text-align: center; font-size: 15px; font-weight: 800; margin-bottom: 3px; text-decoration: underline; }
+    .namsari-header-title { text-align: center; font-size: 15.5px; font-weight: 800; margin-bottom: 3px; text-decoration: underline; }
     .namsari-table { width: 100%; border-collapse: collapse; font-size: 12px; background: transparent; }
     .namsari-table th, .namsari-table td { border: 1px solid #475569; padding: 3px 5px; vertical-align: middle; background: transparent; line-height: 1.2; }
     .namsari-table th { font-weight: 800; text-align: center; font-size: 12.5px; }
@@ -437,6 +465,9 @@
         <a href="darta.html" class="nav-btn active">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
+        
+        <!-- डार्क तथा लाइट मोड बटन (शाही निलो र सेतो) -->
+        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="डार्क / लाइट मोड बदल्नुहोस्">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
       </div>
     </div>
@@ -445,7 +476,7 @@
   <!-- Workspace Grid -->
   <main class="workspace-grid">
     
-    <!-- LEFT INPUT SECTION (१ देखि १८ सम्मका पूर्ण फिल्डहरू) -->
+    <!-- LEFT INPUT SECTION (Royal Dark Blue & Clean White) -->
     <section class="entry-card no-print">
       <h2 class="entry-title">📝 नक्सा विवरण फाराम (१ देखि १८ पूर्ण प्रविष्टि)</h2>
 
@@ -718,7 +749,7 @@
                 <td class="lbl">१६) ढल, सेप्टिक ट्याङ्कः</td><td colspan="3" class="val" id="out_septic">भएको</td>
               </tr>
               <tr>
-                <td colspan="4" style="font-size:12px; line-height:1.25; font-weight:700;">
+                <td colspan="4" style="font-size:12.5px; line-height:1.28; font-weight:700;">
                   १७) उल्लेखित सँरचना निर्माण भएको जग्गामा कुनैपनि किसिमको खरखिचोला, दावीविरोध आदी भएगरेमा सोको जवाफदेही स्वयम् घरधनी हुने।<br>
                   १८) मिति <strong id="out_dec_date">२०८३/०६/०६</strong> को निर्णयानुसार सँरचनागत सुरक्षाको जिम्मेवारी स्वयम् घरधनीमा रहनेगरी घर नक्सा अभिलेखिकरण गरीएको।
                 </td>
@@ -777,7 +808,7 @@
           </footer>
         </div>
 
-        <!-- ================= PAGE 2 (KABULIYAT & 4-ROW NAMSARI) ================= -->
+        <!-- ================= PAGE 2 (KABULIYAT & 6-ROW EXPANDED NAMSARI TABLE) ================= -->
         <div class="a4-sheet back-page" id="certificateBackPage">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -786,6 +817,7 @@
             <section class="kabuliyat-section">
               <h2 class="kabuliyat-title">कबुलियतनामा</h2>
               <div class="shriman-title">श्रीमान्,</div>
+              <!-- कबुलियतनामा २ स्टेप ठूलो (15.5px, line-height 1.55) -->
               <p class="kabuliyat-body">
                 मैले/हामिले बनाएको घर सँरचना ठिक साँचो छ, कानुन विपरित भए गरेमा वा सरकारी, सार्वजनिक वा व्यक्ति विशेषको
                 जग्गा अतिक्रमण गरी बनाएको ठहरिएमा, बाटो, कुलो वा नदीको अधिकार क्षेत्रमा निर्माण भएको ठहर भएमा वा कानुन
@@ -818,7 +850,7 @@
               </div>
             </section>
 
-            <!-- नामसारी विवरण: थपिएका ४ वटा सरकारी बक्सहरू -->
+            <!-- नामसारी विवरण: तलसम्म अटाउने गरी पूरा ६ वटा बक्सहरू (Fit to Page) -->
             <section class="namsari-section">
               <div class="namsari-header-title">नामसारी विवरण</div>
               <table class="namsari-table">
@@ -864,6 +896,22 @@
                     <td>नामथर :<br>दस्तखतः</td>
                     <td>नामथर :<br>दस्तखतः</td>
                   </tr>
+                  <!-- Row 5 -->
+                  <tr>
+                    <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
+                    <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                    <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>
+                    <td>नामथर :<br>दस्तखतः</td>
+                    <td>नामथर :<br>दस्तखतः</td>
+                  </tr>
+                  <!-- Row 6 -->
+                  <tr>
+                    <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
+                    <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                    <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>
+                    <td>नामथर :<br>दस्तखतः</td>
+                    <td>नामथर :<br>दस्तखतः</td>
+                  </tr>
                 </tbody>
               </table>
             </section>
@@ -886,6 +934,7 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
+    // Live Clock
     function updateClock() {
       const now = new Date();
       const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
@@ -893,6 +942,25 @@
       const ampm = h >= 12 ? "PM" : "AM"; h = h % 12 || 12;
 
       document.getElementById("liveNepaliClock").textContent = `मिति: २०८३ असोज ०७ (${nepDays[now.getDay()]}) | समय: ${toNepNum(String(h).padStart(2,"0"))}:${toNepNum(m)}:${toNepNum(s)} ${ampm}`;
+    }
+
+    // Royal Deep Navy Blue & Clean White Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      localStorage.setItem("mayadevi_naksa_theme", isDark ? "dark" : "light");
+      document.getElementById("themeToggleBtn").textContent = isDark ? "☀" : "☾";
+    }
+
+    function applySavedTheme() {
+      const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
+      if (saved === "dark") {
+        document.body.classList.add("dark-mode");
+        document.getElementById("themeToggleBtn").textContent = "☀";
+      } else {
+        document.body.classList.remove("dark-mode");
+        document.getElementById("themeToggleBtn").textContent = "☾";
+      }
     }
 
     function updateLivePreview() {
@@ -1027,6 +1095,7 @@
         }
       } catch(e) {}
 
+      applySavedTheme();
       setInterval(updateClock, 1000);
       updateClock();
       calcTotalArea();
