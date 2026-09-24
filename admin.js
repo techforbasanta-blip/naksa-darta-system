@@ -1,4 +1,4 @@
-// मास्टर सुपरएडमिन खाता विवरण (अपडेट गरिएको)
+// मास्टर सुपरएडमिन खाता
 const defaultMasterAdmin = {
     id: 1,
     full_name: "सुपर एडमिन",
@@ -10,28 +10,28 @@ const defaultMasterAdmin = {
     remarks: "प्रणाली व्यवस्थापक (Master Admin)"
 };
 
-// लोकल स्टोरेजबाट कर्मचारीहरूको सूची सुरक्षित लोड गर्ने
+// लोकल स्टोरेजबाट डाटा लोड गर्ने
 function getStoredStaffList() {
     try {
         const stored = localStorage.getItem('mayadevi_staff_list');
         if (stored) {
-            let parsed = JSON.parse(stored);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-                // सुपरएडमिनको पद र इमेल स्वतः नयाँ विवरण अनुसार अपडेट गर्ने
-                const superIdx = parsed.findIndex(u => u.login_id && u.login_id.toLowerCase() === "superadmin");
-                if (superIdx !== -1) {
-                    parsed[superIdx].post = "कम्प्युटर अपरेटर";
-                    parsed[superIdx].email = "basantabashyalo@gmail.com";
-                    parsed[superIdx].phone = "९७४३६५३६४४";
+            let list = JSON.parse(stored);
+            if (Array.isArray(list) && list.length > 0) {
+                // सुपरएडमिनको विवरण सधैं अद्यावधिक राख्ने
+                const sIdx = list.findIndex(u => u.login_id && u.login_id.toLowerCase() === 'superadmin');
+                if (sIdx !== -1) {
+                    list[sIdx].post = "कम्प्युटर अपरेटर";
+                    list[sIdx].email = "basantabashyalo@gmail.com";
+                    list[sIdx].phone = "९७४३६५३६४४";
                 } else {
-                    parsed.unshift(defaultMasterAdmin);
+                    list.unshift(defaultMasterAdmin);
                 }
-                localStorage.setItem('mayadevi_staff_list', JSON.stringify(parsed));
-                return parsed;
+                localStorage.setItem('mayadevi_staff_list', JSON.stringify(list));
+                return list;
             }
         }
     } catch (e) {
-        console.error("डेटा लोड गर्न समस्या:", e);
+        console.error("डाटा लोड त्रुटि:", e);
     }
 
     localStorage.setItem('mayadevi_staff_list', JSON.stringify([defaultMasterAdmin]));
@@ -41,7 +41,7 @@ function getStoredStaffList() {
 let usersList = getStoredStaffList();
 
 document.addEventListener("DOMContentLoaded", () => {
-    // सेसन प्रमाणीकरण
+    // सेसन जाँच
     const rawUser = sessionStorage.getItem('user') || localStorage.getItem('user');
     if (!rawUser) {
         alert("कृपया पहिले लगइन गर्नुहोस्!");
@@ -49,37 +49,25 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    try {
-        const currentUser = JSON.parse(rawUser);
-        const nameBadge = document.getElementById("loggedUserName");
-        if (nameBadge && currentUser.full_name) {
-            nameBadge.textContent = currentUser.full_name;
-        }
-    } catch (e) {
-        console.error("सेसन त्रुटि:", e);
-    }
-
     usersList = getStoredStaffList();
     renderTable();
 });
 
-// तालिका देखाउने (Render गर्ने)
+// तालिका देखाउने
 function renderTable() {
-    const tableBody = document.getElementById("userTableBody");
+    const tbody = document.getElementById("userTableBody");
     const badge = document.getElementById("slotStatusBadge");
-    if (!tableBody) return;
+    if (!tbody) return;
 
-    tableBody.innerHTML = "";
-    if (badge) {
-        badge.textContent = `कुल एडमिन/कर्मचारी: ${usersList.length} / १०`;
-    }
+    tbody.innerHTML = "";
+    if (badge) badge.textContent = `कुल एडमिन/कर्मचारी: ${usersList.length} / १०`;
 
-    usersList.forEach((u, index) => {
+    usersList.forEach((u, idx) => {
         const isMaster = (u.login_id.toLowerCase() === "superadmin");
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
-            <td style="text-align: center; font-weight: bold;">${index + 1}</td>
+            <td style="text-align:center; font-weight:bold;">${idx + 1}</td>
             <td><input type="text" class="table-input" id="tbl-name-${u.id}" value="${u.full_name}"></td>
             <td><input type="text" class="table-input" id="tbl-post-${u.id}" value="${u.post}"></td>
             <td><input type="text" class="table-input" id="tbl-phone-${u.id}" value="${u.phone}"></td>
@@ -97,16 +85,16 @@ function renderTable() {
                 ${!isMaster ? `<button type="button" class="btn-del" onclick="deleteUser(${u.id})">हटाउने</button>` : ''}
             </td>
         `;
-        tableBody.appendChild(tr);
+        tbody.appendChild(tr);
     });
 }
 
-// नयाँ कर्मचारी थप्ने
+// नयाँ एडमिन/कर्मचारी सुरक्षित गर्ने
 function createNewAdminUser() {
     usersList = getStoredStaffList();
 
     if (usersList.length >= 10) {
-        alert("अधिकतम १० जना सम्म मात्र एडमिन/कर्मचारी सिर्जना गर्न मिल्छ!");
+        alert("अधिकतम १० जना सम्म मात्र एडमिन/कर्मचारी राख्न मिल्छ!");
         return;
     }
 
@@ -119,13 +107,14 @@ function createNewAdminUser() {
     const remarks = document.getElementById("new_remarks").value.trim();
 
     if (!name || !post || !phone || !email || !loginId || !pwd) {
-        alert("कर्मचारीको नाम, पद, सम्पर्क नं., Gmail, Login ID र पासवर्ड सबै अनिवार्य छन्!");
+        alert("कृपया सबै विवरणहरू (नाम, पद, फोन, इमेल, Login ID र पासवर्ड) अनिवार्य भर्नुहोस्!");
         return;
     }
 
-    const duplicate = usersList.some(u => u.login_id.toLowerCase() === loginId.toLowerCase());
-    if (duplicate) {
-        alert(`यो Login ID (${loginId}) पहिले नै प्रयोग भइसकेको छ!`);
+    // डुप्लिकेट जाँच
+    const exists = usersList.some(u => u.login_id.toLowerCase() === loginId.toLowerCase());
+    if (exists) {
+        alert(`यो Login ID (${loginId}) पहिले नै दर्ता भइसकेको छ। कृपया फरक Login ID राख्नुहोस्!`);
         return;
     }
 
@@ -144,11 +133,11 @@ function createNewAdminUser() {
     localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
 
     document.getElementById("newAdminForm").reset();
-    alert(`कर्मचारी "${name}" सफलतापूर्वक सिर्जना भयो र सुरक्षित गरियो!`);
+    alert(`कर्मचारी "${name}" (Login ID: ${loginId}) सुरक्षित भयो! अब यो आइडीबाट सिधै लगइन गर्न सकिन्छ।`);
     renderTable();
 }
 
-// तालिकाबाट विवरण अद्यावधिक गर्ने
+// तालिकाबाट विवरण सम्पादन
 function updateExistingUser(id) {
     const name = document.getElementById(`tbl-name-${id}`).value.trim();
     const post = document.getElementById(`tbl-post-${id}`).value.trim();
@@ -170,7 +159,7 @@ function updateExistingUser(id) {
         user.remarks = remarks;
 
         localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
-        alert("विवरण सफलतापूर्वक अद्यावधिक भयो!");
+        alert("विवरण सफलतापूर्वक अद्यावधिक (Update) भयो!");
         renderTable();
     }
 }
@@ -181,17 +170,23 @@ function deleteUser(id) {
     const target = usersList.find(u => u.id === id);
     if (!target) return;
 
-    if (confirm(`के तपाईं "${target.full_name}" लाई हटाउन चाहनुहुन्छ?`)) {
+    if (confirm(`के तपाईं "${target.full_name}" लाई हटाउन निश्चित हुनुहुन्छ?`)) {
         usersList = usersList.filter(u => u.id !== id);
         localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
         renderTable();
     }
 }
 
-// पासवर्ड देखाउने वा लुकाउने
+// पासवर्ड देखाउने
 function toggleTblPassword(fieldId) {
     const input = document.getElementById(fieldId);
-    if (input) {
-        input.type = (input.type === 'password') ? 'text' : 'password';
-    }
+    if (input) input.type = (input.type === 'password') ? 'text' : 'password';
 }
+
+// सुरक्षित लगआउट (डाटा कहिल्यै नमेटिने गरी)
+window.handleLogout = function() {
+    sessionStorage.clear();
+    localStorage.removeItem('user');
+    alert("लगआउट सफल भयो!");
+    window.location.href = "login.html";
+};
