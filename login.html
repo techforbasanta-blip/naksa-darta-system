@@ -7,118 +7,79 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     * { box-sizing: border-box; font-family: 'Mukta', sans-serif; margin: 0; padding: 0; }
-    body { background-color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; }
+    body { background-color: #f1f5f9; min-height: 100vh; display: flex; flex-direction: column; }
 
-    .system-header {
-      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-      border-bottom: 3px solid #b91c1c;
-      padding: 12px 24px;
+    .gov-header {
+      background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
+      border-bottom: 3px solid #b71c1c;
+      padding: 10px 24px;
       color: #ffffff;
     }
     .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1440px;
-      margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1560px; margin: 0 auto;
     }
     .header-left { display: flex; align-items: center; gap: 14px; }
-    .header-left img { height: 55px; }
+    .header-left img { height: 52px; }
     .header-brand h1 { font-size: 20px; font-weight: 800; color: #ffffff; }
     .header-brand p { font-size: 13px; color: #cbd5e1; }
 
     .login-container {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
+      flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px 16px;
     }
     .login-card {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-      width: 100%;
-      max-width: 400px;
-      padding: 28px 24px;
-      text-align: center;
+      background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%; max-width: 420px;
+      padding: 32px 28px; text-align: center;
     }
-    .login-card h2 { font-size: 20px; font-weight: 800; color: #1e3a8a; margin-bottom: 4px; }
-    .login-card p { font-size: 13px; color: #64748b; margin-bottom: 18px; }
+    .login-card h2 { font-size: 22px; font-weight: 800; color: #07192f; margin-bottom: 4px; }
+    .login-card p { font-size: 13.5px; color: #64748b; margin-bottom: 20px; }
 
-    .form-group { text-align: left; margin-bottom: 14px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 4px; }
-    .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+    .form-group { text-align: left; margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13.5px; font-weight: 700; color: #334155; margin-bottom: 4px; }
+    .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
+    .form-group input:focus { border-color: #2563eb; ring: 2px solid #93c5fd; }
 
     .btn-submit {
-      width: 100%;
-      background: #2563eb;
-      color: #ffffff;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 8px;
+      width: 100%; background: #1e3a8a; color: #ffffff; border: none;
+      padding: 11px; border-radius: 6px; font-size: 15px; font-weight: 700;
+      cursor: pointer; margin-top: 6px; transition: background 0.2s;
     }
-    .btn-submit:hover { background: #1d4ed8; }
+    .btn-submit:hover { background: #2563eb; }
 
     .error-alert {
-      display: none;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #b91c1c;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 14px;
-      text-align: left;
+      display: none; background: #fef2f2; border: 1px solid #fecaca;
+      color: #b91c1c; padding: 8px 12px; border-radius: 6px;
+      font-size: 13px; font-weight: 700; margin-bottom: 14px; text-align: left;
     }
 
     footer {
-      background: #0f172a;
-      color: #cbd5e1;
-      padding: 14px 24px;
-      font-size: 13px;
-      border-top: 3px solid #2563eb;
-      margin-top: auto;
+      background: #07192f; color: #cbd5e1; padding: 12px 24px;
+      font-size: 12.5px; border-top: 3px solid #2563eb; margin-top: auto;
     }
     .footer-inner {
-      max-width: 1440px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
+      max-width: 1560px; margin: 0 auto; display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center; gap: 10px;
     }
   </style>
 </head>
 <body>
 
-  <header class="system-header">
+  <header class="gov-header">
     <div class="header-inner">
       <div class="header-left">
-        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
-             alt="नेपाल सरकार" 
-             onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
+        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="header-brand">
           <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
-          <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही</p>
+          <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही | Staff Portal</p>
         </div>
       </div>
       <div>
-        <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
-             alt="पालिका लोगो" 
-             style="height: 50px; border-radius: 50%;"
-             onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';">
+        <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Palika Logo" style="height: 52px; border-radius: 50%;" onerror="this.src='assets/palika%20logo.jpg';">
       </div>
     </div>
   </header>
@@ -126,7 +87,7 @@
   <main class="login-container">
     <div class="login-card">
       <h2>कर्मचारी लगइन</h2>
-      <p>Login ID र Password हाल्नुहोस्</p>
+      <p>प्रयोगकर्ता आइडी र पासवर्ड राखेर लगइन गर्नुहोस्</p>
 
       <div id="loginErrorMsg" class="error-alert"></div>
 
@@ -148,65 +109,92 @@
 
   <footer>
     <div class="footer-inner">
-      <div><strong>मायादेवी गाउँपालिका</strong> — नक्सा दर्ता प्रणाली</div>
-      <div>📞 For Help / WhatsApp: <strong>९७४३६५३६४४</strong></div>
+      <div><strong>मायादेवी गाउँपालिका</strong> — नक्सा दर्ता प्रणाली | बरेवा, रुपन्देही</div>
       <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
     </div>
   </footer>
 
   <script>
+    // =========================================================================
+    // १. सबै कम्प्युटरमा स्वतः चल्ने स्थायी खाता सूची (Universal Staff Accounts)
+    // यहाँ तपाईंले जुनसुकै कर्मचारीको ID/Password थपिदिनुभयो भने त्यो सबै कम्प्युटरमा चल्छ
+    // =========================================================================
+    const globalStaffList = [
+      {
+        id: 1,
+        full_name: "सुपर एडमिन",
+        post: "कम्प्युटर अपरेटर",
+        email: "basantabashyalo@gmail.com",
+        login_id: "superadmin",
+        password: "Admin@2083",
+        role: "superadmin"
+      },
+      {
+        id: 2,
+        full_name: "कम्प्युटर अपरेटर",
+        post: "कम्प्युटर अपरेटर",
+        email: "operator@gmail.com",
+        login_id: "operator",
+        password: "User@2083",
+        role: "staff"
+      },
+      {
+        id: 3,
+        full_name: "प्राविधिक अमिन",
+        post: "अमिन",
+        email: "amin@gmail.com",
+        login_id: "amin",
+        password: "Amin@2083",
+        role: "staff"
+      }
+    ];
+
     function handleUserLogin() {
       const idInput = document.getElementById("input_login_id");
       const pwdInput = document.getElementById("input_password");
       const errBox = document.getElementById("loginErrorMsg");
 
-      if (!idInput || !pwdInput) return;
-
       const id = idInput.value.trim().toLowerCase();
       const pwd = pwdInput.value.trim();
 
       errBox.style.display = "none";
-      errBox.textContent = "";
 
-      // १. सुपरएडमिन सिधै लगइन
-      if (id === "superadmin" && pwd === "Admin@2083") {
-        const superUser = {
-          id: 1,
-          full_name: "सुपर एडमिन",
-          post: "कम्प्युटर अपरेटर",
-          login_id: "superadmin",
-          role: "superadmin"
-        };
-        sessionStorage.setItem("user", JSON.stringify(superUser));
-        localStorage.setItem("user", JSON.stringify(superUser));
-        alert("सुपरएडमिन लगइन सफल भयो!");
+      // १. पहिले जुनसुकै कम्प्युटरमा चल्ने ग्लोबल खाता जाँच गर्ने
+      const matchedGlobal = globalStaffList.find(u => 
+        u.login_id.toLowerCase() === id && u.password === pwd
+      );
+
+      if (matchedGlobal) {
+        sessionStorage.setItem("user", JSON.stringify(matchedGlobal));
+        localStorage.setItem("user", JSON.stringify(matchedGlobal));
+        alert("स्वागत छ, " + matchedGlobal.full_name + "! लगइन सफल भयो।");
         window.location.href = "darta.html";
         return;
       }
 
-      // २. एडमिन प्यानलबाट बनाइएका कर्मचारीहरू लगइन
+      // २. एडमिन प्यानलबाट त्यसै कम्प्युटरमा थपिएका स्थानीय कर्मचारी जाँच गर्ने
       try {
         const rawStaff = localStorage.getItem("mayadevi_staff_list");
-        const staffList = rawStaff ? JSON.parse(rawStaff) : [];
+        const localList = rawStaff ? JSON.parse(rawStaff) : [];
 
-        const matched = staffList.find(u => 
+        const matchedLocal = localList.find(u => 
           u.login_id && 
           u.login_id.toString().trim().toLowerCase() === id && 
           u.password && 
           u.password.toString().trim() === pwd
         );
 
-        if (matched) {
+        if (matchedLocal) {
           const sessionUser = {
-            id: matched.id,
-            full_name: matched.full_name,
-            post: matched.post,
-            login_id: matched.login_id,
-            role: (matched.login_id.toLowerCase() === "superadmin") ? "superadmin" : "staff"
+            id: matchedLocal.id,
+            full_name: matchedLocal.full_name,
+            post: matchedLocal.post,
+            login_id: matchedLocal.login_id,
+            role: "staff"
           };
           sessionStorage.setItem("user", JSON.stringify(sessionUser));
           localStorage.setItem("user", JSON.stringify(sessionUser));
-          alert("स्वागत छ, " + matched.full_name + "! लगइन सफल भयो।");
+          alert("स्वागत छ, " + matchedLocal.full_name + "! लगइन सफल भयो।");
           window.location.href = "darta.html";
           return;
         }
@@ -214,7 +202,6 @@
         console.error("Login verification error:", e);
       }
 
-      // विवरण नमिलेमा
       errBox.textContent = "प्रयोगकर्ता आइडी वा पासवर्ड मिलेन! कृपया सही विवरण राख्नुहोस्।";
       errBox.style.display = "block";
     }
