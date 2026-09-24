@@ -1,35 +1,20 @@
 /* ==========================================================================
-   H:\naksa-darta-system\frontend\css\print.css
    MAYADEVI RURAL MUNICIPALITY - OFFICIAL A4 PRINT ENGINE
-   - 100% TRANSPARENT TABLES: FULL WATERMARK VISIBILITY BEHIND ALL TABLES
-   - STRICT 2-PAGE FIXED LAYOUT
-   - ENLARGED LEGIBLE FONTS
-   - BALANCED SIGNATURES POSITION
-   - SINGLE CLEAN QR CODE CONTAINER
-   - PAGE 1 WITH FOOTER | PAGE 2 EXPANDED WITHOUT FOOTER
+   - PAGE 1 ENLARGED LEGIBLE FONTS (+1 to +2pt)
+   - 100% TRANSPARENT TABLES: FULL WATERMARK VISIBILITY
+   - STRICT 2-PAGE FIXED A4 LAYOUT
    ========================================================================== */
 
 :root {
-  --font-kokila: 'Kokila', 'Mukta', 'Kalimati', sans-serif;
+  --font-nepali: 'Mukta', 'Kokila', 'Kalimati', sans-serif;
   --gov-red: #b71c1c;
   --gov-blue: #0b2545;
 }
 
 .a4-sheet,
 .a4-sheet * {
-  font-family: var(--font-kokila) !important;
+  font-family: var(--font-nepali) !important;
   box-sizing: border-box !important;
-}
-
-.preview-sticky {
-  position: sticky;
-  top: 4px;
-}
-
-.scaled-screen-preview {
-  transform: scale(0.82);
-  transform-origin: top center;
-  margin-bottom: -90px;
 }
 
 .a4-sheet {
@@ -39,7 +24,7 @@
   min-height: 297mm;
   max-height: 297mm;
   margin: 0 auto 12px auto;
-  padding: 5mm 9mm 4mm 9mm;
+  padding: 6mm 10mm 4mm 10mm;
   border: 1.5px solid #111111;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   display: flex !important;
@@ -52,17 +37,17 @@
 }
 
 /* ==========================================================================
-   BACKGROUND WATERMARK (FULL SIZE & VIVID)
+   BACKGROUND WATERMARK
    ========================================================================== */
 .watermark-img {
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
-  width: 140mm !important;
-  height: 140mm !important;
+  width: 145mm !important;
+  height: 145mm !important;
   object-fit: contain !important;
-  opacity: 0.22 !important;
+  opacity: 0.18 !important;
   pointer-events: none !important;
   z-index: 1 !important;
   display: block !important;
@@ -78,35 +63,37 @@
   background: transparent !important;
 }
 
+/* ==========================================================================
+   PAGE 1 HEADER & TITLES (ENLARGED)
+   ========================================================================== */
 .cert-top-center-motto {
   text-align: center;
   margin-bottom: 2px;
 }
 
 .cert-motto {
-  font-size: 16.5px;
+  font-size: 14.5px !important; /* बढेको फन्ट */
   font-weight: 800;
   color: var(--gov-red);
   line-height: 1.1;
   display: inline-block;
 }
 
-/* Header */
 .cert-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 2px solid var(--gov-red);
-  padding-bottom: 2px;
-  margin-bottom: 2px;
+  padding-bottom: 3px;
+  margin-bottom: 3px;
   background: transparent !important;
 }
 
 .logo-box-left,
 .logo-box-right {
-  width: 54px;
-  height: 54px;
-  flex: 0 0 54px;
+  width: 60px;
+  height: 60px;
+  flex: 0 0 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,58 +112,48 @@
 }
 
 .header-titles .gov-sub {
-  font-size: 14.5px;
+  font-size: 14px !important;
   font-weight: 700;
   color: var(--gov-red);
-  line-height: 1.05;
+  line-height: 1.1;
 }
 
 .header-titles .palika-title {
-  font-size: 28px;
+  font-size: 26px !important; /* स्पष्ट र ठूलो पालिका शीर्षक */
   font-weight: 800;
   color: var(--gov-red);
   line-height: 1.1;
 }
 
 .header-titles .office-title {
-  font-size: 19.5px;
+  font-size: 18px !important;
   font-weight: 800;
   color: var(--gov-red);
-  line-height: 1.05;
+  line-height: 1.1;
 }
 
 .header-titles .address-text {
-  font-size: 15.5px;
+  font-size: 14px !important;
   font-weight: 700;
   color: var(--gov-blue);
   margin-top: 1px;
 }
 
-/* Reference and Photo Row */
+/* Ref Row & Passport Photo */
 .ref-photo-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 2px 0;
+  margin: 3px 0;
   background: transparent !important;
 }
 
 .ref-col {
-  font-size: 15px;
+  font-size: 14px !important; /* बढेको फन्ट */
   font-weight: 700;
   display: flex;
   flex-direction: column;
-  line-height: 1.3;
-}
-
-.bold-highlight {
-  font-size: 16px;
-  font-weight: 800;
-}
-
-.passport-photo-wrapper {
-  display: flex;
-  justify-content: flex-end;
+  line-height: 1.35;
 }
 
 .passport-frame {
@@ -190,26 +167,14 @@
   overflow: hidden;
 }
 
-.passport-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.photo-placeholder {
-  font-size: 11.5px;
-  color: #64748b;
-  font-weight: bold;
-}
-
 .cert-title-container {
   text-align: center;
-  margin: 2px 0 3px 0;
+  margin: 3px 0 4px 0;
 }
 
 .cert-title-text {
   display: inline-block;
-  font-size: 20px;
+  font-size: 20px !important; /* मुख्य प्रमाण-पत्र शीर्षक */
   font-weight: 800;
   color: #000000;
   border-bottom: 1.8px solid #000000;
@@ -218,23 +183,23 @@
 }
 
 .cert-intro {
-  font-size: 14.8px;
+  font-size: 14.5px !important; /* पहिले भन्दा ठूलो र पढ्न सजिलो */
   line-height: 1.35;
   text-align: justify;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
   font-weight: 600;
   background: transparent !important;
 }
 
 /* ==========================================================================
-   PAGE 1 TABLES - 100% TRANSPARENT FOR FULL WATERMARK VISIBILITY
+   PAGE 1 TABLES (ENLARGED FONTS & TRANSPARENT)
    ========================================================================== */
 .cert-table,
 .floor-detail-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14.5px !important;
-  margin-bottom: 2px;
+  font-size: 13.5px !important; /* पहिले ११-१२px थियो, अहिले १३.५px बनाइएको */
+  margin-bottom: 3px;
   table-layout: fixed;
   background: transparent !important;
 }
@@ -248,63 +213,56 @@
 .cert-table th,
 .floor-detail-table td,
 .floor-detail-table th {
-  padding: 1.2px 3.5px;
+  padding: 2px 4px !important;
   border: 1px solid #334155;
   vertical-align: middle;
-  line-height: 1.18;
-  background: transparent !important; /* कुनै ब्याकग्राउन्ड रङ नराख्ने */
+  line-height: 1.2;
+  background: transparent !important;
 }
 
 .cert-table td.lbl {
   font-weight: 800;
   color: #071e3d;
-  width: 25%;
+  width: 26%;
+  font-size: 13.5px !important;
   text-align: left !important;
-  background: transparent !important;
 }
 
 .cert-table td.val {
   font-weight: 700;
   color: #000000;
-  width: 25%;
+  width: 24%;
+  font-size: 13.5px !important;
   text-align: left !important;
-  background: transparent !important;
 }
 
 .floor-detail-table th {
   font-weight: 800;
   color: #071e3d;
   text-align: left !important;
-  font-size: 14.5px !important;
+  font-size: 13.5px !important;
   background: transparent !important;
 }
-
-.t-left { text-align: left !important; }
-.t-center { text-align: center !important; }
-.t-right { text-align: right !important; }
 
 .total-row td {
   font-weight: 800;
-  font-size: 14.8px !important;
-  background: transparent !important;
+  font-size: 14px !important;
 }
 
 .legal-notice-cell {
-  font-size: 13px !important;
-  line-height: 1.25 !important;
-  padding: 2.5px 5px !important;
+  font-size: 12.5px !important;
+  line-height: 1.3 !important;
+  padding: 3px 5px !important;
   font-weight: 700;
   text-align: justify;
-  background: transparent !important;
 }
 
 /* ==========================================================================
-   PAGE 1 SIGNATURES
+   PAGE 1 SIGNATURES (ENLARGED)
    ========================================================================== */
 .cert-signatures-block {
-  margin-top: 18px !important;
+  margin-top: 10px !important;
   margin-bottom: 2px !important;
-  padding-top: 6px;
   background: transparent !important;
 }
 
@@ -313,26 +271,26 @@
   grid-template-columns: 32% 32% 36%;
   gap: 6px;
   align-items: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.sign-item { text-align: center; background: transparent !important; }
-.sign-space-area { height: 24px; }
+.sign-item { text-align: center; }
+.sign-space-area { height: 22px; }
 
 .sign-dotted-line {
   border-top: 1px dotted #1e293b;
-  width: 65%;
+  width: 70%;
   margin: 0 auto 3px auto;
 }
 
 .sign-title-text {
-  font-size: 14px;
+  font-size: 13px !important; /* बढेको हस्ताक्षर विवरण */
   font-weight: 700;
   line-height: 1.25;
 }
 
 .sign-title-text strong {
-  font-size: 14.8px;
+  font-size: 14px !important;
   font-weight: 800;
 }
 
@@ -341,86 +299,57 @@
   justify-content: space-between;
   align-items: flex-end;
   border-top: 1px solid #cbd5e1;
-  padding-top: 6px;
-  background: transparent !important;
+  padding-top: 4px;
 }
-
-.owner-sign-container {
-  text-align: left;
-}
-
-.owner-space-area { height: 14px; }
 
 .owner-dots {
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 0.5px;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
   font-weight: bold;
-  color: #1e293b;
 }
 
 .owner-label {
-  font-size: 15px;
+  font-size: 14px !important;
   font-weight: 800;
 }
 
-/* SINGLE STRICT QR CONTAINER */
-.qr-code-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-}
-
 #cert_qr_div {
-  width: 46px !important;
-  height: 46px !important;
+  width: 48px !important;
+  height: 48px !important;
   border: 1px solid #94a3b8;
   border-radius: 4px;
-  background: #ffffff !important; /* QR सजिलै स्क्यान हुन सेतो ब्याकग्राउन्ड */
-  padding: 1px;
+  background: #ffffff !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   overflow: hidden !important;
-  box-sizing: border-box !important;
 }
 
-#cert_qr_div canvas {
-  display: none !important;
-}
-
-#cert_qr_div img,
-#cert_qr_div svg {
-  width: 42px !important;
-  height: 42px !important;
-  display: block !important;
-  margin: 0 !important;
+#cert_qr_div img {
+  width: 44px !important;
+  height: 44px !important;
 }
 
 .qr-caption {
-  font-size: 8px;
+  font-size: 9px !important;
   font-weight: 700;
   text-align: center;
-  line-height: 1.05;
-  margin-top: 1px;
 }
 
-/* Footer Page 1 */
 .cert-footer {
   border-top: 1.5px solid var(--gov-red);
   padding-top: 2px;
   text-align: center;
-  font-size: 11px;
+  font-size: 11.5px !important;
   font-weight: 700;
   color: #1e293b;
   line-height: 1.25;
-  background: transparent !important;
   margin-top: 2px;
 }
 
 /* ==========================================================================
-   PAGE 2: 100% TRANSPARENT TABLES & FULL WATERMARK VISIBILITY
+   PAGE 2: KABULIYATNAMA & NAMSARI
    ========================================================================== */
 .a4-sheet.back-page {
   page-break-before: always !important;
@@ -435,11 +364,9 @@
   margin-bottom: 8px;
 }
 
-.kabuliyat-head { margin-bottom: 2px; }
-
 .kabuliyat-title {
   text-align: center;
-  font-size: 21px !important;
+  font-size: 20px !important;
   font-weight: 800;
   text-decoration: underline;
   margin-bottom: 4px;
@@ -447,14 +374,14 @@
 
 .shriman-title {
   text-align: left;
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-weight: 800;
   margin-bottom: 4px;
 }
 
 .kabuliyat-body {
-  font-size: 15px !important;
-  line-height: 1.5 !important;
+  font-size: 13.5px !important;
+  line-height: 1.45 !important;
   text-align: justify;
   margin-bottom: 6px;
 }
@@ -462,60 +389,45 @@
 .kabuliyat-sign-grid {
   display: grid;
   grid-template-columns: 58% 42%;
-  gap: 10px;
+  gap: 8px;
   align-items: flex-end;
   border-top: 1.2px dotted #64748b;
   padding-top: 6px;
 }
 
 .sign-left .sign-field {
-  font-size: 15px !important;
+  font-size: 13.5px !important;
   line-height: 1.4 !important;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
-
-.sign-right {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.thumb-box-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.thumb-box { display: flex; gap: 8px; }
 
 .thumb-frame {
-  width: 56px !important;
-  height: 62px !important;
+  width: 52px !important;
+  height: 58px !important;
   border: 1.2px dashed #334155;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px !important;
+  font-size: 12px !important;
   font-weight: 800;
   background: rgba(255, 255, 255, 0.45);
 }
 
 .thumb-label {
-  font-size: 14px !important;
+  font-size: 13px !important;
   font-weight: 800;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 .iti-date-text {
-  font-size: 15px !important;
+  font-size: 13.5px !important;
   font-weight: 800;
-  margin-top: 5px;
+  margin-top: 4px;
 }
 
-/* Namsari Section Page 2 */
 .namsari-section {
   border: 1.2px solid #334155;
-  padding: 8px 10px;
+  padding: 6px 10px;
   background: transparent !important;
   flex: 1 1 auto !important;
   display: flex !important;
@@ -525,61 +437,48 @@
 
 .namsari-header-title {
   text-align: center;
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-weight: 800;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   text-decoration: underline;
 }
 
 .namsari-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px !important;
-  flex: 1 1 auto !important;
-  height: 100% !important;
-  background: transparent !important;
-}
-
-.namsari-table tr {
+  font-size: 13px !important;
   background: transparent !important;
 }
 
 .namsari-table th,
 .namsari-table td {
   border: 1px solid #475569;
-  padding: 10px 8px !important;
+  padding: 6px 8px !important;
   vertical-align: middle;
-  background: transparent !important; /* पूरा पारदर्शी */
-  line-height: 1.35;
+  background: transparent !important;
+  line-height: 1.3;
 }
 
 .namsari-table th {
   font-weight: 800;
   text-align: center;
-  padding: 8px !important;
-  font-size: 15px !important;
-  background: transparent !important;
+  font-size: 13.5px !important;
 }
 
-.namsari-table td.col-center { text-align: center; }
-
-/* Photo Box in Namsari */
 .namsari-photo-box {
-  width: 26mm !important;
-  height: 30mm !important;
+  width: 25mm !important;
+  height: 28mm !important;
   border: 1.2px dashed #64748b;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px !important;
-  font-weight: 700;
+  font-size: 11px !important;
   color: #64748b;
-  background: rgba(255, 255, 255, 0.45);
 }
 
 /* ==========================================================================
-   PRINT ENGINE MEDIA RULES (@media print)
+   PRINT MEDIA RULES
    ========================================================================== */
 @media print {
   @page {
@@ -591,9 +490,14 @@
   nav.main-nav,
   section.entry-card,
   h2.preview-title,
-  div.preview-controls-bar,
-  div.form-actions {
+  div.preview-title,
+  footer,
+  .no-print {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   html, body {
@@ -602,25 +506,20 @@
     margin: 0 !important;
     padding: 0 !important;
     background: #ffffff !important;
-    overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  .main-container,
   .workspace-grid,
   .preview-card,
-  .preview-sticky,
   #printAreaContainer {
     display: block !important;
-    position: static !important;
     width: 210mm !important;
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
     box-shadow: none !important;
     transform: none !important;
-    background: transparent !important;
   }
 
   #a4CertificatePaper,
@@ -630,13 +529,12 @@
     min-height: 297mm !important;
     max-height: 297mm !important;
     margin: 0 !important;
-    padding: 5mm 9mm 4mm 9mm !important;
+    padding: 6mm 10mm 4mm 10mm !important;
     border: 1.5px solid #111111 !important;
     box-shadow: none !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     overflow: hidden !important;
-    background-color: #ffffff !important;
   }
 
   #a4CertificatePaper {
@@ -651,36 +549,12 @@
     break-after: avoid !important;
   }
 
-  /* प्रिन्ट गर्दा टेबलका सम्पूर्ण सेलहरू पूर्ण पारदर्शी रहने */
-  .cert-table,
-  .floor-detail-table,
-  .namsari-table,
   .cert-table td,
   .cert-table th,
   .floor-detail-table td,
   .floor-detail-table th,
   .namsari-table td,
-  .namsari-table th,
-  .kabuliyat-section,
-  .namsari-section {
+  .namsari-table th {
     background: transparent !important;
-    background-color: transparent !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* वाटरमार्क लोगो प्रिन्टमा पूर्ण रूपमा देखिने */
-  .watermark-img {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 0.22 !important;
-    mix-blend-mode: multiply !important;
-    z-index: 1 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  .bw-mode {
-    filter: grayscale(100%) contrast(120%) !important;
   }
 }
