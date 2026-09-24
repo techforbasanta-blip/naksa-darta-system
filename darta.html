@@ -18,8 +18,6 @@
       --gov-crimson: #b71c1c;
       --gov-blue: #07192f;
       --gov-navy: #1e3a8a;
-      
-      /* Light Mode */
       --bg: #f1f5f9;
       --card-bg: #ffffff;
       --input-bg: #ffffff;
@@ -29,7 +27,6 @@
       --print-font: 'Kokila', 'Kalimati', 'Mukta', serif;
     }
 
-    /* Dark Mode (शाही नेवी ब्लू र सेतो) */
     body.dark-mode {
       --bg: #07192f;
       --card-bg: #0d233e;
@@ -41,7 +38,6 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
-    /* Single Government Header */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
@@ -61,7 +57,6 @@
     .brand-text p { font-size: 12.5px; color: #cbd5e1; }
 
     .header-controls { display: flex; align-items: center; gap: 10px; }
-    
     .header-clock-box {
       text-align: right;
       background: rgba(255, 255, 255, 0.1);
@@ -90,7 +85,6 @@
     .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 14px !important; padding: 5px 10px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
-    /* Workspace */
     .workspace-grid {
       max-width: 1600px;
       width: 100%;
@@ -102,7 +96,6 @@
       flex: 1;
     }
 
-    /* Left Input Card */
     .entry-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -161,11 +154,11 @@
     }
     .btn-act { flex: 1; padding: 8px; border: none; border-radius: 4px; font-weight: 700; font-size: 13px; cursor: pointer; }
     .btn-save { background: #16a34a; color: #fff; }
+    .btn-save:hover { background: #15803d; }
     .btn-print { background: #1e3a8a; color: #fff; }
     .btn-print:hover { background: #2563eb; }
     .btn-reset { background: #64748b; color: #fff; }
 
-    /* Right Preview Container */
     .preview-card {
       background: #0f1e33;
       border: 1px solid var(--border-color);
@@ -180,9 +173,7 @@
     }
     .preview-title { font-size: 13.5px; font-weight: 800; color: #ffffff; margin-bottom: 8px; width: 100%; max-width: 210mm; }
 
-    /* ==========================================================================
-       A4 CERTIFICATE ENGINE
-       ========================================================================== */
+    /* A4 CERTIFICATE ENGINE */
     .a4-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -203,15 +194,9 @@
       justify-content: space-between !important;
     }
 
-    .a4-sheet, .a4-sheet * {
-      color: #000000 !important;
-    }
-    .cert-motto, .palika-title, .office-title, .gov-sub {
-      color: var(--gov-crimson) !important;
-    }
-    .address-text {
-      color: #1e3a8a !important;
-    }
+    .a4-sheet, .a4-sheet * { color: #000000 !important; }
+    .cert-motto, .palika-title, .office-title, .gov-sub { color: var(--gov-crimson) !important; }
+    .address-text { color: #1e3a8a !important; }
 
     .watermark-img {
       position: absolute !important;
@@ -230,11 +215,9 @@
     }
 
     .cert-content-top { position: relative !important; z-index: 2 !important; display: flex; flex-direction: column; flex: 1 1 auto; background: transparent; }
-
     .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
     .cert-motto { font-size: 13.5px; font-weight: 800; line-height: 1; }
 
-    /* २/४ स्टेप ठूला लोगोहरू (68px) र ठूलो कार्यालय हेडर */
     .cert-header {
       display: flex; align-items: center; justify-content: space-between;
       border-bottom: 2px solid var(--gov-crimson); padding-bottom: 2px; margin-bottom: 2px;
@@ -267,7 +250,6 @@
     }
     .cert-intro { font-size: 13.5px; line-height: 1.3; text-align: justify; margin-bottom: 3px; font-weight: 600; }
 
-    /* Table Styles */
     .cert-table, .floor-detail-table {
       width: 100%; border-collapse: collapse; font-size: 13.5px !important; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
     }
@@ -292,7 +274,6 @@
       padding: 4px 6px !important;
     }
 
-    /* Signatures: 2/3 Steps Down */
     .cert-signatures-block {
       margin-top: 26px !important;
       margin-bottom: 2px !important;
@@ -321,7 +302,6 @@
     .owner-dots { font-size: 13px; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: bold; }
     .owner-label { font-size: 13.5px !important; font-weight: 800; }
 
-    /* ठूलो QR कोड (64px) */
     #cert_qr_div {
       width: 64px !important; height: 64px !important; border: 1px solid #94a3b8;
       border-radius: 4px; background: #fff !important; display: flex !important;
@@ -330,7 +310,6 @@
     #cert_qr_div img { width: 60px !important; height: 60px !important; }
     .qr-caption { font-size: 8.5px; font-weight: 700; text-align: center; margin-top: 2px; }
 
-    /* Official Footer */
     .cert-footer {
       border-top: 1.5px solid var(--gov-crimson) !important;
       padding-top: 3px !important;
@@ -341,9 +320,7 @@
       line-height: 1.25 !important;
     }
 
-    /* ==========================================================================
-       PAGE 2: KABULIYAT (२ स्टेप ठूलो) & 6-ROW NAMSARI TABLE
-       ========================================================================== */
+    /* PAGE 2 */
     .a4-sheet.back-page {
       page-break-before: always !important;
       justify-content: flex-start !important;
@@ -370,7 +347,6 @@
     .thumb-label { font-size: 11.5px; font-weight: 800; margin-top: 1px; }
     .iti-date-text { font-size: 13px; font-weight: 800; margin-top: 2px; }
 
-    /* Namsari 6 Rows */
     .namsari-section {
       border: 1.2px solid #334155;
       padding: 5px 8px;
@@ -383,67 +359,30 @@
     .namsari-table th { font-weight: 800; text-align: center; font-size: 12.5px; }
     .namsari-photo-box { width: 22mm; height: 23mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #64748b; }
 
-    /* ==========================================================================
-       PRINT MEDIA RULES (KOKILA FONT & STRICT 2-PAGE LOCK)
-       ========================================================================== */
     @media print {
-      @page {
-        size: A4 portrait;
-        margin: 0mm !important;
-      }
-      
-      *, .a4-sheet, .a4-sheet * {
-        font-family: var(--print-font) !important;
-      }
-
+      @page { size: A4 portrait; margin: 0mm !important; }
+      *, .a4-sheet, .a4-sheet * { font-family: var(--print-font) !important; }
       html, body {
         width: 210mm !important; height: 100% !important; margin: 0 !important;
         padding: 0 !important; background: #ffffff !important; overflow: visible !important;
         -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
       }
-
       .gov-header, .entry-card, .preview-title, .form-actions, .site-footer, .no-print {
         display: none !important; visibility: hidden !important; height: 0 !important;
       }
-
       .workspace-grid, .preview-card {
         display: block !important; margin: 0 !important; padding: 0 !important;
         border: none !important; background: transparent !important; width: 210mm !important; max-height: none !important;
       }
-
-      #printAreaContainer {
-        display: block !important; width: 210mm !important; margin: 0 !important; padding: 0 !important;
-      }
-
+      #printAreaContainer { display: block !important; width: 210mm !important; margin: 0 !important; padding: 0 !important; }
       .a4-sheet {
-        width: 210mm !important;
-        height: 294mm !important;
-        max-height: 294mm !important;
-        margin: 0 auto !important;
-        padding: 5mm 8mm 4mm 8mm !important;
-        border: 1.5px solid #000000 !important;
-        box-shadow: none !important;
-        overflow: hidden !important;
-        display: flex !important;
+        width: 210mm !important; height: 294mm !important; max-height: 294mm !important;
+        margin: 0 auto !important; padding: 5mm 8mm 4mm 8mm !important;
+        border: 1.5px solid #000000 !important; box-shadow: none !important; overflow: hidden !important; display: flex !important;
       }
-
-      #a4CertificatePaper {
-        page-break-after: always !important;
-        break-after: page !important;
-      }
-
-      #certificateBackPage {
-        display: flex !important;
-        page-break-before: always !important;
-        break-before: page !important;
-        page-break-after: avoid !important;
-        break-after: avoid !important;
-      }
-
-      .cert-footer {
-        color: #000000 !important;
-        background: transparent !important;
-      }
+      #a4CertificatePaper { page-break-after: always !important; break-after: page !important; }
+      #certificateBackPage { display: flex !important; page-break-before: always !important; break-before: page !important; page-break-after: avoid !important; break-after: avoid !important; }
+      .cert-footer { color: #000000 !important; background: transparent !important; }
     }
 
     footer.site-footer {
@@ -451,14 +390,12 @@
       border-top: 3px solid #2563eb; margin-top: auto;
     }
     .footer-inner {
-      max-width: 1560px; margin: 0 auto; display: flex; justify-content: space-between;
-      align-items: center; flex-wrap: wrap; gap: 6px;
+      max-width: 1560px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Single Government Header -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
@@ -478,16 +415,13 @@
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
         
-        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="डार्क / लाइट मोड बदल्नुहोस्">☾</button>
+        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
       </div>
     </div>
   </header>
 
-  <!-- Workspace Grid -->
   <main class="workspace-grid">
-    
-    <!-- LEFT INPUT SECTION -->
     <section class="entry-card no-print">
       <h2 class="entry-title">📝 नक्सा विवरण फाराम (१ देखि १८ पूर्ण प्रविष्टि)</h2>
 
@@ -511,7 +445,6 @@
         <div class="form-row"><label>४) घर धनी ना.प्र.प.नं.</label><input type="text" id="in_house_cit" placeholder="नागरिकता नं." oninput="updateLivePreview()"></div>
       </div>
 
-      <!-- नयाँ थपिएको: कबुलियतनामाका लागि जारी जिल्ला र सम्पर्क नं. इनपुट -->
       <div class="form-grid-2">
         <div class="form-row"><label>ना.प्र.प. जारी जिल्ला</label><input type="text" id="in_cit_district" value="रुपन्देही" placeholder="जारी जिल्ला" oninput="updateLivePreview()"></div>
         <div class="form-row"><label>सम्पर्क नं.</label><input type="text" id="in_phone" placeholder="सम्पर्क नम्बर" oninput="updateLivePreview()"></div>
@@ -526,7 +459,6 @@
         <div class="form-row"><label>जग्गाको कुल क्षेत्रफल</label><input type="text" id="in_land_area" placeholder="क्षेत्रफल" oninput="updateLivePreview()"></div>
       </div>
 
-      <!-- ६ देखि ९ सम्मका विवरण -->
       <div class="form-section-title">६ देखि ९ सम्मका विवरण</div>
       <div class="form-row">
         <label>६) स्विकृत क्षेत्रफल तथा कित्ता विवरण (लामो खुलाउन मिल्ने) *</label>
@@ -597,9 +529,7 @@
         <div class="form-row"><label>१८) निर्णय मिति</label><input type="text" id="in_dec_date" value="२०८३/०६/०६" oninput="updateLivePreview()"></div>
       </div>
 
-      <!-- प्राविधिक तथा प्रशासनिक अधिकारीहरू -->
       <div class="form-section-title">प्राविधिक तथा प्रशासनिक अधिकारीहरू</div>
-      
       <div class="form-row">
         <label>स्थलगत निरिक्षण तथा रुजु गर्ने (पद र नाम)</label>
         <div style="display:flex; gap:6px;">
@@ -643,8 +573,9 @@
         <input type="file" id="passportInput" accept="image/*" onchange="loadPhoto(event)">
       </div>
 
+      <!-- सेभ इन्जिन जोडिएको बटन -->
       <div class="form-actions">
-        <button type="button" class="btn-act btn-save" onclick="alert('नक्सा रेकर्ड सुरक्षित भयो!')">💾 सुरक्षित गर्नुहोस्</button>
+        <button type="button" class="btn-act btn-save" onclick="saveRecordToDatabase()">💾 सुरक्षित गर्नुहोस्</button>
         <button type="button" class="btn-act btn-print" onclick="window.print()">🖨 प्रिन्ट गर्नुहोस्</button>
         <button type="button" class="btn-act btn-reset" onclick="location.reload()">↺ Reset</button>
       </div>
@@ -656,7 +587,7 @@
 
       <div id="printAreaContainer">
         
-        <!-- ================= PAGE 1 ================= -->
+        <!-- PAGE 1 -->
         <div class="a4-sheet" id="a4CertificatePaper">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -666,7 +597,6 @@
               <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
             </div>
 
-            <!-- २/४ स्टेप ठूला लोगोहरू (68px) र ठूलो कार्यालय हेडर -->
             <header class="cert-header">
               <div class="logo-box-left">
                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल निशान छाप" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -703,7 +633,6 @@
               श्री <strong id="out_intro_name">....................</strong> ले मायादेवी गा.पा. वडा नं. <strong id="out_intro_ward">०१</strong> मा तपसिल बमोजिमको घर सँरचना निर्माण गर्नु भएकोले घर नक्सा अभिलेखिकरण प्रमाण पत्र प्रदान गरीएको छ।
             </div>
 
-            <!-- १ देखि ९ सम्मको मुख्य तालिका (६ नं. छुट्टै फराकिलो रो) -->
             <table class="cert-table">
               <tr>
                 <td class="lbl">१) जग्गा धनीको नामथर</td>
@@ -747,7 +676,6 @@
               </tr>
             </table>
 
-            <!-- १० नम्बर: तलागत तालिका -->
             <table class="floor-detail-table">
               <thead>
                 <tr>
@@ -797,7 +725,6 @@
               </tr>
             </table>
 
-            <!-- हस्ताक्षर ब्लक (२/३ स्टेप तल) -->
             <div class="cert-signatures-block">
               <div class="officers-signature-grid">
                 <div class="sign-item">
@@ -829,7 +756,6 @@
                 </div>
               </div>
 
-              <!-- ठूलो QR कोड सहित बायाँ-दायाँ अलाइनमेन्ट -->
               <div class="bottom-owner-qr-flex">
                 <div class="owner-sign-container">
                   <div class="owner-space-area"></div>
@@ -850,7 +776,7 @@
           </footer>
         </div>
 
-        <!-- ================= PAGE 2 (KABULIYAT & 6-ROW NAMSARI) ================= -->
+        <!-- PAGE 2 -->
         <div class="a4-sheet back-page" id="certificateBackPage">
           <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -868,7 +794,6 @@
               </p>
 
               <div class="kabuliyat-sign-grid">
-                <!-- जारी जिल्ला र सम्पर्क नम्बर आफैं भर्न मिल्ने गरी डाइनामिक बनाइएको -->
                 <div class="sign-left">
                   <div class="sign-field">दस्तखतः ........</div>
                   <div class="sign-field">नामथरः <strong id="back_name">....................</strong></div>
@@ -892,7 +817,6 @@
               </div>
             </section>
 
-            <!-- 6 Rows Namsari Table -->
             <section class="namsari-section">
               <div class="namsari-header-title">नामसारी विवरण</div>
               <table class="namsari-table">
@@ -965,7 +889,6 @@
     </div>
   </footer>
 
-  <!-- Script Logic -->
   <script>
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
@@ -975,6 +898,8 @@
       "कार्तिक", "मंसिर", "पुस", "माघ", "फागुन", "चैत"
     ];
 
+    let currentPhotoBase64 = "";
+
     function updateClock() {
       const now = new Date();
       const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
@@ -983,17 +908,7 @@
       const m = String(now.getMinutes()).padStart(2, "0");
       const s = String(now.getSeconds()).padStart(2, "0");
 
-      let nepPeriod = "विहान";
-      if (h >= 12 && h < 17) {
-        nepPeriod = "दिउँसो";
-      } else if (h >= 17 && h < 20) {
-        nepPeriod = "साँझ";
-      } else if (h >= 20 || h < 4) {
-        nepPeriod = "राती";
-      } else {
-        nepPeriod = "विहान";
-      }
-
+      let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
       const displayHours = h % 12 || 12;
 
       document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
@@ -1019,9 +934,7 @@
         if (yearEl) yearEl.textContent = toNepNum(y);
 
         const monthEl = document.getElementById("iti_month");
-        if (monthEl) {
-          monthEl.textContent = (m >= 1 && m <= 12) ? nepaliMonthNames[m] : toNepNum(m);
-        }
+        if (monthEl) monthEl.textContent = (m >= 1 && m <= 12) ? nepaliMonthNames[m] : toNepNum(m);
 
         const dayEl = document.getElementById("iti_day");
         if (dayEl) dayEl.textContent = toNepNum(String(d).padStart(2, '0'));
@@ -1091,7 +1004,6 @@
       document.getElementById("out_house_cit").textContent = houseCit;
       document.getElementById("back_cit").textContent = houseCit;
 
-      // कबुलियतनामाका लागि डाइनामिक जारी जिल्ला र सम्पर्क नं.
       document.getElementById("back_cit_district").textContent = getVal("in_cit_district", "रुपन्देही");
       document.getElementById("back_phone").textContent = getVal("in_phone", "....................");
 
@@ -1174,12 +1086,88 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = function(evt) {
+          currentPhotoBase64 = evt.target.result;
           const img = document.getElementById("certPhoto");
-          img.src = evt.target.result;
+          img.src = currentPhotoBase64;
           img.style.display = "block";
           document.getElementById("photoText").style.display = "none";
         };
         reader.readAsDataURL(file);
+      }
+    }
+
+    // record.html ले भेट्ने गरी डाटा सेभ गर्ने पूर्ण फङ्सन
+    function saveRecordToDatabase() {
+      const dartaNo = document.getElementById("in_darta").value.trim();
+      const houseOwner = document.getElementById("in_house_owner").value.trim() || document.getElementById("in_owner_name").value.trim();
+
+      if (!dartaNo) {
+        alert("कृपया नक्सा दर्ता नं. अनिवार्य भर्नुहोस्!");
+        return;
+      }
+      if (!houseOwner) {
+        alert("कृपया घरधनी वा जग्गाधनीको नाम अनिवार्य भर्नुहोस्!");
+        return;
+      }
+
+      const recordItem = {
+        id: Date.now(),
+        darta_no: dartaNo,
+        patra_no: document.getElementById("in_patra").value.trim(),
+        reg_date: document.getElementById("in_date").value.trim(),
+        praman_no: document.getElementById("in_praman").value.trim(),
+        owner_name: document.getElementById("in_owner_name").value.trim(),
+        owner_cit: document.getElementById("in_owner_cit").value.trim(),
+        house_owner: houseOwner,
+        house_cit: document.getElementById("in_house_cit").value.trim(),
+        cit_district: document.getElementById("in_cit_district").value.trim() || "रुपन्देही",
+        phone: document.getElementById("in_phone").value.trim(),
+        sabik: document.getElementById("in_sabik").value.trim(),
+        ward: document.getElementById("in_ward").value.trim(),
+        kitta: document.getElementById("in_kitta").value.trim(),
+        land_area: document.getElementById("in_land_area").value.trim(),
+        approved_area: document.getElementById("in_approved_area").value.trim(),
+        land_use: document.getElementById("in_land_use").value.trim(),
+        b_class: document.getElementById("in_b_class").value.trim(),
+        struct: document.getElementById("in_struct").value.trim(),
+        comp_date: document.getElementById("in_comp_date").value.trim(),
+        east: document.getElementById("in_east").value.trim(),
+        west: document.getElementById("in_west").value.trim(),
+        north: document.getElementById("in_north").value.trim(),
+        south: document.getElementById("in_south").value.trim(),
+        total_area: document.getElementById("in_total_area").value.trim(),
+        plinth: document.getElementById("in_plinth").value.trim(),
+        coverage: document.getElementById("in_coverage").value.trim(),
+        height: document.getElementById("in_height").value.trim(),
+        rd_dist: document.getElementById("in_rd_dist").value.trim(),
+        elec_dist: document.getElementById("in_elec_dist").value.trim(),
+        riv_dist: document.getElementById("in_riv_dist").value.trim(),
+        septic: document.getElementById("in_septic").value.trim(),
+        dec_date: document.getElementById("in_dec_date").value.trim(),
+        eng1: document.getElementById("in_eng1").value.trim(),
+        eng1_role: document.getElementById("in_eng1_role").value,
+        eng2: document.getElementById("in_eng2").value.trim(),
+        eng2_role: document.getElementById("in_eng2_role").value,
+        officer: document.getElementById("in_officer").value.trim(),
+        officer_role: document.getElementById("in_officer_role").value,
+        photo: currentPhotoBase64
+      };
+
+      try {
+        let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
+        // यदि सोही दर्ता नं. छ भने अपडेट गर्ने नभए नयाँ थप्ने
+        const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
+        if (existingIdx !== -1) {
+          records[existingIdx] = recordItem;
+        } else {
+          records.unshift(recordItem);
+        }
+
+        localStorage.setItem("naksa_records", JSON.stringify(records));
+        alert(`नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) को विवरण सफलतापूर्वक सुरक्षित भयो!\nअब "पुरानो हेर्नुस्" (record.html) मा गएर हेर्न सक्नुहुन्छ।`);
+      } catch (err) {
+        console.error(err);
+        alert("रेकर्ड सुरक्षित गर्दा त्रुटि भयो!");
       }
     }
 
@@ -1190,6 +1178,68 @@
       window.location.href = "login.html";
     }
 
+    // record.html बाट "हेर्नुहोस्" वा "सम्पादन" थिचेर आएको भए डाटा स्वतः भर्ने
+    function checkEditMode() {
+      const editId = sessionStorage.getItem("view_record_id");
+      if (!editId) return;
+
+      try {
+        const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
+        const item = records.find(r => r.id.toString() === editId.toString());
+        if (item) {
+          document.getElementById("in_patra").value = item.patra_no || "";
+          document.getElementById("in_date").value = item.reg_date || "";
+          document.getElementById("in_darta").value = item.darta_no || "";
+          document.getElementById("in_praman").value = item.praman_no || "";
+          document.getElementById("in_owner_name").value = item.owner_name || "";
+          document.getElementById("in_owner_cit").value = item.owner_cit || "";
+          document.getElementById("in_house_owner").value = item.house_owner || "";
+          document.getElementById("in_house_cit").value = item.house_cit || "";
+          document.getElementById("in_cit_district").value = item.cit_district || "रुपन्देही";
+          document.getElementById("in_phone").value = item.phone || "";
+          document.getElementById("in_sabik").value = item.sabik || "";
+          document.getElementById("in_ward").value = item.ward || "०१";
+          document.getElementById("in_kitta").value = item.kitta || "";
+          document.getElementById("in_land_area").value = item.land_area || "";
+          document.getElementById("in_approved_area").value = item.approved_area || "";
+          document.getElementById("in_land_use").value = item.land_use || "आवासीय / संस्थागत";
+          document.getElementById("in_b_class").value = item.b_class || "(ख)";
+          document.getElementById("in_struct").value = item.struct || "फ्रेम स्ट्रक्चर";
+          document.getElementById("in_comp_date").value = item.comp_date || "";
+          document.getElementById("in_east").value = item.east || "";
+          document.getElementById("in_west").value = item.west || "";
+          document.getElementById("in_north").value = item.north || "";
+          document.getElementById("in_south").value = item.south || "";
+          document.getElementById("in_plinth").value = item.plinth || "";
+          document.getElementById("in_coverage").value = item.coverage || "";
+          document.getElementById("in_height").value = item.height || "";
+          document.getElementById("in_rd_dist").value = item.rd_dist || "";
+          document.getElementById("in_elec_dist").value = item.elec_dist || "";
+          document.getElementById("in_riv_dist").value = item.riv_dist || "";
+          document.getElementById("in_septic").value = item.septic || "भएको";
+          document.getElementById("in_dec_date").value = item.dec_date || "";
+          document.getElementById("in_eng1").value = item.eng1 || "";
+          document.getElementById("in_eng1_role").value = item.eng1_role || "इन्जिनियर";
+          document.getElementById("in_eng2").value = item.eng2 || "";
+          document.getElementById("in_eng2_role").value = item.eng2_role || "इन्जिनियर";
+          document.getElementById("in_officer").value = item.officer || "";
+          document.getElementById("in_officer_role").value = item.officer_role || "प्रमुख प्रशासकीय अधिकृत";
+
+          if (item.photo) {
+            currentPhotoBase64 = item.photo;
+            const img = document.getElementById("certPhoto");
+            img.src = item.photo;
+            img.style.display = "block";
+            document.getElementById("photoText").style.display = "none";
+          }
+
+          sessionStorage.removeItem("view_record_id");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
       if (!raw) {
@@ -1198,7 +1248,7 @@
       }
       try {
         const u = JSON.parse(raw);
-        if (u.login_id && u.login_id.toLowerCase() === "superadmin") {
+        if (u.login_id && (u.login_id.toLowerCase() === "superadmin" || u.login_id.toLowerCase() === "admin")) {
           document.getElementById("adminMenuBtn").style.display = "inline-flex";
         }
       } catch(e) {}
@@ -1206,6 +1256,7 @@
       applySavedTheme();
       setInterval(updateClock, 1000);
       updateClock();
+      checkEditMode();
       calcTotalArea();
       updateLivePreview();
     });
