@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>घर नक्सा प्रमाणिकरण | Smart Mayadevi</title>
+  <title>Smart Mayadevi - प्रमाणिकरण पोर्टल</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,36 +18,37 @@
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid #b71c1c;
-      padding: 8px 18px;
+      padding: 10px 18px;
       color: #ffffff;
+      text-align: center;
     }
     .header-inner {
       max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 14px;
     }
     .header-inner img { height: 48px; }
-    .header-titles h1 { font-size: 18px; font-weight: 800; color: #ffffff; }
-    .header-titles p { font-size: 12.5px; color: #cbd5e1; }
+    .header-titles h1 { font-size: 20px; font-weight: 800; color: #ffffff; }
+    .header-titles p { font-size: 13px; color: #cbd5e1; }
 
     .verify-container {
-      max-width: 680px; width: 95%; margin: 30px auto; background: #ffffff;
-      border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 24px;
+      max-width: 650px; width: 92%; margin: 26px auto; background: #ffffff;
+      border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 22px;
     }
 
     .badge-status {
-      display: inline-block; background: #16a34a; color: #ffffff; padding: 6px 14px;
-      border-radius: 20px; font-size: 14px; font-weight: 800; margin-bottom: 15px;
+      display: inline-block; background: #16a34a; color: #ffffff; padding: 6px 16px;
+      border-radius: 20px; font-size: 14.5px; font-weight: 800; margin-bottom: 12px;
     }
 
-    .details-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 15px; }
+    .details-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15.5px; }
     .details-table td { padding: 9px 8px; border-bottom: 1px solid #e2e8f0; }
-    .details-table td.lbl { font-weight: 800; color: #1e3a8a; width: 40%; }
-    .details-table td.val { font-weight: 700; color: #0f172a; width: 60%; }
+    .details-table td.lbl { font-weight: 800; color: #1e3a8a; width: 42%; }
+    .details-table td.val { font-weight: 700; color: #0f172a; width: 58%; }
 
     .photo-preview-box {
-      text-align: center; margin-bottom: 15px;
+      text-align: center; margin-bottom: 12px;
     }
     .photo-preview-box img {
-      width: 95px; height: 110px; object-fit: cover; border: 2px solid #1e3a8a; border-radius: 4px;
+      width: 90px; height: 105px; object-fit: cover; border: 2px solid #1e3a8a; border-radius: 4px;
     }
 
     footer {
@@ -62,7 +63,7 @@
       <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Logo" onerror="this.src='assets/nishan%20chap.jpg';">
       <div class="header-titles">
         <h1>Smart Mayadevi</h1>
-        <p>घर नक्सा अभिलेख आधिकारिक प्रमाणिकरण प्रणाली | Verification Portal</p>
+        <p>घर नक्सा आधिकारिक प्रमाणिकरण प्रणाली | Official Verification</p>
       </div>
     </div>
   </header>
@@ -71,7 +72,7 @@
     <div style="text-align: center;">
       <div id="verifiedBadge" class="badge-status">✔ प्रमाणित प्रमाण-पत्र (Verified Record)</div>
       <div id="photoContainer" class="photo-preview-box" style="display:none;">
-        <img id="ownerPhoto" src="" alt="घरधनी फोटो">
+        <img id="ownerPhoto" src="" alt="फोटो">
       </div>
     </div>
 
@@ -81,16 +82,16 @@
   </main>
 
   <footer>
-    Smart Mayadevi — नक्सा दर्ता तथा अभिलेखीकरण प्रणाली | गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही
+    Smart Mayadevi — नक्सा दर्ता तथा प्रमाणिकरण | गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase Project URL
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; 
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; 
     
     let supabaseClient = null;
     try {
-      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
+      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany") && typeof supabase !== 'undefined') {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
     } catch(e) {}
@@ -101,7 +102,6 @@
       
       let item = null;
 
-      // १. सुपाबेस क्लाउडबाट खोज्ने (केस-असंवेदनशील मिलान)
       if (queryDarta && supabaseClient) {
         try {
           const decoded = decodeURIComponent(queryDarta).trim();
@@ -114,12 +114,9 @@
           if (!error && data && data.length > 0) {
             item = data[0];
           }
-        } catch(e) {
-          console.warn("Supabase fetch error:", e);
-        }
+        } catch(e) {}
       }
 
-      // २. यदि भेटिएन भने लोकल स्टोरेज जाँच गर्ने
       if (!item) {
         try {
           const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
@@ -144,21 +141,22 @@
 
         box.innerHTML = `
           <table class="details-table">
-            <tr><td class="lbl">नक्सा दर्ता नं.</td><td class="val">${item.darta_no}</td></tr>
-            <tr><td class="lbl">दर्ता मिति</td><td class="val">${item.reg_date || '-'}</td></tr>
-            <tr><td class="lbl">घरधनीको नामथर</td><td class="val"><strong>${item.house_owner || item.owner_name}</strong></td></tr>
-            <tr><td class="lbl">नागरिकता नं.</td><td class="val">${item.house_cit || item.owner_cit || '-'}</td></tr>
-            <tr><td class="lbl">ठेगाना</td><td class="val">मायादेवी गाउँपालिका वडा नं. ${item.ward || '-'}</td></tr>
+            <tr><td class="lbl">१) नक्सा दर्ता नं.</td><td class="val" style="color:#b71c1c; font-size:16.5px;">${item.darta_no}</td></tr>
+            <tr><td class="lbl">२) दर्ता मिति</td><td class="val">${item.reg_date || '-'}</td></tr>
+            <tr><td class="lbl">३) प्रमाण पत्र नं.</td><td class="val">${item.praman_no || '-'}</td></tr>
+            <tr><td class="lbl">४) जग्गा धनीको नामथर</td><td class="val"><strong>${item.owner_name || item.house_owner}</strong></td></tr>
+            <tr><td class="lbl">घर धनीको नामथर</td><td class="val">${item.house_owner || '-'}</td></tr>
+            <tr><td class="lbl">ठेगाना / वडा</td><td class="val">मायादेवी गाउँपालिका, वडा नं. ${item.ward || '-'}</td></tr>
             <tr><td class="lbl">कित्ता नं.</td><td class="val">${item.kitta || '-'}</td></tr>
-            <tr><td class="lbl">स्वीकृत क्षेत्रफल</td><td class="val">${item.approved_area || item.total_area || '-'} वर्गफिट</td></tr>
+            <tr><td class="lbl">कुल निर्माण क्षेत्रफल</td><td class="val">${item.total_area || item.approved_area || '-'} वर्गफिट</td></tr>
             <tr><td class="lbl">निर्णय मिति</td><td class="val">${item.dec_date || '-'}</td></tr>
-            <tr><td class="lbl">प्रमाणित गर्ने अधिकृत</td><td class="val">${item.officer || '-'} (${item.officer_role || 'अधिकृत'})</td></tr>
+            <tr><td class="lbl">प्रमाणित गर्ने अधिकृत</td><td class="val">${item.officer || '-'} (${item.officer_role || 'प्रमुख प्रशासकीय अधिकृत'})</td></tr>
           </table>
         `;
       } else {
         badge.style.background = "#dc2626";
         badge.textContent = "✖ रेकर्ड फेला परेन (Record Not Found)";
-        box.innerHTML = `<p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">यो दर्ता नम्बरको नक्सा प्रमाण-पत्र सिस्टममा भेटिएन। कृपया दर्ता नं. मिलेको छ कि छैन जाँच्नुहोस्।</p>`;
+        box.innerHTML = `<p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">यो दर्ता नम्बरको नक्सा प्रमाण-पत्र सिस्टममा भेटिएन।</p>`;
       }
     });
   </script>
