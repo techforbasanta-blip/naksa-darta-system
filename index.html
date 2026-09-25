@@ -6,7 +6,7 @@
   <title>Smart Mayadevi - डिजिटल कार्यप्रणाली तथा व्यवस्थापन</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -54,7 +54,37 @@
     .brand-left { display: flex; align-items: center; gap: 12px; }
     .brand-left img { height: 48px; width: auto; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
-    .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; }
+
+    /* नाराको ठीक २/४ ट्याब पछाडि Home बटन मिलाउने कन्टेनर */
+    .motto-home-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px; /* २/४ ट्याब बराबरको खुला ठाउँ */
+      margin-top: 2px;
+    }
+    .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; margin: 0; }
+
+    .brand-home-badge {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff !important;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .brand-home-badge:hover, .brand-home-badge.active {
+      background: #2563eb;
+      border-color: #60a5fa;
+      transform: translateY(-1px);
+    }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     
@@ -203,20 +233,21 @@
 </head>
 <body>
 
-  <!-- Top Header with Home Menu -->
+  <!-- Top Header with Motto followed by 2/4 Tab Spaced Home Button -->
   <header class="gov-header">
     <div class="header-inner">
       <div class="brand-left">
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
           <h1>Smart Mayadevi</h1>
-          <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
+          <div class="motto-home-row">
+            <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
+            <a href="index.html" class="brand-home-badge active" title="मुख्य गृहपृष्ठमा जानुहोस्">🏠 Home</a>
+          </div>
         </div>
       </div>
 
       <div class="header-controls">
-        <a href="index.html" class="btn-hdr active">🏠 गृहपृष्ठ (Home)</a>
-
         <!-- Profile badge with photo update feature -->
         <div class="user-badge" id="uBadgeBox" onclick="editSuperAdminPP()" title="फोटो फेर्न यहाँ क्लिक गर्नुहोस्">
           <div class="user-badge-fallback" id="uAvatarFallback">S</div>
@@ -318,7 +349,6 @@
       document.getElementById("naksaOptionsContainer").style.display = "none";
     }
 
-    // ID Card सुपर एडमिनले मात्र खोल्न मिल्ने चेक
     function handleIdCardClick() {
       const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
       let u = raw ? JSON.parse(raw) : null;
@@ -330,7 +360,6 @@
       }
     }
 
-    // Superadmin प्रोफाइल फोटो (PP) आफै सम्पादन गर्ने लजिक
     function editSuperAdminPP() {
       const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
       let u = raw ? JSON.parse(raw) : null;
@@ -354,7 +383,6 @@
         sessionStorage.setItem("user", JSON.stringify(u));
         localStorage.setItem("user", JSON.stringify(u));
         
-        // सुपरएडमिनको फोटो सबै पानाको लागि सुरक्षित
         localStorage.setItem("superadmin_profile_photo", base64Photo);
 
         document.getElementById("uAvatarImg").src = base64Photo;
@@ -370,7 +398,6 @@
         const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
         let u = null;
 
-        // यदि पहिले लगइन छैन भने सिधै Superadmin पासवर्ड Sarkar@#07 को लागि डिफाल्ट सेट
         if (!raw) {
           u = { username: "superadmin", full_name: "Super Admin", role: "Superadmin", password: "Sarkar@#07" };
           sessionStorage.setItem("user", JSON.stringify(u));
