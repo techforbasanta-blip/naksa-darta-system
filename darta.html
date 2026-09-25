@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>घर नक्सा दर्ता तथा Live A4 Preview | Smart Mayadevi</title>
+  <title>Smart Mayadevi</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -194,19 +194,30 @@
     .form-actions {
       display: flex;
       gap: 6px;
-      margin-top: 8px;
+      margin-top: 10px;
       position: sticky;
       bottom: 0;
       background: var(--card-bg);
-      padding-top: 6px;
-      z-index: 10;
+      padding-top: 8px;
+      padding-bottom: 4px;
+      z-index: 999;
+      border-top: 1px solid var(--border-color);
     }
-    .btn-act { flex: 1; padding: 9px; border: none; border-radius: 4px; font-weight: 800; font-size: 13px; cursor: pointer; }
-    .btn-save { background: #16a34a; color: #fff; }
+    .btn-act {
+      flex: 1;
+      padding: 10px 4px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 13.5px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-save { background: #16a34a; color: #ffffff; }
     .btn-save:hover { background: #15803d; }
-    .btn-print { background: #1e3a8a; color: #fff; }
+    .btn-print { background: #1e3a8a; color: #ffffff; }
     .btn-print:hover { background: #2563eb; }
-    .btn-reset { background: #64748b; color: #fff; }
+    .btn-reset { background: #64748b; color: #ffffff; }
     .btn-reset:hover { background: #475569; }
 
     .preview-card {
@@ -287,6 +298,7 @@
     .cert-top-center-motto { text-align: center; margin-bottom: 1px; }
     .cert-motto { font-size: 14.5px; font-weight: 800; line-height: 1; }
 
+    /* सच्याइएको आधिकारिक लेटरहेड */
     .cert-header {
       display: flex !important;
       align-items: center !important;
@@ -411,6 +423,7 @@
       line-height: 1.2 !important;
     }
 
+    /* PAGE 2 */
     .a4-sheet.back-page {
       page-break-before: always !important;
       justify-content: flex-start !important;
@@ -748,6 +761,7 @@
         <input type="file" id="passportInput" accept="image/*" onchange="loadPhoto(event)">
       </div>
 
+      <!-- Action Buttons -->
       <div class="form-actions">
         <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="saveRecordToDatabase()">💾 सुरक्षित गर्नुहोस्</button>
         <button type="button" id="printBtnMain" class="btn-act btn-print" onclick="triggerPrint()">🖨 प्रिन्ट गर्नुहोस्</button>
@@ -955,6 +969,7 @@
               </div>
             </div>
 
+            <!-- Page 1 Footer Locked Directly at the Bottom -->
             <footer class="cert-footer">
               सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
               वेभ साइटः- mayadevimunrupandehi.gov.np
@@ -1160,6 +1175,7 @@
       } catch(e) {}
     }
 
+    // १००% चालु हुने प्रिन्ट बटन (Zoom लाई १००% बनाएर सीधै प्रिन्ट खोल्ने)
     function triggerPrint() {
       const wrapper = document.getElementById("previewZoomWrapper");
       if (wrapper) wrapper.style.transform = "none";
@@ -1171,8 +1187,9 @@
       }, 200);
     }
 
+    // १००% चालु हुने रिसेट बटन
     function resetFormAction() {
-      if (confirm("के तपाईं फाराम खाली गरी रिसेट गर्न चाहनुहुन्छ?")) {
+      if (confirm("के तपाईं फारामका विवरणहरू खाली गरी नयाँ प्रविष्टि गर्न चाहनुहुन्छ?")) {
         sessionStorage.removeItem("view_record_id");
         window.location.reload();
       }
@@ -1336,6 +1353,7 @@
       const offRoleEl = document.getElementById("in_officer_role");
       if (offRoleEl) setTxt("out_officer_role", offRoleEl.value);
 
+      // Namsari Table Updates
       setTxt("out_ns_date", getVal("in_ns_date", "...."));
       setTxt("out_ns_from", getVal("in_ns_from", "...."));
       setTxt("out_ns_to", getVal("in_ns_to", "...."));
@@ -1441,6 +1459,7 @@
       }
     }
 
+    // १००% चालु हुने सुरक्षित गर्ने फङ्सन (लोकल र क्लाउड)
     async function saveRecordToDatabase() {
       const getVal = id => {
         const el = document.getElementById(id);
@@ -1522,6 +1541,7 @@
         ns_photo: currentNamsariPhotoBase64
       };
 
+      // १. पहिले लोकलमा अनिवार्य सेभ
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
         const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
@@ -1534,6 +1554,7 @@
         localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
       } catch (err) { console.warn("Local storage error:", err); }
 
+      // २. सुपाबेसमा सेभ
       let savedInCloud = false;
       if (supabaseClient) {
         try {
