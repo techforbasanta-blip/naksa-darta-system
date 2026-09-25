@@ -37,7 +37,6 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
-    /* Top Navigation Header */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
@@ -154,13 +153,15 @@
       bottom: 0;
       background: var(--card-bg);
       padding-top: 6px;
+      z-index: 10;
     }
-    .btn-act { flex: 1; padding: 7px; border: none; border-radius: 4px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+    .btn-act { flex: 1; padding: 9px; border: none; border-radius: 4px; font-weight: 800; font-size: 13px; cursor: pointer; }
     .btn-save { background: #16a34a; color: #fff; }
     .btn-save:hover { background: #15803d; }
     .btn-print { background: #1e3a8a; color: #fff; }
     .btn-print:hover { background: #2563eb; }
     .btn-reset { background: #64748b; color: #fff; }
+    .btn-reset:hover { background: #475569; }
 
     .preview-card {
       background: #0f1e33;
@@ -196,7 +197,6 @@
       align-items: center;
     }
 
-    /* A4 CERTIFICATE ENGINE - EXACT 294mm LOCK */
     .a4-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -241,7 +241,6 @@
     .cert-top-center-motto { text-align: center; margin-bottom: 1px; }
     .cert-motto { font-size: 14.5px; font-weight: 800; line-height: 1; }
 
-    /* सच्याइएको आधिकारिक लेटरहेड */
     .cert-header {
       display: flex !important;
       align-items: center !important;
@@ -276,30 +275,10 @@
       align-items: center !important;
       justify-content: center !important;
     }
-    .header-titles .gov-sub {
-      font-size: 15.5px !important;
-      font-weight: 800 !important;
-      line-height: 1.15 !important;
-      margin: 0 !important;
-    }
-    .header-titles .palika-title {
-      font-size: 23.5px !important;
-      font-weight: 900 !important;
-      line-height: 1.15 !important;
-      margin: 0 !important;
-    }
-    .header-titles .office-title {
-      font-size: 29.5px !important;
-      font-weight: 900 !important;
-      line-height: 1.15 !important;
-      margin: 0 !important;
-    }
-    .header-titles .address-text {
-      font-size: 15.5px !important;
-      font-weight: 700 !important;
-      margin-top: 1px !important;
-      line-height: 1.15 !important;
-    }
+    .header-titles .gov-sub { font-size: 15.5px !important; font-weight: 800 !important; line-height: 1.15 !important; }
+    .header-titles .palika-title { font-size: 23.5px !important; font-weight: 900 !important; line-height: 1.15 !important; }
+    .header-titles .office-title { font-size: 29.5px !important; font-weight: 900 !important; line-height: 1.15 !important; }
+    .header-titles .address-text { font-size: 15.5px !important; font-weight: 700 !important; margin-top: 1px !important; line-height: 1.15 !important; }
 
     .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 1px 0; }
     .ref-col { font-size: 15.5px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.22; }
@@ -316,7 +295,6 @@
     }
     .cert-intro { font-size: 15.5px !important; line-height: 1.32; text-align: justify; margin-bottom: 2px; font-weight: 600; }
 
-    /* पहिलो पेजको टेबल फन्ट साइज १६.२px */
     .cert-table, .floor-detail-table {
       width: 100%; border-collapse: collapse; font-size: 16.2px !important; margin-bottom: 1.5px; table-layout: fixed; background: transparent !important;
     }
@@ -341,11 +319,8 @@
       padding: 2.5px 5px !important;
     }
 
-    /* =========================================================
-       २ STEP TALA JHARIEKO SIGNATURE & QR BLOCK
-       ========================================================= */
     .cert-signatures-block {
-      margin-top: 22px !important; /* २ स्टेप तल झारिएको (Margin enlarged) */
+      margin-top: 22px !important;
       margin-bottom: 2px !important;
     }
     .officers-signature-grid {
@@ -353,10 +328,10 @@
       grid-template-columns: 32% 32% 36%;
       gap: 6px;
       align-items: flex-end;
-      margin-bottom: 10px; /* हस्ताक्षर मुनिको ग्याप २ स्टेप खुला गरिएको */
+      margin-bottom: 10px;
     }
     .sign-item { text-align: center; }
-    .sign-space-area { height: 16px; } /* सहि गर्ने खाली ठाउँ ठूलो */
+    .sign-space-area { height: 16px; }
     .sign-dotted-line { border-top: 1.2px dotted #1e293b; width: 75%; margin: 0 auto 3px auto; }
     .sign-title-text { font-size: 14.5px !important; font-weight: 700; line-height: 1.25; }
     .sign-title-text strong { font-size: 15.5px !important; font-weight: 800; }
@@ -526,6 +501,7 @@
   </header>
 
   <main class="workspace-grid">
+    <!-- Form Card -->
     <section class="entry-card no-print">
       <h2 class="entry-title">📝 नक्सा विवरण फाराम (१ देखि १८ पूर्ण प्रविष्टि)</h2>
 
@@ -717,10 +693,11 @@
         <input type="file" id="passportInput" accept="image/*" onchange="loadPhoto(event)">
       </div>
 
+      <!-- Action Buttons -->
       <div class="form-actions">
-        <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="saveRecordToDatabase()">💾 सुरक्षित गर्नुहोस् (Cloud)</button>
-        <button type="button" class="btn-act btn-print" onclick="window.print()">🖨 प्रिन्ट गर्नुहोस्</button>
-        <button type="button" class="btn-act btn-reset" onclick="location.reload()">↺ Reset</button>
+        <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="saveRecordToDatabase()">💾 सुरक्षित गर्नुहोस्</button>
+        <button type="button" id="printBtnMain" class="btn-act btn-print" onclick="triggerPrint()">🖨 प्रिन्ट गर्नुहोस्</button>
+        <button type="button" id="resetBtnMain" class="btn-act btn-reset" onclick="resetFormAction()">↺ Reset</button>
       </div>
     </section>
 
@@ -924,7 +901,6 @@
               </div>
             </div>
 
-            <!-- Page 1 Footer Locked Directly at the Bottom -->
             <footer class="cert-footer">
               सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
               वेभ साइटः- mayadevimunrupandehi.gov.np
@@ -1057,15 +1033,17 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
     
     let supabaseClient = null;
     try {
       if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
-    } catch(e) {}
+    } catch(e) {
+      console.warn("Supabase init error:", e);
+    }
 
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
@@ -1101,6 +1079,26 @@
       }
     }
 
+    // १००% काम गर्ने प्रिन्ट फङ्सन
+    function triggerPrint() {
+      const wrapper = document.getElementById("previewZoomWrapper");
+      if (wrapper) wrapper.style.transform = "none";
+      setTimeout(function() {
+        window.print();
+        setTimeout(function() {
+          if (wrapper) wrapper.style.transform = `scale(${currentZoomLevel})`;
+        }, 800);
+      }, 200);
+    }
+
+    // १००% काम गर्ने रिसेट फङ्सन
+    function resetFormAction() {
+      if (confirm("के तपाईं फाराम खाली गरी रिसेट गर्न चाहनुहुन्छ?")) {
+        sessionStorage.removeItem("view_record_id");
+        window.location.reload();
+      }
+    }
+
     function updateClock() {
       const now = new Date();
       const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
@@ -1108,8 +1106,11 @@
       const m = String(now.getMinutes()).padStart(2, "0");
       const s = String(now.getSeconds()).padStart(2, "0");
       let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
-      document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
-      document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+      
+      const dateEl = document.getElementById("liveNepaliHeaderDate");
+      const timeEl = document.getElementById("liveNepaliHeaderTime");
+      if (dateEl) dateEl.textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
+      if (timeEl) timeEl.textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
     }
 
     function calculateNepaliItiDate(bsDateStr) {
@@ -1154,17 +1155,19 @@
       document.body.classList.toggle("dark-mode");
       const isDark = document.body.classList.contains("dark-mode");
       localStorage.setItem("mayadevi_naksa_theme", isDark ? "dark" : "light");
-      document.getElementById("themeToggleBtn").textContent = isDark ? "☀" : "☾";
+      const btn = document.getElementById("themeToggleBtn");
+      if (btn) btn.textContent = isDark ? "☀" : "☾";
     }
 
     function applySavedTheme() {
       const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
+      const btn = document.getElementById("themeToggleBtn");
       if (saved === "dark") {
         document.body.classList.add("dark-mode");
-        document.getElementById("themeToggleBtn").textContent = "☀";
+        if (btn) btn.textContent = "☀";
       } else {
         document.body.classList.remove("dark-mode");
-        document.getElementById("themeToggleBtn").textContent = "☾";
+        if (btn) btn.textContent = "☾";
       }
     }
 
@@ -1174,114 +1177,138 @@
         return el ? (el.value.trim() || def) : def;
       };
 
-      document.getElementById("out_patra").textContent = getVal("in_patra", "०८३/८४");
-      document.getElementById("out_darta").textContent = getVal("in_darta", "२८/२०८३/०८४");
-      document.getElementById("out_praman").textContent = getVal("in_praman", "१०१");
+      const setTxt = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+
+      setTxt("out_patra", getVal("in_patra", "०८३/८४"));
+      setTxt("out_darta", getVal("in_darta", "२८/२०८३/०८४"));
+      setTxt("out_praman", getVal("in_praman", "१०१"));
       
       const inDate = getVal("in_date", "२०८३/०६/०८");
-      document.getElementById("out_date").textContent = inDate;
+      setTxt("out_date", inDate);
 
       calculateNepaliItiDate(inDate);
 
       const owner = getVal("in_owner_name", "....................");
-      document.getElementById("out_intro_name").textContent = owner;
-      document.getElementById("out_owner").textContent = owner;
+      setTxt("out_intro_name", owner);
+      setTxt("out_owner", owner);
 
       const houseOwner = getVal("in_house_owner", owner);
-      document.getElementById("out_house_owner").textContent = houseOwner;
-      document.getElementById("back_name").textContent = houseOwner;
+      setTxt("out_house_owner", houseOwner);
+      setTxt("back_name", houseOwner);
 
       const ward = getVal("in_ward", "०१");
-      document.getElementById("out_intro_ward").textContent = ward;
-      document.getElementById("out_ward").textContent = ward;
+      setTxt("out_intro_ward", ward);
+      setTxt("out_ward", ward);
 
       const kitta = getVal("in_kitta", "....");
-      document.getElementById("out_kitta").textContent = kitta;
+      setTxt("out_kitta", kitta);
 
-      document.getElementById("out_owner_cit").textContent = getVal("in_owner_cit");
+      setTxt("out_owner_cit", getVal("in_owner_cit"));
       const houseCit = getVal("in_house_cit", getVal("in_owner_cit"));
-      document.getElementById("out_house_cit").textContent = houseCit;
-      document.getElementById("back_cit").textContent = houseCit;
+      setTxt("out_house_cit", houseCit);
+      setTxt("back_cit", houseCit);
 
-      document.getElementById("back_cit_district").textContent = getVal("in_cit_district", "रुपन्देही");
-      document.getElementById("back_phone").textContent = getVal("in_phone", "....................");
+      setTxt("back_cit_district", getVal("in_cit_district", "रुपन्देही"));
+      setTxt("back_phone", getVal("in_phone", "...................."));
 
-      document.getElementById("out_sabik").textContent = getVal("in_sabik");
-      document.getElementById("out_area").textContent = getVal("in_land_area");
+      setTxt("out_sabik", getVal("in_sabik"));
+      setTxt("out_area", getVal("in_land_area"));
 
-      const inAppr = document.getElementById("in_approved_area").value.trim();
-      if (inAppr) {
-        document.getElementById("out_approved_area_full").textContent = inAppr;
-      } else {
-        document.getElementById("out_approved_area_full").innerHTML = `कि.नं. <span id="out_kitta2">${kitta}</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट`;
+      const inAppr = document.getElementById("in_approved_area") ? document.getElementById("in_approved_area").value.trim() : "";
+      const apprContainer = document.getElementById("out_approved_area_full");
+      if (apprContainer) {
+        if (inAppr) {
+          apprContainer.textContent = inAppr;
+        } else {
+          apprContainer.innerHTML = `कि.नं. <span id="out_kitta2">${kitta}</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट`;
+        }
       }
 
-      document.getElementById("out_land_use").textContent = getVal("in_land_use", "आवासीय");
+      setTxt("out_land_use", getVal("in_land_use", "आवासीय"));
 
       const e = getVal("in_east"), w = getVal("in_west"), n = getVal("in_north"), s = getVal("in_south");
-      document.getElementById("out_killa").textContent = `पूर्वः ${e} | पश्चिमः ${w} | उत्तरः ${n} | दक्षिणः ${s}`;
+      setTxt("out_killa", `पूर्वः ${e} | पश्चिमः ${w} | उत्तरः ${n} | दक्षिणः ${s}`);
 
-      document.getElementById("out_b_class").textContent = getVal("in_b_class", "(ख)");
-      document.getElementById("out_struct").textContent = getVal("in_struct", "फ्रेम स्ट्रक्चर");
-      document.getElementById("out_comp_date").textContent = getVal("in_comp_date");
+      setTxt("out_b_class", getVal("in_b_class", "(ख)"));
+      setTxt("out_struct", getVal("in_struct", "फ्रेम स्ट्रक्चर"));
+      setTxt("out_comp_date", getVal("in_comp_date"));
 
-      document.getElementById("out_plinth").textContent = getVal("in_plinth");
-      document.getElementById("out_coverage").textContent = getVal("in_coverage");
-      document.getElementById("out_height").textContent = getVal("in_height");
-      document.getElementById("out_rd_dist").textContent = getVal("in_rd_dist");
-      document.getElementById("out_elec_dist").textContent = getVal("in_elec_dist");
-      document.getElementById("out_riv_dist").textContent = getVal("in_riv_dist");
-      document.getElementById("out_septic").textContent = getVal("in_septic", "भएको");
-      document.getElementById("out_dec_date").textContent = getVal("in_dec_date", "२०८३/०६/०६");
+      setTxt("out_plinth", getVal("in_plinth"));
+      setTxt("out_coverage", getVal("in_coverage"));
+      setTxt("out_height", getVal("in_height"));
+      setTxt("out_rd_dist", getVal("in_rd_dist"));
+      setTxt("out_elec_dist", getVal("in_elec_dist"));
+      setTxt("out_riv_dist", getVal("in_riv_dist"));
+      setTxt("out_septic", getVal("in_septic", "भएको"));
+      setTxt("out_dec_date", getVal("in_dec_date", "२०८३/०६/०६"));
 
-      document.getElementById("out_eng1").textContent = getVal("in_eng1", "....................");
-      document.getElementById("out_eng1_role").textContent = document.getElementById("in_eng1_role").value;
+      setTxt("out_eng1", getVal("in_eng1", "...................."));
+      const eng1RoleEl = document.getElementById("in_eng1_role");
+      if (eng1RoleEl) setTxt("out_eng1_role", eng1RoleEl.value);
 
-      document.getElementById("out_eng2").textContent = getVal("in_eng2", "....................");
-      document.getElementById("out_eng2_role").textContent = document.getElementById("in_eng2_role").value;
+      setTxt("out_eng2", getVal("in_eng2", "...................."));
+      const eng2RoleEl = document.getElementById("in_eng2_role");
+      if (eng2RoleEl) setTxt("out_eng2_role", eng2RoleEl.value);
 
-      document.getElementById("out_officer").textContent = getVal("in_officer", "....................");
-      document.getElementById("out_officer_role").textContent = document.getElementById("in_officer_role").value;
+      setTxt("out_officer", getVal("in_officer", "...................."));
+      const offRoleEl = document.getElementById("in_officer_role");
+      if (offRoleEl) setTxt("out_officer_role", offRoleEl.value);
 
       // Namsari Table Updates
-      document.getElementById("out_ns_date").textContent = getVal("in_ns_date", "....");
-      document.getElementById("out_ns_from").textContent = getVal("in_ns_from", "....");
-      document.getElementById("out_ns_to").textContent = getVal("in_ns_to", "....");
-      document.getElementById("out_ns_sif_name").textContent = getVal("in_ns_sif_name", "....");
-      document.getElementById("out_ns_sif_post").textContent = getVal("in_ns_sif_post", "....");
-      document.getElementById("out_ns_app_name").textContent = getVal("in_ns_app_name", "....");
-      document.getElementById("out_ns_app_post").textContent = getVal("in_ns_app_post", "....");
+      setTxt("out_ns_date", getVal("in_ns_date", "...."));
+      setTxt("out_ns_from", getVal("in_ns_from", "...."));
+      setTxt("out_ns_to", getVal("in_ns_to", "...."));
+      setTxt("out_ns_sif_name", getVal("in_ns_sif_name", "...."));
+      setTxt("out_ns_sif_post", getVal("in_ns_sif_post", "...."));
+      setTxt("out_ns_app_name", getVal("in_ns_app_name", "...."));
+      setTxt("out_ns_app_post", getVal("in_ns_app_post", "...."));
 
       generateQR();
     }
 
     function calcTotalArea() {
-      const b1 = parseFloat(document.getElementById("in_b1").value) || 0;
-      const b2 = parseFloat(document.getElementById("in_b2").value) || 0;
-      const g = parseFloat(document.getElementById("in_ground").value) || 0;
-      const f1 = parseFloat(document.getElementById("in_first").value) || 0;
-      const f2 = parseFloat(document.getElementById("in_second").value) || 0;
-      const f3 = parseFloat(document.getElementById("in_third").value) || 0;
+      const getNum = id => {
+        const el = document.getElementById(id);
+        return el ? (parseFloat(el.value) || 0) : 0;
+      };
+
+      const b1 = getNum("in_b1");
+      const b2 = getNum("in_b2");
+      const g = getNum("in_ground");
+      const f1 = getNum("in_first");
+      const f2 = getNum("in_second");
+      const f3 = getNum("in_third");
 
       const sum = b1 + b2 + g + f1 + f2 + f3;
       const nepSum = toNepNum(sum.toFixed(2));
 
-      document.getElementById("in_total_area").value = nepSum;
-      document.getElementById("out_total").textContent = nepSum;
+      const inTotal = document.getElementById("in_total_area");
+      const outTotal = document.getElementById("out_total");
+      if (inTotal) inTotal.value = nepSum;
+      if (outTotal) outTotal.textContent = nepSum;
 
-      document.getElementById("out_b1").textContent = b1 > 0 ? toNepNum(b1.toFixed(2)) : "-";
-      document.getElementById("out_b2").textContent = b2 > 0 ? toNepNum(b2.toFixed(2)) : "-";
-      document.getElementById("out_ground").textContent = g > 0 ? toNepNum(g.toFixed(2)) : "-";
-      document.getElementById("out_first").textContent = f1 > 0 ? toNepNum(f1.toFixed(2)) : "-";
-      document.getElementById("out_second").textContent = f2 > 0 ? toNepNum(f2.toFixed(2)) : "-";
-      document.getElementById("out_third").textContent = f3 > 0 ? toNepNum(f3.toFixed(2)) : "-";
+      const setOut = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val > 0 ? toNepNum(val.toFixed(2)) : "-";
+      };
+
+      setOut("out_b1", b1);
+      setOut("out_b2", b2);
+      setOut("out_ground", g);
+      setOut("out_first", f1);
+      setOut("out_second", f2);
+      setOut("out_third", f3);
     }
 
     function generateQR() {
       const qrDiv = document.getElementById("cert_qr_div");
       if (!qrDiv) return;
 
-      const darta = document.getElementById("in_darta").value || '२८/२०८३/०८४';
+      const dartaEl = document.getElementById("in_darta");
+      const darta = (dartaEl && dartaEl.value.trim()) ? dartaEl.value.trim() : '२८/२०८३/०८४';
       const verifyUrl = `${window.location.origin}${window.location.pathname.replace('darta.html', 'verify.html')}?darta=${encodeURIComponent(darta)}`;
 
       qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(verifyUrl)}" alt="QR Code" style="width:54px; height:54px; display:block;">`;
@@ -1316,9 +1343,9 @@
         compressImageFile(file, function(base64) {
           currentPhotoBase64 = base64;
           const img = document.getElementById("certPhoto");
-          img.src = currentPhotoBase64;
-          img.style.display = "block";
-          document.getElementById("photoText").style.display = "none";
+          const txt = document.getElementById("photoText");
+          if (img) { img.src = currentPhotoBase64; img.style.display = "block"; }
+          if (txt) { txt.style.display = "none"; }
         });
       }
     }
@@ -1329,16 +1356,22 @@
         compressImageFile(file, function(base64) {
           currentNamsariPhotoBase64 = base64;
           const img = document.getElementById("out_ns_photo");
-          img.src = currentNamsariPhotoBase64;
-          img.style.display = "block";
-          document.getElementById("out_ns_photo_txt").style.display = "none";
+          const txt = document.getElementById("out_ns_photo_txt");
+          if (img) { img.src = currentNamsariPhotoBase64; img.style.display = "block"; }
+          if (txt) { txt.style.display = "none"; }
         });
       }
     }
 
+    // १००% चालु हुने सुरक्षित गर्ने फङ्सन
     async function saveRecordToDatabase() {
-      const dartaNo = document.getElementById("in_darta").value.trim();
-      const houseOwner = document.getElementById("in_house_owner").value.trim() || document.getElementById("in_owner_name").value.trim();
+      const getVal = id => {
+        const el = document.getElementById(id);
+        return el ? el.value.trim() : "";
+      };
+
+      const dartaNo = getVal("in_darta");
+      const houseOwner = getVal("in_house_owner") || getVal("in_owner_name");
 
       if (!dartaNo) {
         alert("कृपया नक्सा दर्ता नं. अनिवार्य भर्नुहोस्!");
@@ -1350,66 +1383,69 @@
       }
 
       const saveBtn = document.getElementById("saveBtnMain");
-      saveBtn.disabled = true;
-      saveBtn.textContent = "⏳ सुरक्षित हुँदैछ...";
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = "⏳ सुरक्षित हुँदैछ...";
+      }
 
       const recordItem = {
         id: Date.now(),
         darta_no: dartaNo,
-        patra_no: document.getElementById("in_patra").value.trim(),
-        reg_date: document.getElementById("in_date").value.trim(),
-        praman_no: document.getElementById("in_praman").value.trim(),
-        owner_name: document.getElementById("in_owner_name").value.trim(),
-        owner_cit: document.getElementById("in_owner_cit").value.trim(),
+        patra_no: getVal("in_patra"),
+        reg_date: getVal("in_date"),
+        praman_no: getVal("in_praman"),
+        owner_name: getVal("in_owner_name"),
+        owner_cit: getVal("in_owner_cit"),
         house_owner: houseOwner,
-        house_cit: document.getElementById("in_house_cit").value.trim(),
-        cit_district: document.getElementById("in_cit_district").value.trim() || "रुपन्देही",
-        phone: document.getElementById("in_phone").value.trim(),
-        sabik: document.getElementById("in_sabik").value.trim(),
-        ward: document.getElementById("in_ward").value.trim(),
-        kitta: document.getElementById("in_kitta").value.trim(),
-        land_area: document.getElementById("in_land_area").value.trim(),
-        approved_area: document.getElementById("in_approved_area").value.trim(),
-        land_use: document.getElementById("in_land_use").value.trim(),
-        b_class: document.getElementById("in_b_class").value.trim(),
-        struct: document.getElementById("in_struct").value.trim(),
-        comp_date: document.getElementById("in_comp_date").value.trim(),
-        east: document.getElementById("in_east").value.trim(),
-        west: document.getElementById("in_west").value.trim(),
-        north: document.getElementById("in_north").value.trim(),
-        south: document.getElementById("in_south").value.trim(),
-        total_area: document.getElementById("in_total_area").value.trim(),
-        b1: document.getElementById("in_b1").value.trim(),
-        b2: document.getElementById("in_b2").value.trim(),
-        ground: document.getElementById("in_ground").value.trim(),
-        first: document.getElementById("in_first").value.trim(),
-        second: document.getElementById("in_second").value.trim(),
-        third: document.getElementById("in_third").value.trim(),
-        plinth: document.getElementById("in_plinth").value.trim(),
-        coverage: document.getElementById("in_coverage").value.trim(),
-        height: document.getElementById("in_height").value.trim(),
-        rd_dist: document.getElementById("in_rd_dist").value.trim(),
-        elec_dist: document.getElementById("in_elec_dist").value.trim(),
-        riv_dist: document.getElementById("in_riv_dist").value.trim(),
-        septic: document.getElementById("in_septic").value.trim(),
-        dec_date: document.getElementById("in_dec_date").value.trim(),
-        eng1: document.getElementById("in_eng1").value.trim(),
-        eng1_role: document.getElementById("in_eng1_role").value,
-        eng2: document.getElementById("in_eng2").value.trim(),
-        eng2_role: document.getElementById("in_eng2_role").value,
-        officer: document.getElementById("in_officer").value.trim(),
-        officer_role: document.getElementById("in_officer_role").value,
+        house_cit: getVal("in_house_cit"),
+        cit_district: getVal("in_cit_district") || "रुपन्देही",
+        phone: getVal("in_phone"),
+        sabik: getVal("in_sabik"),
+        ward: getVal("in_ward"),
+        kitta: getVal("in_kitta"),
+        land_area: getVal("in_land_area"),
+        approved_area: getVal("in_approved_area"),
+        land_use: getVal("in_land_use"),
+        b_class: getVal("in_b_class"),
+        struct: getVal("in_struct"),
+        comp_date: getVal("in_comp_date"),
+        east: getVal("in_east"),
+        west: getVal("in_west"),
+        north: getVal("in_north"),
+        south: getVal("in_south"),
+        total_area: getVal("in_total_area"),
+        b1: getVal("in_b1"),
+        b2: getVal("in_b2"),
+        ground: getVal("in_ground"),
+        first: getVal("in_first"),
+        second: getVal("in_second"),
+        third: getVal("in_third"),
+        plinth: getVal("in_plinth"),
+        coverage: getVal("in_coverage"),
+        height: getVal("in_height"),
+        rd_dist: getVal("in_rd_dist"),
+        elec_dist: getVal("in_elec_dist"),
+        riv_dist: getVal("in_riv_dist"),
+        septic: getVal("in_septic"),
+        dec_date: getVal("in_dec_date"),
+        eng1: getVal("in_eng1"),
+        eng1_role: (document.getElementById("in_eng1_role") || {}).value || "इन्जिनियर",
+        eng2: getVal("in_eng2"),
+        eng2_role: (document.getElementById("in_eng2_role") || {}).value || "इन्जिनियर",
+        officer: getVal("in_officer"),
+        officer_role: (document.getElementById("in_officer_role") || {}).value || "प्रमुख प्रशासकीय अधिकृत",
         photo: currentPhotoBase64,
-        ns_date: document.getElementById("in_ns_date").value.trim(),
-        ns_from: document.getElementById("in_ns_from").value.trim(),
-        ns_to: document.getElementById("in_ns_to").value.trim(),
-        ns_sif_name: document.getElementById("in_ns_sif_name").value.trim(),
-        ns_sif_post: document.getElementById("in_ns_sif_post").value.trim(),
-        ns_app_name: document.getElementById("in_ns_app_name").value.trim(),
-        ns_app_post: document.getElementById("in_ns_app_post").value.trim(),
+        ns_date: getVal("in_ns_date"),
+        ns_from: getVal("in_ns_from"),
+        ns_to: getVal("in_ns_to"),
+        ns_sif_name: getVal("in_ns_sif_name"),
+        ns_sif_post: getVal("in_ns_sif_post"),
+        ns_app_name: getVal("in_ns_app_name"),
+        ns_app_post: getVal("in_ns_app_post"),
         ns_photo: currentNamsariPhotoBase64
       };
 
+      // १. लोकल स्टोरेजमा अनिवार्य सुरक्षित
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
         const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
@@ -1422,6 +1458,7 @@
         localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
       } catch (err) { console.warn("Local storage error:", err); }
 
+      // २. सुपाबेसमा सुरक्षित
       let savedInCloud = false;
       if (supabaseClient) {
         try {
@@ -1439,8 +1476,11 @@
         }
       }
 
-      saveBtn.disabled = false;
-      saveBtn.textContent = "💾 सुरक्षित गर्नुहोस् (Cloud)";
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "💾 सुरक्षित गर्नुहोस्";
+      }
+
       alert(`नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) ${savedInCloud ? 'क्लाउड र लोकल दुवैमा' : 'लोकलमा'} सफलतापूर्वक सुरक्षित भयो!\nअब "पुरानो हेर्नुस्" र "भेरिफाइ" दुवैमा हेर्न सकिनेछ।`);
     }
 
@@ -1474,74 +1514,79 @@
       }
 
       if (item) {
-        document.getElementById("in_patra").value = item.patra_no || "";
-        document.getElementById("in_date").value = item.reg_date || "";
-        document.getElementById("in_darta").value = item.darta_no || "";
-        document.getElementById("in_praman").value = item.praman_no || "";
-        document.getElementById("in_owner_name").value = item.owner_name || "";
-        document.getElementById("in_owner_cit").value = item.owner_cit || "";
-        document.getElementById("in_house_owner").value = item.house_owner || "";
-        document.getElementById("in_house_cit").value = item.house_cit || "";
-        document.getElementById("in_cit_district").value = item.cit_district || "रुपन्देही";
-        document.getElementById("in_phone").value = item.phone || "";
-        document.getElementById("in_sabik").value = item.sabik || "";
-        document.getElementById("in_ward").value = item.ward || "०१";
-        document.getElementById("in_kitta").value = item.kitta || "";
-        document.getElementById("in_land_area").value = item.land_area || "";
-        document.getElementById("in_approved_area").value = item.approved_area || "";
-        document.getElementById("in_land_use").value = item.land_use || "आवासीय";
-        document.getElementById("in_b_class").value = item.b_class || "(ख)";
-        document.getElementById("in_struct").value = item.struct || "फ्रेम स्ट्रक्चर";
-        document.getElementById("in_comp_date").value = item.comp_date || "";
-        document.getElementById("in_east").value = item.east || "";
-        document.getElementById("in_west").value = item.west || "";
-        document.getElementById("in_north").value = item.north || "";
-        document.getElementById("in_south").value = item.south || "";
+        const setVal = (id, val) => {
+          const el = document.getElementById(id);
+          if (el) el.value = val || "";
+        };
 
-        document.getElementById("in_b1").value = item.b1 || 0;
-        document.getElementById("in_b2").value = item.b2 || 0;
-        document.getElementById("in_ground").value = item.ground || 0;
-        document.getElementById("in_first").value = item.first || 0;
-        document.getElementById("in_second").value = item.second || 0;
-        document.getElementById("in_third").value = item.third || 0;
+        setVal("in_patra", item.patra_no);
+        setVal("in_date", item.reg_date);
+        setVal("in_darta", item.darta_no);
+        setVal("in_praman", item.praman_no);
+        setVal("in_owner_name", item.owner_name);
+        setVal("in_owner_cit", item.owner_cit);
+        setVal("in_house_owner", item.house_owner);
+        setVal("in_house_cit", item.house_cit);
+        setVal("in_cit_district", item.cit_district || "रुपन्देही");
+        setVal("in_phone", item.phone);
+        setVal("in_sabik", item.sabik);
+        setVal("in_ward", item.ward || "०१");
+        setVal("in_kitta", item.kitta);
+        setVal("in_land_area", item.land_area);
+        setVal("in_approved_area", item.approved_area);
+        setVal("in_land_use", item.land_use || "आवासीय");
+        setVal("in_b_class", item.b_class || "(ख)");
+        setVal("in_struct", item.struct || "फ्रेम स्ट्रक्चर");
+        setVal("in_comp_date", item.comp_date);
+        setVal("in_east", item.east);
+        setVal("in_west", item.west);
+        setVal("in_north", item.north);
+        setVal("in_south", item.south);
 
-        document.getElementById("in_plinth").value = item.plinth || "";
-        document.getElementById("in_coverage").value = item.coverage || "";
-        document.getElementById("in_height").value = item.height || "";
-        document.getElementById("in_rd_dist").value = item.rd_dist || "";
-        document.getElementById("in_elec_dist").value = item.elec_dist || "";
-        document.getElementById("in_riv_dist").value = item.riv_dist || "";
-        document.getElementById("in_septic").value = item.septic || "भएको";
-        document.getElementById("in_dec_date").value = item.dec_date || "";
-        document.getElementById("in_eng1").value = item.eng1 || "";
-        document.getElementById("in_eng1_role").value = item.eng1_role || "इन्जिनियर";
-        document.getElementById("in_eng2").value = item.eng2 || "";
-        document.getElementById("in_eng2_role").value = item.eng2_role || "इन्जिनियर";
-        document.getElementById("in_officer").value = item.officer || "";
-        document.getElementById("in_officer_role").value = item.officer_role || "प्रमुख प्रशासकीय अधिकृत";
+        setVal("in_b1", item.b1 || 0);
+        setVal("in_b2", item.b2 || 0);
+        setVal("in_ground", item.ground || 0);
+        setVal("in_first", item.first || 0);
+        setVal("in_second", item.second || 0);
+        setVal("in_third", item.third || 0);
 
-        if (item.ns_date) document.getElementById("in_ns_date").value = item.ns_date;
-        if (item.ns_from) document.getElementById("in_ns_from").value = item.ns_from;
-        if (item.ns_to) document.getElementById("in_ns_to").value = item.ns_to;
-        if (item.ns_sif_name) document.getElementById("in_ns_sif_name").value = item.ns_sif_name;
-        if (item.ns_sif_post) document.getElementById("in_ns_sif_post").value = item.ns_sif_post;
-        if (item.ns_app_name) document.getElementById("in_ns_app_name").value = item.ns_app_name;
-        if (item.ns_app_post) document.getElementById("in_ns_app_post").value = item.ns_app_post;
+        setVal("in_plinth", item.plinth);
+        setVal("in_coverage", item.coverage);
+        setVal("in_height", item.height);
+        setVal("in_rd_dist", item.rd_dist);
+        setVal("in_elec_dist", item.elec_dist);
+        setVal("in_riv_dist", item.riv_dist);
+        setVal("in_septic", item.septic || "भएको");
+        setVal("in_dec_date", item.dec_date);
+        setVal("in_eng1", item.eng1);
+        setVal("in_eng1_role", item.eng1_role || "इन्जिनियर");
+        setVal("in_eng2", item.eng2);
+        setVal("in_eng2_role", item.eng2_role || "इन्जिनियर");
+        setVal("in_officer", item.officer);
+        setVal("in_officer_role", item.officer_role || "प्रमुख प्रशासकीय अधिकृत");
+
+        setVal("in_ns_date", item.ns_date);
+        setVal("in_ns_from", item.ns_from);
+        setVal("in_ns_to", item.ns_to);
+        setVal("in_ns_sif_name", item.ns_sif_name);
+        setVal("in_ns_sif_post", item.ns_sif_post);
+        setVal("in_ns_app_name", item.ns_app_name);
+        setVal("in_ns_app_post", item.ns_app_post);
 
         if (item.ns_photo) {
           currentNamsariPhotoBase64 = item.ns_photo;
           const imgNs = document.getElementById("out_ns_photo");
-          imgNs.src = item.ns_photo;
-          imgNs.style.display = "block";
-          document.getElementById("out_ns_photo_txt").style.display = "none";
+          const txtNs = document.getElementById("out_ns_photo_txt");
+          if (imgNs) { imgNs.src = item.ns_photo; imgNs.style.display = "block"; }
+          if (txtNs) { txtNs.style.display = "none"; }
         }
 
         if (item.photo) {
           currentPhotoBase64 = item.photo;
           const img = document.getElementById("certPhoto");
-          img.src = item.photo;
-          img.style.display = "block";
-          document.getElementById("photoText").style.display = "none";
+          const txt = document.getElementById("photoText");
+          if (img) { img.src = item.photo; img.style.display = "block"; }
+          if (txt) { txt.style.display = "none"; }
         }
 
         sessionStorage.removeItem("view_record_id");
@@ -1560,7 +1605,8 @@
       try {
         const u = JSON.parse(raw);
         if (u.username && u.username.toLowerCase() === "superadmin") {
-          document.getElementById("adminMenuBtn").style.display = "inline-flex";
+          const btn = document.getElementById("adminMenuBtn");
+          if (btn) btn.style.display = "inline-flex";
         }
       } catch(e) {}
 
