@@ -208,7 +208,6 @@
       margin: 0 auto;
     }
 
-    /* Modal Popup Lightbox for Superadmin */
     .pp-modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -284,7 +283,6 @@
   </header>
 
   <div class="container">
-    <!-- नयाँ एडमिन/कर्मचारी फाराम -->
     <div class="card">
       <div class="card-title">
         <span>➕ नयाँ कर्मचारी / एडमिन खाता थप्नुहोस् (Auto-Sync to Cloud)</span>
@@ -316,7 +314,6 @@
       </form>
     </div>
 
-    <!-- सक्रिय खाताहरूको सूची -->
     <div class="card">
       <div class="card-title">
         <span>👥 सक्रिय कर्मचारी तथा एडमिन खाताहरू <span id="superadminBadge" style="display:none; color:#16a34a; font-size:13px;">(Superadmin: PP Full Access Enabled)</span></span>
@@ -326,7 +323,7 @@
         <thead>
           <tr>
             <th style="width: 50px;">क्र.सं.</th>
-            <th style="width: 80px; text-align: center;" id="th_photo">फोटो (PP)</th>
+            <th style="width: 80px; text-align: center;">फोटो (PP)</th>
             <th>कर्मचारीको नामथर</th>
             <th>Username</th>
             <th>Password</th>
@@ -341,7 +338,6 @@
     </div>
   </div>
 
-  <!-- Superadmin PP Lightbox Modal -->
   <div class="pp-modal-overlay" id="ppModal" onclick="closePPModal()">
     <div class="pp-modal-box" onclick="event.stopPropagation()">
       <button type="button" class="pp-modal-close" onclick="closePPModal()">✕</button>
@@ -361,8 +357,8 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
+    const SUPABASE_URL = "https://xyzcompany.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
 
     let supabaseClient = null;
     try {
@@ -377,21 +373,35 @@
     let tempPhotoBase64 = "";
     let isSuperAdmin = false;
 
+    // फोटोलाई कम्प्रेस गरेर साइज सानो बनाउने (जसले गर्दा क्लाउडमा तुरुन्तै सेभ हुन्छ)
     function previewAdminPhoto(e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = function(evt) {
-          tempPhotoBase64 = evt.target.result;
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            const maxW = 300, maxH = 300;
+            let w = img.width, h = img.height;
+            if (w > h) {
+              if (w > maxW) { h *= maxW / w; w = maxW; }
+            } else {
+              if (h > maxH) { w *= maxH / h; h = maxH; }
+            }
+            canvas.width = w; canvas.height = h;
+            ctx.drawImage(img, 0, 0, w, h);
+            tempPhotoBase64 = canvas.toDataURL("image/jpeg", 0.7);
+          };
+          img.src = evt.target.result;
         };
         reader.readAsDataURL(file);
       }
     }
 
     const defaultMaster = [
-      { id: 1, full_name: 'Super Administrator', username: 'superadmin', password: 'Admin@123', role: 'Superadmin', photo: '' },
-      { id: 2, full_name: 'System Admin', username: 'admin', password: 'Admin@123', role: 'IT Admin', photo: '' },
-      { id: 3, full_name: 'Land Surveyor (Amin)', username: 'amin', password: 'Amin@123', role: 'अमिन', photo: '' }
+      { id: 1, full_name: 'Super Administrator', username: 'superadmin', password: 'Admin@123', role: 'Superadmin', photo: '' }
     ];
 
     let allUsers = [];
@@ -448,7 +458,6 @@
         const tr = document.createElement("tr");
         const isPermanent = u.username.toLowerCase() === 'superadmin';
 
-        // Superadmin ले मात्र फोटो हेर्न मिल्ने लजिक
         let photoHtml = "";
         if (isSuperAdmin) {
           if (u.photo) {
@@ -479,7 +488,6 @@
       });
     }
 
-    // Modal Functions (Superadmin फोटो हेर्ने)
     function openPPModal(name, role, imgSrc) {
       if (!isSuperAdmin) return;
       document.getElementById("modalName").textContent = name;
@@ -523,6 +531,8 @@
         photo: tempPhotoBase64
       };
 
+      let savedInCloud = false;
+
       if (supabaseClient) {
         try {
           const { error } = await supabaseClient
@@ -530,13 +540,16 @@
             .insert([newAccount]);
 
           if (error) {
-            alert(`त्रुटि: यो Username (${un}) पहिले नै प्रयोगमा हुन सक्छ!`);
+            console.error("Supabase Error:", error);
+            alert(`सुपाबेस त्रुटि: ${error.message}\nकृपया टेबलमा कोलम मिलेको छ कि छैन जाँच्नुहोस्।`);
             addBtn.disabled = false;
             addBtn.textContent = "थप्नुहोस्";
             return;
+          } else {
+            savedInCloud = true;
           }
         } catch(err) {
-          console.error("Supabase error:", err);
+          console.error("Supabase catch error:", err);
         }
       }
 
@@ -554,7 +567,7 @@
       addBtn.disabled = false;
       addBtn.textContent = "थप्नुहोस्";
 
-      alert(`बधाई छ! खाता "${un}" (पद: ${rl}) फोटो सहित सुरक्षित भयो। अब जुनसुकै PC बाट यो खाताले लगइन गर्न सकिनेछ।`);
+      alert(`बधाई छ! खाता "${un}" (पद: ${rl}) ${savedInCloud ? 'क्लाउडमा' : 'लोकलमा'} सफलतापूर्वक सुरक्षित भयो। अब यो युजरनेम र पासवर्डले लगइन गर्नुहोस्।`);
     }
 
     async function deleteAccount(id, username) {
@@ -606,7 +619,6 @@
 
       try {
         const u = JSON.parse(raw);
-        // सुपरएडमिन प्रमाणीकरण
         if (u.username && u.username.toLowerCase() === "superadmin") {
           isSuperAdmin = true;
           document.getElementById("superadminBadge").style.display = "inline-block";
