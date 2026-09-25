@@ -363,11 +363,9 @@
       padding: 2px 5px !important;
     }
 
-    /* =========================================================
-       २ STEP TALA JHARIEKO + THULO SIGNATURE AREA
-       ========================================================= */
+    /* हस्ताक्षर भाग २ स्टेप तल झारिएको र ठूलो खाली ठाउँ */
     .cert-signatures-block {
-      margin-top: 36px !important; /* २ स्टेप अझै तल झारिएको */
+      margin-top: 36px !important;
       margin-bottom: 2px !important;
     }
     .officers-signature-grid {
@@ -375,10 +373,10 @@
       grid-template-columns: 32% 32% 36%;
       gap: 6px;
       align-items: flex-end;
-      margin-bottom: 12px; /* दस्तखत र तलको भागको दूरी बढाइएको */
+      margin-bottom: 12px;
     }
     .sign-item { text-align: center; }
-    .sign-space-area { height: 28px !important; } /* ठूलो हस्ताक्षर अटाउने पर्याप्त खाली ठाउँ */
+    .sign-space-area { height: 28px !important; }
     .sign-dotted-line { border-top: 1.2px dotted #1e293b; width: 80%; margin: 0 auto 3px auto; }
     .sign-title-text { font-size: 14.5px !important; font-weight: 700; line-height: 1.25; }
     .sign-title-text strong { font-size: 15.5px !important; font-weight: 800; }
@@ -748,10 +746,11 @@
         <input type="file" id="passportInput" accept="image/*" onchange="loadPhoto(event)">
       </div>
 
+      <!-- Action Buttons with Direct Onclick functions -->
       <div class="form-actions">
-        <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="executeSave()">💾 सुरक्षित गर्नुहोस्</button>
-        <button type="button" id="printBtnMain" class="btn-act btn-print" onclick="executePrint()">🖨 प्रिन्ट गर्नुहोस्</button>
-        <button type="button" id="resetBtnMain" class="btn-act btn-reset" onclick="executeReset()">↺ Reset</button>
+        <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="window.executeSave()">💾 सुरक्षित गर्नुहोस्</button>
+        <button type="button" id="printBtnMain" class="btn-act btn-print" onclick="window.executePrint()">🖨 प्रिन्ट गर्नुहोस्</button>
+        <button type="button" id="resetBtnMain" class="btn-act btn-reset" onclick="window.executeReset()">↺ Reset</button>
       </div>
     </section>
 
@@ -909,7 +908,6 @@
                 </tr>
               </table>
 
-              <!-- हस्ताक्षर तथा QR ब्लक २ स्टेप तल झारिएको (ठूलो सहि अट्ने ठाउँ) -->
               <div class="cert-signatures-block">
                 <div class="officers-signature-grid">
                   <div class="sign-item">
@@ -955,7 +953,6 @@
               </div>
             </div>
 
-            <!-- Page 1 Footer Locked Directly at the Bottom -->
             <footer class="cert-footer">
               सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
               वेभ साइटः- mayadevimunrupandehi.gov.np
@@ -1001,7 +998,6 @@
                 </div>
               </section>
 
-              <!-- 5 Large Namsari Boxes -->
               <section class="namsari-section">
                 <div class="namsari-header-title">नामसारी विवरण</div>
                 <table class="namsari-table">
@@ -1069,8 +1065,8 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co"; 
-    const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4"; 
+    const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
     
     let supabaseClient = null;
     try {
@@ -1110,11 +1106,13 @@
       }
     }
 
+    // Superadmin र प्रोफाइल हेडर लजिक (Try-catch सहित जसले स्क्रिप्ट रोक्दैन)
     function renderHeaderUser() {
       try {
         const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
         if (!raw) return;
         const u = JSON.parse(raw);
+
         const nameEl = document.getElementById("headerUserName");
         const roleEl = document.getElementById("headerUserRole");
         const avatarImg = document.getElementById("headerUserAvatarImg");
@@ -1123,42 +1121,178 @@
         if (nameEl) nameEl.textContent = u.full_name || u.username;
         if (roleEl) roleEl.textContent = u.role || "कर्मचारी";
 
-        if (u.photo) {
+        if (u.photo && avatarImg) {
           avatarImg.src = u.photo;
           avatarImg.style.display = "block";
-          fallback.style.display = "none";
-        } else {
-          avatarImg.style.display = "none";
+          if (fallback) fallback.style.display = "none";
+        } else if (fallback) {
+          if (avatarImg) avatarImg.style.display = "none";
           fallback.style.display = "flex";
           fallback.textContent = (u.full_name || u.username || 'A').charAt(0).toUpperCase();
         }
 
+        // Superadmin भए Admin मेन्यु बटन देखिने
         const btn = document.getElementById("adminMenuBtn");
         if (btn && u.username && u.username.toLowerCase() === "superadmin") {
           btn.style.display = "inline-flex";
         }
-      } catch(e) {}
+      } catch(e) {
+        console.warn("User profile rendering ignored:", e);
+      }
     }
 
-    // १००% काम गर्ने प्रिन्ट फङ्सन
-    function executePrint() {
-      const wrapper = document.getElementById("previewZoomWrapper");
-      if (wrapper) wrapper.style.transform = "none";
-      setTimeout(function() {
-        window.print();
+    // ==========================================
+    // WINDOW LEVEL 100% BULLETPROOF ACTION BUTTONS
+    // ==========================================
+    window.executePrint = function() {
+      try {
+        const wrapper = document.getElementById("previewZoomWrapper");
+        if (wrapper) wrapper.style.transform = "none";
         setTimeout(function() {
-          if (wrapper) wrapper.style.transform = `scale(${currentZoomLevel})`;
-        }, 500);
-      }, 100);
-    }
+          window.print();
+          setTimeout(function() {
+            if (wrapper) wrapper.style.transform = `scale(${currentZoomLevel})`;
+          }, 500);
+        }, 100);
+      } catch(e) {
+        window.print();
+      }
+    };
 
-    // १००% काम गर्ने रिसेट फङ्सन
-    function executeReset() {
+    window.executeReset = function() {
       if (confirm("के तपाईं फारामका विवरणहरू खाली गरी नयाँ प्रविष्टि गर्न चाहनुहुन्छ?")) {
         sessionStorage.removeItem("view_record_id");
         window.location.reload();
       }
-    }
+    };
+
+    window.executeSave = async function() {
+      const getVal = id => {
+        const el = document.getElementById(id);
+        return el ? el.value.trim() : "";
+      };
+
+      const dartaNo = getVal("in_darta");
+      const houseOwner = getVal("in_house_owner") || getVal("in_owner_name");
+
+      if (!dartaNo) {
+        alert("कृपया नक्सा दर्ता नं. अनिवार्य भर्नुहोस्!");
+        return;
+      }
+      if (!houseOwner) {
+        alert("कृपया घरधनी वा जग्गाधनीको नाम अनिवार्य भर्नुहोस्!");
+        return;
+      }
+
+      const saveBtn = document.getElementById("saveBtnMain");
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = "⏳ सुरक्षित हुँदैछ...";
+      }
+
+      const nowTime = Date.now();
+      const recordItem = {
+        id: nowTime,
+        created_timestamp: nowTime,
+        darta_no: dartaNo,
+        patra_no: getVal("in_patra"),
+        reg_date: getVal("in_date"),
+        praman_no: getVal("in_praman"),
+        owner_name: getVal("in_owner_name"),
+        owner_cit: getVal("in_owner_cit"),
+        house_owner: houseOwner,
+        house_cit: getVal("in_house_cit"),
+        cit_district: getVal("in_cit_district") || "रुपन्देही",
+        phone: getVal("in_phone"),
+        sabik: getVal("in_sabik"),
+        ward: getVal("in_ward"),
+        kitta: getVal("in_kitta"),
+        land_area: getVal("in_land_area"),
+        approved_area: getVal("in_approved_area"),
+        land_use: getVal("in_land_use"),
+        b_class: getVal("in_b_class"),
+        struct: getVal("in_struct"),
+        comp_date: getVal("in_comp_date"),
+        east: getVal("in_east"),
+        west: getVal("in_west"),
+        north: getVal("in_north"),
+        south: getVal("in_south"),
+        total_area: getVal("in_total_area"),
+        b1: getVal("in_b1"),
+        b2: getVal("in_b2"),
+        ground: getVal("in_ground"),
+        first: getVal("in_first"),
+        second: getVal("in_second"),
+        third: getVal("in_third"),
+        plinth: getVal("in_plinth"),
+        coverage: getVal("in_coverage"),
+        height: getVal("in_height"),
+        rd_dist: getVal("in_rd_dist"),
+        elec_dist: getVal("in_elec_dist"),
+        riv_dist: getVal("in_riv_dist"),
+        septic: getVal("in_septic"),
+        dec_date: getVal("in_dec_date"),
+        eng1: getVal("in_eng1"),
+        eng1_role: (document.getElementById("in_eng1_role") || {}).value || "इन्जिनियर",
+        eng2: getVal("in_eng2"),
+        eng2_role: (document.getElementById("in_eng2_role") || {}).value || "इन्जिनियर",
+        officer: getVal("in_officer"),
+        officer_role: (document.getElementById("in_officer_role") || {}).value || "प्रमुख प्रशासकीय अधिकृत",
+        photo: currentPhotoBase64,
+        ns_date: getVal("in_ns_date"),
+        ns_from: getVal("in_ns_from"),
+        ns_to: getVal("in_ns_to"),
+        ns_sif_name: getVal("in_ns_sif_name"),
+        ns_sif_post: getVal("in_ns_sif_post"),
+        ns_app_name: getVal("in_ns_app_name"),
+        ns_app_post: getVal("in_ns_app_post"),
+        ns_photo: currentNamsariPhotoBase64
+      };
+
+      // १. पहिले लोकल ब्याकअप सुरक्षित
+      try {
+        let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
+        const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
+        if (existingIdx !== -1) {
+          records[existingIdx] = recordItem;
+        } else {
+          records.unshift(recordItem);
+        }
+        localStorage.setItem("naksa_records", JSON.stringify(records));
+        localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
+      } catch (err) {}
+
+      // २. सुपाबेस क्लाउडमा सिधै सुरक्षित
+      let savedInCloud = false;
+      let cloudErrorMsg = "";
+
+      if (supabaseClient) {
+        try {
+          const { error } = await supabaseClient
+            .from('naksa_records')
+            .upsert(recordItem, { onConflict: 'darta_no' });
+
+          if (!error) {
+            savedInCloud = true;
+          } else {
+            cloudErrorMsg = error.message;
+          }
+        } catch (cloudErr) {
+          cloudErrorMsg = cloudErr.message;
+        }
+      }
+
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "💾 सुरक्षित गर्नुहोस्";
+      }
+
+      if (savedInCloud) {
+        alert(`बधाई छ! नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) सुपाबेस क्लाउडमा सफलतापूर्वक सुरक्षित भयो!\nअब जुनसुकै कम्प्युटरबाट पनि रेकर्ड खुल्नेछ र प्रमाणिकरण हुनेछ।`);
+      } else {
+        alert(`नक्सा दर्ता नं. "${dartaNo}" सुरक्षित भयो!\n(नोट: सुपाबेसमा समस्या भए पनि मेमोरीमा सुरक्षित छ। ${cloudErrorMsg ? cloudErrorMsg : ''})`);
+      }
+    };
 
     function updateClock() {
       try {
@@ -1370,7 +1504,6 @@
       } catch(e) {}
     }
 
-    // QR कोड स्क्यान गर्दा सिधै प्रमाणिकरण लिङ्क खुल्ने
     function generateQR() {
       try {
         const qrDiv = document.getElementById("cert_qr_div");
@@ -1378,7 +1511,6 @@
 
         const dartaEl = document.getElementById("in_darta");
         const darta = (dartaEl && dartaEl.value.trim()) ? dartaEl.value.trim() : '२८/२०८३/०८४';
-        
         const verifyUrl = `${window.location.origin}${window.location.pathname.replace('darta.html', 'verify.html')}?darta=${encodeURIComponent(darta)}`;
 
         qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(verifyUrl)}" alt="QR Code" style="width:56px; height:56px; display:block;">`;
@@ -1431,135 +1563,6 @@
           if (img) { img.src = currentNamsariPhotoBase64; img.style.display = "block"; }
           if (txt) { txt.style.display = "none"; }
         });
-      }
-    }
-
-    // सुपाबेस क्लाउडमा सिधै सुरक्षित गर्ने फङ्सन
-    async function executeSave() {
-      const getVal = id => {
-        const el = document.getElementById(id);
-        return el ? el.value.trim() : "";
-      };
-
-      const dartaNo = getVal("in_darta");
-      const houseOwner = getVal("in_house_owner") || getVal("in_owner_name");
-
-      if (!dartaNo) {
-        alert("कृपया नक्सा दर्ता नं. अनिवार्य भर्नुहोस्!");
-        return;
-      }
-      if (!houseOwner) {
-        alert("कृपया घरधनी वा जग्गाधनीको नाम अनिवार्य भर्नुहोस्!");
-        return;
-      }
-
-      const saveBtn = document.getElementById("saveBtnMain");
-      if (saveBtn) {
-        saveBtn.disabled = true;
-        saveBtn.textContent = "⏳ सुरक्षित हुँदैछ...";
-      }
-
-      const nowTime = Date.now();
-      const recordItem = {
-        id: nowTime,
-        created_timestamp: nowTime,
-        darta_no: dartaNo,
-        patra_no: getVal("in_patra"),
-        reg_date: getVal("in_date"),
-        praman_no: getVal("in_praman"),
-        owner_name: getVal("in_owner_name"),
-        owner_cit: getVal("in_owner_cit"),
-        house_owner: houseOwner,
-        house_cit: getVal("in_house_cit"),
-        cit_district: getVal("in_cit_district") || "रुपन्देही",
-        phone: getVal("in_phone"),
-        sabik: getVal("in_sabik"),
-        ward: getVal("in_ward"),
-        kitta: getVal("in_kitta"),
-        land_area: getVal("in_land_area"),
-        approved_area: getVal("in_approved_area"),
-        land_use: getVal("in_land_use"),
-        b_class: getVal("in_b_class"),
-        struct: getVal("in_struct"),
-        comp_date: getVal("in_comp_date"),
-        east: getVal("in_east"),
-        west: getVal("in_west"),
-        north: getVal("in_north"),
-        south: getVal("in_south"),
-        total_area: getVal("in_total_area"),
-        b1: getVal("in_b1"),
-        b2: getVal("in_b2"),
-        ground: getVal("in_ground"),
-        first: getVal("in_first"),
-        second: getVal("in_second"),
-        third: getVal("in_third"),
-        plinth: getVal("in_plinth"),
-        coverage: getVal("in_coverage"),
-        height: getVal("in_height"),
-        rd_dist: getVal("in_rd_dist"),
-        elec_dist: getVal("in_elec_dist"),
-        riv_dist: getVal("in_riv_dist"),
-        septic: getVal("in_septic"),
-        dec_date: getVal("in_dec_date"),
-        eng1: getVal("in_eng1"),
-        eng1_role: (document.getElementById("in_eng1_role") || {}).value || "इन्जिनियर",
-        eng2: getVal("in_eng2"),
-        eng2_role: (document.getElementById("in_eng2_role") || {}).value || "इन्जिनियर",
-        officer: getVal("in_officer"),
-        officer_role: (document.getElementById("in_officer_role") || {}).value || "प्रमुख प्रशासकीय अधिकृत",
-        photo: currentPhotoBase64,
-        ns_date: getVal("in_ns_date"),
-        ns_from: getVal("in_ns_from"),
-        ns_to: getVal("in_ns_to"),
-        ns_sif_name: getVal("in_ns_sif_name"),
-        ns_sif_post: getVal("in_ns_sif_post"),
-        ns_app_name: getVal("in_ns_app_name"),
-        ns_app_post: getVal("in_ns_app_post"),
-        ns_photo: currentNamsariPhotoBase64
-      };
-
-      // १. लोकल ब्याकअप सेभ
-      try {
-        let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
-        const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
-        if (existingIdx !== -1) {
-          records[existingIdx] = recordItem;
-        } else {
-          records.unshift(recordItem);
-        }
-        localStorage.setItem("naksa_records", JSON.stringify(records));
-        localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
-      } catch (err) {}
-
-      // २. सुपाबेसमा सिधै सेभ
-      let savedInCloud = false;
-      let cloudErrorMsg = "";
-
-      if (supabaseClient) {
-        try {
-          const { error } = await supabaseClient
-            .from('naksa_records')
-            .upsert(recordItem, { onConflict: 'darta_no' });
-
-          if (!error) {
-            savedInCloud = true;
-          } else {
-            cloudErrorMsg = error.message;
-          }
-        } catch (cloudErr) {
-          cloudErrorMsg = cloudErr.message;
-        }
-      }
-
-      if (saveBtn) {
-        saveBtn.disabled = false;
-        saveBtn.textContent = "💾 सुरक्षित गर्नुहोस्";
-      }
-
-      if (savedInCloud) {
-        alert(`बधाई छ! नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) सुपाबेस क्लाउडमा सफलतापूर्वक सुरक्षित भयो!\nअब जुनसुकै कम्प्युटरबाट पनि रेकर्ड खुल्नेछ।`);
-      } else {
-        alert(`नक्सा दर्ता नं. "${dartaNo}" सुरक्षित भयो!\n(नोट: सुपाबेसमा समस्या भए पनि लोकल मेमोरीमा सुरक्षित छ। ${cloudErrorMsg ? cloudErrorMsg : ''})`);
       }
     }
 
@@ -1664,7 +1667,7 @@
             currentPhotoBase64 = item.photo;
             const img = document.getElementById("certPhoto");
             const txt = document.getElementById("photoText");
-            if (img) { img.src = currentPhotoBase64; img.style.display = "block"; }
+            if (img) { img.src = item.photo; img.style.display = "block"; }
             if (txt) { txt.style.display = "none"; }
           }
 
