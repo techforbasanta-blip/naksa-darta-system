@@ -58,6 +58,52 @@
     .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+    /* Header Profile Badge */
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 3px 9px 3px 4px;
+      border-radius: 25px;
+    }
+    .user-profile-badge img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #38bdf8;
+    }
+    .user-profile-avatar-fallback {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #0284c7;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1.5px solid #38bdf8;
+    }
+    .user-profile-info {
+      text-align: left;
+      line-height: 1.15;
+    }
+    .user-profile-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .user-profile-role {
+      font-size: 10.5px;
+      color: #7dd3fc;
+      font-weight: 600;
+    }
+
     .header-clock-box {
       text-align: right;
       background: rgba(255, 255, 255, 0.1);
@@ -365,7 +411,6 @@
       line-height: 1.2 !important;
     }
 
-    /* PAGE 2 */
     .a4-sheet.back-page {
       page-break-before: always !important;
       justify-content: flex-start !important;
@@ -484,6 +529,17 @@
         </div>
       </div>
       <div class="header-controls">
+        
+        <!-- Header Active User Badge -->
+        <div class="user-profile-badge" id="headerUserProfile">
+          <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
+          <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
+          <div class="user-profile-info">
+            <div class="user-profile-name" id="headerUserName">प्रयोगकर्ता</div>
+            <div class="user-profile-role" id="headerUserRole">कर्मचारी</div>
+          </div>
+        </div>
+
         <div class="header-clock-box">
           <div class="h-date" id="liveNepaliHeaderDate">मिति: लोड हुँदैछ...</div>
           <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
@@ -501,7 +557,6 @@
   </header>
 
   <main class="workspace-grid">
-    <!-- Form Card -->
     <section class="entry-card no-print">
       <h2 class="entry-title">📝 नक्सा विवरण फाराम (१ देखि १८ पूर्ण प्रविष्टि)</h2>
 
@@ -693,7 +748,6 @@
         <input type="file" id="passportInput" accept="image/*" onchange="loadPhoto(event)">
       </div>
 
-      <!-- Action Buttons -->
       <div class="form-actions">
         <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="saveRecordToDatabase()">💾 सुरक्षित गर्नुहोस्</button>
         <button type="button" id="printBtnMain" class="btn-act btn-print" onclick="triggerPrint()">🖨 प्रिन्ट गर्नुहोस्</button>
@@ -1079,7 +1133,33 @@
       }
     }
 
-    // १००% काम गर्ने प्रिन्ट फङ्सन
+    // Header Profile Rendering
+    function renderHeaderUser() {
+      const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
+      if (!raw) return;
+      try {
+        const u = JSON.parse(raw);
+        const nameEl = document.getElementById("headerUserName");
+        const roleEl = document.getElementById("headerUserRole");
+        const avatarImg = document.getElementById("headerUserAvatarImg");
+        const fallback = document.getElementById("headerUserAvatarFallback");
+
+        if (nameEl) nameEl.textContent = u.full_name || u.username;
+        if (roleEl) roleEl.textContent = u.role || "कर्मचारी";
+
+        if (u.photo) {
+          avatarImg.src = u.photo;
+          avatarImg.style.display = "block";
+          fallback.style.display = "none";
+        } else {
+          avatarImg.style.display = "none";
+          fallback.style.display = "flex";
+          const firstLetter = (u.full_name || u.username || 'A').charAt(0).toUpperCase();
+          fallback.textContent = firstLetter;
+        }
+      } catch(e) {}
+    }
+
     function triggerPrint() {
       const wrapper = document.getElementById("previewZoomWrapper");
       if (wrapper) wrapper.style.transform = "none";
@@ -1091,7 +1171,6 @@
       }, 200);
     }
 
-    // १००% काम गर्ने रिसेट फङ्सन
     function resetFormAction() {
       if (confirm("के तपाईं फाराम खाली गरी रिसेट गर्न चाहनुहुन्छ?")) {
         sessionStorage.removeItem("view_record_id");
@@ -1257,7 +1336,6 @@
       const offRoleEl = document.getElementById("in_officer_role");
       if (offRoleEl) setTxt("out_officer_role", offRoleEl.value);
 
-      // Namsari Table Updates
       setTxt("out_ns_date", getVal("in_ns_date", "...."));
       setTxt("out_ns_from", getVal("in_ns_from", "...."));
       setTxt("out_ns_to", getVal("in_ns_to", "...."));
@@ -1363,7 +1441,6 @@
       }
     }
 
-    // १००% चालु हुने सुरक्षित गर्ने फङ्सन
     async function saveRecordToDatabase() {
       const getVal = id => {
         const el = document.getElementById(id);
@@ -1445,7 +1522,6 @@
         ns_photo: currentNamsariPhotoBase64
       };
 
-      // १. लोकल स्टोरेजमा अनिवार्य सुरक्षित
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
         const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
@@ -1458,7 +1534,6 @@
         localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
       } catch (err) { console.warn("Local storage error:", err); }
 
-      // २. सुपाबेसमा सुरक्षित
       let savedInCloud = false;
       if (supabaseClient) {
         try {
@@ -1610,6 +1685,7 @@
         }
       } catch(e) {}
 
+      renderHeaderUser();
       applySavedTheme();
       setInterval(updateClock, 1000);
       updateClock();
