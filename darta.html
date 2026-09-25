@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Mayadevi</title>
+  <title>Smart Maydevi</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +38,7 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
-    /* Single Clean Government Header */
+    /* Government Top Header */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
@@ -55,9 +55,9 @@
       gap: 10px;
     }
     .brand-left { display: flex; align-items: center; gap: 12px; }
-    .brand-left img { height: 50px !important; width: auto !important; }
-    .brand-text h1 { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.2; }
-    .brand-text p { font-size: 12px; color: #cbd5e1; }
+    .brand-left img { height: 52px !important; width: auto !important; }
+    .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
+    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .header-clock-box {
@@ -163,7 +163,7 @@
     .btn-print:hover { background: #2563eb; }
     .btn-reset { background: #64748b; color: #fff; }
 
-    /* PREVIEW CONTAINER */
+    /* Preview Container */
     .preview-card {
       background: #0f1e33;
       border: 1px solid var(--border-color);
@@ -198,7 +198,7 @@
       align-items: center;
     }
 
-    /* STRICT A4 ENGINE (Page 1 र Page 2 को पूर्ण फिटिङ) */
+    /* A4 Certificate Engine */
     .a4-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -345,7 +345,7 @@
       line-height: 1.2 !important;
     }
 
-    /* PAGE 2 */
+    /* Page 2 */
     .a4-sheet.back-page {
       page-break-before: always !important;
       justify-content: flex-start !important;
@@ -413,6 +413,7 @@
     .namsari-table th { font-weight: 800; text-align: center; font-size: 13px; background: rgba(0,0,0,0.03); }
     .namsari-photo-box { width: 22mm; height: 25mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: #64748b; font-weight: bold; }
 
+    /* Print Setup */
     @media print {
       @page { size: A4 portrait; margin: 0mm !important; }
       *, .a4-sheet, .a4-sheet * { font-family: var(--print-font) !important; }
@@ -453,13 +454,14 @@
 </head>
 <body>
 
+  <!-- Top Header with Smart Maydevi -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
-          <h1>Mayadevi rural Mun Office</h1>
-          <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही | Staff Desk</p>
+          <h1>Smart Maydevi</h1>
+          <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
         </div>
       </div>
       <div class="header-controls">
@@ -944,24 +946,22 @@
 
   <footer class="site-footer no-print">
     <div class="footer-inner">
-      <div><strong>Mayadevi rural Mun Office</strong> — नक्सा दर्ता प्रणाली | बरेवा, रुपन्देही</div>
+      <div><strong>Smart Maydevi</strong> — नक्सा दर्ता प्रणाली | बरेवा, रुपन्देही</div>
       <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
     </div>
   </footer>
 
   <script>
-    // =========================================================================
-    // SUPABASE CLOUD CONFIGURATION (तपाईंको Supabase को विवरण यहाँ राख्न सक्नुहुन्छ)
-    // =========================================================================
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // तपाईंको Supabase Project URL यहाँ राख्नुहोस्
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // तपाईंको Supabase Anon Key यहाँ राख्नुहोस्
+    // Supabase credentials configuration
+    const SUPABASE_URL = "https://xyzcompany.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
     
     let supabaseClient = null;
     try {
       if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
-    } catch(e) { console.warn("Supabase जडान प्रतीक्षामा:", e); }
+    } catch(e) { console.warn("Supabase load pending:", e); }
 
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
@@ -1160,7 +1160,6 @@
       document.getElementById("out_third").textContent = f3 > 0 ? toNepNum(f3.toFixed(2)) : "-";
     }
 
-    // QR स्क्यान गर्दा verify.html मा पुग्ने डाइनामिक लिङ्क
     function generateQR() {
       const qrDiv = document.getElementById("cert_qr_div");
       if (!qrDiv) return;
@@ -1186,7 +1185,6 @@
       }
     }
 
-    // SUPABASE CLOUD SYNC + LOCAL MEMORY BACKUP
     async function saveRecordToDatabase() {
       const dartaNo = document.getElementById("in_darta").value.trim();
       const houseOwner = document.getElementById("in_house_owner").value.trim() || document.getElementById("in_owner_name").value.trim();
@@ -1253,7 +1251,6 @@
         photo: currentPhotoBase64
       };
 
-      // १. लोकल मेमोरीमा ब्याकअप राख्ने
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
         const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
@@ -1264,9 +1261,8 @@
         }
         localStorage.setItem("naksa_records", JSON.stringify(records));
         localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
-      } catch (err) { console.warn("Local storage त्रुटि:", err); }
+      } catch (err) { console.warn("Local storage error:", err); }
 
-      // २. सुपाबेस क्लाउडमा सिंक गर्ने
       if (supabaseClient) {
         try {
           const { error } = await supabaseClient
@@ -1275,7 +1271,7 @@
 
           if (error) throw error;
         } catch (cloudErr) {
-          console.error("Supabase क्लाउड त्रुटि:", cloudErr);
+          console.error("Supabase cloud error:", cloudErr);
         }
       }
 
@@ -1297,13 +1293,11 @@
 
       let item = null;
 
-      // पहिले लोकल मेमोरीमा हेर्ने
       try {
         const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
         item = records.find(r => r.id.toString() === editId.toString());
       } catch (e) {}
 
-      // यदि लोकलमा भेटिएन भने सुपाबेस क्लाउडबाट तान्ने
       if (!item && supabaseClient) {
         try {
           const { data } = await supabaseClient
