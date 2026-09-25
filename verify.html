@@ -35,7 +35,6 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
-    /* Top Navigation Header - Exactly like darta.html */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
@@ -54,11 +53,39 @@
     .brand-left { display: flex; align-items: center; gap: 12px; }
     .brand-left img { height: 52px !important; width: auto !important; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
-    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; }
+
+    .motto-home-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 2px;
+    }
+    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; margin: 0; }
+
+    .brand-home-badge {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff !important;
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .brand-home-badge:hover {
+      background: #2563eb;
+      border-color: #60a5fa;
+      transform: translateY(-1px);
+    }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-    /* Logged In User Profile Badge */
     .user-profile-badge {
       display: flex;
       align-items: center;
@@ -133,6 +160,40 @@
       padding: 24px;
       flex: 1;
     }
+
+    /* सर्च बार स्टाइलिङ */
+    .verify-search-box {
+      display: flex;
+      gap: 8px;
+      background: rgba(30, 58, 138, 0.06);
+      border: 1.5px dashed #3b82f6;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .verify-search-box input {
+      flex: 1;
+      padding: 9px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--input-bg);
+      color: var(--text-dark);
+    }
+    .verify-search-box button {
+      background: #1e3a8a;
+      color: #ffffff;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 5px;
+      font-weight: 800;
+      font-size: 13.5px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .verify-search-box button:hover { background: #2563eb; }
 
     .badge-status {
       display: inline-block;
@@ -210,12 +271,14 @@
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
           <h1>Smart Mayadevi</h1>
-          <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
+          <div class="motto-home-row">
+            <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
+            <a href="index.html" class="brand-home-badge" title="मुख्य गृहपृष्ठमा जानुहोस्">🏠 Home</a>
+          </div>
         </div>
       </div>
       <div class="header-controls">
         
-        <!-- Logged In User Profile (यदि कोही कर्मचारी लगइन छ भने मात्र देखिने) -->
         <div class="user-profile-badge" id="headerUserProfile" style="display:none;">
           <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
           <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
@@ -232,8 +295,6 @@
 
         <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
-        
-        <!-- यो Admin बटन सामान्य एडमिनलाई देखिँदैन, superadmin हुँदा मात्र देखिन्छ -->
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
@@ -244,27 +305,33 @@
 
   <!-- Verification Card -->
   <main class="verify-container">
+    
+    <!-- १. हातैले दर्ता नम्बर टाइप गरेर खोज्न मिल्ने सर्च बक्स -->
+    <div class="verify-search-box">
+      <input type="text" id="manualSearchInput" placeholder="नक्सा दर्ता नं. हाल्नुहोस् (उदा: २८/२०८३/०८४)..." onkeydown="if(event.key==='Enter') searchDartaManual()">
+      <button type="button" onclick="searchDartaManual()">🔍 खोज्नुहोस्</button>
+    </div>
+
     <div style="text-align: center;">
-      <div id="verifiedBadge" class="badge-status">✔ आधिकारिक रूपमा प्रमाणित प्रमाण-पत्र (Verified Record)</div>
+      <div id="verifiedBadge" class="badge-status">आधिकारिक प्रमाणिकरण पोर्टल (Verification Portal)</div>
       <div id="photoContainer" class="photo-preview-box" style="display:none;">
         <img id="ownerPhoto" src="" alt="घरधनी फोटो">
       </div>
     </div>
 
     <div id="verifyDetailsBox">
-      <p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">विवरण खोजिँदैछ...</p>
+      <p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">कृपया माथि नक्सा दर्ता नम्बर प्रविष्ट गरी "खोज्नुहोस्" थिच्नुहोस् वा QR कोड स्क्यान गर्नुहोस्।</p>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div><strong>Smart Mayadevi</strong> — नक्सा दर्ता तथा प्रमाणिकरण प्रणाली | बरेवा, रुपन्देही</div>
+      <div>Smart Mayadevi — एकीकृत स्थानीय सरकारी व्यवस्थापन प्रणाली | बरेवा, रुपन्देही</div>
       <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
     </div>
   </footer>
 
   <script>
-    // Supabase Credentials
     const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co"; 
     const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4"; 
     
@@ -314,14 +381,12 @@
       }
     }
 
-    // Role-Based User Check: Superadmin लाई मात्र Admin प्यानल देखाउने
     function renderHeaderUser() {
       try {
         const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
         if (!raw) return;
         const u = JSON.parse(raw);
 
-        // लगइन भएको प्रयोगकर्ताको प्रोफाइल देखाउने
         const profileBox = document.getElementById("headerUserProfile");
         const nameEl = document.getElementById("headerUserName");
         const roleEl = document.getElementById("headerUserRole");
@@ -345,13 +410,12 @@
           fallback.textContent = (u.full_name || u.username || 'A').charAt(0).toUpperCase();
         }
 
-        // कडा सुरक्षा: केवल superadmin लाई मात्र Admin मेन्यु बटन देखिने
         const adminBtn = document.getElementById("adminMenuBtn");
         if (adminBtn) {
           if (u.username && u.username.toLowerCase() === "superadmin") {
             adminBtn.style.display = "inline-flex";
           } else {
-            adminBtn.style.display = "none"; // अरू सामान्य एडमिन/कर्मचारीकोमा लुक्ने
+            adminBtn.style.display = "none";
           }
         }
       } catch(e) {}
@@ -364,26 +428,32 @@
       window.location.href = "login.html";
     }
 
-    // प्रमाणिकरण विवरण लोड गर्ने (Supabase + LocalStorage Fallback)
-    document.addEventListener("DOMContentLoaded", async () => {
-      applySavedTheme();
-      renderHeaderUser();
-      setInterval(updateClock, 1000);
-      updateClock();
+    // २. विवरण खोज्ने र तालिकामा देखाउने मुख्य फङ्सन
+    async function fetchAndDisplayRecord(dartaNo) {
+      const box = document.getElementById("verifyDetailsBox");
+      const badge = document.getElementById("verifiedBadge");
+      const photoBox = document.getElementById("photoContainer");
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const queryDarta = urlParams.get('darta');
-      
+      if (!dartaNo) {
+        badge.style.background = "#64748b";
+        badge.textContent = "आधिकारिक प्रमाणिकरण पोर्टल";
+        photoBox.style.display = "none";
+        box.innerHTML = `<p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">कृपया माथि नक्सा दर्ता नम्बर प्रविष्ट गरी "खोज्नुहोस्" थिच्नुहोस्।</p>`;
+        return;
+      }
+
+      box.innerHTML = `<p style="text-align:center; padding: 25px; color:#1e3a8a; font-weight:bold;">🔍 दर्ता नं. "${dartaNo}" को विवरण खोजिँदैछ...</p>`;
+
       let item = null;
+      const cleanDarta = dartaNo.trim();
 
-      // १. पहिले सुपाबेस क्लाउडबाट खोज्ने
-      if (queryDarta && supabaseClient) {
+      // सुपाबेसमा खोज्ने
+      if (supabaseClient) {
         try {
-          const decoded = decodeURIComponent(queryDarta).trim();
           const { data, error } = await supabaseClient
             .from('naksa_records')
             .select('*')
-            .ilike('darta_no', decoded)
+            .ilike('darta_no', cleanDarta)
             .limit(1);
 
           if (!error && data && data.length > 0) {
@@ -392,27 +462,25 @@
         } catch(e) {}
       }
 
-      // २. यदि क्लाउडमा भेटिएन भने लोकल स्टोरेजमा खोज्ने
+      // लोकल स्टोरेजमा खोज्ने
       if (!item) {
         try {
           const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
-          if (queryDarta) {
-            const dec = decodeURIComponent(queryDarta).trim().toLowerCase();
-            item = records.find(r => r.darta_no && r.darta_no.trim().toLowerCase() === dec);
-          }
-          if (!item) {
-            item = JSON.parse(localStorage.getItem("last_verified_record") || "null");
-          }
+          const q = cleanDarta.toLowerCase();
+          item = records.find(r => r.darta_no && r.darta_no.trim().toLowerCase() === q);
         } catch(e) {}
       }
 
-      const box = document.getElementById("verifyDetailsBox");
-      const badge = document.getElementById("verifiedBadge");
-
+      // विवरण देखाउने वा त्रुटि सन्देश
       if (item) {
+        badge.style.background = "#16a34a";
+        badge.textContent = "✔ आधिकारिक रूपमा प्रमाणित प्रमाण-पत्र (Verified Record)";
+
         if (item.photo) {
           document.getElementById("ownerPhoto").src = item.photo;
-          document.getElementById("photoContainer").style.display = "block";
+          photoBox.style.display = "block";
+        } else {
+          photoBox.style.display = "none";
         }
 
         box.innerHTML = `
@@ -433,7 +501,44 @@
       } else {
         badge.style.background = "#dc2626";
         badge.textContent = "✖ रेकर्ड फेला परेन (Record Not Found)";
-        box.innerHTML = `<p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">यो दर्ता नम्बरको घर नक्सा अभिलेख सिस्टममा भेटिएन। कृपया दर्ता नम्बर ठीक छ कि छैन जाँच्नुहोस्।</p>`;
+        photoBox.style.display = "none";
+        box.innerHTML = `
+          <div style="text-align:center; padding: 20px;">
+            <p style="color:#dc2626; font-weight:800; font-size:16px; margin-bottom:6px;">दर्ता नं. "${cleanDarta}" को रेकर्ड फेला परेन!</p>
+            <p style="color:#64748b; font-size:13.5px;">कृपया दर्ता नम्बर ठीक छ कि छैन जाँचेर माथिको बक्सबाट पुनः प्रयास गर्नुहोस्।</p>
+          </div>
+        `;
+      }
+    }
+
+    // ३. इनपुट बक्सबाट खोज्ने
+    function searchDartaManual() {
+      const val = document.getElementById("manualSearchInput").value.trim();
+      if (!val) {
+        alert("कृपया नक्सा दर्ता नम्बर टाइप गर्नुहोस्!");
+        return;
+      }
+      // URL मा पनि darta पारामिटर अपडेट गर्ने
+      const newUrl = `${window.location.pathname}?darta=${encodeURIComponent(val)}`;
+      window.history.pushState({ path: newUrl }, '', newUrl);
+      fetchAndDisplayRecord(val);
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      applySavedTheme();
+      renderHeaderUser();
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryDarta = urlParams.get('darta');
+
+      if (queryDarta) {
+        const decoded = decodeURIComponent(queryDarta).trim();
+        document.getElementById("manualSearchInput").value = decoded;
+        fetchAndDisplayRecord(decoded);
+      } else {
+        fetchAndDisplayRecord("");
       }
     });
   </script>
