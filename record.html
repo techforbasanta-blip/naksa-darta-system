@@ -55,7 +55,37 @@
     .brand-left { display: flex; align-items: center; gap: 12px; }
     .brand-left img { height: 52px !important; width: auto !important; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
-    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; }
+
+    /* नाराको ठीक २/४ ट्याब पछाडि Home बटन मिलाउने कन्टेनर */
+    .motto-home-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px; /* २/४ ट्याब बराबरको खुला ठाउँ */
+      margin-top: 2px;
+    }
+    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; margin: 0; }
+
+    .brand-home-badge {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff !important;
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .brand-home-badge:hover {
+      background: #2563eb;
+      border-color: #60a5fa;
+      transform: translateY(-1px);
+    }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .header-clock-box {
@@ -171,7 +201,10 @@
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
           <h1>Smart Mayadevi</h1>
-          <p>पुराना नक्सा अभिलेखहरू | 1-Week Auto-Purge सुरक्षित प्रणाली</p>
+          <div class="motto-home-row">
+            <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
+            <a href="index.html" class="brand-home-badge" title="मुख्य गृहपृष्ठमा जानुहोस्">🏠 Home</a>
+          </div>
         </div>
       </div>
       <div class="header-controls">
@@ -181,6 +214,7 @@
         </div>
 
         <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
+        <a href="tippani.html" class="nav-btn">📄 टिप्पणी</a>
         <a href="record.html" class="nav-btn active">📂 पुरानो हेर्नुस्</a>
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
         
@@ -228,7 +262,7 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div><strong>Smart Mayadevi</strong> — नक्सा दर्ता प्रणाली | बरेवा, रुपन्देही</div>
+      <div>Smart Mayadevi — एकीकृत स्थानीय सरकारी व्यवस्थापन प्रणाली | बरेवा, रुपन्देही</div>
       <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
     </div>
   </footer>
@@ -278,7 +312,6 @@
       }
     }
 
-    // १ हप्ता कटेका पुराना रेकर्ड स्वतः मेटाउने लजिक
     async function purgeExpiredRecords(records) {
       const now = Date.now();
       const validRecords = [];
@@ -306,7 +339,6 @@
       return validRecords;
     }
 
-    // सबै एडमिनले भरेको सुपाबेसको साझा डाटा लोड गर्ने
     async function loadRecords() {
       let loaded = [];
 
@@ -405,20 +437,17 @@
       renderRecords(allRecords);
     }
 
-    // हेर्न र प्रिन्ट गर्न खोल्ने
     function viewAndPrintRecord(id) {
       sessionStorage.setItem("view_record_id", id.toString());
       window.location.href = "darta.html";
     }
 
-    // गल्ती सच्याउन (Edit) खोल्ने
     function editExistingRecord(id) {
       sessionStorage.setItem("view_record_id", id.toString());
       sessionStorage.setItem("is_edit_mode", "true");
       window.location.href = "darta.html";
     }
 
-    // एडमिनले त्यही दिन तुरुन्तै डिलिट गर्ने
     async function deleteRecordImmediate(id, dartaNo) {
       if (!confirm(`के तपाईं दर्ता नं. "${dartaNo}" को रेकर्ड तुरुन्त हटाउन चाहनुहुन्छ?`)) return;
 
