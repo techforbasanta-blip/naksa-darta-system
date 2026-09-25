@@ -7,87 +7,266 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Mukta', sans-serif; }
-    body { background-color: #f1f5f9; min-height: 100vh; display: flex; flex-direction: column; }
+    :root {
+      --gov-crimson: #b71c1c;
+      --gov-blue: #07192f;
+      --gov-navy: #1e3a8a;
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --input-bg: #ffffff;
+      --text-dark: #0f172a;
+      --border-color: #cbd5e1;
+      --screen-font: 'Mukta', sans-serif;
+    }
 
+    body.dark-mode {
+      --bg: #07192f;
+      --card-bg: #0d233e;
+      --input-bg: #07192f;
+      --text-dark: #ffffff;
+      --border-color: #1e3a8a;
+    }
+
+    * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
+    body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
+
+    /* Top Navigation Header - Exactly like darta.html */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
-      border-bottom: 3px solid #b71c1c;
-      padding: 10px 18px;
+      border-bottom: 3px solid var(--gov-crimson);
+      padding: 8px 18px;
       color: #ffffff;
-      text-align: center;
     }
     .header-inner {
-      max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 14px;
+      max-width: 1720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .header-inner img { height: 48px; }
-    .header-titles h1 { font-size: 20px; font-weight: 800; color: #ffffff; }
-    .header-titles p { font-size: 13px; color: #cbd5e1; }
+    .brand-left { display: flex; align-items: center; gap: 12px; }
+    .brand-left img { height: 52px !important; width: auto !important; }
+    .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
+    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; }
 
+    .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+    /* Logged In User Profile Badge */
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 3px 9px 3px 4px;
+      border-radius: 25px;
+    }
+    .user-profile-badge img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #38bdf8;
+    }
+    .user-profile-avatar-fallback {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #0284c7;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1.5px solid #38bdf8;
+    }
+    .user-profile-info { text-align: left; line-height: 1.15; }
+    .user-profile-name { font-size: 12px; font-weight: 800; color: #ffffff; }
+    .user-profile-role { font-size: 10.5px; color: #7dd3fc; font-weight: 600; }
+
+    .header-clock-box {
+      text-align: right;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      line-height: 1.2;
+    }
+    .header-clock-box .h-date { font-size: 11px; color: #cbd5e1; font-weight: 600; }
+    .header-clock-box .h-time { font-size: 12.5px; color: #ffffff; font-weight: 800; }
+
+    .nav-btn {
+      background: #0d233e;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 11px;
+      border-radius: 4px;
+      border: 1px solid #1e3a8a;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .nav-btn:hover, .nav-btn.active { background: #2563eb; border-color: #3b82f6; }
+    .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
+    .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
+
+    /* Verification Card Styling */
     .verify-container {
-      max-width: 650px; width: 92%; margin: 26px auto; background: #ffffff;
-      border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 22px;
+      max-width: 680px;
+      width: 94%;
+      margin: 24px auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      padding: 24px;
+      flex: 1;
     }
 
     .badge-status {
-      display: inline-block; background: #16a34a; color: #ffffff; padding: 6px 16px;
-      border-radius: 20px; font-size: 14.5px; font-weight: 800; margin-bottom: 12px;
+      display: inline-block;
+      background: #16a34a;
+      color: #ffffff;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      letter-spacing: 0.3px;
     }
-
-    .details-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15.5px; }
-    .details-table td { padding: 9px 8px; border-bottom: 1px solid #e2e8f0; }
-    .details-table td.lbl { font-weight: 800; color: #1e3a8a; width: 42%; }
-    .details-table td.val { font-weight: 700; color: #0f172a; width: 58%; }
 
     .photo-preview-box {
-      text-align: center; margin-bottom: 12px;
+      text-align: center;
+      margin-bottom: 14px;
     }
     .photo-preview-box img {
-      width: 90px; height: 105px; object-fit: cover; border: 2px solid #1e3a8a; border-radius: 4px;
+      width: 95px;
+      height: 112px;
+      object-fit: cover;
+      border: 2px solid #1e3a8a;
+      border-radius: 5px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
     }
 
-    footer {
-      background: #07192f; color: #cbd5e1; padding: 12px; text-align: center; font-size: 12px; margin-top: auto;
+    .details-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 15.5px;
+    }
+    .details-table td {
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border-color);
+      line-height: 1.35;
+    }
+    .details-table td.lbl {
+      font-weight: 800;
+      color: #1e3a8a;
+      width: 42%;
+    }
+    body.dark-mode .details-table td.lbl { color: #60a5fa; }
+    .details-table td.val {
+      font-weight: 700;
+      color: var(--text-dark);
+      width: 58%;
+    }
+
+    footer.site-footer {
+      background: #07192f;
+      color: #cbd5e1;
+      padding: 8px 18px;
+      font-size: 11.5px;
+      border-top: 3px solid #2563eb;
+      margin-top: auto;
+    }
+    .footer-inner {
+      max-width: 1720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Top Navigation Header -->
   <header class="gov-header">
     <div class="header-inner">
-      <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Logo" onerror="this.src='assets/nishan%20chap.jpg';">
-      <div class="header-titles">
-        <h1>Smart Mayadevi</h1>
-        <p>घर नक्सा आधिकारिक प्रमाणिकरण प्रणाली | Official Verification</p>
+      <div class="brand-left">
+        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
+        <div class="brand-text">
+          <h1>Smart Mayadevi</h1>
+          <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
+        </div>
+      </div>
+      <div class="header-controls">
+        
+        <!-- Logged In User Profile (यदि कोही कर्मचारी लगइन छ भने मात्र देखिने) -->
+        <div class="user-profile-badge" id="headerUserProfile" style="display:none;">
+          <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
+          <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
+          <div class="user-profile-info">
+            <div class="user-profile-name" id="headerUserName">प्रयोगकर्ता</div>
+            <div class="user-profile-role" id="headerUserRole">कर्मचारी</div>
+          </div>
+        </div>
+
+        <div class="header-clock-box">
+          <div class="h-date" id="liveNepaliHeaderDate">मिति: लोड हुँदैछ...</div>
+          <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
+        </div>
+
+        <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
+        <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
+        
+        <!-- यो Admin बटन सामान्य एडमिनलाई देखिँदैन, superadmin हुँदा मात्र देखिन्छ -->
+        <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
+        
+        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
+        <button type="button" class="nav-btn btn-logout" id="logoutBtn" style="display:none;" onclick="handleSafeLogout()">🚪 लगआउट</button>
       </div>
     </div>
   </header>
 
+  <!-- Verification Card -->
   <main class="verify-container">
     <div style="text-align: center;">
-      <div id="verifiedBadge" class="badge-status">✔ प्रमाणित प्रमाण-पत्र (Verified Record)</div>
+      <div id="verifiedBadge" class="badge-status">✔ आधिकारिक रूपमा प्रमाणित प्रमाण-पत्र (Verified Record)</div>
       <div id="photoContainer" class="photo-preview-box" style="display:none;">
-        <img id="ownerPhoto" src="" alt="फोटो">
+        <img id="ownerPhoto" src="" alt="घरधनी फोटो">
       </div>
     </div>
 
     <div id="verifyDetailsBox">
-      <p style="text-align:center; color:#64748b;">विवरण खोजिँदैछ...</p>
+      <p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">विवरण खोजिँदैछ...</p>
     </div>
   </main>
 
-  <footer>
-    Smart Mayadevi — नक्सा दर्ता तथा प्रमाणिकरण | गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div><strong>Smart Mayadevi</strong> — नक्सा दर्ता तथा प्रमाणिकरण प्रणाली | बरेवा, रुपन्देही</div>
+      <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
+    </div>
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; 
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; 
+    // Supabase Credentials
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
     
     let supabaseClient = null;
     try {
@@ -96,12 +275,108 @@
       }
     } catch(e) {}
 
+    const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+    function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
+
+    function updateClock() {
+      try {
+        const now = new Date();
+        const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
+        let h = now.getHours();
+        const m = String(now.getMinutes()).padStart(2, "0");
+        const s = String(now.getSeconds()).padStart(2, "0");
+        let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
+        
+        const dateEl = document.getElementById("liveNepaliHeaderDate");
+        const timeEl = document.getElementById("liveNepaliHeaderTime");
+        if (dateEl) dateEl.textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
+        if (timeEl) timeEl.textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+      } catch(e) {}
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      localStorage.setItem("mayadevi_naksa_theme", isDark ? "dark" : "light");
+      const btn = document.getElementById("themeToggleBtn");
+      if (btn) btn.textContent = isDark ? "☀" : "☾";
+    }
+
+    function applySavedTheme() {
+      const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
+      const btn = document.getElementById("themeToggleBtn");
+      if (saved === "dark") {
+        document.body.classList.add("dark-mode");
+        if (btn) btn.textContent = "☀";
+      } else {
+        document.body.classList.remove("dark-mode");
+        if (btn) btn.textContent = "☾";
+      }
+    }
+
+    // Role-Based User Check: Superadmin लाई मात्र Admin प्यानल देखाउने
+    function renderHeaderUser() {
+      try {
+        const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
+        if (!raw) return;
+        const u = JSON.parse(raw);
+
+        // लगइन भएको प्रयोगकर्ताको प्रोफाइल देखाउने
+        const profileBox = document.getElementById("headerUserProfile");
+        const nameEl = document.getElementById("headerUserName");
+        const roleEl = document.getElementById("headerUserRole");
+        const avatarImg = document.getElementById("headerUserAvatarImg");
+        const fallback = document.getElementById("headerUserAvatarFallback");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        if (profileBox) profileBox.style.display = "flex";
+        if (logoutBtn) logoutBtn.style.display = "inline-flex";
+
+        if (nameEl) nameEl.textContent = u.full_name || u.username;
+        if (roleEl) roleEl.textContent = u.role || "कर्मचारी";
+
+        if (u.photo) {
+          avatarImg.src = u.photo;
+          avatarImg.style.display = "block";
+          fallback.style.display = "none";
+        } else {
+          avatarImg.style.display = "none";
+          fallback.style.display = "flex";
+          fallback.textContent = (u.full_name || u.username || 'A').charAt(0).toUpperCase();
+        }
+
+        // कडा सुरक्षा: केवल superadmin लाई मात्र Admin मेन्यु बटन देखिने
+        const adminBtn = document.getElementById("adminMenuBtn");
+        if (adminBtn) {
+          if (u.username && u.username.toLowerCase() === "superadmin") {
+            adminBtn.style.display = "inline-flex";
+          } else {
+            adminBtn.style.display = "none"; // अरू सामान्य एडमिन/कर्मचारीकोमा लुक्ने
+          }
+        }
+      } catch(e) {}
+    }
+
+    function handleSafeLogout() {
+      sessionStorage.clear();
+      localStorage.removeItem("user");
+      alert("सफलतापूर्वक लगआउट भयो!");
+      window.location.href = "login.html";
+    }
+
+    // प्रमाणिकरण विवरण लोड गर्ने (Supabase + LocalStorage Fallback)
     document.addEventListener("DOMContentLoaded", async () => {
+      applySavedTheme();
+      renderHeaderUser();
+      setInterval(updateClock, 1000);
+      updateClock();
+
       const urlParams = new URLSearchParams(window.location.search);
       const queryDarta = urlParams.get('darta');
       
       let item = null;
 
+      // १. पहिले सुपाबेस क्लाउडबाट खोज्ने
       if (queryDarta && supabaseClient) {
         try {
           const decoded = decodeURIComponent(queryDarta).trim();
@@ -117,6 +392,7 @@
         } catch(e) {}
       }
 
+      // २. यदि क्लाउडमा भेटिएन भने लोकल स्टोरेजमा खोज्ने
       if (!item) {
         try {
           const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
@@ -141,11 +417,12 @@
 
         box.innerHTML = `
           <table class="details-table">
-            <tr><td class="lbl">१) नक्सा दर्ता नं.</td><td class="val" style="color:#b71c1c; font-size:16.5px;">${item.darta_no}</td></tr>
+            <tr><td class="lbl">१) नक्सा दर्ता नं.</td><td class="val" style="color:#b71c1c; font-size:16.5px;"><strong>${item.darta_no}</strong></td></tr>
             <tr><td class="lbl">२) दर्ता मिति</td><td class="val">${item.reg_date || '-'}</td></tr>
             <tr><td class="lbl">३) प्रमाण पत्र नं.</td><td class="val">${item.praman_no || '-'}</td></tr>
             <tr><td class="lbl">४) जग्गा धनीको नामथर</td><td class="val"><strong>${item.owner_name || item.house_owner}</strong></td></tr>
             <tr><td class="lbl">घर धनीको नामथर</td><td class="val">${item.house_owner || '-'}</td></tr>
+            <tr><td class="lbl">नागरिकता नं.</td><td class="val">${item.house_cit || item.owner_cit || '-'}</td></tr>
             <tr><td class="lbl">ठेगाना / वडा</td><td class="val">मायादेवी गाउँपालिका, वडा नं. ${item.ward || '-'}</td></tr>
             <tr><td class="lbl">कित्ता नं.</td><td class="val">${item.kitta || '-'}</td></tr>
             <tr><td class="lbl">कुल निर्माण क्षेत्रफल</td><td class="val">${item.total_area || item.approved_area || '-'} वर्गफिट</td></tr>
@@ -156,7 +433,7 @@
       } else {
         badge.style.background = "#dc2626";
         badge.textContent = "✖ रेकर्ड फेला परेन (Record Not Found)";
-        box.innerHTML = `<p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">यो दर्ता नम्बरको नक्सा प्रमाण-पत्र सिस्टममा भेटिएन।</p>`;
+        box.innerHTML = `<p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">यो दर्ता नम्बरको घर नक्सा अभिलेख सिस्टममा भेटिएन। कृपया दर्ता नम्बर ठीक छ कि छैन जाँच्नुहोस्।</p>`;
       }
     });
   </script>
