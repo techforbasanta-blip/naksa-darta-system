@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>लगइन प्रणाली | Smart Mayadevi</title>
+  <title>कर्मचारी लगइन | Smart Mayadevi</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Supabase Cloud SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -36,7 +35,6 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
-    /* Exactly Same Top Header as darta.html */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
@@ -84,7 +82,6 @@
     }
     .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
 
-    /* Login Body Wrapper */
     .login-wrapper {
       flex: 1;
       display: flex;
@@ -147,18 +144,16 @@
     }
     .btn-login:hover { background: #2563eb; }
 
-    .btn-bypass {
-      width: 100%;
-      padding: 8px;
-      background: rgba(30, 58, 138, 0.08);
-      color: var(--text-dark);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      font-size: 12.5px;
-      font-weight: 700;
+    .btn-secret {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 11.5px;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 14px;
+      text-decoration: underline;
     }
+    .btn-secret:hover { color: #1e3a8a; }
 
     footer.site-footer {
       background: #07192f; color: #cbd5e1; padding: 8px 18px; font-size: 11.5px;
@@ -171,7 +166,6 @@
 </head>
 <body>
 
-  <!-- Exactly Same Header -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
@@ -212,8 +206,10 @@
         </div>
 
         <button type="submit" id="loginBtn" class="btn-login">🔒 लगइन गर्नुहोस्</button>
-        <button type="button" class="btn-bypass" onclick="quickSuperadminLogin()">⚡ Quick Superadmin Login</button>
       </form>
+
+      <!-- Fakt tamare potana secret bypass mate: Koi ne username/password screen par dekhase nahi -->
+      <button type="button" class="btn-secret" onclick="secretSuperadminPrompt()">🔒 Admin Direct Recovery Login</button>
     </div>
   </main>
 
@@ -225,9 +221,8 @@
   </footer>
 
   <script>
-    // Supabase जडान
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
+    const SUPABASE_URL = "https://xyzcompany.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
 
     let supabaseClient = null;
     try {
@@ -239,11 +234,8 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
-    // मास्टर खाताहरू
     const masterAccounts = [
-      { id: 1, full_name: 'Super Administrator', username: 'superadmin', password: 'Admin@123', role: 'superadmin' },
-      { id: 2, full_name: 'System Admin', username: 'admin', password: 'Admin@123', role: 'admin' },
-      { id: 3, full_name: 'Land Surveyor (Amin)', username: 'amin', password: 'Amin@123', role: 'amin' }
+      { id: 1, full_name: 'Super Administrator', username: 'superadmin', password: 'Admin@123', role: 'superadmin' }
     ];
 
     function togglePasswordVisibility() {
@@ -258,14 +250,20 @@
       }
     }
 
-    function quickSuperadminLogin() {
-      const user = masterAccounts[0];
-      sessionStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("user", JSON.stringify(user));
-      window.location.href = "darta.html";
+    // Secret prompt - koi bija direct bypass nahi kari shake
+    function secretSuperadminPrompt() {
+      const secretKey = prompt("कृपया गुप्त मास्टर पिन (Master PIN) राख्नुहोस्:");
+      if (secretKey === "98765" || secretKey === "Admin@123") {
+        const user = masterAccounts[0];
+        sessionStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(user));
+        alert("मास्टर लगइन प्रमाणित भयो!");
+        window.location.href = "darta.html";
+      } else if (secretKey !== null) {
+        alert("गलत पिन!");
+      }
     }
 
-    // जुनसुकै PC बाट Supabase को क्लाउड खाता जाँचेर लगइन गर्ने फङ्सन
     async function handleLogin(e) {
       e.preventDefault();
       const u = document.getElementById("username").value.trim().toLowerCase();
@@ -277,7 +275,7 @@
 
       let matchedUser = null;
 
-      // १. Supabase Cloud Database मा युजरनेम र पासवर्ड खोज्ने
+      // 1. Supabase Cloud Database check
       if (supabaseClient) {
         try {
           const { data, error } = await supabaseClient
@@ -291,11 +289,11 @@
             matchedUser = data;
           }
         } catch(err) {
-          console.warn("Supabase auth check error:", err);
+          console.warn("Supabase check error:", err);
         }
       }
 
-      // २. लोकल मेमोरीमा खोज्ने
+      // 2. Local memory fallback
       if (!matchedUser) {
         try {
           const localList = JSON.parse(localStorage.getItem("local_admin_accounts") || "[]");
@@ -303,9 +301,9 @@
         } catch(e) {}
       }
 
-      // ३. मास्टर खातामा खोज्ने
-      if (!matchedUser) {
-        matchedUser = masterAccounts.find(acc => acc.username.toLowerCase() === u && acc.password === p);
+      // 3. Fallback master superadmin
+      if (!matchedUser && u === 'superadmin' && p === 'Admin@123') {
+        matchedUser = masterAccounts[0];
       }
 
       if (matchedUser) {
@@ -314,7 +312,7 @@
         alert(`स्वागत छ, ${matchedUser.full_name || matchedUser.username}!`);
         window.location.href = "darta.html";
       } else {
-        alert("त्रुटि: गलत युजरनेम वा पासवर्ड!\nकृपया admin.html मा थपिएको सही युजरनेम र पासवर्ड राख्नुहोस्।");
+        alert("त्रुटि: गलत युजरनेम वा पासवर्ड!");
         btn.disabled = false;
         btn.textContent = "🔒 लगइन गर्नुहोस्";
       }
@@ -343,9 +341,6 @@
       if (saved === "dark") {
         document.body.classList.add("dark-mode");
         document.getElementById("themeToggleBtn").textContent = "☀";
-      } else {
-        document.body.classList.remove("dark-mode");
-        document.getElementById("themeToggleBtn").textContent = "☾";
       }
     }
 
