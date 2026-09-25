@@ -202,7 +202,7 @@
       align-items: center;
     }
 
-    /* A4 Paper Sheet Matching SAMPLE.pdf with Top Letterhead */
+    /* EXACT DARTA.HTML STYLE A4 SHEET */
     .a4-tippani-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -213,18 +213,46 @@
       min-height: 294mm !important;
       max-height: 294mm !important;
       margin: 0 auto 16px auto !important;
-      padding: 4mm 12mm 4mm 16mm !important;
+      padding: 3.5mm 12mm 3.5mm 16mm !important;
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
       position: relative !important;
       overflow: hidden !important;
       display: flex !important;
       flex-direction: column !important;
-      justify-content: flex-start !important;
+      justify-content: space-between !important;
     }
     .a4-tippani-sheet, .a4-tippani-sheet * { color: #000000 !important; font-family: var(--print-font) !important; }
 
-    /* Top Official Letterhead */
+    .watermark-img {
+      position: absolute !important;
+      left: 52% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 120mm !important;
+      height: 120mm !important;
+      max-width: 120mm !important;
+      max-height: 120mm !important;
+      object-fit: contain !important;
+      opacity: 0.12 !important;
+      pointer-events: none !important;
+      z-index: 1 !important;
+      mix-blend-mode: multiply !important;
+    }
+
+    .cert-content-top {
+      position: relative !important;
+      z-index: 2 !important;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      background: transparent;
+    }
+
+    .cert-top-center-motto { text-align: center; margin-bottom: 1px; }
+    .cert-motto { font-size: 14.5px; font-weight: 800; line-height: 1; color: var(--gov-crimson) !important; }
+
+    /* EXACT DARTA.HTML LETTERHEAD HEADER */
     .cert-header {
       display: flex !important;
       align-items: center !important;
@@ -233,29 +261,40 @@
       padding-bottom: 2px !important;
       margin-bottom: 4px !important;
       width: 100% !important;
-      position: relative;
-      z-index: 2;
     }
     .logo-box-left, .logo-box-right {
-      width: 62px !important; height: 62px !important; flex: 0 0 62px !important;
-      display: flex !important; align-items: center !important; justify-content: center !important;
+      width: 65px !important;
+      height: 65px !important;
+      flex: 0 0 65px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
-    .logo-box-left img, .logo-box-right img { width: 62px !important; height: 62px !important; object-fit: contain !important; }
+    .logo-box-left img, .logo-box-right img {
+      width: 65px !important;
+      height: 65px !important;
+      max-width: 65px !important;
+      max-height: 65px !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
     .header-titles {
-      text-align: center !important; flex: 1 !important; padding: 0 6px !important;
-      display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+      text-align: center !important;
+      flex: 1 !important;
+      padding: 0 6px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
-    .header-titles .palika-title { font-size: 22.5px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15; }
-    .header-titles .palika-en { font-size: 13.5px !important; font-weight: 800 !important; color: #1e3a8a !important; line-height: 1; }
-    .header-titles .office-title { font-size: 24.5px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15; }
-    .header-titles .office-en { font-size: 13px !important; font-weight: 700 !important; color: #1e3a8a !important; line-height: 1; }
-    .header-titles .address-text { font-size: 14.5px !important; font-weight: 800 !important; color: #000 !important; margin-top: 1px; }
+    .header-titles .gov-sub { font-size: 15px !important; font-weight: 800 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
+    .header-titles .palika-title { font-size: 23px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
+    .header-titles .office-title { font-size: 29px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
+    .header-titles .address-text { font-size: 15px !important; font-weight: 700 !important; color: #1e3a8a !important; margin-top: 1px !important; line-height: 1.15 !important; }
 
-    .tippani-content { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; justify-content: flex-start; }
-
-    /* Shriman BELOW letterhead header */
+    /* SHRIMAN BELOW LETTERHEAD */
     .tippani-top-shriman {
-      font-size: 18.5px !important;
+      font-size: 19px !important;
       font-weight: 900 !important;
       text-align: left !important;
       margin-top: 2px !important;
@@ -269,7 +308,7 @@
       margin: 2px 0 4px 0 !important;
     }
     .tippani-subject {
-      font-size: 18px !important;
+      font-size: 18.5px !important;
       font-weight: 900 !important;
       text-decoration: underline !important;
       display: inline-block !important;
@@ -324,7 +363,7 @@
       margin-bottom: 4px !important;
     }
 
-    /* Final bottom approval and Iti block */
+    /* FINAL BOTTOM APPROVAL AND ITI BLOCK */
     .final-bottom-block {
       text-align: center !important;
       margin-top: 8px !important;
@@ -334,10 +373,20 @@
       justify-content: center !important;
     }
     .approval-badge-title { font-size: 15px !important; font-weight: 800 !important; margin-bottom: 2px !important; }
-    .approval-dots-line { font-size: 14px !important; letter-spacing: 1px !important; margin-bottom: 2px !important; }
+    .approval-dots-line { font-size: 14px !important; letter-spacing: 1px !important; margin-bottom: 2px !important; font-weight: bold; }
     .approval-iti-line { font-size: 16px !important; font-weight: 900 !important; margin-bottom: 3px !important; color: #000 !important; }
     .approval-name { font-size: 16.5px !important; font-weight: 900 !important; }
     .approval-post { font-size: 14.5px !important; font-weight: 800 !important; }
+
+    .cert-footer {
+      border-top: 1.5px solid var(--gov-crimson) !important;
+      padding-top: 2px !important;
+      text-align: center !important;
+      font-size: 11.5px !important;
+      font-weight: 700 !important;
+      background: transparent !important;
+      line-height: 1.2 !important;
+    }
 
     @media print {
       @page { size: A4 portrait; margin: 0mm !important; }
@@ -502,7 +551,7 @@
     <!-- RIGHT: EXACT SAMPLE.PDF REPLICA (LIVE A4 PREVIEW) -->
     <section class="preview-card">
       <div class="preview-header-bar no-print">
-        <div class="preview-title">📄 निर्णयार्थ पेश टिप्पणी Live A4 Preview (SAMPLE.pdf Exact Fit)</div>
+        <div class="preview-title">📄 निर्णयार्थ पेश टिप्पणी Live A4 Preview (Exact Darta Letterhead Fit)</div>
         <div class="zoom-controls">
           <button type="button" class="btn-zoom" onclick="setZoom(0.82)">फिट स्क्रिन</button>
           <button type="button" class="btn-zoom" onclick="changeZoom(-0.05)">- सानो</button>
@@ -514,38 +563,45 @@
       <div class="preview-zoom-wrapper" id="previewZoomWrapper">
         <div class="a4-tippani-sheet" id="tippaniSheet">
 
-          <!-- 1. Top Official Letterhead Header -->
-          <header class="cert-header">
-            <div class="logo-box-left">
-              <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
-            </div>
-            <div class="header-titles">
-              <div class="palika-title">मायादेवी गाउँपालिका</div>
-              <div class="palika-en">Mayadevi Rural Muncipality</div>
-              <div class="office-title">गाउँकार्यपालिकाको कार्यालय</div>
-              <div class="office-en">Office of the Rural Municipal Executive</div>
-              <div class="address-text">बरेवा, रुपन्देही/Barewa, Rupandehi &nbsp;|&nbsp; लुम्बिनी प्रदेश, नेपाल / Lumbini Province, Nepal</div>
-            </div>
-            <div class="logo-box-right">
-              <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Logo" onerror="this.src='assets/palika%20logo.jpg';">
-            </div>
-          </header>
+          <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
+               onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
 
-          <div class="tippani-content">
-            <!-- 2. Shriman below letterhead header -->
+          <div class="cert-content-top">
+            
+            <div class="cert-top-center-motto">
+              <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
+            </div>
+
+            <!-- 1. EXACT DARTA.HTML LETTERHEAD AT VERY TOP -->
+            <header class="cert-header">
+              <div class="logo-box-left">
+                <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
+              </div>
+              <div class="header-titles">
+                <div class="gov-sub">स्थानीय सरकार</div>
+                <div class="palika-title">मायादेवी गाउँपालिका</div>
+                <div class="office-title">गाउँ कार्यपालिकाको कार्यालय</div>
+                <div class="address-text">बरेवा, रुपन्देही, लुम्बिनी प्रदेश, नेपाल ।</div>
+              </div>
+              <div class="logo-box-right">
+                <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Logo" onerror="this.src='assets/palika%20logo.jpg';">
+              </div>
+            </header>
+
+            <!-- 2. SHRIMAN BELOW LETTERHEAD -->
             <div class="tippani-top-shriman">श्रीमान्</div>
 
-            <!-- 3. Subject Line -->
+            <!-- 3. SUBJECT LINE -->
             <div class="tippani-subject-box">
               <span class="tippani-subject">विषयः घर सँरचना अभिलेखिकरण प्रमाण-पत्र दिने सम्बन्धमा ।</span>
             </div>
 
-            <!-- 4. Main Paragraph Content -->
+            <!-- 4. MAIN PARAGRAPH CONTENT -->
             <p class="tippani-para">
               मायादेवी गाउँपालिका वडा नं.<strong id="out_ward">०८</strong> बस्ने श्री <strong id="out_owner">ज्योती कर्ण</strong>ले निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="out_sabik">हाटिबनगाई गा.वि.स. वडा नं.५ क</strong> कि.न. <strong id="out_kitta">२५२४</strong> को क्षे.फ. <strong id="out_area">विगह क्रमशः ०-०-१०</strong> जग्गामा मिति <strong id="out_comp_date">२०८३/०१/०५</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति <strong id="out_darta_date">२०८३/०५/१८</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति <strong id="out_insp_date">२०८३/०६/०६</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण भएको पाईएको साथै मिति <strong id="out_dec_date">२०८३/०६/१२</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरीएको ।
             </p>
 
-            <!-- 5. Two Columns Inspection Signatures -->
+            <!-- 5. TWO COLUMNS INSPECTION SIGNATURES -->
             <div class="two-col-sign-grid">
               <div class="sign-item-col">
                 <div class="sign-heading">स्थलगत निरिक्षण</div>
@@ -559,23 +615,23 @@
               </div>
             </div>
 
-            <!-- 6. Technical Recommendation -->
+            <!-- 6. TECHNICAL RECOMMENDATION -->
             <p class="engineer-ray-para">
               उल्लेखित बिवरण अनुसारको निर्माण कार्यमा स्थलगत नापजाँच गर्ने प्रविधिकको राय बमोजिम निर्माण घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्न मनासिव देखिएकोले निर्णयार्थ पेश गर्दछु ।
             </p>
 
-            <!-- 7. Engineer Block -->
+            <!-- 7. ENGINEER BLOCK -->
             <div class="engineer-sign-block">
               <div class="sign-post-title" id="out_eng3_role">ईन्जिनियर</div>
               <div class="sign-officer-name" id="out_eng3_name">प्रकाश थापा</div>
             </div>
 
-            <!-- 8. Order Approval -->
+            <!-- 8. ORDER APPROVAL -->
             <p class="approval-opinion-para">
               प्रस्तुत प्राविधिक राय तथा सिफारिसका आधारमा घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्नेगरी सदर।
             </p>
 
-            <!-- 9. Final Center Approval & Iti Block -->
+            <!-- 9. FINAL CENTER APPROVAL & ITI BLOCK -->
             <div class="final-bottom-block">
               <div class="approval-badge-title">स्वीकृत गर्ने</div>
               <div class="approval-dots-line">................................................</div>
@@ -587,6 +643,12 @@
             </div>
 
           </div>
+
+          <footer class="cert-footer">
+            सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
+            वेभ साइटः- mayadevimunrupandehi.gov.np
+          </footer>
+
         </div>
       </div>
     </section>
