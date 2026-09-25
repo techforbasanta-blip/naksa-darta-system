@@ -155,6 +155,20 @@
     }
     .btn-del:hover { background: #b91c1c; }
 
+    .btn-view-pp {
+      background: #1e3a8a;
+      color: #fff;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 4px;
+      display: inline-block;
+    }
+    .btn-view-pp:hover { background: #2563eb; }
+
     .badge-role {
       padding: 4px 10px;
       border-radius: 4px;
@@ -165,7 +179,6 @@
       display: inline-block;
     }
 
-    /* Staff Photo (PP) Avatar */
     .admin-pp-thumb {
       width: 44px;
       height: 44px;
@@ -175,7 +188,11 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
       cursor: pointer;
       display: block;
+      margin: 0 auto;
+      transition: transform 0.2s;
     }
+    .admin-pp-thumb:hover { transform: scale(1.1); }
+
     .admin-pp-placeholder {
       width: 44px;
       height: 44px;
@@ -185,9 +202,48 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: bold;
       border: 1.5px dashed #94a3b8;
+      margin: 0 auto;
+    }
+
+    /* Modal Popup Lightbox for Superadmin */
+    .pp-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: blur(3px);
+    }
+    .pp-modal-box {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      position: relative;
+    }
+    .pp-modal-img {
+      width: 180px;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 3px solid #1e3a8a;
+      margin-bottom: 12px;
+    }
+    .pp-modal-close {
+      position: absolute;
+      top: 10px; right: 12px;
+      background: #dc2626; color: #fff;
+      border: none; border-radius: 50%;
+      width: 28px; height: 28px; font-weight: bold;
+      cursor: pointer; font-size: 14px;
     }
 
     footer.site-footer {
@@ -228,7 +284,7 @@
   </header>
 
   <div class="container">
-    <!-- Naya Staff/Admin Add Form -->
+    <!-- नयाँ एडमिन/कर्मचारी फाराम -->
     <div class="card">
       <div class="card-title">
         <span>➕ नयाँ कर्मचारी / एडमिन खाता थप्नुहोस् (Auto-Sync to Cloud)</span>
@@ -260,17 +316,17 @@
       </form>
     </div>
 
-    <!-- Active Cloud Users List with PP -->
+    <!-- सक्रिय खाताहरूको सूची -->
     <div class="card">
       <div class="card-title">
-        <span>👥 सक्रिय कर्मचारी तथा एडमिन खाताहरू (Photo & Details)</span>
+        <span>👥 सक्रिय कर्मचारी तथा एडमिन खाताहरू <span id="superadminBadge" style="display:none; color:#16a34a; font-size:13px;">(Superadmin: PP Full Access Enabled)</span></span>
         <span id="userCount" style="font-size:12.5px; background:rgba(30,58,138,0.1); padding:3px 10px; border-radius:15px; font-weight:bold;">लोड हुँदैछ...</span>
       </div>
       <table>
         <thead>
           <tr>
             <th style="width: 50px;">क्र.सं.</th>
-            <th style="width: 70px; text-align: center;">फोटो (PP)</th>
+            <th style="width: 80px; text-align: center;" id="th_photo">फोटो (PP)</th>
             <th>कर्मचारीको नामथर</th>
             <th>Username</th>
             <th>Password</th>
@@ -285,6 +341,18 @@
     </div>
   </div>
 
+  <!-- Superadmin PP Lightbox Modal -->
+  <div class="pp-modal-overlay" id="ppModal" onclick="closePPModal()">
+    <div class="pp-modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="pp-modal-close" onclick="closePPModal()">✕</button>
+      <h3 id="modalName" style="color:#1e3a8a; margin-bottom:4px; font-size:18px;"></h3>
+      <p id="modalRole" style="color:#64748b; font-size:13px; font-weight:bold; margin-bottom:12px;"></p>
+      <img id="modalImg" src="" class="pp-modal-img" alt="Profile Photo">
+      <br>
+      <button type="button" class="nav-btn" style="background:#1e3a8a; padding:6px 14px;" onclick="downloadModalImg()">💾 डाउनलोड गर्नुहोस्</button>
+    </div>
+  </div>
+
   <footer class="site-footer no-print">
     <div class="footer-inner">
       <div><strong>Smart Mayadevi</strong> — एडमिन प्यानल | गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही</div>
@@ -293,8 +361,8 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // Tamara Supabase nu URL
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // Tamaro anon key
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
 
     let supabaseClient = null;
     try {
@@ -307,6 +375,7 @@
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
     let tempPhotoBase64 = "";
+    let isSuperAdmin = false;
 
     function previewAdminPhoto(e) {
       const file = e.target.files[0];
@@ -379,9 +448,21 @@
         const tr = document.createElement("tr");
         const isPermanent = u.username.toLowerCase() === 'superadmin';
 
-        const photoHtml = u.photo 
-          ? `<img src="${u.photo}" class="admin-pp-thumb" onclick="window.open('${u.photo}')" title="फोटो ठूलो हेर्न क्लिक गर्नुहोस्">`
-          : `<div class="admin-pp-placeholder">फोटो छैन</div>`;
+        // Superadmin ले मात्र फोटो हेर्न मिल्ने लजिक
+        let photoHtml = "";
+        if (isSuperAdmin) {
+          if (u.photo) {
+            photoHtml = `
+              <div style="text-align:center;">
+                <img src="${u.photo}" class="admin-pp-thumb" onclick="openPPModal('${u.full_name}', '${u.role}', '${u.photo}')" title="ठूलो हेर्न क्लिक गर्नुहोस्">
+                <button type="button" class="btn-view-pp" onclick="openPPModal('${u.full_name}', '${u.role}', '${u.photo}')">👁️ हेर्नुस्</button>
+              </div>`;
+          } else {
+            photoHtml = `<div class="admin-pp-placeholder">फोटो छैन</div>`;
+          }
+        } else {
+          photoHtml = `<small style="color:#94a3b8; font-weight:bold;">गोप्य</small>`;
+        }
 
         tr.innerHTML = `
           <td>${toNepNum(i + 1)}</td>
@@ -396,6 +477,30 @@
         `;
         tbody.appendChild(tr);
       });
+    }
+
+    // Modal Functions (Superadmin फोटो हेर्ने)
+    function openPPModal(name, role, imgSrc) {
+      if (!isSuperAdmin) return;
+      document.getElementById("modalName").textContent = name;
+      document.getElementById("modalRole").textContent = `पद: ${role || 'कर्मचारी'}`;
+      document.getElementById("modalImg").src = imgSrc;
+      document.getElementById("ppModal").style.display = "flex";
+    }
+
+    function closePPModal() {
+      document.getElementById("ppModal").style.display = "none";
+    }
+
+    function downloadModalImg() {
+      const src = document.getElementById("modalImg").src;
+      const name = document.getElementById("modalName").textContent || 'admin_pp';
+      const a = document.createElement("a");
+      a.href = src;
+      a.download = `${name}_PP.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
     async function handleCreateUser(e) {
@@ -482,9 +587,6 @@
       if (saved === "dark") {
         document.body.classList.add("dark-mode");
         document.getElementById("themeToggleBtn").textContent = "☀";
-      } else {
-        document.body.classList.remove("dark-mode");
-        document.getElementById("themeToggleBtn").textContent = "☾";
       }
     }
 
@@ -501,6 +603,15 @@
         window.location.href = "login.html";
         return;
       }
+
+      try {
+        const u = JSON.parse(raw);
+        // सुपरएडमिन प्रमाणीकरण
+        if (u.username && u.username.toLowerCase() === "superadmin") {
+          isSuperAdmin = true;
+          document.getElementById("superadminBadge").style.display = "inline-block";
+        }
+      } catch(e) {}
 
       applySavedTheme();
       setInterval(updateClock, 1000);
