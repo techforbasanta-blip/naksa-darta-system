@@ -52,7 +52,7 @@
       gap: 10px;
     }
     .brand-left { display: flex; align-items: center; gap: 12px; }
-    .brand-left img { height: 50px !important; width: auto !important; }
+    .brand-left img { height: 48px !important; width: auto !important; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; }
     .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; }
 
@@ -202,7 +202,7 @@
       align-items: center;
     }
 
-    /* A4 Paper Sheet for Tippani - Strict 1 Page Kokila Fit */
+    /* A4 Paper Sheet Matching SAMPLE.pdf */
     .a4-tippani-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -213,133 +213,107 @@
       min-height: 294mm !important;
       max-height: 294mm !important;
       margin: 0 auto 16px auto !important;
-      padding: 3.5mm 12mm 3.5mm 16mm !important;
+      padding: 12mm 18mm 8mm 20mm !important;
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
       position: relative !important;
       overflow: hidden !important;
       display: flex !important;
       flex-direction: column !important;
-      justify-content: space-between !important;
+      justify-content: flex-start !important;
     }
     .a4-tippani-sheet, .a4-tippani-sheet * { color: #000000 !important; font-family: var(--print-font) !important; }
 
-    .watermark-img {
-      position: absolute !important;
-      left: 50% !important;
-      top: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      width: 120mm !important;
-      height: 120mm !important;
-      object-fit: contain !important;
-      opacity: 0.12 !important;
-      pointer-events: none !important;
-      z-index: 1 !important;
-    }
-
-    .cert-header {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      border-bottom: 2.2px solid var(--gov-crimson) !important;
-      padding-bottom: 2px !important;
+    .tippani-top-shriman {
+      font-size: 19px !important;
+      font-weight: 900 !important;
+      text-align: left !important;
       margin-bottom: 2px !important;
-      width: 100% !important;
-      position: relative;
-      z-index: 2;
-    }
-    .logo-box-left, .logo-box-right {
-      width: 60px !important; height: 60px !important; flex: 0 0 60px !important;
-      display: flex !important; align-items: center !important; justify-content: center !important;
-    }
-    .logo-box-left img, .logo-box-right img { width: 60px !important; height: 60px !important; object-fit: contain !important; }
-    .header-titles {
-      text-align: center !important; flex: 1 !important; padding: 0 6px !important;
-      display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
-    }
-    .header-titles .palika-title { font-size: 22px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15; }
-    .header-titles .palika-en { font-size: 13.5px !important; font-weight: 800 !important; color: #1e3a8a !important; line-height: 1; }
-    .header-titles .office-title { font-size: 24px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15; }
-    .header-titles .office-en { font-size: 12.5px !important; font-weight: 700 !important; color: #1e3a8a !important; line-height: 1; }
-    .header-titles .address-text { font-size: 14.5px !important; font-weight: 800 !important; color: #000 !important; margin-top: 1px; }
-
-    .tippani-content { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; justify-content: flex-start; }
-    .tippani-shriman { font-size: 18px; font-weight: 900; text-decoration: underline; margin-top: 1px; margin-bottom: 1px; }
-    .tippani-subject-box { text-align: center; margin: 2px 0 4px 0; }
-    .tippani-subject { font-size: 18.5px; font-weight: 900; text-decoration: underline; display: inline-block; }
-
-    .tippani-para {
-      font-size: 16px !important;
-      line-height: 1.48 !important;
-      text-align: justify !important;
-      font-weight: 600 !important;
-      margin-bottom: 6px !important;
-      text-indent: 26px;
-    }
-    .tippani-para strong { font-weight: 900 !important; }
-
-    .sign-flow-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 6px;
-      align-items: flex-end;
-    }
-    .sign-box { text-align: center; }
-    .sign-label-title { font-size: 15px; font-weight: 800; margin-bottom: 14px; }
-    .sign-name-holder { font-size: 16px; font-weight: 900; border-top: 1.2px dotted #000; display: inline-block; min-width: 170px; text-align: center; padding-top: 2px; }
-    .sign-role-holder { font-size: 14px; font-weight: 700; text-align: center; }
-
-    .middle-opinion-para {
-      font-size: 15.5px !important;
-      line-height: 1.4 !important;
-      text-align: justify !important;
-      font-weight: 600 !important;
-      margin: 6px 0 4px 0 !important;
+      line-height: 1.2 !important;
     }
 
-    .approval-order-para {
-      font-size: 15.5px !important;
-      line-height: 1.4 !important;
-      text-align: justify !important;
-      font-weight: 600 !important;
-      margin: 8px 0 4px 0 !important;
+    .sample-letter-header {
+      text-align: center !important;
+      margin-bottom: 12px !important;
+      line-height: 1.25 !important;
     }
+    .sample-letter-header .line-palika-ne { font-size: 23px !important; font-weight: 900 !important; }
+    .sample-letter-header .line-palika-en { font-size: 14.5px !important; font-weight: 800 !important; }
+    .sample-letter-header .line-karyapalika-ne { font-size: 21.5px !important; font-weight: 900 !important; }
+    .sample-letter-header .line-karyapalika-en { font-size: 14.5px !important; font-weight: 800 !important; }
+    .sample-letter-header .line-barewa { font-size: 16px !important; font-weight: 800 !important; }
+    .sample-letter-header .line-province { font-size: 15px !important; font-weight: 800 !important; }
 
-    /* पुछारमा बीचमा आउने हस्ताक्षर र ईति सम्बत ब्लक */
-    .center-iti-approval-block {
-      margin-top: 8px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    .tippani-subject-box {
+      text-align: left !important;
+      margin: 6px 0 10px 0 !important;
     }
-    .dots-sign-line {
-      font-size: 14px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      margin-bottom: 3px;
-    }
-    .iti-sambhat-text {
-      font-size: 16px !important;
+    .tippani-subject {
+      font-size: 18.5px !important;
       font-weight: 900 !important;
-      color: #000 !important;
-      margin-bottom: 3px;
+      text-decoration: underline !important;
+      display: inline-block !important;
     }
-    .approver-details {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+
+    .tippani-body-para {
+      font-size: 17px !important;
+      line-height: 1.55 !important;
+      text-align: justify !important;
+      font-weight: 600 !important;
+      margin-bottom: 12px !important;
     }
-    .approver-name {
+    .tippani-body-para strong { font-weight: 900 !important; }
+
+    .two-col-sign-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 20px !important;
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
+    }
+    .sign-item-col { text-align: center !important; }
+    .sign-heading { font-size: 16px !important; font-weight: 800 !important; line-height: 1.3 !important; }
+    .sign-post-title { font-size: 15.5px !important; font-weight: 700 !important; margin-top: 2px !important; }
+    .sign-officer-name { font-size: 17px !important; font-weight: 900 !important; margin-top: 22px !important; }
+
+    .engineer-ray-para {
       font-size: 16.5px !important;
-      font-weight: 900 !important;
+      line-height: 1.5 !important;
+      text-align: justify !important;
+      font-weight: 600 !important;
+      margin-top: 8px !important;
+      margin-bottom: 4px !important;
     }
-    .approver-role {
-      font-size: 14.5px !important;
-      font-weight: 800 !important;
+    .engineer-sign-block {
+      text-align: left !important;
+      margin-top: 4px !important;
+      margin-bottom: 8px !important;
+      padding-left: 20px !important;
     }
+
+    .approval-opinion-para {
+      font-size: 16.5px !important;
+      line-height: 1.5 !important;
+      text-align: justify !important;
+      font-weight: 600 !important;
+      margin-top: 8px !important;
+      margin-bottom: 6px !important;
+    }
+
+    /* Final bottom approval and Iti block matching sample */
+    .final-bottom-block {
+      text-align: center !important;
+      margin-top: 16px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .approval-badge-title { font-size: 16.5px !important; font-weight: 800 !important; margin-bottom: 2px !important; }
+    .approval-dots-line { font-size: 14px !important; letter-spacing: 1px !important; margin-bottom: 2px !important; }
+    .approval-iti-line { font-size: 16.5px !important; font-weight: 900 !important; margin-bottom: 4px !important; }
+    .approval-name { font-size: 17.5px !important; font-weight: 900 !important; }
+    .approval-post { font-size: 15.5px !important; font-weight: 800 !important; }
 
     @media print {
       @page { size: A4 portrait; margin: 0mm !important; }
@@ -349,7 +323,7 @@
       .preview-zoom-wrapper { transform: none !important; width: 210mm !important; }
       .a4-tippani-sheet {
         width: 210mm !important; height: 294mm !important; max-height: 294mm !important;
-        margin: 0 !important; padding: 3.5mm 12mm 3.5mm 16mm !important; border: 1.5px solid #000 !important; box-shadow: none !important;
+        margin: 0 !important; padding: 12mm 18mm 8mm 20mm !important; border: none !important; box-shadow: none !important;
       }
     }
   </style>
@@ -442,7 +416,7 @@
         </div>
       </div>
 
-      <div class="form-section-title">प्राविधिक तथा प्रशासनिक अधिकारीहरू (Default: मायादेवी)</div>
+      <div class="form-section-title">प्राविधिक तथा प्रशासनिक अधिकारीहरू</div>
       
       <!-- 1. Sthalagat Nirikshan -->
       <div class="form-row">
@@ -453,7 +427,7 @@
             <option value="सब-ईन्जिनियर">सब-ईन्जिनियर</option>
             <option value="असिस्टेन्ट सब-इन्जिनियर">असिस्टेन्ट सब-इन्जिनियर</option>
           </select>
-          <input type="text" id="in_eng1_name" value="मायादेवी" oninput="updateTippaniLive()">
+          <input type="text" id="in_eng1_name" value="लक्ष्मण घिमिरे" oninput="updateTippaniLive()">
         </div>
       </div>
 
@@ -466,7 +440,7 @@
             <option value="ईन्जिनियर">ईन्जिनियर</option>
             <option value="अमिन">अमिन</option>
           </select>
-          <input type="text" id="in_eng2_name" value="मायादेवी" oninput="updateTippaniLive()">
+          <input type="text" id="in_eng2_name" value="तिर्थराज पन्थी" oninput="updateTippaniLive()">
         </div>
       </div>
 
@@ -478,7 +452,7 @@
             <option value="ईन्जिनियर" selected>ईन्जिनियर</option>
             <option value="वरिष्ठ ईन्जिनियर">वरिष्ठ ईन्जिनियर</option>
           </select>
-          <input type="text" id="in_eng3_name" value="मायादेवी" oninput="updateTippaniLive()">
+          <input type="text" id="in_eng3_name" value="प्रकाश थापा" oninput="updateTippaniLive()">
         </div>
       </div>
 
@@ -490,7 +464,7 @@
             <option value="प्रमुख प्रशासकीय अधिकृत" selected>प्रमुख प्रशासकीय अधिकृत</option>
             <option value="निमित्त प्रमुख प्रशासकीय अधिकृत">निमित्त प्र.प्र. अधिकृत</option>
           </select>
-          <input type="text" id="in_off_name" value="मायादेवी" oninput="updateTippaniLive()">
+          <input type="text" id="in_off_name" value="सुरेश भुसाल" oninput="updateTippaniLive()">
         </div>
       </div>
 
@@ -501,10 +475,10 @@
       </div>
     </section>
 
-    <!-- RIGHT: LIVE A4 PRINT PREVIEW (FIT TO 1 PAGE) -->
+    <!-- RIGHT: EXACT SAMPLE.PDF REPLICA (LIVE A4 PREVIEW) -->
     <section class="preview-card">
       <div class="preview-header-bar no-print">
-        <div class="preview-title">📄 निर्णयार्थ पेश टिप्पणी Live A4 Preview (Fit To 1 Page)</div>
+        <div class="preview-title">📄 निर्णयार्थ पेश टिप्पणी Live A4 Preview (SAMPLE.pdf Exact Fit)</div>
         <div class="zoom-controls">
           <button type="button" class="btn-zoom" onclick="setZoom(0.82)">फिट स्क्रिन</button>
           <button type="button" class="btn-zoom" onclick="changeZoom(-0.05)">- सानो</button>
@@ -515,80 +489,73 @@
 
       <div class="preview-zoom-wrapper" id="previewZoomWrapper">
         <div class="a4-tippani-sheet" id="tippaniSheet">
-          <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
-               onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
 
-          <div class="tippani-content">
-            <div class="tippani-shriman">श्रीमान्</div>
+          <!-- 1. Top Shriman -->
+          <div class="tippani-top-shriman">श्रीमान्</div>
 
-            <!-- आधिकारिक लेटरहेड -->
-            <header class="cert-header">
-              <div class="logo-box-left">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
-              </div>
-              <div class="header-titles">
-                <div class="palika-title">मायादेवी गाउँपालिका</div>
-                <div class="palika-en">Mayadevi Rural Municipality</div>
-                <div class="office-title">गाउँकार्यपालिकाको कार्यालय</div>
-                <div class="office-en">Office of the Rural Municipal Executive</div>
-                <div class="address-text">बरेवा, रुपन्देही / Barewa, Rupandehi &nbsp;|&nbsp; लुम्बिनी प्रदेश, नेपाल / Lumbini Province, Nepal</div>
-              </div>
-              <div class="logo-box-right">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Logo" onerror="this.src='assets/palika%20logo.jpg';">
-              </div>
-            </header>
-
-            <div class="tippani-subject-box">
-              <span class="tippani-subject">विषयः घर सँरचना अभिलेखिकरण प्रमाण-पत्र दिने सम्बन्धमा ।</span>
-            </div>
-
-            <!-- मुख्य टिप्पणी व्यहोरा -->
-            <p class="tippani-para">
-              मायादेवी गाउँपालिका वडा नं. <strong id="out_ward">०८</strong> बस्ने श्री <strong id="out_owner">ज्योती कर्ण</strong>ले निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="out_sabik">हाटिबनगाई गा.वि.स. वडा नं.५ क</strong> कि.न. <strong id="out_kitta">२५२४</strong> को क्षे.फ. <strong id="out_area">विगह क्रमशः ०-०-१०</strong> जग्गामा मिति <strong id="out_comp_date">२०८३/०१/०५</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति <strong id="out_darta_date">२०८३/०५/१८</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति <strong id="out_insp_date">२०८३/०६/०६</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण भएको पाईएको साथै मिति <strong id="out_dec_date">२०८३/०६/१२</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरीएको ।
-            </p>
-
-            <!-- स्थलगत निरीक्षण र चेकजाँच रुजु -->
-            <div class="sign-flow-grid">
-              <div class="sign-box">
-                <div class="sign-label-title">स्थलगत निरिक्षण</div>
-                <div class="sign-name-holder" id="out_eng1_name">मायादेवी</div>
-                <div class="sign-role-holder" id="out_eng1_role">अमिन</div>
-              </div>
-              <div class="sign-box">
-                <div class="sign-label-title">संरचना चेकजाँच गर्ने तथा रुजु गर्ने</div>
-                <div class="sign-name-holder" id="out_eng2_name">मायादेवी</div>
-                <div class="sign-role-holder" id="out_eng2_role">सब-ईन्जिनियर</div>
-              </div>
-            </div>
-
-            <!-- प्राविधिक राय -->
-            <p class="middle-opinion-para">
-              उल्लेखित बिवरण अनुसारको निर्माण कार्यमा स्थलगत नापजाँच गर्ने प्रविधिकको राय बमोजिम निर्माण घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्न मनासिव देखिएकोले निर्णयार्थ पेश गर्दछु ।
-            </p>
-
-            <div style="text-align: left; margin-top: 10px; margin-bottom: 4px;">
-              <div class="sign-name-holder" id="out_eng3_name">मायादेवी</div>
-              <div class="sign-role-holder" id="out_eng3_role" style="text-align: left; padding-left: 20px;">ईन्जिनियर</div>
-            </div>
-
-            <!-- प्रशासकीय आदेश -->
-            <p class="approval-order-para">
-              प्रस्तुत प्राविधिक राय तथा सिफारिसका आधारमा घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्नेगरी सदर।
-            </p>
-
-            <!-- बीचमा आउने हस्ताक्षर र ईति सम्बत ब्लक -->
-            <div class="center-iti-approval-block">
-              <div class="dots-sign-line">................................................</div>
-              <div class="iti-sambhat-text" id="out_iti_footer">
-                ईति सम्बत २०८३ साल ०६ महिना १२ गते ०२ रोज शुभम् ।
-              </div>
-              <div class="approver-details">
-                <span class="approver-name" id="out_off_name">मायादेवी</span>
-                <span class="approver-role" id="out_off_role">प्रमुख प्रशासकीय अधिकृत</span>
-              </div>
-            </div>
-
+          <!-- 2. Exact Header from SAMPLE.pdf -->
+          <div class="sample-letter-header">
+            <div class="line-palika-ne">मायादेवी गाउँपालिका</div>
+            <div class="line-palika-en">Mayadevi Rural Muncipality</div>
+            <div class="line-karyapalika-ne">गाउँकार्यपालिकाको कार्यालय</div>
+            <div class="line-karyapalika-en">Office of the Rural Municipal Executive</div>
+            <div class="line-barewa">बरेवा, रुपन्देही/Barewa, Rupandehi</div>
+            <div class="line-palika-ne" style="font-size: 20px !important;">मायादेवी गाउँपालिका</div>
+            <div class="line-province">लुम्बिनी प्रदेश, नेपाल</div>
+            <div class="line-province" style="font-size: 14.5px !important;">Lumbini Province, Nepal</div>
           </div>
+
+          <!-- 3. Subject Line -->
+          <div class="tippani-subject-box">
+            <span class="tippani-subject">विषयः घर सँरचना अभिलेखिकरण प्रमाण-पत्र दिने सम्बन्धमा ।</span>
+          </div>
+
+          <!-- 4. Main Paragraph Content -->
+          <p class="tippani-para">
+            मायादेवी गाउँपालिका वडा नं.<strong id="out_ward">०८</strong> बस्ने श्री <strong id="out_owner">ज्योती कर्ण</strong>ले निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="out_sabik">हाटिबनगाई गा.वि.स. वडा नं.५ क</strong> कि.न. <strong id="out_kitta">२५२४</strong> को क्षे.फ. <strong id="out_area">विगह क्रमशः ०-०-१०</strong> जग्गामा मिति <strong id="out_comp_date">२०८३/०१/०५</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति <strong id="out_darta_date">२०८३/०५/१८</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति <strong id="out_insp_date">२०८३/०६/०६</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण भएको पाईएको साथै मिति <strong id="out_dec_date">२०८३/०६/१२</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरीएको ।
+          </p>
+
+          <!-- 5. Two Columns Inspection Signatures -->
+          <div class="two-col-sign-grid">
+            <div class="sign-item-col">
+              <div class="sign-heading">स्थलगत निरिक्षण</div>
+              <div class="sign-post-title" id="out_eng1_role">अमिन</div>
+              <div class="sign-officer-name" id="out_eng1_name">लक्ष्मण घिमिरे</div>
+            </div>
+            <div class="sign-item-col">
+              <div class="sign-heading">संरचना चेकजाँच गर्ने तथा रुजु गर्ने</div>
+              <div class="sign-post-title" id="out_eng2_role">सब-ईन्जिनियर</div>
+              <div class="sign-officer-name" id="out_eng2_name">तिर्थराज पन्थी</div>
+            </div>
+          </div>
+
+          <!-- 6. Technical Recommendation -->
+          <p class="engineer-ray-para">
+            उल्लेखित बिवरण अनुसारको निर्माण कार्यमा स्थलगत नापजाँच गर्ने प्रविधिकको राय बमोजिम निर्माण घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्न मनासिव देखिएकोले निर्णयार्थ पेश गर्दछु ।
+          </p>
+
+          <!-- 7. Engineer Block -->
+          <div class="engineer-sign-block">
+            <div class="sign-post-title" id="out_eng3_role">ईन्जिनियर</div>
+            <div class="sign-officer-name" id="out_eng3_name" style="margin-top: 14px !important;">प्रकाश थापा</div>
+          </div>
+
+          <!-- 8. Order Approval -->
+          <p class="approval-opinion-para">
+            प्रस्तुत प्राविधिक राय तथा सिफारिसका आधारमा घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्नेगरी सदर।
+          </p>
+
+          <!-- 9. Final Center Approval & Iti Block -->
+          <div class="final-bottom-block">
+            <div class="approval-badge-title">स्वीकृत गर्ने</div>
+            <div class="approval-dots-line">................................................</div>
+            <div class="approval-iti-line" id="out_iti_footer">
+              ईति सम्बत २०८३ साल ०६ महिना १२ गते ०२ रोज शुभम् ।
+            </div>
+            <div class="approval-name" id="out_off_name">सुरेश भुसाल</div>
+            <div class="approval-post" id="out_off_role">प्रमुख प्रशासकीय अधिकृत</div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -618,7 +585,6 @@
       document.getElementById("previewZoomWrapper").style.transform = `scale(${currentZoomLevel})`;
     }
 
-    // स्वचालित ईति सम्बत हिसाब
     function calculateItiSambhat(bsDateStr) {
       if (!bsDateStr) return;
       const engDate = bsDateStr.toString()
@@ -634,7 +600,7 @@
         const d = parseInt(parts[2], 10);
 
         const bsDaysInMonth = [0, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30];
-        const refY = 2083, refM = 6, refD = 12, refRoj = 2; // सोमबार
+        const refY = 2083, refM = 6, refD = 12, refRoj = 2; // Sombar
         let diffDays = (y - refY) * 365 + (d - refD);
         if (m > refM) {
           for (let i = refM; i < m; i++) diffDays += bsDaysInMonth[i] || 30;
@@ -673,16 +639,16 @@
       document.getElementById("out_dec_date").textContent = decDate;
       calculateItiSambhat(decDate);
 
-      document.getElementById("out_eng1_name").textContent = getVal("in_eng1_name", "मायादेवी");
+      document.getElementById("out_eng1_name").textContent = getVal("in_eng1_name", "लक्ष्मण घिमिरे");
       document.getElementById("out_eng1_role").textContent = getVal("in_eng1_role", "अमिन");
 
-      document.getElementById("out_eng2_name").textContent = getVal("in_eng2_name", "मायादेवी");
+      document.getElementById("out_eng2_name").textContent = getVal("in_eng2_name", "तिर्थराज पन्थी");
       document.getElementById("out_eng2_role").textContent = getVal("in_eng2_role", "सब-ईन्जिनियर");
 
-      document.getElementById("out_eng3_name").textContent = getVal("in_eng3_name", "मायादेवी");
+      document.getElementById("out_eng3_name").textContent = getVal("in_eng3_name", "प्रकाश थापा");
       document.getElementById("out_eng3_role").textContent = getVal("in_eng3_role", "ईन्जिनियर");
 
-      document.getElementById("out_off_name").textContent = getVal("in_off_name", "मायादेवी");
+      document.getElementById("out_off_name").textContent = getVal("in_off_name", "सुरेश भुसाल");
       document.getElementById("out_off_role").textContent = getVal("in_off_role", "प्रमुख प्रशासकीय अधिकृत");
     }
 
@@ -723,11 +689,10 @@
         document.getElementById("in_darta_date").value = found.reg_date || "२०८३/०५/१८";
         document.getElementById("in_dec_date").value = found.dec_date || "२०८३/०६/१२";
 
-        document.getElementById("in_eng1_name").value = found.eng1 || "मायादेवी";
+        if (found.eng1) document.getElementById("in_eng1_name").value = found.eng1;
         if (found.eng1_role) document.getElementById("in_eng1_role").value = found.eng1_role;
-        document.getElementById("in_eng2_name").value = found.eng2 || "मायादेवी";
-        document.getElementById("in_eng3_name").value = "मायादेवी";
-        document.getElementById("in_off_name").value = found.officer || "मायादेवी";
+        if (found.eng2) document.getElementById("in_eng2_name").value = found.eng2;
+        if (found.officer) document.getElementById("in_off_name").value = found.officer;
         if (found.officer_role) document.getElementById("in_off_role").value = found.officer_role;
 
         updateTippaniLive();
