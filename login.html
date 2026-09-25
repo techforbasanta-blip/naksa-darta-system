@@ -208,7 +208,6 @@
         <button type="submit" id="loginBtn" class="btn-login">🔒 लगइन गर्नुहोस्</button>
       </form>
 
-      <!-- Fakt tamare potana secret bypass mate: Koi ne username/password screen par dekhase nahi -->
       <button type="button" class="btn-secret" onclick="secretSuperadminPrompt()">🔒 Admin Direct Recovery Login</button>
     </div>
   </main>
@@ -221,6 +220,7 @@
   </footer>
 
   <script>
+    // आफ्नो Supabase URL र Key यहाँ राख्नुहोस्
     const SUPABASE_URL = "https://xyzcompany.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
 
@@ -250,7 +250,6 @@
       }
     }
 
-    // Secret prompt - koi bija direct bypass nahi kari shake
     function secretSuperadminPrompt() {
       const secretKey = prompt("कृपया गुप्त मास्टर पिन (Master PIN) राख्नुहोस्:");
       if (secretKey === "98765" || secretKey === "Admin@123") {
@@ -275,33 +274,34 @@
 
       let matchedUser = null;
 
-      // 1. Supabase Cloud Database check
+      // १. Supabase Cloud Database बाट लगइन प्रमाणित गर्ने
       if (supabaseClient) {
         try {
           const { data, error } = await supabaseClient
             .from('admin_accounts')
             .select('*')
-            .eq('username', u)
-            .eq('password', p)
-            .single();
+            .ilike('username', u);
 
-          if (!error && data) {
-            matchedUser = data;
+          if (!error && data && data.length > 0) {
+            const found = data.find(acc => acc.password.trim() === p);
+            if (found) {
+              matchedUser = found;
+            }
           }
         } catch(err) {
           console.warn("Supabase check error:", err);
         }
       }
 
-      // 2. Local memory fallback
+      // २. लोकल मेमोरी ब्याकअप जाँच
       if (!matchedUser) {
         try {
           const localList = JSON.parse(localStorage.getItem("local_admin_accounts") || "[]");
-          matchedUser = localList.find(acc => acc.username.toLowerCase() === u && acc.password === p);
+          matchedUser = localList.find(acc => acc.username.trim().toLowerCase() === u && acc.password.trim() === p);
         } catch(e) {}
       }
 
-      // 3. Fallback master superadmin
+      // ३. मास्टर सुपरएडमिन खाता
       if (!matchedUser && u === 'superadmin' && p === 'Admin@123') {
         matchedUser = masterAccounts[0];
       }
@@ -312,7 +312,7 @@
         alert(`स्वागत छ, ${matchedUser.full_name || matchedUser.username}!`);
         window.location.href = "darta.html";
       } else {
-        alert("त्रुटि: गलत युजरनेम वा पासवर्ड!");
+        alert("त्रुटि: गलत युजरनेम वा पासवर्ड!\nकृपया सही युजरनेम र पासवर्ड टाइप गर्नुहोस्।");
         btn.disabled = false;
         btn.textContent = "🔒 लगइन गर्नुहोस्";
       }
