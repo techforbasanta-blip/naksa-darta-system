@@ -53,8 +53,28 @@
     }
     .brand-left { display: flex; align-items: center; gap: 12px; }
     .brand-left img { height: 48px !important; width: auto !important; }
-    .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; }
+    .brand-text h1 { font-size: 21px; font-weight: 800; color: #fff; line-height: 1.1; }
     .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; }
+
+    /* Smart Mayadevi को साइडमा आउने Home Badge */
+    .brand-home-badge {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff !important;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.2s;
+    }
+    .brand-home-badge:hover {
+      background: #2563eb;
+      border-color: #60a5fa;
+    }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .nav-btn {
@@ -368,19 +388,21 @@
 </head>
 <body>
 
-  <!-- Top Header with Home Button -->
+  <!-- Top Header with Side-by-Side Home Button -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
-          <h1>Smart Mayadevi</h1>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <h1>Smart Mayadevi</h1>
+            <a href="index.html" class="brand-home-badge" title="मुख्य गृहपृष्ठमा जानुहोस्">🏠 Home</a>
+          </div>
           <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
         </div>
       </div>
 
       <div class="header-controls">
-        <a href="index.html" class="nav-btn">🏠 Home</a>
         <a href="darta.html" class="nav-btn">📝 प्रमाणपत्र (Darta)</a>
         <a href="tippani.html" class="nav-btn active">📄 टिप्पणी (Tippani)</a>
         <a href="record.html" class="nav-btn">📂 पुराना रेकर्डहरू</a>
@@ -613,7 +635,7 @@
     </section>
   </main>
 
-  <!-- Saved Tippani Modal (नाम अनुसार खोज्ने) -->
+  <!-- Saved Tippani Modal -->
   <div class="tippani-list-modal" id="tippaniModal">
     <div class="tippani-modal-content">
       <div class="modal-header-bar">
@@ -755,7 +777,6 @@
       }
     }
 
-    // टिप्पणी सेभ गर्ने / अद्यावधिक गर्ने (Save/Update)
     async function saveTippaniToCloud() {
       const owner = document.getElementById("in_owner").value.trim();
       const kitta = document.getElementById("in_kitta").value.trim();
@@ -790,7 +811,6 @@
 
       document.getElementById("current_tippani_id").value = nowTime;
 
-      // Local storage save
       try {
         let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
         const existIdx = list.findIndex(item => item.id === nowTime);
@@ -802,7 +822,6 @@
         localStorage.setItem("naksa_tippani_list", JSON.stringify(list));
       } catch(e) {}
 
-      // Supabase save
       if (supabaseClient) {
         try {
           await supabaseClient.from('tippani_records').upsert(tippaniItem);
@@ -812,7 +831,6 @@
       alert(`टिप्पणी (${owner}) सफलतापूर्वक सुरक्षित भयो!`);
     }
 
-    // टिप्पणी मेटाउने (Delete)
     async function deleteCurrentTippani() {
       const currentId = document.getElementById("current_tippani_id").value;
       const owner = document.getElementById("in_owner").value.trim();
@@ -855,7 +873,6 @@
       updateTippaniLive();
     }
 
-    // सुरक्षित गरिएका टिप्पणीहरूको मोडल खोल्ने
     function openSavedTippaniModal() {
       document.getElementById("tippaniModal").style.display = "flex";
       renderModalTippaniList();
