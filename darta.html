@@ -59,7 +59,6 @@
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-    /* Header Profile Badge */
     .user-profile-badge {
       display: flex;
       align-items: center;
@@ -193,15 +192,15 @@
 
     .form-actions {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       margin-top: 10px;
       position: sticky;
       bottom: 0;
       background: var(--card-bg);
       padding-top: 8px;
-      padding-bottom: 4px;
+      padding-bottom: 6px;
       z-index: 999;
-      border-top: 1px solid var(--border-color);
+      border-top: 2px solid var(--border-color);
     }
     .btn-act {
       flex: 1;
@@ -209,16 +208,18 @@
       border: none;
       border-radius: 4px;
       font-weight: 800;
-      font-size: 13.5px;
+      font-size: 14px;
       cursor: pointer;
       text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      user-select: none;
     }
-    .btn-save { background: #16a34a; color: #ffffff; }
-    .btn-save:hover { background: #15803d; }
-    .btn-print { background: #1e3a8a; color: #ffffff; }
-    .btn-print:hover { background: #2563eb; }
-    .btn-reset { background: #64748b; color: #ffffff; }
-    .btn-reset:hover { background: #475569; }
+    .btn-save { background: #16a34a !important; color: #ffffff !important; }
+    .btn-save:hover { background: #15803d !important; }
+    .btn-print { background: #1e3a8a !important; color: #ffffff !important; }
+    .btn-print:hover { background: #2563eb !important; }
+    .btn-reset { background: #64748b !important; color: #ffffff !important; }
+    .btn-reset:hover { background: #475569 !important; }
 
     .preview-card {
       background: #0f1e33;
@@ -298,7 +299,6 @@
     .cert-top-center-motto { text-align: center; margin-bottom: 1px; }
     .cert-motto { font-size: 14.5px; font-weight: 800; line-height: 1; }
 
-    /* सच्याइएको आधिकारिक लेटरहेड */
     .cert-header {
       display: flex !important;
       align-items: center !important;
@@ -377,7 +377,6 @@
       padding: 2.5px 5px !important;
     }
 
-    /* हस्ताक्षर तथा QR ब्लक २ स्टेप तल झारिएको */
     .cert-signatures-block {
       margin-top: 22px !important;
       margin-bottom: 2px !important;
@@ -544,7 +543,6 @@
       </div>
       <div class="header-controls">
         
-        <!-- Header Active User Badge -->
         <div class="user-profile-badge" id="headerUserProfile">
           <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
           <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
@@ -762,11 +760,11 @@
         <input type="file" id="passportInput" accept="image/*" onchange="loadPhoto(event)">
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Action Buttons with Direct IDs -->
       <div class="form-actions">
-        <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="saveRecordToDatabase()">💾 सुरक्षित गर्नुहोस्</button>
-        <button type="button" id="printBtnMain" class="btn-act btn-print" onclick="triggerPrint()">🖨 प्रिन्ट गर्नुहोस्</button>
-        <button type="button" id="resetBtnMain" class="btn-act btn-reset" onclick="resetFormAction()">↺ Reset</button>
+        <button type="button" id="saveBtnMain" class="btn-act btn-save">💾 सुरक्षित गर्नुहोस्</button>
+        <button type="button" id="printBtnMain" class="btn-act btn-print">🖨 प्रिन्ट गर्नुहोस्</button>
+        <button type="button" id="resetBtnMain" class="btn-act btn-reset">↺ Reset</button>
       </div>
     </section>
 
@@ -924,7 +922,6 @@
                 </tr>
               </table>
 
-              <!-- हस्ताक्षर तथा QR ब्लक २ स्टेप तल झारिएको -->
               <div class="cert-signatures-block">
                 <div class="officers-signature-grid">
                   <div class="sign-item">
@@ -970,7 +967,6 @@
               </div>
             </div>
 
-            <!-- Page 1 Footer Locked Directly at the Bottom -->
             <footer class="cert-footer">
               सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
               वेभ साइटः- mayadevimunrupandehi.gov.np
@@ -1016,7 +1012,6 @@
                 </div>
               </section>
 
-              <!-- 5 Large Namsari Boxes -->
               <section class="namsari-section">
                 <div class="namsari-header-title">नामसारी विवरण</div>
                 <table class="namsari-table">
@@ -1103,8 +1098,8 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // Tamara Supabase nu URL
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // Tamaro Anon Key
     
     let supabaseClient = null;
     try {
@@ -1149,7 +1144,6 @@
       }
     }
 
-    // Header Profile Rendering
     function renderHeaderUser() {
       const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
       if (!raw) return;
@@ -1174,26 +1168,6 @@
           fallback.textContent = firstLetter;
         }
       } catch(e) {}
-    }
-
-    // १००% चालु हुने प्रिन्ट बटन
-    function triggerPrint() {
-      const wrapper = document.getElementById("previewZoomWrapper");
-      if (wrapper) wrapper.style.transform = "none";
-      setTimeout(function() {
-        window.print();
-        setTimeout(function() {
-          if (wrapper) wrapper.style.transform = `scale(${currentZoomLevel})`;
-        }, 800);
-      }, 200);
-    }
-
-    // १००% चालु हुने रिसेट बटन
-    function resetFormAction() {
-      if (confirm("के तपाईं फारामका विवरणहरू खाली गरी नयाँ प्रविष्टि गर्न चाहनुहुन्छ?")) {
-        sessionStorage.removeItem("view_record_id");
-        window.location.reload();
-      }
     }
 
     function updateClock() {
@@ -1354,7 +1328,6 @@
       const offRoleEl = document.getElementById("in_officer_role");
       if (offRoleEl) setTxt("out_officer_role", offRoleEl.value);
 
-      // Namsari Table Updates
       setTxt("out_ns_date", getVal("in_ns_date", "...."));
       setTxt("out_ns_from", getVal("in_ns_from", "...."));
       setTxt("out_ns_to", getVal("in_ns_to", "...."));
@@ -1418,7 +1391,7 @@
         img.onload = function() {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
-          const maxW = 350, maxH = 350;
+          const maxW = 320, maxH = 320;
           let w = img.width, h = img.height;
           if (w > h) {
             if (w > maxW) { h *= maxW / w; w = maxW; }
@@ -1460,8 +1433,10 @@
       }
     }
 
-    // १००% चालु हुने सुरक्षित गर्ने फङ्सन
-    async function saveRecordToDatabase() {
+    // ==========================================
+    // GUARANTEED WORKING ACTION FUNCTIONS
+    // ==========================================
+    async function doSave() {
       const getVal = id => {
         const el = document.getElementById(id);
         return el ? el.value.trim() : "";
@@ -1577,6 +1552,24 @@
       }
 
       alert(`नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) ${savedInCloud ? 'क्लाउड र लोकल दुवैमा' : 'लोकलमा'} सफलतापूर्वक सुरक्षित भयो!\nअब "पुरानो हेर्नुस्" र "भेरिफाइ" दुवैमा हेर्न सकिनेछ।`);
+    }
+
+    function doPrint() {
+      const wrapper = document.getElementById("previewZoomWrapper");
+      if (wrapper) wrapper.style.transform = "none";
+      setTimeout(function() {
+        window.print();
+        setTimeout(function() {
+          if (wrapper) wrapper.style.transform = `scale(${currentZoomLevel})`;
+        }, 800);
+      }, 250);
+    }
+
+    function doReset() {
+      if (confirm("के तपाईं फाराम खाली गरी रिसेट गर्न चाहनुहुन्छ?")) {
+        sessionStorage.removeItem("view_record_id");
+        window.location.reload();
+      }
     }
 
     function handleSafeLogout() {
@@ -1704,6 +1697,31 @@
           if (btn) btn.style.display = "inline-flex";
         }
       } catch(e) {}
+
+      // Robust Direct Event Listeners for all 3 buttons
+      const btnSave = document.getElementById("saveBtnMain");
+      if (btnSave) {
+        btnSave.addEventListener("click", function(e) {
+          e.preventDefault();
+          doSave();
+        });
+      }
+
+      const btnPrint = document.getElementById("printBtnMain");
+      if (btnPrint) {
+        btnPrint.addEventListener("click", function(e) {
+          e.preventDefault();
+          doPrint();
+        });
+      }
+
+      const btnReset = document.getElementById("resetBtnMain");
+      if (btnReset) {
+        btnReset.addEventListener("click", function(e) {
+          e.preventDefault();
+          doReset();
+        });
+      }
 
       renderHeaderUser();
       applySavedTheme();
