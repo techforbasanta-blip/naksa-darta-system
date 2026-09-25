@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Mayadevi - निर्णयार्थ पेश टिप्पणी</title>
+  <title>Smart Mayadevi - Nirnayarth Pesh Tippani</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +36,6 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
-    /* Top Master Navigation Bar */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
@@ -87,7 +86,6 @@
     .header-clock-box .h-date { font-size: 11px; color: #cbd5e1; font-weight: 600; }
     .header-clock-box .h-time { font-size: 12px; color: #ffffff; font-weight: 800; }
 
-    /* 2 Column Layout (Form Entry on Left, Live A4 Paper on Right) */
     .workspace-grid {
       max-width: 1720px;
       width: 100%;
@@ -129,6 +127,7 @@
     }
     .auto-pull-box input {
       flex: 1; padding: 6px 8px; font-size: 12.5px; border: 1px solid var(--border-color); border-radius: 4px;
+      background: var(--input-bg); color: var(--text-dark);
     }
     .btn-pull {
       background: #16a34a; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 800; cursor: pointer; font-size: 12.5px; white-space: nowrap;
@@ -177,7 +176,6 @@
     .btn-print { background: #1e3a8a !important; }
     .btn-reset { background: #64748b !important; }
 
-    /* Right Preview Window */
     .preview-card {
       background: #0f1e33;
       border: 1px solid var(--border-color);
@@ -215,7 +213,7 @@
       min-height: 294mm !important;
       max-height: 294mm !important;
       margin: 0 auto 16px auto !important;
-      padding: 4mm 12mm 4mm 16mm !important;
+      padding: 3.5mm 12mm 3.5mm 16mm !important;
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
       position: relative !important;
@@ -245,76 +243,73 @@
       justify-content: space-between !important;
       border-bottom: 2.2px solid var(--gov-crimson) !important;
       padding-bottom: 2px !important;
-      margin-bottom: 4px !important;
+      margin-bottom: 3px !important;
       width: 100% !important;
       position: relative;
       z-index: 2;
     }
     .logo-box-left, .logo-box-right {
-      width: 65px !important; height: 65px !important; flex: 0 0 65px !important;
+      width: 62px !important; height: 62px !important; flex: 0 0 62px !important;
       display: flex !important; align-items: center !important; justify-content: center !important;
     }
-    .logo-box-left img, .logo-box-right img { width: 65px !important; height: 65px !important; object-fit: contain !important; }
+    .logo-box-left img, .logo-box-right img { width: 62px !important; height: 62px !important; object-fit: contain !important; }
     .header-titles {
       text-align: center !important; flex: 1 !important; padding: 0 6px !important;
       display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
     }
-    .header-titles .palika-title { font-size: 24px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15; }
-    .header-titles .palika-en { font-size: 14.5px !important; font-weight: 800 !important; color: #1e3a8a !important; line-height: 1; }
-    .header-titles .office-title { font-size: 26px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15; }
-    .header-titles .office-en { font-size: 13.5px !important; font-weight: 700 !important; color: #1e3a8a !important; line-height: 1; }
-    .header-titles .address-text { font-size: 15.5px !important; font-weight: 800 !important; color: #000 !important; margin-top: 2px; }
+    .header-titles .palika-title { font-size: 23px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15; }
+    .header-titles .palika-en { font-size: 14px !important; font-weight: 800 !important; color: #1e3a8a !important; line-height: 1; }
+    .header-titles .office-title { font-size: 25px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15; }
+    .header-titles .office-en { font-size: 13px !important; font-weight: 700 !important; color: #1e3a8a !important; line-height: 1; }
+    .header-titles .address-text { font-size: 15px !important; font-weight: 800 !important; color: #000 !important; margin-top: 1px; }
 
     .tippani-content { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; justify-content: flex-start; }
-    .tippani-shriman { font-size: 18px; font-weight: 900; text-decoration: underline; margin-top: 4px; margin-bottom: 2px; }
-    .tippani-subject-box { text-align: center; margin: 4px 0 6px 0; }
-    .tippani-subject { font-size: 19px; font-weight: 900; text-decoration: underline; display: inline-block; }
+    .tippani-shriman { font-size: 18px; font-weight: 900; text-decoration: underline; margin-top: 2px; margin-bottom: 2px; }
+    .tippani-subject-box { text-align: center; margin: 2px 0 4px 0; }
+    .tippani-subject { font-size: 18.5px; font-weight: 900; text-decoration: underline; display: inline-block; }
 
     .tippani-para {
-      font-size: 16.2px !important;
-      line-height: 1.52 !important;
+      font-size: 16px !important;
+      line-height: 1.5 !important;
       text-align: justify !important;
       font-weight: 600 !important;
-      margin-bottom: 8px !important;
-      text-indent: 30px;
+      margin-bottom: 6px !important;
+      text-indent: 26px;
     }
     .tippani-para strong { font-weight: 900 !important; }
 
-    /* Officer Signatures Section */
     .sign-flow-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      margin-top: 10px;
+      margin-top: 8px;
       align-items: flex-end;
     }
     .sign-box { text-align: center; }
-    .sign-box.left { text-align: left; }
-    .sign-box.right { text-align: right; }
-    .sign-label-title { font-size: 15.5px; font-weight: 800; margin-bottom: 18px; }
-    .sign-name-holder { font-size: 16.5px; font-weight: 900; border-top: 1.2px dotted #000; display: inline-block; min-width: 170px; text-align: center; padding-top: 2px; }
-    .sign-role-holder { font-size: 14.5px; font-weight: 700; text-align: center; }
+    .sign-label-title { font-size: 15px; font-weight: 800; margin-bottom: 16px; }
+    .sign-name-holder { font-size: 16px; font-weight: 900; border-top: 1.2px dotted #000; display: inline-block; min-width: 170px; text-align: center; padding-top: 2px; }
+    .sign-role-holder { font-size: 14px; font-weight: 700; text-align: center; }
 
     .middle-opinion-para {
-      font-size: 16px !important;
-      line-height: 1.45 !important;
+      font-size: 15.5px !important;
+      line-height: 1.4 !important;
       text-align: justify !important;
       font-weight: 600 !important;
-      margin: 12px 0 6px 0 !important;
+      margin: 8px 0 4px 0 !important;
     }
 
     .approval-order-para {
-      font-size: 16px !important;
-      line-height: 1.45 !important;
+      font-size: 15.5px !important;
+      line-height: 1.4 !important;
       text-align: justify !important;
       font-weight: 600 !important;
-      margin: 14px 0 6px 0 !important;
+      margin: 10px 0 4px 0 !important;
     }
 
     .iti-sambhat-footer {
       font-size: 15.5px;
       font-weight: 900;
-      margin-top: 14px;
+      margin-top: 12px;
       text-align: left;
     }
 
@@ -326,14 +321,13 @@
       .preview-zoom-wrapper { transform: none !important; width: 210mm !important; }
       .a4-tippani-sheet {
         width: 210mm !important; height: 294mm !important; max-height: 294mm !important;
-        margin: 0 !important; padding: 4mm 12mm 4mm 16mm !important; border: 1.5px solid #000 !important; box-shadow: none !important;
+        margin: 0 !important; padding: 3.5mm 12mm 3.5mm 16mm !important; border: 1.5px solid #000 !important; box-shadow: none !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Header with Module Links -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
@@ -366,7 +360,6 @@
     <section class="entry-card no-print">
       <h2 class="entry-title">📄 निर्णयार्थ पेश टिप्पणी प्रविष्टि फाराम</h2>
 
-      <!-- Auto-Pull Box -->
       <div class="auto-pull-box">
         <input type="text" id="pull_darta_no" placeholder="दर्ता नं. टाइप गरी डाटा तान्नुहोस् (उदा: २८/२०८३/०८४)">
         <button type="button" class="btn-pull" onclick="pullDataFromDarta()">🔄 डाटा तान्नुहोस्</button>
@@ -422,7 +415,6 @@
 
       <div class="form-section-title">प्राविधिक तथा प्रशासनिक अधिकारीहरू (हस्ताक्षर गर्ने)</div>
       
-      <!-- 1. Sthalagat Nirikshan -->
       <div class="form-row">
         <label>१) स्थलगत निरीक्षण गर्ने (पद र नाम)</label>
         <div style="display:flex; gap:6px;">
@@ -435,7 +427,6 @@
         </div>
       </div>
 
-      <!-- 2. Sanrachana Checkjanch -->
       <div class="form-row">
         <label>२) संरचना चेकजाँच तथा रुजु गर्ने (पद र नाम)</label>
         <div style="display:flex; gap:6px;">
@@ -448,7 +439,6 @@
         </div>
       </div>
 
-      <!-- 3. Technical Opinion Submitter -->
       <div class="form-row">
         <label>३) राय पेश गर्ने ईन्जिनियर (पद र नाम)</label>
         <div style="display:flex; gap:6px;">
@@ -460,7 +450,6 @@
         </div>
       </div>
 
-      <!-- 4. Approving Officer -->
       <div class="form-row">
         <label>४) स्वीकृत गर्ने अधिकृत (पद र नाम)</label>
         <div style="display:flex; gap:6px;">
@@ -499,7 +488,6 @@
           <div class="tippani-content">
             <div class="tippani-shriman">श्रीमान्</div>
 
-            <!-- आधिकारिक लेटरहेड -->
             <header class="cert-header">
               <div class="logo-box-left">
                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -520,12 +508,10 @@
               <span class="tippani-subject">विषयः घर सँरचना अभिलेखिकरण प्रमाण-पत्र दिने सम्बन्धमा ।</span>
             </div>
 
-            <!-- मुख्य टिप्पणी विवरण -->
             <p class="tippani-para">
               मायादेवी गाउँपालिका वडा नं. <strong id="out_ward">०८</strong> बस्ने श्री <strong id="out_owner">ज्योती कर्ण</strong>ले निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="out_sabik">हाटिबनगाई गा.वि.स. वडा नं.५ क</strong> कि.न. <strong id="out_kitta">२५२४</strong> को क्षे.फ. <strong id="out_area">विगह क्रमशः ०-०-१०</strong> जग्गामा मिति <strong id="out_comp_date">२०८३/०१/०५</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति <strong id="out_darta_date">२०८३/०५/१८</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति <strong id="out_insp_date">२०८३/०६/०६</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण भएको पाईएको साथै मिति <strong id="out_dec_date">२०८३/०६/१२</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरीएको ।
             </p>
 
-            <!-- स्थलगत निरीक्षण र चेकजाँच रुजु हस्ताक्षर -->
             <div class="sign-flow-grid">
               <div class="sign-box">
                 <div class="sign-label-title">स्थलगत निरिक्षण</div>
@@ -539,30 +525,27 @@
               </div>
             </div>
 
-            <!-- प्राविधिक राय -->
             <p class="middle-opinion-para">
               उल्लेखित बिवरण अनुसारको निर्माण कार्यमा स्थलगत नापजाँच गर्ने प्रविधिकको राय बमोजिम निर्माण घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्न मनासिव देखिएकोले निर्णयार्थ पेश गर्दछु ।
             </p>
 
-            <div style="text-align: left; margin-top: 18px; margin-bottom: 8px;">
+            <div style="text-align: left; margin-top: 14px; margin-bottom: 6px;">
               <div class="sign-name-holder" id="out_eng3_name">प्रकाश थापा</div>
               <div class="sign-role-holder" id="out_eng3_role" style="text-align: left; padding-left: 20px;">ईन्जिनियर</div>
             </div>
 
-            <!-- प्रशासकीय आदेश तथा सदर -->
             <p class="approval-order-para">
               प्रस्तुत प्राविधिक राय तथा सिफारिसका आधारमा घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्नेगरी सदर।
             </p>
 
-            <div style="text-align: right; margin-top: 20px;">
+            <div style="text-align: right; margin-top: 16px;">
               <div style="display: inline-block; text-align: center;">
-                <div class="sign-label-title" style="margin-bottom: 22px;">स्वीकृत गर्ने</div>
+                <div class="sign-label-title" style="margin-bottom: 20px;">स्वीकृत गर्ने</div>
                 <div class="sign-name-holder" id="out_off_name">सुरेश भुसाल</div>
                 <div class="sign-role-holder" id="out_off_role">प्रमुख प्रशासकीय अधिकृत</div>
               </div>
             </div>
 
-            <!-- स्वचालित ईति सम्बत मिति -->
             <div class="iti-sambhat-footer" id="out_iti_footer">
               ईति सम्बत २०८३ साल ०६ महिना १२ गते ०२ रोज शुभम् ।
             </div>
@@ -573,7 +556,6 @@
   </main>
 
   <script>
-    // Supabase Credentials
     const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
     const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
     
@@ -597,7 +579,6 @@
       document.getElementById("previewZoomWrapper").style.transform = `scale(${currentZoomLevel})`;
     }
 
-    // स्वचालित ईति सम्बत हिसाब (साल, महिना, गते, र रोज)
     function calculateItiSambhat(bsDateStr) {
       if (!bsDateStr) return;
       const engDate = bsDateStr.toString()
@@ -613,7 +594,7 @@
         const d = parseInt(parts[2], 10);
 
         const bsDaysInMonth = [0, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30];
-        const refY = 2083, refM = 6, refD = 12, refRoj = 2; // सोमबार
+        const refY = 2083, refM = 6, refD = 12, refRoj = 2;
         let diffDays = (y - refY) * 365 + (d - refD);
         if (m > refM) {
           for (let i = refM; i < m; i++) diffDays += bsDaysInMonth[i] || 30;
@@ -633,7 +614,6 @@
       }
     }
 
-    // लाइभ अद्यावधिक
     function updateTippaniLive() {
       const getVal = (id, def = "....") => {
         const el = document.getElementById(id);
@@ -666,7 +646,6 @@
       document.getElementById("out_off_role").textContent = getVal("in_off_role", "प्रमुख प्रशासकीय अधिकृत");
     }
 
-    // darta.html को सेभ भएको डाटा दर्ता नम्बरबाट स्वतः तान्ने
     async function pullDataFromDarta() {
       const q = document.getElementById("pull_darta_no").value.trim().toLowerCase();
       if (!q) {
@@ -676,7 +655,6 @@
 
       let found = null;
 
-      // १. पहिले सुपाबेसबाट खोज्ने
       if (supabaseClient) {
         try {
           const { data } = await supabaseClient
@@ -688,7 +666,6 @@
         } catch(e) {}
       }
 
-      // २. लोकल स्टोरेजबाट खोज्ने
       if (!found) {
         try {
           const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
@@ -715,11 +692,10 @@
         updateTippaniLive();
         alert(`दर्ता नं. "${found.darta_no}" को विवरण प्रमाणपत्रबाट स्वतः तानियो!`);
       } else {
-        alert("यो दर्ता नम्बरको प्रमाणपत्र फेला परेन। कृपया हातैले भर्नुहोस्।");
+        alert("यो दर्ता नम्बरको प्रमाणपत्र फेला परेन। कृपया विवरण हातैले भर्नुहोस्।");
       }
     }
 
-    // सुपाबेस क्लाउडमा सुरक्षित गर्ने (७ दिन अटो डिलिट सिस्टम)
     async function saveTippaniToCloud() {
       const dartaNo = document.getElementById("pull_darta_no").value.trim() || document.getElementById("in_kitta").value.trim();
       const owner = document.getElementById("in_owner").value.trim();
@@ -727,7 +703,7 @@
       const nowTime = Date.now();
       const tippaniItem = {
         id: nowTime,
-        created_timestamp: nowTime, // ७ दिन पछि अटो डिलिट टाइमर
+        created_timestamp: nowTime,
         darta_no: dartaNo,
         owner_name: owner,
         ward: document.getElementById("in_ward").value.trim(),
@@ -747,7 +723,6 @@
         officer_role: document.getElementById("in_off_role").value
       };
 
-      // सुपाबेसमा सुरक्षित
       let cloudOk = false;
       if (supabaseClient) {
         try {
@@ -758,7 +733,6 @@
         } catch(e) {}
       }
 
-      // लोकल ब्याकअप
       try {
         let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
         list.unshift(tippaniItem);
