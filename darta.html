@@ -37,6 +37,7 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
+    /* Top Navigation Header */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
@@ -195,6 +196,7 @@
       align-items: center;
     }
 
+    /* A4 CERTIFICATE ENGINE */
     .a4-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -239,22 +241,67 @@
     .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
     .cert-motto { font-size: 15px; font-weight: 800; line-height: 1; }
 
+    /* =========================================================
+       FIXED OFFICIAL LETTERHEAD (सच्याइएको आधिकारिक लेटरहेड)
+       ========================================================= */
     .cert-header {
-      display: flex align-items: center; justify-content: space-between;
-      border-bottom: 2px solid var(--gov-crimson); padding-bottom: 2px; margin-bottom: 2px;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      border-bottom: 2.2px solid var(--gov-crimson) !important;
+      padding-bottom: 2px !important;
+      margin-bottom: 3px !important;
+      width: 100% !important;
     }
     .logo-box-left, .logo-box-right {
-      width: 70px !important; height: 70px !important; flex: 0 0 70px !important;
-      display: flex; align-items: center; justify-content: center;
+      width: 68px !important;
+      height: 68px !important;
+      flex: 0 0 68px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
     .logo-box-left img, .logo-box-right img {
-      width: 70px !important; height: 70px !important; max-width: 70px !important; max-height: 70px !important; object-fit: contain !important;
+      width: 68px !important;
+      height: 68px !important;
+      max-width: 68px !important;
+      max-height: 68px !important;
+      object-fit: contain !important;
+      display: block !important;
     }
-    .header-titles { text-align: center; flex: 1; padding: 0 4px; }
-    .header-titles .gov-sub { font-size: 16.5px; font-weight: 800; line-height: 1; }
-    .header-titles .palika-title { font-size: 24.5px; font-weight: 900; line-height: 1.1; }
-    .header-titles .office-title { font-size: 30.5px !important; font-weight: 900 !important; line-height: 1.15; }
-    .header-titles .address-text { font-size: 16.5px; font-weight: 700; margin-top: 1px; }
+    .header-titles {
+      text-align: center !important;
+      flex: 1 !important;
+      padding: 0 6px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .header-titles .gov-sub {
+      font-size: 16px !important;
+      font-weight: 800 !important;
+      line-height: 1.15 !important;
+      margin: 0 !important;
+    }
+    .header-titles .palika-title {
+      font-size: 24px !important;
+      font-weight: 900 !important;
+      line-height: 1.15 !important;
+      margin: 0 !important;
+    }
+    .header-titles .office-title {
+      font-size: 30px !important;
+      font-weight: 900 !important;
+      line-height: 1.15 !important;
+      margin: 0 !important;
+    }
+    .header-titles .address-text {
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      margin-top: 1px !important;
+      line-height: 1.15 !important;
+    }
 
     .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 2px 0; }
     .ref-col { font-size: 16px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
@@ -341,6 +388,7 @@
       line-height: 1.2 !important;
     }
 
+    /* PAGE 2 */
     .a4-sheet.back-page {
       page-break-before: always !important;
       justify-content: flex-start !important;
@@ -466,10 +514,7 @@
 
         <a href="darta.html" class="nav-btn active">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
-        
-        <!-- यो बटन सुरुमा लुकेको हुन्छ, केवल superadmin ले लगइन गर्दा मात्र खुल्छ -->
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
-        
         <button type="button" class="nav-btn btn-idcard" onclick="alert('ID Card Module चाँडै आउँदैछ!');">🪪 ID Card Create</button>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
@@ -692,7 +737,7 @@
       <div class="preview-zoom-wrapper" id="previewZoomWrapper">
         <div id="printAreaContainer">
           
-          <!-- PAGE 1 -->
+          <!-- PAGE 1 (Fixed Clean Letterhead) -->
           <div class="a4-sheet" id="a4CertificatePaper">
             <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                  onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -702,6 +747,7 @@
                 <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
               </div>
 
+              <!-- पूर्ण सच्याइएको आधिकारिक लेटरहेड ब्लक -->
               <header class="cert-header">
                 <div class="logo-box-left">
                   <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -875,6 +921,7 @@
               </div>
             </div>
 
+            <!-- Page 1 Footer Locked Directly at the Bottom -->
             <footer class="cert-footer">
               सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
               वेभ साइटः- mayadevimunrupandehi.gov.np
@@ -920,6 +967,7 @@
                 </div>
               </section>
 
+              <!-- 5 Large Namsari Boxes -->
               <section class="namsari-section">
                 <div class="namsari-header-title">नामसारी विवरण</div>
                 <table class="namsari-table">
@@ -1006,9 +1054,9 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
-
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key
+    
     let supabaseClient = null;
     try {
       if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
@@ -1505,7 +1553,6 @@
         return;
       }
 
-      // केवल superadmin खाता भएको व्यक्तिलाई मात्र हेडरमा Admin बटन देखाउने
       try {
         const u = JSON.parse(raw);
         if (u.username && u.username.toLowerCase() === "superadmin") {
