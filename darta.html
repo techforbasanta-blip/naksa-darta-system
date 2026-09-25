@@ -152,6 +152,18 @@
     }
     body.dark-mode .entry-title { color: #60a5fa; }
 
+    .edit-banner {
+      background: #fef08a;
+      color: #854d0e;
+      border: 1px solid #facc15;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 12px;
+      margin-bottom: 8px;
+      display: none;
+    }
+
     .form-section-title {
       font-size: 12.5px;
       font-weight: 800;
@@ -363,7 +375,7 @@
       padding: 2px 5px !important;
     }
 
-    /* हस्ताक्षर भाग २ स्टेप तल झारिएको र ठूलो खाली ठाउँ */
+    /* हस्ताक्षर भाग २ स्टेप तल झारिएको */
     .cert-signatures-block {
       margin-top: 36px !important;
       margin-bottom: 2px !important;
@@ -556,11 +568,15 @@
 
   <main class="workspace-grid">
     <section class="entry-card no-print">
-      <h2 class="entry-title">📝 नक्सा विवरण फाराम (१ देखि १८ पूर्ण प्रविष्टि)</h2>
+      <div id="editBannerNotice" class="edit-banner">
+        ⚠️ तपाईं पुरानो नक्सा रेकर्ड सच्याउँदै हुनुहुन्छ। विवरण मिलाएर तल "अद्यावधिक गर्नुहोस्" थिच्नुहोस्।
+      </div>
+
+      <h2 class="entry-title" id="pageFormTitle">📝 नक्सा विवरण फाराम (१ देखि १८ पूर्ण प्रविष्टि)</h2>
 
       <div class="form-section-title">दर्ता तथा प्रमाण-पत्र विवरण</div>
       <div class="form-grid-2">
-        <div class="form-row"><label>पत्र संख्या</label><input type="text" id="in_patra" value="०८३/८४" oninput="updateLivePreview()"></div>
+        <div class="form-row"><label>पत्र संख्या</label><input type="text" id="in_patra" value="०८३/८4" oninput="updateLivePreview()"></div>
         <div class="form-row"><label>दर्ता मिति *</label><input type="text" id="in_date" value="२०८३/०६/०८" oninput="updateLivePreview()"></div>
       </div>
       <div class="form-grid-2">
@@ -746,7 +762,7 @@
         <input type="file" id="passportInput" accept="image/*" onchange="loadPhoto(event)">
       </div>
 
-      <!-- Action Buttons with Direct Onclick functions -->
+      <!-- Action Buttons -->
       <div class="form-actions">
         <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="window.executeSave()">💾 सुरक्षित गर्नुहोस्</button>
         <button type="button" id="printBtnMain" class="btn-act btn-print" onclick="window.executePrint()">🖨 प्रिन्ट गर्नुहोस्</button>
@@ -908,6 +924,7 @@
                 </tr>
               </table>
 
+              <!-- हस्ताक्षर तथा QR ब्लक २ स्टेप तल झारिएको -->
               <div class="cert-signatures-block">
                 <div class="officers-signature-grid">
                   <div class="sign-item">
@@ -953,6 +970,7 @@
               </div>
             </div>
 
+            <!-- Page 1 Footer Locked Directly at the Bottom -->
             <footer class="cert-footer">
               सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
               वेभ साइटः- mayadevimunrupandehi.gov.np
@@ -998,6 +1016,7 @@
                 </div>
               </section>
 
+              <!-- 5 Large Namsari Boxes -->
               <section class="namsari-section">
                 <div class="namsari-header-title">नामसारी विवरण</div>
                 <table class="namsari-table">
@@ -1083,6 +1102,7 @@
     let currentPhotoBase64 = "";
     let currentNamsariPhotoBase64 = "";
     let currentZoomLevel = 0.82;
+    let editingOriginalRecord = null; // सम्पादन भइरहेको रेकर्ड
 
     function setZoom(lvl) {
       currentZoomLevel = lvl;
@@ -1106,7 +1126,6 @@
       }
     }
 
-    // Superadmin र प्रोफाइल हेडर लजिक (Try-catch सहित जसले स्क्रिप्ट रोक्दैन)
     function renderHeaderUser() {
       try {
         const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
@@ -1131,19 +1150,14 @@
           fallback.textContent = (u.full_name || u.username || 'A').charAt(0).toUpperCase();
         }
 
-        // Superadmin भए Admin मेन्यु बटन देखिने
         const btn = document.getElementById("adminMenuBtn");
         if (btn && u.username && u.username.toLowerCase() === "superadmin") {
           btn.style.display = "inline-flex";
         }
-      } catch(e) {
-        console.warn("User profile rendering ignored:", e);
-      }
+      } catch(e) {}
     }
 
-    // ==========================================
-    // WINDOW LEVEL 100% BULLETPROOF ACTION BUTTONS
-    // ==========================================
+    // १००% चालु हुने प्रिन्ट फङ्सन
     window.executePrint = function() {
       try {
         const wrapper = document.getElementById("previewZoomWrapper");
@@ -1159,13 +1173,16 @@
       }
     };
 
+    // १००% चालु हुने रिसेट फङ्सन
     window.executeReset = function() {
       if (confirm("के तपाईं फारामका विवरणहरू खाली गरी नयाँ प्रविष्टि गर्न चाहनुहुन्छ?")) {
         sessionStorage.removeItem("view_record_id");
-        window.location.reload();
+        sessionStorage.removeItem("is_edit_mode");
+        window.location.href = "darta.html";
       }
     };
 
+    // नयाँ सुरक्षित गर्ने वा गल्ती सच्याएर अद्यावधिक गर्ने (Update) फङ्सन
     window.executeSave = async function() {
       const getVal = id => {
         const el = document.getElementById(id);
@@ -1190,10 +1207,14 @@
         saveBtn.textContent = "⏳ सुरक्षित हुँदैछ...";
       }
 
+      // यदि पुरानो रेकर्ड सच्याएको हो भने पुरानै ID र created_timestamp कायम राख्ने
       const nowTime = Date.now();
+      const recordId = editingOriginalRecord ? editingOriginalRecord.id : nowTime;
+      const createdTimestamp = editingOriginalRecord ? (editingOriginalRecord.created_timestamp || editingOriginalRecord.id) : nowTime;
+
       const recordItem = {
-        id: nowTime,
-        created_timestamp: nowTime,
+        id: recordId,
+        created_timestamp: createdTimestamp,
         darta_no: dartaNo,
         patra_no: getVal("in_patra"),
         reg_date: getVal("in_date"),
@@ -1249,10 +1270,10 @@
         ns_photo: currentNamsariPhotoBase64
       };
 
-      // १. पहिले लोकल ब्याकअप सुरक्षित
+      // १. लोकल स्टोरेज अपडेट
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
-        const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
+        const existingIdx = records.findIndex(r => r.id === recordId || r.darta_no === dartaNo);
         if (existingIdx !== -1) {
           records[existingIdx] = recordItem;
         } else {
@@ -1262,7 +1283,7 @@
         localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
       } catch (err) {}
 
-      // २. सुपाबेस क्लाउडमा सिधै सुरक्षित
+      // २. सुपाबेसमा सिधै Upsert (नयाँ भए Insert, पुरानो भए Update)
       let savedInCloud = false;
       let cloudErrorMsg = "";
 
@@ -1284,13 +1305,13 @@
 
       if (saveBtn) {
         saveBtn.disabled = false;
-        saveBtn.textContent = "💾 सुरक्षित गर्नुहोस्";
+        saveBtn.textContent = editingOriginalRecord ? "💾 अद्यावधिक (Update) सुरक्षित" : "💾 सुरक्षित गर्नुहोस्";
       }
 
-      if (savedInCloud) {
-        alert(`बधाई छ! नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) सुपाबेस क्लाउडमा सफलतापूर्वक सुरक्षित भयो!\nअब जुनसुकै कम्प्युटरबाट पनि रेकर्ड खुल्नेछ र प्रमाणिकरण हुनेछ।`);
+      if (editingOriginalRecord) {
+        alert(`सफलतापूर्वक अद्यावधिक (Updated)! दर्ता नं. "${dartaNo}" को सच्याइएको विवरण सुपाबेस क्लाउडमा सुरक्षित भयो। अब सिधै प्रिन्ट गर्न सक्नुहुन्छ।`);
       } else {
-        alert(`नक्सा दर्ता नं. "${dartaNo}" सुरक्षित भयो!\n(नोट: सुपाबेसमा समस्या भए पनि मेमोरीमा सुरक्षित छ। ${cloudErrorMsg ? cloudErrorMsg : ''})`);
+        alert(`बधाई छ! नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) सुपाबेस क्लाउडमा सफलतापूर्वक सुरक्षित भयो!`);
       }
     };
 
@@ -1573,18 +1594,16 @@
       window.location.href = "login.html";
     }
 
+    // सच्याउने (Edit) मोड जाँच्ने र फाराममा भर्ने
     async function checkEditMode() {
       try {
         const editId = sessionStorage.getItem("view_record_id");
         if (!editId) return;
 
         let item = null;
-        try {
-          const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
-          item = records.find(r => r.id.toString() === editId.toString());
-        } catch (e) {}
 
-        if (!item && supabaseClient) {
+        // १. सुपाबेसबाट खोज्ने
+        if (supabaseClient) {
           try {
             const { data } = await supabaseClient
               .from('naksa_records')
@@ -1595,7 +1614,25 @@
           } catch(e) {}
         }
 
+        // २. यदि सुपाबेसमा भेटिएन भने लोकलमा खोज्ने
+        if (!item) {
+          try {
+            const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
+            item = records.find(r => r.id.toString() === editId.toString());
+          } catch (e) {}
+        }
+
         if (item) {
+          editingOriginalRecord = item; // सम्पादन भइरहेको रेकर्ड सेट भयो
+
+          // सच्याउने ब्यानर देखाउने
+          const banner = document.getElementById("editBannerNotice");
+          if (banner) banner.style.display = "block";
+          const formTitle = document.getElementById("pageFormTitle");
+          if (formTitle) formTitle.textContent = `✏️ नक्सा विवरण सम्पादन (दर्ता नं: ${item.darta_no})`;
+          const saveBtn = document.getElementById("saveBtnMain");
+          if (saveBtn) saveBtn.textContent = "💾 अद्यावधिक (Update) सुरक्षित";
+
           const setVal = (id, val) => {
             const el = document.getElementById(id);
             if (el) el.value = val || "";
@@ -1671,7 +1708,6 @@
             if (txt) { txt.style.display = "none"; }
           }
 
-          sessionStorage.removeItem("view_record_id");
           updateLivePreview();
           calcTotalArea();
         }
