@@ -202,7 +202,7 @@
       align-items: center;
     }
 
-    /* EXACT DARTA.HTML STYLE A4 SHEET */
+    /* A4 Paper Sheet - Punching margin left 26mm & Kokila font */
     .a4-tippani-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -213,20 +213,20 @@
       min-height: 294mm !important;
       max-height: 294mm !important;
       margin: 0 auto 16px auto !important;
-      padding: 3.5mm 12mm 3.5mm 16mm !important;
+      padding: 5mm 12mm 5mm 26mm !important; /* Left 26mm punching space */
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
       position: relative !important;
       overflow: hidden !important;
       display: flex !important;
       flex-direction: column !important;
-      justify-content: space-between !important;
+      justify-content: flex-start !important;
     }
     .a4-tippani-sheet, .a4-tippani-sheet * { color: #000000 !important; font-family: var(--print-font) !important; }
 
     .watermark-img {
       position: absolute !important;
-      left: 52% !important;
+      left: 54% !important;
       top: 50% !important;
       transform: translate(-50%, -50%) !important;
       width: 120mm !important;
@@ -234,7 +234,7 @@
       max-width: 120mm !important;
       max-height: 120mm !important;
       object-fit: contain !important;
-      opacity: 0.12 !important;
+      opacity: 0.10 !important;
       pointer-events: none !important;
       z-index: 1 !important;
       mix-blend-mode: multiply !important;
@@ -249,32 +249,30 @@
       background: transparent;
     }
 
-    .cert-top-center-motto { text-align: center; margin-bottom: 1px; }
-    .cert-motto { font-size: 14.5px; font-weight: 800; line-height: 1; color: var(--gov-crimson) !important; }
-
-    /* EXACT DARTA.HTML LETTERHEAD HEADER */
+    /* 1 Step Tala + Font 2 Step Thulo */
     .cert-header {
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
-      border-bottom: 2.2px solid var(--gov-crimson) !important;
-      padding-bottom: 2px !important;
-      margin-bottom: 4px !important;
+      border-bottom: 2.5px solid var(--gov-crimson) !important;
+      padding-bottom: 4px !important;
+      margin-top: 10mm !important; /* Header 1 Step Tala */
+      margin-bottom: 8px !important;
       width: 100% !important;
     }
     .logo-box-left, .logo-box-right {
-      width: 65px !important;
-      height: 65px !important;
-      flex: 0 0 65px !important;
+      width: 68px !important;
+      height: 68px !important;
+      flex: 0 0 68px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
     }
     .logo-box-left img, .logo-box-right img {
-      width: 65px !important;
-      height: 65px !important;
-      max-width: 65px !important;
-      max-height: 65px !important;
+      width: 68px !important;
+      height: 68px !important;
+      max-width: 68px !important;
+      max-height: 68px !important;
       object-fit: contain !important;
       display: block !important;
     }
@@ -287,40 +285,43 @@
       align-items: center !important;
       justify-content: center !important;
     }
-    .header-titles .gov-sub { font-size: 15px !important; font-weight: 800 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
-    .header-titles .palika-title { font-size: 23px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
-    .header-titles .office-title { font-size: 29px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
-    .header-titles .address-text { font-size: 15px !important; font-weight: 700 !important; color: #1e3a8a !important; margin-top: 1px !important; line-height: 1.15 !important; }
+    /* Header fonts 2 step thulo */
+    .header-titles .gov-sub { font-size: 16.5px !important; font-weight: 800 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
+    .header-titles .palika-title { font-size: 26px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
+    .header-titles .office-title { font-size: 32px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
+    .header-titles .address-text { font-size: 17px !important; font-weight: 800 !important; color: #1e3a8a !important; margin-top: 1px !important; line-height: 1.15 !important; }
 
-    /* SHRIMAN BELOW LETTERHEAD */
+    /* Shriman: underline hatayeko, font thulo */
     .tippani-top-shriman {
-      font-size: 19px !important;
+      font-size: 21px !important;
       font-weight: 900 !important;
       text-align: left !important;
-      margin-top: 2px !important;
+      margin-top: 4px !important;
       margin-bottom: 2px !important;
-      text-decoration: underline !important;
+      text-decoration: none !important;
       line-height: 1.2 !important;
     }
 
+    /* Bishay: mathi rakheko, font 2/4 step thulo */
     .tippani-subject-box {
       text-align: center !important;
-      margin: 2px 0 4px 0 !important;
+      margin: 4px 0 8px 0 !important;
     }
     .tippani-subject {
-      font-size: 18.5px !important;
+      font-size: 22px !important;
       font-weight: 900 !important;
       text-decoration: underline !important;
       display: inline-block !important;
     }
 
+    /* Main Paragraph: Font 2 step thulo */
     .tippani-body-para {
-      font-size: 16px !important;
-      line-height: 1.48 !important;
+      font-size: 18.5px !important;
+      line-height: 1.55 !important;
       text-align: justify !important;
       font-weight: 600 !important;
-      margin-bottom: 6px !important;
-      text-indent: 26px;
+      margin-bottom: 8px !important;
+      text-indent: 28px;
     }
     .tippani-body-para strong { font-weight: 900 !important; }
 
@@ -328,17 +329,17 @@
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
       gap: 16px !important;
-      margin-top: 6px !important;
-      margin-bottom: 4px !important;
+      margin-top: 8px !important;
+      margin-bottom: 6px !important;
     }
     .sign-item-col { text-align: center !important; }
-    .sign-heading { font-size: 15px !important; font-weight: 800 !important; line-height: 1.3 !important; }
-    .sign-post-title { font-size: 14px !important; font-weight: 700 !important; margin-top: 1px !important; }
-    .sign-officer-name { font-size: 16px !important; font-weight: 900 !important; margin-top: 16px !important; border-top: 1px dotted #000; display: inline-block; min-width: 160px; padding-top: 2px; }
+    .sign-heading { font-size: 16px !important; font-weight: 800 !important; line-height: 1.3 !important; }
+    .sign-post-title { font-size: 15px !important; font-weight: 700 !important; margin-top: 1px !important; }
+    .sign-officer-name { font-size: 17.5px !important; font-weight: 900 !important; margin-top: 18px !important; border-top: 1.2px dotted #000; display: inline-block; min-width: 170px; padding-top: 2px; }
 
     .engineer-ray-para {
-      font-size: 15.5px !important;
-      line-height: 1.38 !important;
+      font-size: 17px !important;
+      line-height: 1.45 !important;
       text-align: justify !important;
       font-weight: 600 !important;
       margin-top: 6px !important;
@@ -355,15 +356,15 @@
     }
 
     .approval-opinion-para {
-      font-size: 15.5px !important;
-      line-height: 1.38 !important;
+      font-size: 17px !important;
+      line-height: 1.45 !important;
       text-align: justify !important;
       font-weight: 600 !important;
       margin-top: 6px !important;
       margin-bottom: 4px !important;
     }
 
-    /* FINAL BOTTOM APPROVAL AND ITI BLOCK */
+    /* Final bottom approval and Iti block */
     .final-bottom-block {
       text-align: center !important;
       margin-top: 8px !important;
@@ -372,11 +373,11 @@
       align-items: center !important;
       justify-content: center !important;
     }
-    .approval-badge-title { font-size: 15px !important; font-weight: 800 !important; margin-bottom: 2px !important; }
-    .approval-dots-line { font-size: 14px !important; letter-spacing: 1px !important; margin-bottom: 2px !important; font-weight: bold; }
-    .approval-iti-line { font-size: 16px !important; font-weight: 900 !important; margin-bottom: 3px !important; color: #000 !important; }
-    .approval-name { font-size: 16.5px !important; font-weight: 900 !important; }
-    .approval-post { font-size: 14.5px !important; font-weight: 800 !important; }
+    .approval-badge-title { font-size: 16px !important; font-weight: 800 !important; margin-bottom: 2px !important; }
+    .approval-dots-line { font-size: 15px !important; letter-spacing: 1px !important; margin-bottom: 2px !important; font-weight: bold; }
+    .approval-iti-line { font-size: 17px !important; font-weight: 900 !important; margin-bottom: 4px !important; color: #000 !important; }
+    .approval-name { font-size: 18px !important; font-weight: 900 !important; }
+    .approval-post { font-size: 15.5px !important; font-weight: 800 !important; }
 
     .cert-footer {
       border-top: 1.5px solid var(--gov-crimson) !important;
@@ -396,7 +397,7 @@
       .preview-zoom-wrapper { transform: none !important; width: 210mm !important; }
       .a4-tippani-sheet {
         width: 210mm !important; height: 294mm !important; max-height: 294mm !important;
-        margin: 0 !important; padding: 4mm 12mm 4mm 16mm !important; border: 1.5px solid #000 !important; box-shadow: none !important;
+        margin: 0 !important; padding: 5mm 12mm 5mm 26mm !important; border: 1.5px solid #000 !important; box-shadow: none !important;
       }
     }
   </style>
@@ -548,7 +549,7 @@
       </div>
     </section>
 
-    <!-- RIGHT: EXACT SAMPLE.PDF REPLICA (LIVE A4 PREVIEW) -->
+    <!-- RIGHT: EXACT A4 PREVIEW (PUNCHING MARGIN + EXACT LETTERHEAD) -->
     <section class="preview-card">
       <div class="preview-header-bar no-print">
         <div class="preview-title">📄 निर्णयार्थ पेश टिप्पणी Live A4 Preview (Exact Darta Letterhead Fit)</div>
@@ -567,12 +568,8 @@
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
 
           <div class="cert-content-top">
-            
-            <div class="cert-top-center-motto">
-              <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
-            </div>
 
-            <!-- 1. EXACT DARTA.HTML LETTERHEAD AT VERY TOP -->
+            <!-- 1. EXACT DARTA.HTML LETTERHEAD (1 STEP NICHE & FONT 2 STEP THULO) -->
             <header class="cert-header">
               <div class="logo-box-left">
                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -588,15 +585,15 @@
               </div>
             </header>
 
-            <!-- 2. SHRIMAN BELOW LETTERHEAD -->
+            <!-- 2. SHRIMAN (UNDERLINE HATAYEKO & FONT 2 STEP THULO) -->
             <div class="tippani-top-shriman">श्रीमान्</div>
 
-            <!-- 3. SUBJECT LINE -->
+            <!-- 3. SUBJECT LINE (MATHI & FONT 2/4 STEP THULO) -->
             <div class="tippani-subject-box">
               <span class="tippani-subject">विषयः घर सँरचना अभिलेखिकरण प्रमाण-पत्र दिने सम्बन्धमा ।</span>
             </div>
 
-            <!-- 4. MAIN PARAGRAPH CONTENT -->
+            <!-- 4. MAIN PARAGRAPH (FONT THULO) -->
             <p class="tippani-para">
               मायादेवी गाउँपालिका वडा नं.<strong id="out_ward">०८</strong> बस्ने श्री <strong id="out_owner">ज्योती कर्ण</strong>ले निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="out_sabik">हाटिबनगाई गा.वि.स. वडा नं.५ क</strong> कि.न. <strong id="out_kitta">२५२४</strong> को क्षे.फ. <strong id="out_area">विगह क्रमशः ०-०-१०</strong> जग्गामा मिति <strong id="out_comp_date">२०८३/०१/०५</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति <strong id="out_darta_date">२०८३/०५/१८</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति <strong id="out_insp_date">२०८३/०६/०६</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण भएको पाईएको साथै मिति <strong id="out_dec_date">२०८३/०६/१२</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरीएको ।
             </p>
