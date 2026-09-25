@@ -377,6 +377,7 @@
       padding: 2.5px 5px !important;
     }
 
+    /* हस्ताक्षर तथा QR ब्लक २ स्टेप तल झारिएको */
     .cert-signatures-block {
       margin-top: 22px !important;
       margin-bottom: 2px !important;
@@ -1175,7 +1176,7 @@
       } catch(e) {}
     }
 
-    // १००% चालु हुने प्रिन्ट बटन (Zoom लाई १००% बनाएर सीधै प्रिन्ट खोल्ने)
+    // १००% चालु हुने प्रिन्ट बटन
     function triggerPrint() {
       const wrapper = document.getElementById("previewZoomWrapper");
       if (wrapper) wrapper.style.transform = "none";
@@ -1459,7 +1460,7 @@
       }
     }
 
-    // १००% चालु हुने सुरक्षित गर्ने फङ्सन (लोकल र क्लाउड)
+    // १००% चालु हुने सुरक्षित गर्ने फङ्सन
     async function saveRecordToDatabase() {
       const getVal = id => {
         const el = document.getElementById(id);
@@ -1541,7 +1542,6 @@
         ns_photo: currentNamsariPhotoBase64
       };
 
-      // १. पहिले लोकलमा अनिवार्य सेभ
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
         const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
@@ -1554,7 +1554,6 @@
         localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
       } catch (err) { console.warn("Local storage error:", err); }
 
-      // २. सुपाबेसमा सेभ
       let savedInCloud = false;
       if (supabaseClient) {
         try {
