@@ -176,7 +176,10 @@
 
         <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn active">📂 पुरानो हेर्नुस्</a>
-        <a href="admin.html" id="adminMenuBtn" class="nav-btn">⚙️ Admin</a>
+        
+        <!-- केवल superadmin ले लगइन गर्दा मात्र खुल्छ -->
+        <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
+        
         <button type="button" class="nav-btn btn-idcard" onclick="alert('ID Card Module चाँडै आउँदैछ!');">🪪 ID Card Create</button>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
@@ -229,8 +232,8 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key
+    const SUPABASE_URL = "https://xyzcompany.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
     
     let supabaseClient = null;
     try {
@@ -276,7 +279,6 @@
     async function loadRecords() {
       let loaded = [];
 
-      // १. पहिले सुपाबेस क्लाउडबाट डेटा तान्ने
       if (supabaseClient) {
         try {
           const { data, error } = await supabaseClient
@@ -293,7 +295,6 @@
         }
       }
 
-      // २. क्लाउडमा नभेटिए लोकल स्टोरेजबाट ब्याकअप तान्ने
       if (loaded.length === 0) {
         try {
           const raw = localStorage.getItem("naksa_records");
@@ -376,12 +377,10 @@
     async function deleteRecord(id, dartaNo) {
       if (!confirm(`के तपाईं दर्ता नं. "${dartaNo}" को रेकर्ड हटाउन चाहनुहुन्छ?`)) return;
 
-      // १. लोकलबाट हटाउने
       allRecords = allRecords.filter(r => r.id !== id);
       localStorage.setItem("naksa_records", JSON.stringify(allRecords));
       renderRecords(allRecords);
 
-      // २. सुपाबेस क्लाउडबाट हटाउने
       if (supabaseClient) {
         try {
           await supabaseClient.from('naksa_records').delete().eq('id', id);
@@ -404,6 +403,13 @@
         window.location.href = "login.html";
         return;
       }
+
+      try {
+        const u = JSON.parse(raw);
+        if (u.username && u.username.toLowerCase() === "superadmin") {
+          document.getElementById("adminMenuBtn").style.display = "inline-flex";
+        }
+      } catch(e) {}
 
       applySavedTheme();
       setInterval(updateClock, 1000);
