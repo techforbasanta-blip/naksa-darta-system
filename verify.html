@@ -1,319 +1,166 @@
 <!DOCTYPE html>
 <html lang="ne">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>घर नक्सा प्रमाणिकरण | मायादेवी गाउँपालिका, बरेवा, रुपन्देही</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>घर नक्सा प्रमाणिकरण | Smart Mayadevi</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Mukta', sans-serif; }
+    body { background-color: #f1f5f9; min-height: 100vh; display: flex; flex-direction: column; }
 
-    <style>
-        .verify-wrapper {
-            max-width: 780px;
-            margin: 30px auto;
-            padding: 0 15px;
-        }
+    .gov-header {
+      background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
+      border-bottom: 3px solid #b71c1c;
+      padding: 8px 18px;
+      color: #ffffff;
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 14px;
+    }
+    .header-inner img { height: 48px; }
+    .header-titles h1 { font-size: 18px; font-weight: 800; color: #ffffff; }
+    .header-titles p { font-size: 12.5px; color: #cbd5e1; }
 
-        .verify-card {
-            background: #ffffff;
-            border-radius: 12px;
-            border: 1.5px solid #cbd5e1;
-            box-shadow: 0 10px 30px rgba(7, 30, 61, 0.12);
-            overflow: hidden;
-        }
+    .verify-container {
+      max-width: 680px; width: 95%; margin: 30px auto; background: #ffffff;
+      border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 24px;
+    }
 
-        .verify-banner {
-            background: linear-gradient(135deg, #05162d, #071e3d 60%, #0b2545);
-            color: #ffffff;
-            text-align: center;
-            padding: 24px 20px 20px;
-            border-bottom: 3px solid #16a34a;
-        }
+    .badge-status {
+      display: inline-block; background: #16a34a; color: #ffffff; padding: 6px 14px;
+      border-radius: 20px; font-size: 14px; font-weight: 800; margin-bottom: 15px;
+    }
 
-        .verify-banner-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 12px;
-        }
+    .details-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 15px; }
+    .details-table td { padding: 9px 8px; border-bottom: 1px solid #e2e8f0; }
+    .details-table td.lbl { font-weight: 800; color: #1e3a8a; width: 40%; }
+    .details-table td.val { font-weight: 700; color: #0f172a; width: 60%; }
 
-        .verify-banner-logos img {
-            width: 52px;
-            height: 52px;
-            object-fit: contain;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            padding: 3px;
-        }
+    .photo-preview-box {
+      text-align: center; margin-bottom: 15px;
+    }
+    .photo-preview-box img {
+      width: 95px; height: 110px; object-fit: cover; border: 2px solid #1e3a8a; border-radius: 4px;
+    }
 
-        .verify-banner h2 { margin: 0; font-size: 24px; font-weight: 800; color: #ffffff; }
-        .verify-banner p { margin: 4px 0 0; font-size: 15px; color: #93c5fd; }
-
-        .status-badge-container {
-            display: flex;
-            justify-content: center;
-            margin-top: -18px;
-            margin-bottom: 16px;
-        }
-
-        .verified-badge {
-            background: #15803d;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 800;
-            padding: 8px 24px;
-            border-radius: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 14px rgba(21, 128, 61, 0.35);
-            border: 2px solid #ffffff;
-        }
-
-        .verify-body { padding: 10px 30px 30px; }
-
-        .verify-info-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .verify-info-table tr { border-bottom: 1px solid #e2e8f0; }
-        .verify-info-table td { padding: 12px 14px; font-size: 16px; }
-        .verify-info-table td.field-label { font-weight: 700; color: #071e3d; width: 38%; background: #f8fafc; }
-        .verify-info-table td.field-val { font-weight: 700; color: #1e293b; background: #ffffff; }
-
-        .search-manual-box { display: flex; gap: 10px; margin-bottom: 20px; }
-        .search-manual-box input {
-            flex: 1; padding: 10px 14px; border: 1.5px solid #94a3b8;
-            border-radius: 7px; font-size: 15.5px; font-weight: 600; outline: none;
-        }
-        .search-manual-box button {
-            background: #071e3d; color: #ffffff; border: none; padding: 10px 20px;
-            border-radius: 7px; font-weight: 800; cursor: pointer;
-        }
-
-        .verify-notice {
-            margin-top: 25px; padding: 14px; background: #f0fdf4; border: 1.2px solid #86efac;
-            border-radius: 8px; font-size: 13.5px; line-height: 1.6; color: #166534; text-align: center;
-        }
-
-        .not-found-card { text-align: center; padding: 35px 20px; display: none; }
-        .not-found-card h3 { color: #b91c1c; font-size: 22px; margin-bottom: 10px; }
-
-        body.dark-mode .verify-card { background: #0c1a30; border-color: #1e3a5f; }
-        body.dark-mode .verify-info-table td.field-label { background: #112240; color: #38bdf8; }
-        body.dark-mode .verify-info-table td.field-val { background: #0c1a30; color: #ffffff; }
-        body.dark-mode .verify-info-table tr { border-bottom-color: #1e3a5f; }
-        body.dark-mode .search-manual-box input { background: #071224; color: #ffffff; border-color: #2b4c7e; }
-    </style>
+    footer {
+      background: #07192f; color: #cbd5e1; padding: 12px; text-align: center; font-size: 12px; margin-top: auto;
+    }
+  </style>
 </head>
 <body>
 
-<header class="system-header">
+  <header class="gov-header">
     <div class="header-inner">
-        <div class="header-emblem">
-            <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
-                 alt="नेपाल सरकारको प्रतीक" 
-                 onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
-        </div>
-        <div class="header-brand">
-            <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
-            <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही <span>|</span> Public Verification Portal</p>
-        </div>
-        <div class="header-tools">
-            <div class="fiscal-badge">आ.व. २०८३/०८४</div>
-            <button type="button" class="header-btn" id="themeToggle" onclick="toggleTheme()" title="Dark / Light">☾</button>
-        </div>
+      <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Logo" onerror="this.src='assets/nishan%20chap.jpg';">
+      <div class="header-titles">
+        <h1>Smart Mayadevi</h1>
+        <p>घर नक्सा अभिलेख आधिकारिक प्रमाणिकरण प्रणाली | Verification Portal</p>
+      </div>
     </div>
-</header>
+  </header>
 
-<main class="verify-wrapper">
-    <div class="verify-card">
-        <div class="verify-banner">
-            <div class="verify-banner-logos">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" 
-                     alt="निशान छाप" 
-                     onerror="this.onerror=null; this.src='assets/nishan%20chap.jpg';">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
-                     alt="पालिका लोगो" 
-                     onerror="this.onerror=null; this.src='assets/palika%20logo.jpg';">
-            </div>
-            <h2>मायादेवी गाउँपालिका</h2>
-            <p>घर नक्सा अभिलेखीकरण आधिकारिक प्रमाणिकरण प्रणाली</p>
-        </div>
-
-        <div class="status-badge-container">
-            <div id="statusBadge" class="verified-badge">
-                <span>✔</span> आधिकारिक प्रमाणित अभिलेख (Verified Record)
-            </div>
-        </div>
-
-        <div class="verify-body">
-            <div class="search-manual-box">
-                <input type="text" id="manualSearchInput" placeholder="नक्सा दर्ता नं. वा टोकन राख्नुहोस् (उदा: २८/२०८३/०८४)...">
-                <button type="button" onclick="handleManualSearch()">खोज्नुहोस्</button>
-            </div>
-
-            <div id="recordFoundBox">
-                <table class="verify-info-table">
-                    <tr>
-                        <td class="field-label">नक्सा दर्ता नं.:</td>
-                        <td class="field-val" id="v_darta_no">—</td>
-                    </tr>
-                    <tr>
-                        <td class="field-label">प्रमाण-पत्र नं.:</td>
-                        <td class="field-val" id="v_cert_no">—</td>
-                    </tr>
-                    <tr>
-                        <td class="field-label">दर्ता मिति:</td>
-                        <td class="field-val" id="v_darta_date">—</td>
-                    </tr>
-                    <tr>
-                        <td class="field-label">जग्गा / घरधनीको नाम:</td>
-                        <td class="field-val" id="v_owner_name">—</td>
-                    </tr>
-                    <tr>
-                        <td class="field-label">ठेगाना / वडा नं.:</td>
-                        <td class="field-val" id="v_address">—</td>
-                    </tr>
-                    <tr>
-                        <td class="field-label">कित्ता नं.:</td>
-                        <td class="field-val" id="v_kitta">—</td>
-                    </tr>
-                    <tr>
-                        <td class="field-label">स्वीकृत क्षेत्रफल:</td>
-                        <td class="field-val" id="v_area">—</td>
-                    </tr>
-                    <tr>
-                        <td class="field-label">भवनको वर्ग / तला:</td>
-                        <td class="field-val" id="v_structure">—</td>
-                    </tr>
-                    <tr>
-                        <td class="field-label">प्रमाणीकरण स्थिति:</td>
-                        <td class="field-val" style="color:#15803d; font-weight:800;">सम्पन्न (कार्यालय अभिलेखमा दर्ता कायम)</td>
-                    </tr>
-                </table>
-
-                <div class="verify-notice">
-                    <strong>गोपनीयता तथा प्रमाणिकरण सूचना:</strong> यो विवरण मायादेवी गाउँपालिका, गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देहीको नक्सा दर्ता प्रणालीबाट सिधै प्रमाणित गरिएको डिजिटल अभिलेख हो।
-                </div>
-            </div>
-
-            <div id="recordNotFoundBox" class="not-found-card">
-                <h3>⚠️ अभिलेख फेला परेन (Record Not Found)</h3>
-                <p>तपाईँले खोज्नुभएको नक्सा दर्ता नं. वा QR टोकन कार्यालयको प्रणालीमा फेला परेन। कृपया सही दर्ता नं. राखी पुनः प्रयास गर्नुहोस्।</p>
-            </div>
-        </div>
+  <main class="verify-container">
+    <div style="text-align: center;">
+      <div id="verifiedBadge" class="badge-status">✔ प्रमाणित प्रमाण-पत्र (Verified Record)</div>
+      <div id="photoContainer" class="photo-preview-box" style="display:none;">
+        <img id="ownerPhoto" src="" alt="घरधनी फोटो">
+      </div>
     </div>
-</main>
 
-<script>
-(function () {
-    "use strict";
+    <div id="verifyDetailsBox">
+      <p style="text-align:center; color:#64748b;">विवरण खोजिँदैछ...</p>
+    </div>
+  </main>
 
-    window.toggleTheme = function () {
-        document.body.classList.toggle("dark-mode");
-    };
+  <footer>
+    Smart Mayadevi — नक्सा दर्ता तथा अभिलेखीकरण प्रणाली | गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही
+  </footer>
 
-    const nepaliDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
-    const englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  <script>
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase Project URL
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key
+    
+    let supabaseClient = null;
+    try {
+      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    } catch(e) {}
 
-    function toEnglishDigits(str) {
-        if (!str) return "";
-        let s = str.toString();
-        for (let i = 0; i < 10; i++) {
-            s = s.split(nepaliDigits[i]).join(englishDigits[i]);
+    document.addEventListener("DOMContentLoaded", async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryDarta = urlParams.get('darta');
+      
+      let item = null;
+
+      // १. सुपाबेस क्लाउडबाट खोज्ने (केस-असंवेदनशील मिलान)
+      if (queryDarta && supabaseClient) {
+        try {
+          const decoded = decodeURIComponent(queryDarta).trim();
+          const { data, error } = await supabaseClient
+            .from('naksa_records')
+            .select('*')
+            .ilike('darta_no', decoded)
+            .limit(1);
+
+          if (!error && data && data.length > 0) {
+            item = data[0];
+          }
+        } catch(e) {
+          console.warn("Supabase fetch error:", e);
         }
-        return s.replace(/[^0-9.]/g, '');
-    }
+      }
 
-    function toNepaliDigits(str) {
-        if (!str) return "—";
-        let s = str.toString();
-        for (let i = 0; i < 10; i++) {
-            s = s.split(englishDigits[i]).join(nepaliDigits[i]);
+      // २. यदि भेटिएन भने लोकल स्टोरेज जाँच गर्ने
+      if (!item) {
+        try {
+          const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
+          if (queryDarta) {
+            const dec = decodeURIComponent(queryDarta).trim().toLowerCase();
+            item = records.find(r => r.darta_no && r.darta_no.trim().toLowerCase() === dec);
+          }
+          if (!item) {
+            item = JSON.parse(localStorage.getItem("last_verified_record") || "null");
+          }
+        } catch(e) {}
+      }
+
+      const box = document.getElementById("verifyDetailsBox");
+      const badge = document.getElementById("verifiedBadge");
+
+      if (item) {
+        if (item.photo) {
+          document.getElementById("ownerPhoto").src = item.photo;
+          document.getElementById("photoContainer").style.display = "block";
         }
-        return s;
-    }
 
-    function verifyRecord(query) {
-        if (!query) return null;
-        const records = JSON.parse(localStorage.getItem("mayadevi_naksa_darta_records") || "[]");
-        const cleanQuery = query.trim().toLowerCase();
-        const engQuery = toEnglishDigits(cleanQuery);
-
-        return records.find(r => {
-            const darta = (r.in_darta_no || "").trim().toLowerCase();
-            const dartaEng = toEnglishDigits(darta);
-            const cert = (r.in_cert_no || "").trim().toLowerCase();
-            const id = (r.id || "").trim().toLowerCase();
-
-            return darta.includes(cleanQuery) || 
-                   (engQuery && dartaEng.includes(engQuery)) ||
-                   cert.includes(cleanQuery) ||
-                   cleanQuery.includes(id) ||
-                   cleanQuery.includes(dartaEng);
-        });
-    }
-
-    function renderVerification(data) {
-        const foundBox = document.getElementById("recordFoundBox");
-        const notFoundBox = document.getElementById("recordNotFoundBox");
-        const badge = document.getElementById("statusBadge");
-
-        if (data) {
-            foundBox.style.display = "block";
-            notFoundBox.style.display = "none";
-            badge.style.background = "#15803d";
-            badge.innerHTML = "<span>✔</span> आधिकारिक प्रमाणित अभिलेख (Verified Record)";
-
-            document.getElementById("v_darta_no").textContent = toNepaliDigits(data.in_darta_no || "—");
-            document.getElementById("v_cert_no").textContent = toNepaliDigits(data.in_cert_no || "—");
-            document.getElementById("v_darta_date").textContent = toNepaliDigits(data.in_darta_date || "—");
-            document.getElementById("v_owner_name").textContent = data.in_homeowner_name || data.in_landowner_name || "—";
-            document.getElementById("v_address").textContent = `मायादेवी गा.पा., वडा नं. ${toNepaliDigits(data.in_ward || "०१")}`;
-            document.getElementById("v_kitta").textContent = toNepaliDigits(data.in_kitta || "—");
-            document.getElementById("v_area").textContent = `${toNepaliDigits(data.in_approved_area || data.in_total_area || "—")} वर्गफिट`;
-            document.getElementById("v_structure").textContent = `${data.in_building_class || "(ख)"} / ${toNepaliDigits(data.in_height_floor || "२ तला")}`;
-        } else {
-            foundBox.style.display = "none";
-            notFoundBox.style.display = "block";
-            badge.style.background = "#b91c1c";
-            badge.innerHTML = "<span>✖</span> अप्रमाणित वा फेला नपरेको अभिलेख";
-        }
-    }
-
-    window.handleManualSearch = function () {
-        const input = document.getElementById("manualSearchInput");
-        if (!input || !input.value.trim()) return;
-        renderVerification(verifyRecord(input.value.trim()));
-    };
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get("token") || urlParams.get("darta") || urlParams.get("id");
-        if (token) {
-            const input = document.getElementById("manualSearchInput");
-            if (input) input.value = token;
-            renderVerification(verifyRecord(token));
-        } else {
-            renderVerification({
-                in_darta_no: "२८/२०८३/०८४",
-                in_cert_no: "१०१",
-                in_darta_date: "२०८३/०६/०६",
-                in_homeowner_name: "मायादेवी गाउँपालिका",
-                in_landowner_name: "मायादेवी गाउँपालिका",
-                in_ward: "०१",
-                in_kitta: "१९२९",
-                in_approved_area: "१७१९.४९",
-                in_building_class: "(ख)",
-                in_height_floor: "२० फिट १० ईन्च / २ तला"
-            });
-        }
+        box.innerHTML = `
+          <table class="details-table">
+            <tr><td class="lbl">नक्सा दर्ता नं.</td><td class="val">${item.darta_no}</td></tr>
+            <tr><td class="lbl">दर्ता मिति</td><td class="val">${item.reg_date || '-'}</td></tr>
+            <tr><td class="lbl">घरधनीको नामथर</td><td class="val"><strong>${item.house_owner || item.owner_name}</strong></td></tr>
+            <tr><td class="lbl">नागरिकता नं.</td><td class="val">${item.house_cit || item.owner_cit || '-'}</td></tr>
+            <tr><td class="lbl">ठेगाना</td><td class="val">मायादेवी गाउँपालिका वडा नं. ${item.ward || '-'}</td></tr>
+            <tr><td class="lbl">कित्ता नं.</td><td class="val">${item.kitta || '-'}</td></tr>
+            <tr><td class="lbl">स्वीकृत क्षेत्रफल</td><td class="val">${item.approved_area || item.total_area || '-'} वर्गफिट</td></tr>
+            <tr><td class="lbl">निर्णय मिति</td><td class="val">${item.dec_date || '-'}</td></tr>
+            <tr><td class="lbl">प्रमाणित गर्ने अधिकृत</td><td class="val">${item.officer || '-'} (${item.officer_role || 'अधिकृत'})</td></tr>
+          </table>
+        `;
+      } else {
+        badge.style.background = "#dc2626";
+        badge.textContent = "✖ रेकर्ड फेला परेन (Record Not Found)";
+        box.innerHTML = `<p style="text-align:center; padding: 25px; color:#64748b; font-weight:bold;">यो दर्ता नम्बरको नक्सा प्रमाण-पत्र सिस्टममा भेटिएन। कृपया दर्ता नं. मिलेको छ कि छैन जाँच्नुहोस्।</p>`;
+      }
     });
-})();
-</script>
+  </script>
 </body>
 </html>
