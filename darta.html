@@ -94,7 +94,7 @@
       margin: 8px auto;
       padding: 0 10px;
       display: grid;
-      grid-template-columns: 450px 1fr;
+      grid-template-columns: 460px 1fr;
       gap: 12px;
       flex: 1;
     }
@@ -195,7 +195,6 @@
       align-items: center;
     }
 
-    /* A4 CERTIFICATE ENGINE - STRICT 294mm LOCK */
     .a4-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -240,7 +239,6 @@
     .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
     .cert-motto { font-size: 15px; font-weight: 800; line-height: 1; }
 
-    /* लेटरहेडको फन्ट २ साइज ठूलो */
     .cert-header {
       display: flex; align-items: center; justify-content: space-between;
       border-bottom: 2px solid var(--gov-crimson); padding-bottom: 2px; margin-bottom: 2px;
@@ -273,7 +271,6 @@
     }
     .cert-intro { font-size: 16px !important; line-height: 1.35; text-align: justify; margin-bottom: 3px; font-weight: 600; }
 
-    /* पहिलो पेजको टेबल फन्ट साइज २ साइज ठूलो (११ pt / १६.५px) */
     .cert-table, .floor-detail-table {
       width: 100%; border-collapse: collapse; font-size: 16.5px !important; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
     }
@@ -298,7 +295,6 @@
       padding: 3px 5px !important;
     }
 
-    /* हस्ताक्षर ब्लक */
     .cert-signatures-block {
       margin-top: 10px !important;
       margin-bottom: 2px !important;
@@ -411,9 +407,9 @@
     .namsari-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: transparent; }
     .namsari-table th, .namsari-table td { border: 1.2px solid #475569; padding: 3px 5px; vertical-align: middle; background: transparent; line-height: 1.2; }
     .namsari-table th { font-weight: 800; text-align: center; font-size: 13px; background: rgba(0,0,0,0.03); }
-    .namsari-photo-box { width: 22mm; height: 25mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: #64748b; font-weight: bold; }
+    .namsari-photo-box { width: 22mm; height: 25mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: #64748b; font-weight: bold; overflow: hidden; }
+    .namsari-photo-box img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Print Setup - Strict 2-Page Boundary */
     @media print {
       @page { size: A4 portrait; margin: 0mm !important; }
       *, .a4-sheet, .a4-sheet * { font-family: var(--print-font) !important; }
@@ -627,8 +623,49 @@
         </div>
       </div>
 
+      <!-- नामसारी विवरण इन्ट्री सेक्सन -->
+      <div class="form-section-title">नामसारी विवरण (Page 2 Entry)</div>
       <div class="form-row">
-        <label>पासपोर्ट फोटो अपलोड (JPG/PNG)</label>
+        <label>नामसारी निर्णय मिति</label>
+        <input type="text" id="in_ns_date" placeholder="उदा: २०८३/०७/१०" oninput="updateLivePreview()">
+      </div>
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>कसबाट (पुरानो नामथर)</label>
+          <input type="text" id="in_ns_from" placeholder="श्री ..." oninput="updateLivePreview()">
+        </div>
+        <div class="form-row">
+          <label>कसमा (नयाँ नामथर)</label>
+          <input type="text" id="in_ns_to" placeholder="श्री ..." oninput="updateLivePreview()">
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>सिफारिस गर्ने (नामथर)</label>
+          <input type="text" id="in_ns_sif_name" placeholder="नामथर" oninput="updateLivePreview()">
+        </div>
+        <div class="form-row">
+          <label>सिफारिस गर्ने (पद)</label>
+          <input type="text" id="in_ns_sif_post" placeholder="पद (उदा: वडा अध्यक्ष)" oninput="updateLivePreview()">
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>स्विकृत गर्ने (नामथर)</label>
+          <input type="text" id="in_ns_app_name" placeholder="नामथर" oninput="updateLivePreview()">
+        </div>
+        <div class="form-row">
+          <label>स्विकृत गर्ने (पद)</label>
+          <input type="text" id="in_ns_app_post" placeholder="पद (उदा: प्र.प्र. अधिकृत)" oninput="updateLivePreview()">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>नामसारी लिनेको फोटो अपलोड (JPG/PNG)</label>
+        <input type="file" id="namsariPhotoInput" accept="image/*" onchange="loadNamsariPhoto(event)">
+      </div>
+
+      <div class="form-row">
+        <label>घर नक्सा पासपोर्ट फोटो अपलोड (JPG/PNG)</label>
         <input type="file" id="passportInput" accept="image/*" onchange="loadPhoto(event)">
       </div>
 
@@ -654,7 +691,7 @@
       <div class="preview-zoom-wrapper" id="previewZoomWrapper">
         <div id="printAreaContainer">
           
-          <!-- PAGE 1 (Font 16.5px with Tight Proportional Padding) -->
+          <!-- PAGE 1 -->
           <div class="a4-sheet" id="a4CertificatePaper">
             <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                  onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -669,10 +706,10 @@
                   <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
                 </div>
                 <div class="header-titles">
-                  <div class="gov-sub">स्थानीय सरकार</div>[cite: 1]
-                  <div class="palika-title">मायादेवी गाउँपालिका</div>[cite: 1]
-                  <div class="office-title">गाउँ कार्यपालिकाको कार्यालय</div>[cite: 1]
-                  <div class="address-text">बरेवा, रुपन्देही, लुम्बिनी प्रदेश, नेपाल ।</div>[cite: 1]
+                  <div class="gov-sub">स्थानीय सरकार</div>
+                  <div class="palika-title">मायादेवी गाउँपालिका</div>
+                  <div class="office-title">गाउँ कार्यपालिकाको कार्यालय</div>
+                  <div class="address-text">बरेवा, रुपन्देही, लुम्बिनी प्रदेश, नेपाल ।</div>
                 </div>
                 <div class="logo-box-right">
                   <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Logo" onerror="this.src='assets/palika%20logo.jpg';">
@@ -681,64 +718,64 @@
 
               <div class="ref-photo-row">
                 <div class="ref-col">
-                  <div>पत्र संख्या:- <span id="out_patra">०८३/८४</span></div>[cite: 1]
-                  <div>नक्सा दर्ता नं. <strong id="out_darta">२८/२०८३/०८४</strong></div>[cite: 1]
-                  <div>प्रमाण पत्र नं. <span id="out_praman">१०१</span></div>[cite: 1]
-                  <div>मितिः <span id="out_date">२०८३/०६/०८</span></div>[cite: 1]
+                  <div>पत्र संख्या:- <span id="out_patra">०८३/८४</span></div>
+                  <div>नक्सा दर्ता नं. <strong id="out_darta">२८/२०८३/०८४</strong></div>
+                  <div>प्रमाण पत्र नं. <span id="out_praman">१०१</span></div>
+                  <div>मितिः <span id="out_date">२०८३/०६/०८</span></div>
                 </div>
                 <div class="passport-frame">
                   <img id="certPhoto" src="" alt="" style="display:none;">
-                  <span id="photoText" style="font-size:12px; color:#64748b; font-weight:bold;">फोटो</span>[cite: 1]
+                  <span id="photoText" style="font-size:12px; color:#64748b; font-weight:bold;">फोटो</span>
                 </div>
               </div>
 
               <div class="cert-title-container">
-                <span class="cert-title-text">घर नक्सा अभिलेखीकरण प्रमाण-पत्र</span>[cite: 1]
+                <span class="cert-title-text">घर नक्सा अभिलेखीकरण प्रमाण-पत्र</span>
               </div>
 
               <div class="cert-intro">
-                श्री <strong id="out_intro_name">....................</strong> ले मायादेवी गा.पा. वडा नं. <strong id="out_intro_ward">०१</strong> मा तपसिल बमोजिमको घर सँरचना निर्माण गर्नु भएकोले घर नक्सा अभिलेखिकरण प्रमाण पत्र प्रदान गरीएको छ।[cite: 1]
+                श्री <strong id="out_intro_name">....................</strong> ले मायादेवी गा.पा. वडा नं. <strong id="out_intro_ward">०१</strong> मा तपसिल बमोजिमको घर सँरचना निर्माण गर्नु भएकोले घर नक्सा अभिलेखिकरण प्रमाण पत्र प्रदान गरीएको छ।
               </div>
 
               <table class="cert-table">
                 <tr>
-                  <td class="lbl">१) जग्गा धनीको नामथर</td>[cite: 1]
-                  <td class="val" id="out_owner">....................</td>[cite: 1]
-                  <td class="lbl">२) जग्गा धनीको ना.प्र.प.नं.</td>[cite: 1]
-                  <td class="val" id="out_owner_cit">....</td>[cite: 1]
+                  <td class="lbl">१) जग्गा धनीको नामथर</td>
+                  <td class="val" id="out_owner">....................</td>
+                  <td class="lbl">२) जग्गा धनीको ना.प्र.प.नं.</td>
+                  <td class="val" id="out_owner_cit">....</td>
                 </tr>
                 <tr>
-                  <td class="lbl">३) घर धनीको नामथर-</td>[cite: 1]
+                  <td class="lbl">३) घर धनीको नामथर-</td>
                   <td class="val" id="out_house_owner">....................</td>
-                  <td class="lbl">४) घर धनीको ना.प्र.प.नं.</td>[cite: 1]
+                  <td class="lbl">४) घर धनीको ना.प्र.प.नं.</td>
                   <td class="val" id="out_house_cit">....</td>
                 </tr>
                 <tr>
-                  <td class="lbl">५) जग्गाको विवरण-</td>[cite: 1]
+                  <td class="lbl">५) जग्गाको विवरण-</td>
                   <td colspan="3" class="val">
-                    साविक <span id="out_sabik">....</span> हाल मायादेवी गा.पा. वडा नं. <span id="out_ward">०१</span> कि.नं. <span id="out_kitta">....</span> क्षेत्रफल <span id="out_area">....</span>[cite: 1]
+                    साविक <span id="out_sabik">....</span> हाल मायादेवी गा.पा. वडा नं. <span id="out_ward">०१</span> कि.नं. <span id="out_kitta">....</span> क्षेत्रफल <span id="out_area">....</span>
                   </td>
                 </tr>
                 <tr>
-                  <td class="lbl">६) स्विकृत क्षेत्रफलः</td>[cite: 1]
+                  <td class="lbl">६) स्विकृत क्षेत्रफलः</td>
                   <td colspan="3" class="val" id="out_approved_area_full" style="line-height: 1.25; padding: 2.5px 5px !important;">
-                    कि.नं. <span id="out_kitta2">....</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट[cite: 1]
+                    कि.नं. <span id="out_kitta2">....</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट
                   </td>
                 </tr>
                 <tr>
-                  <td class="lbl">भु-उपयोग क्षेत्रः</td>[cite: 1]
-                  <td class="val" id="out_land_use">आवासीय</td>[cite: 1]
-                  <td class="lbl">भवनको वर्गिकरणः</td>[cite: 1]
-                  <td class="val"><span id="out_b_class">(ख)</span> &nbsp;|&nbsp; स्ट्रक्चरलः <span id="out_struct">फ्रेम स्ट्रक्चर</span></td>[cite: 1]
+                  <td class="lbl">भु-उपयोग क्षेत्रः</td>
+                  <td class="val" id="out_land_use">आवासीय</td>
+                  <td class="lbl">भवनको वर्गिकरणः</td>
+                  <td class="val"><span id="out_b_class">(ख)</span> &nbsp;|&nbsp; स्ट्रक्चरलः <span id="out_struct">फ्रेम स्ट्रक्चर</span></td>
                 </tr>
                 <tr>
-                  <td class="lbl">७) जग्गाको चारकिल्लाः</td>[cite: 1]
+                  <td class="lbl">७) जग्गाको चारकिल्लाः</td>
                   <td colspan="3" class="val" id="out_killa">
-                    पूर्वः .... | पश्चिमः .... | उत्तरः .... | दक्षिणः ....[cite: 1]
+                    पूर्वः .... | पश्चिमः .... | उत्तरः .... | दक्षिणः ....
                   </td>
                 </tr>
                 <tr>
-                  <td class="lbl">८) निर्माण सम्पन्न मितिः</td>[cite: 1]
+                  <td class="lbl">८) निर्माण सम्पन्न मितिः</td>
                   <td colspan="3" class="val" id="out_comp_date">....</td>
                 </tr>
               </table>
@@ -746,22 +783,22 @@
               <table class="floor-detail-table">
                 <thead>
                   <tr>
-                    <th style="width: 40%;">१०) तला</th>[cite: 1]
-                    <th style="width: 26%; text-align: center;">निर्माण भएको क्षेत्रफल</th>[cite: 1]
-                    <th style="width: 18%; text-align: center;">मिति</th>[cite: 1]
-                    <th style="width: 16%; text-align: center;">कैफियत</th>[cite: 1]
+                    <th style="width: 40%;">१०) तला</th>
+                    <th style="width: 26%; text-align: center;">निर्माण भएको क्षेत्रफल</th>
+                    <th style="width: 18%; text-align: center;">मिति</th>
+                    <th style="width: 16%; text-align: center;">कैफियत</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>(क) भुमिगत १</td><td style="text-align:center;" id="out_b1">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>[cite: 1]
-                  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;भुमिगत २</td><td style="text-align:center;" id="out_b2">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>[cite: 1]
-                  <tr><td>(ख) जमिन तला</td><td style="text-align:center;" id="out_ground">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>[cite: 1]
-                  <tr><td>(ग) पहिलो तला</td><td style="text-align:center;" id="out_first">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>[cite: 1]
-                  <tr><td>(घ) दोश्रो तला</td><td style="text-align:center;" id="out_second">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>[cite: 1]
-                  <tr><td>(ङ) तेश्रो तला</td><td style="text-align:center;" id="out_third">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>[cite: 1]
+                  <tr><td>(क) भुमिगत १</td><td style="text-align:center;" id="out_b1">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
+                  <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;भुमिगत २</td><td style="text-align:center;" id="out_b2">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
+                  <tr><td>(ख) जमिन तला</td><td style="text-align:center;" id="out_ground">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
+                  <tr><td>(ग) पहिलो तला</td><td style="text-align:center;" id="out_first">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
+                  <tr><td>(घ) दोश्रो तला</td><td style="text-align:center;" id="out_second">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
+                  <tr><td>(ङ) तेश्रो तला</td><td style="text-align:center;" id="out_third">-</td><td style="text-align:center;">-</td><td style="text-align:center;">-</td></tr>
                   <tr class="total-row">
-                    <td>१०) जम्मा क्षेत्रफलः</td>[cite: 1]
-                    <td style="text-align:center;"><strong id="out_total">०.००</strong></td>[cite: 1]
+                    <td>१०) जम्मा क्षेत्रफलः</td>
+                    <td style="text-align:center;"><strong id="out_total">०.००</strong></td>
                     <td></td>
                     <td></td>
                   </tr>
@@ -770,24 +807,24 @@
 
               <table class="cert-table">
                 <tr>
-                  <td class="lbl">११) प्लिन्थ क्षेत्रफलः</td><td class="val" id="out_plinth">....</td>[cite: 1]
-                  <td class="lbl">कभरेज प्रतिशतः</td><td class="val" id="out_coverage">....</td>[cite: 1]
+                  <td class="lbl">११) प्लिन्थ क्षेत्रफलः</td><td class="val" id="out_plinth">....</td>
+                  <td class="lbl">कभरेज प्रतिशतः</td><td class="val" id="out_coverage">....</td>
                 </tr>
                 <tr>
-                  <td class="lbl">१२) भवनको उचाईः</td><td class="val" id="out_height">....</td>[cite: 1]
-                  <td class="lbl">१३) सडक केन्द्र दुरीः</td><td class="val" id="out_rd_dist">....</td>[cite: 1]
+                  <td class="lbl">१२) भवनको उचाईः</td><td class="val" id="out_height">....</td>
+                  <td class="lbl">१३) सडक केन्द्र दुरीः</td><td class="val" id="out_rd_dist">....</td>
                 </tr>
                 <tr>
-                  <td class="lbl">१४) बिजुलीको तार दुरीः</td><td class="val" id="out_elec_dist">....</td>[cite: 1]
-                  <td class="lbl">१५) नदी किनार दुरीः</td><td class="val" id="out_riv_dist">....</td>[cite: 1]
+                  <td class="lbl">१४) बिजुलीको तार दुरीः</td><td class="val" id="out_elec_dist">....</td>
+                  <td class="lbl">१५) नदी किनार दुरीः</td><td class="val" id="out_riv_dist">....</td>
                 </tr>
                 <tr>
-                  <td class="lbl">१६) ढल, सेप्टिक ट्याङ्कः</td><td colspan="3" class="val" id="out_septic">भएको</td>[cite: 1]
+                  <td class="lbl">१६) ढल, सेप्टिक ट्याङ्कः</td><td colspan="3" class="val" id="out_septic">भएको</td>
                 </tr>
                 <tr>
                   <td colspan="4" class="legal-notice-cell">
-                    १७) उल्लेखित सँरचना निर्माण भएको जग्गामा कुनैपनि किसिमको खरखिचोला, दावीविरोध आदी भएगरेमा सोको जवाफदेही स्वयम् घरधनी हुने।<br>[cite: 1]
-                    १८) मिति <strong id="out_dec_date">२०८३/०६/०६</strong> को निर्णयानुसार सँरचनागत सुरक्षाको जिम्मेवारी स्वयम् घरधनीमा रहनेगरी घर नक्सा अभिलेखिकरण गरीएको।[cite: 1]
+                    १७) उल्लेखित सँरचना निर्माण भएको जग्गामा कुनैपनि किसिमको खरखिचोला, दावीविरोध आदी भएगरेमा सोको जवाफदेही स्वयम् घरधनी हुने।<br>
+                    १८) मिति <strong id="out_dec_date">२०८३/०६/०६</strong> को निर्णयानुसार सँरचनागत सुरक्षाको जिम्मेवारी स्वयम् घरधनीमा रहनेगरी घर नक्सा अभिलेखिकरण गरीएको।
                   </td>
                 </tr>
               </table>
@@ -798,27 +835,27 @@
                     <div class="sign-space-area"></div>
                     <div class="sign-dotted-line"></div>
                     <div class="sign-title-text">
-                      स्थलगत निरिक्षण तथा रुजु गर्ने<br>[cite: 1]
+                      स्थलगत निरिक्षण तथा रुजु गर्ने<br>
                       <strong id="out_eng1">....................</strong><br>
-                      <span id="out_eng1_role">इन्जिनियर</span>[cite: 1]
+                      <span id="out_eng1_role">इन्जिनियर</span>
                     </div>
                   </div>
                   <div class="sign-item">
                     <div class="sign-space-area"></div>
                     <div class="sign-dotted-line"></div>
                     <div class="sign-title-text">
-                      चेक जाँच गर्ने<br>[cite: 1]
+                      चेक जाँच गर्ने<br>
                       <strong id="out_eng2">....................</strong><br>
-                      <span id="out_eng2_role">इन्जिनियर</span>[cite: 1]
+                      <span id="out_eng2_role">इन्जिनियर</span>
                     </div>
                   </div>
                   <div class="sign-item">
                     <div class="sign-space-area"></div>
                     <div class="sign-dotted-line"></div>
                     <div class="sign-title-text">
-                      प्रमाणित गर्ने<br>[cite: 1]
+                      प्रमाणित गर्ने<br>
                       <strong id="out_officer">....................</strong><br>
-                      <span id="out_officer_role">प्रमुख प्रशासकीय अधिकृत</span>[cite: 1]
+                      <span id="out_officer_role">प्रमुख प्रशासकीय अधिकृत</span>
                     </div>
                   </div>
                 </div>
@@ -827,20 +864,20 @@
                   <div class="owner-sign-container">
                     <div class="owner-space-area"></div>
                     <div class="owner-dots">................................................</div>
-                    <div class="owner-label">घरधनी / प्रतिनिधिको सहिः</div>[cite: 1]
+                    <div class="owner-label">घरधनी / प्रतिनिधिको सहिः</div>
                   </div>
                   <div style="display:flex; flex-direction:column; align-items:center;">
                     <div id="cert_qr_div"></div>
-                    <div class="qr-caption">QR Scan गरी प्रमाणिकरण गर्नुहोस्</div>[cite: 1]
+                    <div class="qr-caption">QR Scan गरी प्रमाणिकरण गर्नुहोस्</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Page 1 Footer Locked Directly at the Bottom -->
+            <!-- Page 1 Footer Locked -->
             <footer class="cert-footer">
-              सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>[cite: 1]
-              वेभ साइटः- mayadevimunrupandehi.gov.np[cite: 1]
+              सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
+              वेभ साइटः- mayadevimunrupandehi.gov.np
             </footer>
           </div>
 
@@ -851,86 +888,107 @@
 
             <div class="cert-content-top">
               <section class="kabuliyat-section">
-                <h2 class="kabuliyat-title">कबुलियतनामा</h2>[cite: 1]
-                <div class="shriman-title">श्रीमान्,</div>[cite: 1]
+                <h2 class="kabuliyat-title">कबुलियतनामा</h2>
+                <div class="shriman-title">श्रीमान्,</div>
                 <p class="kabuliyat-body">
                   मैले/हामिले बनाएको घर सँरचना ठिक साँचो छ, कानुन विपरित भए गरेमा वा सरकारी, सार्वजनिक वा व्यक्ति विशेषको
                   जग्गा अतिक्रमण गरी बनाएको ठहरिएमा, बाटो, कुलो वा नदीको अधिकार क्षेत्रमा निर्माण भएको ठहर भएमा वा कानुन
                   बमोजिम सरकार वा गाउँपालिकाले भत्काउन वा हटाउन आवश्यक ठानेमा जुनसुकै बखत भत्काउन वा हटाउन मञ्जुर
                   छु/छौं । पछि कुनै किसिमको मुआब्जा माग तथा उजुर-वाजुर, खर-खिचोला, दावि-विरोध हुने गर्ने छैन/छैनौ। भए गरेमा
-                  यसै कबुलियतनामाले प्रमाण लागि बदर होस भनी मेरो/हाम्रो पूर्ण मनोमान राजी खुशीका साथ सहिछाप गरिदिए/गरीदियौं।[cite: 1]
+                  यसै कबुलियतनामाले प्रमाण लागि बदर होस भनी मेरो/हाम्रो पूर्ण मनोमान राजी खुशीका साथ सहिछाप गरिदिए/गरीदियौं।
                 </p>
 
                 <div class="kabuliyat-sign-grid">
                   <div class="sign-left">
-                    <div class="sign-field">दस्तखतः ........</div>[cite: 1]
-                    <div class="sign-field">नामथरः <strong id="back_name">....................</strong></div>[cite: 1]
-                    <div class="sign-field">ना.प्र.प.नंः <span id="back_cit">....</span></div>[cite: 1]
-                    <div class="sign-field">जारी जिल्लाः <span id="back_cit_district">रुपन्देही</span></div>[cite: 1]
-                    <div class="sign-field">सम्पर्क नंः <span id="back_phone">....................</span></div>[cite: 1]
+                    <div class="sign-field">दस्तखतः ........</div>
+                    <div class="sign-field">नामथरः <strong id="back_name">....................</strong></div>
+                    <div class="sign-field">ना.प्र.प.नंः <span id="back_cit">....</span></div>
+                    <div class="sign-field">जारी जिल्लाः <span id="back_cit_district">रुपन्देही</span></div>
+                    <div class="sign-field">सम्पर्क नंः <span id="back_phone">....................</span></div>
                     <div class="iti-date-text-left">
-                      ईति सम्बत <span id="iti_year">२०८३</span> साल <span id="iti_month">असोज</span> महिना <span id="iti_day">०८</span> गते <span id="iti_roj">५</span> रोज शुभम्।[cite: 1]
+                      ईति सम्बत <span id="iti_year">२०८३</span> साल <span id="iti_month">असोज</span> महिना <span id="iti_day">०८</span> गते <span id="iti_roj">५</span> रोज शुभम्।
                     </div>
                   </div>
 
                   <div class="sign-right-centered">
                     <div class="thumb-frame-wrapper">
-                      <div class="thumb-frame">दायाँ</div>[cite: 1]
-                      <div class="thumb-frame">बायाँ</div>[cite: 1]
+                      <div class="thumb-frame">दायाँ</div>
+                      <div class="thumb-frame">बायाँ</div>
                     </div>
-                    <span class="thumb-label">औंठा छाप</span>[cite: 1]
+                    <span class="thumb-label">औंठा छाप</span>
                   </div>
                 </div>
               </section>
 
-              <!-- 5 Large Namsari Boxes -->
+              <!-- Dynamic 5 Rows Namsari Section -->
               <section class="namsari-section">
-                <div class="namsari-header-title">नामसारी विवरण</div>[cite: 1]
+                <div class="namsari-header-title">नामसारी विवरण</div>
                 <table class="namsari-table">
                   <thead>
                     <tr>
-                      <th style="width: 19%;">मितिको निर्णय अनुसार</th>[cite: 1]
-                      <th style="width: 33%;">नामथर</th>[cite: 1]
-                      <th style="width: 16%;">नामसारी लिनेको फोटो</th>[cite: 1]
-                      <th style="width: 16%;">सिफारिस गर्ने</th>[cite: 1]
-                      <th style="width: 16%;">स्विकृत गर्ने</th>[cite: 1]
+                      <th style="width: 19%;">मितिको निर्णय अनुसार</th>
+                      <th style="width: 33%;">नामथर</th>
+                      <th style="width: 16%;">नामसारी लिनेको फोटो</th>
+                      <th style="width: 16%;">सिफारिस गर्ने</th>
+                      <th style="width: 16%;">स्विकृत गर्ने</th>
                     </tr>
                   </thead>
                   <tbody>
+                    <!-- Row 1: Fully Dynamic Input Driven -->
                     <tr>
-                      <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>[cite: 1]
-                      <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>[cite: 1]
-                      <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
+                      <td style="text-align:center;">
+                        मितिः <span id="out_ns_date">....</span><br>निर्णय अनुसार
+                      </td>
+                      <td>
+                        श्री <span id="out_ns_from">....</span> बाट<br>
+                        श्री <strong id="out_ns_to">....</strong> मा<br>
+                        <strong>नामसारी गरीएको ।</strong>
+                      </td>
+                      <td style="text-align:center;">
+                        <div class="namsari-photo-box">
+                          <img id="out_ns_photo" src="" alt="" style="display:none;">
+                          <span id="out_ns_photo_txt">फोटो</span>
+                        </div>
+                      </td>
+                      <td>
+                        नामथर : <span id="out_ns_sif_name">....</span><br>
+                        पद : <span id="out_ns_sif_post">....</span><br>
+                        दस्तखतः ........
+                      </td>
+                      <td>
+                        नामथर : <span id="out_ns_app_name">....</span><br>
+                        पद : <span id="out_ns_app_post">....</span><br>
+                        दस्तखतः ........
+                      </td>
+                    </tr>
+                    <!-- Row 2 to 5 Blank Template Rows -->
+                    <tr>
+                      <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
+                      <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                      <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>
+                      <td>नामथर :<br>पद :<br>दस्तखतः</td>
+                      <td>नामथर :<br>पद :<br>दस्तखतः</td>
                     </tr>
                     <tr>
-                      <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>[cite: 1]
-                      <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>[cite: 1]
-                      <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
+                      <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
+                      <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                      <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>
+                      <td>नामथर :<br>पद :<br>दस्तखतः</td>
+                      <td>नामथर :<br>पद :<br>दस्तखतः</td>
                     </tr>
                     <tr>
-                      <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>[cite: 1]
-                      <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>[cite: 1]
-                      <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
+                      <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
+                      <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                      <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>
+                      <td>नामथर :<br>पद :<br>दस्तखतः</td>
+                      <td>नामथर :<br>पद :<br>दस्तखतः</td>
                     </tr>
                     <tr>
-                      <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>[cite: 1]
-                      <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>[cite: 1]
-                      <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
-                    </tr>
-                    <tr>
-                      <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>[cite: 1]
-                      <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>[cite: 1]
-                      <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
-                      <td>नामथर :<br>दस्तखतः</td>[cite: 1]
+                      <td style="text-align:center;">मितिः ....<br>निर्णय अनुसार</td>
+                      <td>श्री .... बाट<br>श्री .... मा<br><strong>नामसारी गरीएको ।</strong></td>
+                      <td style="text-align:center;"><div class="namsari-photo-box">फोटो</div></td>
+                      <td>नामथर :<br>पद :<br>दस्तखतः</td>
+                      <td>नामथर :<br>पद :<br>दस्तखतः</td>
                     </tr>
                   </tbody>
                 </table>
@@ -970,6 +1028,7 @@
     ];
 
     let currentPhotoBase64 = "";
+    let currentNamsariPhotoBase64 = "";
     let currentZoomLevel = 0.82;
 
     function setZoom(lvl) {
@@ -1062,7 +1121,10 @@
     }
 
     function updateLivePreview() {
-      const getVal = (id, def = "....") => document.getElementById(id).value.trim() || def;
+      const getVal = (id, def = "....") => {
+        const el = document.getElementById(id);
+        return el ? (el.value.trim() || def) : def;
+      };
 
       document.getElementById("out_patra").textContent = getVal("in_patra", "०८३/८४");
       document.getElementById("out_darta").textContent = getVal("in_darta", "२८/२०८३/०८४");
@@ -1133,6 +1195,15 @@
       document.getElementById("out_officer").textContent = getVal("in_officer", "....................");
       document.getElementById("out_officer_role").textContent = document.getElementById("in_officer_role").value;
 
+      // Namsari Table Live Preview Updates
+      document.getElementById("out_ns_date").textContent = getVal("in_ns_date", "....");
+      document.getElementById("out_ns_from").textContent = getVal("in_ns_from", "....");
+      document.getElementById("out_ns_to").textContent = getVal("in_ns_to", "....");
+      document.getElementById("out_ns_sif_name").textContent = getVal("in_ns_sif_name", "....");
+      document.getElementById("out_ns_sif_post").textContent = getVal("in_ns_sif_post", "....");
+      document.getElementById("out_ns_app_name").textContent = getVal("in_ns_app_name", "....");
+      document.getElementById("out_ns_app_post").textContent = getVal("in_ns_app_post", "....");
+
       generateQR();
     }
 
@@ -1178,6 +1249,21 @@
           img.src = currentPhotoBase64;
           img.style.display = "block";
           document.getElementById("photoText").style.display = "none";
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function loadNamsariPhoto(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          currentNamsariPhotoBase64 = evt.target.result;
+          const img = document.getElementById("out_ns_photo");
+          img.src = currentNamsariPhotoBase64;
+          img.style.display = "block";
+          document.getElementById("out_ns_photo_txt").style.display = "none";
         };
         reader.readAsDataURL(file);
       }
@@ -1246,7 +1332,16 @@
         eng2_role: document.getElementById("in_eng2_role").value,
         officer: document.getElementById("in_officer").value.trim(),
         officer_role: document.getElementById("in_officer_role").value,
-        photo: currentPhotoBase64
+        photo: currentPhotoBase64,
+        // Namsari Fields
+        ns_date: document.getElementById("in_ns_date").value.trim(),
+        ns_from: document.getElementById("in_ns_from").value.trim(),
+        ns_to: document.getElementById("in_ns_to").value.trim(),
+        ns_sif_name: document.getElementById("in_ns_sif_name").value.trim(),
+        ns_sif_post: document.getElementById("in_ns_sif_post").value.trim(),
+        ns_app_name: document.getElementById("in_ns_app_name").value.trim(),
+        ns_app_post: document.getElementById("in_ns_app_post").value.trim(),
+        ns_photo: currentNamsariPhotoBase64
       };
 
       try {
@@ -1353,6 +1448,23 @@
         document.getElementById("in_eng2_role").value = item.eng2_role || "इन्जिनियर";
         document.getElementById("in_officer").value = item.officer || "";
         document.getElementById("in_officer_role").value = item.officer_role || "प्रमुख प्रशासकीय अधिकृत";
+
+        // Load Namsari Values
+        if (item.ns_date) document.getElementById("in_ns_date").value = item.ns_date;
+        if (item.ns_from) document.getElementById("in_ns_from").value = item.ns_from;
+        if (item.ns_to) document.getElementById("in_ns_to").value = item.ns_to;
+        if (item.ns_sif_name) document.getElementById("in_ns_sif_name").value = item.ns_sif_name;
+        if (item.ns_sif_post) document.getElementById("in_ns_sif_post").value = item.ns_sif_post;
+        if (item.ns_app_name) document.getElementById("in_ns_app_name").value = item.ns_app_name;
+        if (item.ns_app_post) document.getElementById("in_ns_app_post").value = item.ns_app_post;
+
+        if (item.ns_photo) {
+          currentNamsariPhotoBase64 = item.ns_photo;
+          const imgNs = document.getElementById("out_ns_photo");
+          imgNs.src = item.ns_photo;
+          imgNs.style.display = "block";
+          document.getElementById("out_ns_photo_txt").style.display = "none";
+        }
 
         if (item.photo) {
           currentPhotoBase64 = item.photo;
