@@ -273,7 +273,7 @@
 
         <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
-        <a href="admin.html" id="adminMenuBtn" class="nav-btn active">⚙️ Admin</a>
+        <a href="admin.html" class="nav-btn active">⚙️ Admin</a>
         <button type="button" class="nav-btn btn-idcard" onclick="alert('ID Card Module चाँडै आउँदैछ!');">🪪 ID Card Create</button>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
@@ -316,7 +316,7 @@
 
     <div class="card">
       <div class="card-title">
-        <span>👥 सक्रिय कर्मचारी तथा एडमिन खाताहरू <span id="superadminBadge" style="display:none; color:#16a34a; font-size:13px;">(Superadmin: PP Full Access Enabled)</span></span>
+        <span>👥 सक्रिय कर्मचारी तथा एडमिन खाताहरू <span style="color:#16a34a; font-size:13px;">(Superadmin Verified: PP Access Active)</span></span>
         <span id="userCount" style="font-size:12.5px; background:rgba(30,58,138,0.1); padding:3px 10px; border-radius:15px; font-weight:bold;">लोड हुँदैछ...</span>
       </div>
       <table>
@@ -357,8 +357,8 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
+    const SUPABASE_URL = "https://xyzcompany.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
 
     let supabaseClient = null;
     try {
@@ -371,9 +371,7 @@
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
     let tempPhotoBase64 = "";
-    let isSuperAdmin = false;
 
-    // फोटोलाई कम्प्रेस गरेर साइज सानो बनाउने (जसले गर्दा क्लाउडमा तुरुन्तै सेभ हुन्छ)
     function previewAdminPhoto(e) {
       const file = e.target.files[0];
       if (file) {
@@ -459,18 +457,14 @@
         const isPermanent = u.username.toLowerCase() === 'superadmin';
 
         let photoHtml = "";
-        if (isSuperAdmin) {
-          if (u.photo) {
-            photoHtml = `
-              <div style="text-align:center;">
-                <img src="${u.photo}" class="admin-pp-thumb" onclick="openPPModal('${u.full_name}', '${u.role}', '${u.photo}')" title="ठूलो हेर्न क्लिक गर्नुहोस्">
-                <button type="button" class="btn-view-pp" onclick="openPPModal('${u.full_name}', '${u.role}', '${u.photo}')">👁️ हेर्नुस्</button>
-              </div>`;
-          } else {
-            photoHtml = `<div class="admin-pp-placeholder">फोटो छैन</div>`;
-          }
+        if (u.photo) {
+          photoHtml = `
+            <div style="text-align:center;">
+              <img src="${u.photo}" class="admin-pp-thumb" onclick="openPPModal('${u.full_name}', '${u.role}', '${u.photo}')" title="ठूलो हेर्न क्लिक गर्नुहोस्">
+              <button type="button" class="btn-view-pp" onclick="openPPModal('${u.full_name}', '${u.role}', '${u.photo}')">👁️ हेर्नुस्</button>
+            </div>`;
         } else {
-          photoHtml = `<small style="color:#94a3b8; font-weight:bold;">गोप्य</small>`;
+          photoHtml = `<div class="admin-pp-placeholder">फोटो छैन</div>`;
         }
 
         tr.innerHTML = `
@@ -489,7 +483,6 @@
     }
 
     function openPPModal(name, role, imgSrc) {
-      if (!isSuperAdmin) return;
       document.getElementById("modalName").textContent = name;
       document.getElementById("modalRole").textContent = `पद: ${role || 'कर्मचारी'}`;
       document.getElementById("modalImg").src = imgSrc;
@@ -567,7 +560,7 @@
       addBtn.disabled = false;
       addBtn.textContent = "थप्नुहोस्";
 
-      alert(`बधाई छ! खाता "${un}" (पद: ${rl}) ${savedInCloud ? 'क्लाउडमा' : 'लोकलमा'} सफलतापूर्वक सुरक्षित भयो। अब यो युजरनेम र पासवर्डले लगइन गर्नुहोस्।`);
+      alert(`बधाई छ! खाता "${un}" (पद: ${rl}) ${savedInCloud ? 'क्लाउडमा' : 'लोकलमा'} सफलतापूर्वक सुरक्षित भयो।`);
     }
 
     async function deleteAccount(id, username) {
@@ -610,6 +603,7 @@
       window.location.href = "login.html";
     }
 
+    // कडा सुरक्षा जाँच: Superadmin बाहेक कसैलाई पनि admin.html खोल्न नदिने
     document.addEventListener("DOMContentLoaded", () => {
       const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
       if (!raw) {
@@ -619,11 +613,15 @@
 
       try {
         const u = JSON.parse(raw);
-        if (u.username && u.username.toLowerCase() === "superadmin") {
-          isSuperAdmin = true;
-          document.getElementById("superadminBadge").style.display = "inline-block";
+        if (!u.username || u.username.toLowerCase() !== "superadmin") {
+          alert("⚠️ पहुँच अस्वीकृत (Access Denied):\nयो Admin प्यानल खोल्ने अधिकार केवल Super Administrator लाई मात्र छ!");
+          window.location.href = "darta.html";
+          return;
         }
-      } catch(e) {}
+      } catch(e) {
+        window.location.href = "login.html";
+        return;
+      }
 
       applySavedTheme();
       setInterval(updateClock, 1000);
