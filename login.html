@@ -196,7 +196,6 @@
     .card-top p { font-size: 13.5px; color: #64748b; font-weight: 700; }
     body.dark-mode .card-top p { color: #94a3b8; }
 
-    /* लगातार ३ पटक गलत पासवर्डको लक अलर्ट */
     .lockout-alert {
       display: none;
       background: #fee2e2;
@@ -258,7 +257,6 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
     }
 
-    /* पासवर्ड देखाउने / लुकाउने आँखा (Toggle Eye) */
     .eye-toggle-btn {
       position: absolute;
       right: 12px;
@@ -370,7 +368,6 @@
 </head>
 <body>
 
-  <!-- हेडर -->
   <header class="gov-header">
     <div class="header-inner">
       <div class="brand-box">
@@ -392,7 +389,6 @@
     </div>
   </header>
 
-  <!-- मुख्य लगइन कार्ड -->
   <main class="login-wrapper">
     <div class="login-card">
       <div class="card-top">
@@ -402,7 +398,6 @@
         <p>मायादेवी गाउँकार्यपालिकाको कार्यालय, बरेवा</p>
       </div>
 
-      <!-- ३ पटक गलत भएमा देखिने रातो चेतावनी -->
       <div class="lockout-alert" id="lockoutNotice">
         ⛔ ३ पटक भन्दा बढी गलत पासवर्ड प्रविष्ट भयो!<br>
         कृपया आफ्नो Superadmin लाई सम्पर्क गर्नुहोस् (Contact your Superadmin)।
@@ -422,7 +417,6 @@
           <div class="input-wrap">
             <span class="input-icon">🔑</span>
             <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
-            <!-- पासवर्ड हेर्ने/लुकाउने बटन -->
             <button type="button" class="eye-toggle-btn" id="eyeToggleBtn" onclick="togglePasswordVisibility()" title="पासवर्ड हेर्नुहोस्">👁️</button>
           </div>
           <div class="forgot-link-wrap">
@@ -439,7 +433,6 @@
         <span>वा</span>
       </div>
 
-      <!-- गोप्य मास्टर रिकभरी (Master PIN: 0707 वा Sarkar@#07) -->
       <a href="javascript:void(0)" class="recovery-btn" onclick="handleDirectRecoveryLogin()">
         🔒 Admin Direct Recovery Login
       </a>
@@ -451,7 +444,6 @@
   </footer>
 
   <script>
-    // १. आधिकारिक Supabase Credentials जडान
     const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
     const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
     
@@ -460,9 +452,10 @@
       if (typeof supabase !== 'undefined') {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
-    } catch(e) {}
+    } catch(e) {
+      console.warn("Supabase Init Error:", e);
+    }
 
-    // २. Web Audio API (Typing & Click Sounds)
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     function playTypeSound() {
@@ -502,7 +495,6 @@
       inp.addEventListener('keydown', playTypeSound);
     });
 
-    // ३. पासवर्ड देखाउने वा लुकाउने लजिक (Show / Hide Password)
     function togglePasswordVisibility() {
       playClickSound();
       const pwdInput = document.getElementById("password");
@@ -518,13 +510,11 @@
       }
     }
 
-    // ४. पासवर्ड बिर्सिएमा (Forgot Password)
     function handleForgotPassword() {
       playClickSound();
       alert("🔐 पासवर्ड रिसेट गर्नको लागि कृपया आफ्नो सुपरएडमिन (Superadmin) सँग सम्पर्क गर्नुहोस्!");
     }
 
-    // ५. गलत प्रयास गन्ने र ३ पटक भए लक गर्ने लजिक
     let failedAttempts = parseInt(sessionStorage.getItem("login_failed_attempts") || "0", 10);
 
     function checkLockoutStatus() {
@@ -537,7 +527,43 @@
       }
     }
 
-    // ६. मुख्य लगइन प्रक्रिया (सुपाबेस डाटाबेस + लोकल प्रमाणीकरण)
+    // बहु-तालिका खोज (Multi-Table Supabase Checker)
+    async function querySupabaseUser(usernameInput) {
+      if (!supabaseClient) return null;
+
+      // १. admin_users टेबल खोज्ने
+      try {
+        const { data, error } = await supabaseClient
+          .from('admin_users')
+          .select('*')
+          .or(`username.ilike.${usernameInput},email.ilike.${usernameInput}`)
+          .limit(1);
+
+        if (!error && data && data.length > 0) {
+          return data[0];
+        }
+      } catch (e) {
+        console.warn("admin_users check error:", e);
+      }
+
+      // २. यदि भेटिएन भने users टेबल खोज्ने
+      try {
+        const { data, error } = await supabaseClient
+          .from('users')
+          .select('*')
+          .or(`username.ilike.${usernameInput},email.ilike.${usernameInput}`)
+          .limit(1);
+
+        if (!error && data && data.length > 0) {
+          return data[0];
+        }
+      } catch (e) {
+        console.warn("users check error:", e);
+      }
+
+      return null;
+    }
+
     async function handleMainLogin(e) {
       e.preventDefault();
       playClickSound();
@@ -556,30 +582,21 @@
 
       let authenticatedUser = null;
 
-      // १. पहिले सुपाबेस क्लाउडबाट जाँच्ने
-      if (supabaseClient) {
-        try {
-          const { data, error } = await supabaseClient
-            .from('admin_users')
-            .select('*')
-            .ilike('username', u)
-            .limit(1);
-
-          if (!error && data && data.length > 0) {
-            const dbUser = data[0];
-            if (dbUser.password === p) {
-              authenticatedUser = {
-                username: dbUser.username,
-                full_name: dbUser.full_name || dbUser.username,
-                role: dbUser.role || (dbUser.username.toLowerCase() === "superadmin" ? "Superadmin" : "Admin"),
-                photo: dbUser.photo || localStorage.getItem("superadmin_profile_photo") || ""
-              };
-            }
-          }
-        } catch(err) {}
+      // १. सुपाबेस क्लाउडबाट जाँच्ने
+      const dbUser = await querySupabaseUser(u);
+      if (dbUser) {
+        const dbPass = (dbUser.password || dbUser.pass || '').toString().trim();
+        if (dbPass === p) {
+          authenticatedUser = {
+            username: dbUser.username || dbUser.email || u,
+            full_name: dbUser.full_name || dbUser.name || dbUser.username || u,
+            role: dbUser.role || ((u.toLowerCase() === "superadmin") ? "Superadmin" : "Admin"),
+            photo: dbUser.photo || dbUser.avatar_url || localStorage.getItem("superadmin_profile_photo") || ""
+          };
+        }
       }
 
-      // २. यदि सुपाबेसमा भेटिएन भने सुपरएडमिनको हार्डकोड पासवर्ड (Sarkar@#07) वा लोकल जाँच्ने
+      // २. स्थानीय तथा सुपरएडमिन डिफल्ट ब्याकअप (Fallback)
       if (!authenticatedUser) {
         if (u.toLowerCase() === "superadmin" && (p === "Sarkar@#07" || p === "superadmin")) {
           authenticatedUser = {
@@ -598,7 +615,7 @@
         }
       }
 
-      // ३. नतिजा मूल्याङ्कन
+      // ३. नतिजा
       if (authenticatedUser) {
         sessionStorage.removeItem("login_failed_attempts");
         sessionStorage.setItem("user", JSON.stringify(authenticatedUser));
@@ -622,7 +639,7 @@
       }
     }
 
-    // ७. आपतकालीन मास्टर पिन रिकभरी (Master PIN: 0707 वा Sarkar@#07)
+    // आपतकालीन मास्टर पिन रिकभरी (PIN: 0707 वा Sarkar@#07)
     function handleDirectRecoveryLogin() {
       playClickSound();
       const MASTER_PIN = "0707";
@@ -632,7 +649,6 @@
       if (pin === null) return;
 
       if (pin.trim() === MASTER_PIN || pin.trim() === MASTER_PASS) {
-        // मास्टर पिनले लक भएको खण्डमा पनि रिसेट गरिदिन्छ
         sessionStorage.removeItem("login_failed_attempts");
         
         const superAdminUser = {
@@ -651,7 +667,6 @@
       }
     }
 
-    // ८. डार्क/लाइट मोड
     function toggleTheme() {
       playClickSound();
       document.body.classList.toggle("dark-mode");
@@ -674,7 +689,6 @@
       }
     }
 
-    // घडी
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
