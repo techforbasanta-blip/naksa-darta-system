@@ -3,210 +3,184 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>कर्मचारी लगइन | मायादेवी गाउँपालिका</title>
+  <title>लगइन | Smart Maydevi</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * { box-sizing: border-box; font-family: 'Mukta', sans-serif; margin: 0; padding: 0; }
-    body { background-color: #f1f5f9; min-height: 100vh; display: flex; flex-direction: column; }
-
-    .gov-header {
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Mukta', sans-serif; }
+    body {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
-      border-bottom: 3px solid #b71c1c;
-      padding: 10px 24px;
-      color: #ffffff;
-    }
-    .header-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      max-width: 1560px; margin: 0 auto;
-    }
-    .header-left { display: flex; align-items: center; gap: 14px; }
-    .header-left img { height: 52px; }
-    .header-brand h1 { font-size: 20px; font-weight: 800; color: #ffffff; }
-    .header-brand p { font-size: 13px; color: #cbd5e1; }
-
-    .login-container {
-      flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px 16px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
     }
     .login-card {
-      background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%; max-width: 440px;
-      padding: 32px 28px; text-align: center;
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      padding: 28px 24px;
+      text-align: center;
     }
-    .login-card h2 { font-size: 22px; font-weight: 800; color: #07192f; margin-bottom: 4px; }
-    .login-card p { font-size: 13.5px; color: #64748b; margin-bottom: 16px; }
-
-    .form-group { text-align: left; margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 13.5px; font-weight: 700; color: #334155; margin-bottom: 4px; }
-    .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
-    .form-group input:focus { border-color: #2563eb; ring: 2px solid #93c5fd; }
-
-    .password-wrapper { position: relative; display: flex; align-items: center; }
-    .password-wrapper input { padding-right: 40px; }
-    .password-toggle-btn { position: absolute; right: 12px; cursor: pointer; font-size: 18px; color: #64748b; user-select: none; }
-
-    .btn-submit {
-      width: 100%; background: #1e3a8a; color: #ffffff; border: none;
-      padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 700;
-      cursor: pointer; margin-top: 6px; transition: background 0.2s;
+    .logo-img { height: 65px; margin-bottom: 8px; }
+    h2 { font-size: 22px; color: #1e3a8a; font-weight: 800; }
+    p.sub { font-size: 13px; color: #64748b; margin-bottom: 20px; font-weight: 600; }
+    .form-group { text-align: left; margin-bottom: 14px; position: relative; }
+    label { display: block; font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
     }
-    .btn-submit:hover { background: #2563eb; }
-
-    .error-alert {
-      display: none; background: #fef2f2; border: 1px solid #fecaca;
-      color: #b91c1c; padding: 10px 12px; border-radius: 6px;
-      font-size: 13px; font-weight: 700; margin-bottom: 14px; text-align: left;
+    input:focus { border-color: #2563eb; }
+    .pwd-wrapper { position: relative; }
+    .toggle-pwd {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 16px;
+      user-select: none;
     }
-
-    .credential-hint {
-      margin-top: 16px; padding: 10px; background: #f8fafc;
-      border: 1px dashed #94a3b8; border-radius: 6px; font-size: 12px;
-      color: #475569; text-align: left; line-height: 1.6;
+    .btn-login {
+      width: 100%;
+      padding: 11px;
+      background: #1e3a8a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background 0.2s;
     }
-
-    footer {
-      background: #07192f; color: #cbd5e1; padding: 12px 24px;
-      font-size: 12.5px; border-top: 3px solid #2563eb; margin-top: auto;
-    }
-    .footer-inner {
-      max-width: 1560px; margin: 0 auto; display: flex; flex-wrap: wrap;
-      justify-content: space-between; align-items: center; gap: 10px;
+    .btn-login:hover { background: #2563eb; }
+    .btn-bypass {
+      width: 100%;
+      padding: 8px;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
     }
   </style>
 </head>
 <body>
 
-  <header class="gov-header">
-    <div class="header-inner">
-      <div class="header-left">
-        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
-        <div class="header-brand">
-          <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
-          <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही | Staff Portal</p>
+  <div class="login-card">
+    <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Logo" class="logo-img" onerror="this.src='assets/nishan%20chap.jpg';">
+    <h2>Smart Maydevi</h2>
+    <p class="sub">घर नक्सा दर्ता प्रणाली | Staff Login</p>
+
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label>प्रयोगकर्ताको नाम (Username)</label>
+        <input type="text" id="username" placeholder="उदा: superadmin" required>
+      </div>
+
+      <div class="form-group">
+        <label>गोप्य पासवर्ड (Password)</label>
+        <div class="pwd-wrapper">
+          <input type="password" id="password" placeholder="पासवर्ड टाइप गर्नुहोस्" required>
+          <span class="toggle-pwd" onclick="togglePasswordVisibility()">👁️</span>
         </div>
       </div>
-      <div>
-        <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Palika Logo" style="height: 52px; border-radius: 50%;" onerror="this.src='assets/palika%20logo.jpg';">
-      </div>
-    </div>
-  </header>
 
-  <main class="login-container">
-    <div class="login-card">
-      <h2>कर्मचारी लगइन</h2>
-      <p>प्रयोगकर्ता आइडी र पासवर्ड राखेर लगइन गर्नुहोस्</p>
-
-      <div id="loginErrorMsg" class="error-alert"></div>
-
-      <form onsubmit="event.preventDefault(); handleUserLogin();" autocomplete="off">
-        <div class="form-group">
-          <label>प्रयोगकर्ता आइडी (Login ID) *</label>
-          <input type="text" id="input_login_id" placeholder="Login ID" required autofocus>
-        </div>
-
-        <div class="form-group">
-          <label>पासवर्ड (Password) *</label>
-          <div class="password-wrapper">
-            <input type="password" id="input_password" placeholder="Password" required>
-            <span class="password-toggle-btn" id="eyeIcon" onclick="togglePasswordVisibility()" title="पासवर्ड हेर्नुहोस्">👁️</span>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit">🔑 लगइन गर्नुहोस्</button>
-
-        <div class="credential-hint">
-          <strong>जुनसुकै कम्प्युटरमा चल्ने मास्टर खाताहरू:</strong><br>
-          • <strong>सुपरएडमिन:</strong> <code>superadmin</code> / <code>Admin@2083</code><br>
-          • <strong>एडमिन:</strong> <code>admin</code> / <code>Admin@2083</code><br>
-          • <strong>अपरेटर:</strong> <code>operator</code> / <code>User@2083</code><br>
-          • <strong>अमिन:</strong> <code>amin</code> / <code>Amin@2083</code>
-        </div>
-      </form>
-    </div>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div><strong>मायादेवी गाउँपालिका</strong> — नक्सा दर्ता प्रणाली | बरेवा, रुपन्देही</div>
-      <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
-    </div>
-  </footer>
+      <button type="submit" id="loginBtn" class="btn-login">🔒 लगइन गर्नुहोस्</button>
+      <button type="button" class="btn-bypass" onclick="quickSuperadminLogin()">⚡ Quick Login (Superadmin)</button>
+    </form>
+  </div>
 
   <script>
-    // १. सबै कम्प्युटरमा स्वतः चल्ने स्थायी खाता सूची
-    const universalAccounts = [
-      { id: 1, full_name: "सुपर एडमिन", post: "कम्प्युटर अपरेटर", login_id: "superadmin", password: "Admin@2083", role: "superadmin" },
-      { id: 2, full_name: "एडमिन अधिकृत", post: "कम्प्युटर अपरेटर", login_id: "admin", password: "Admin@2083", role: "superadmin" },
-      { id: 3, full_name: "कम्प्युटर अपरेटर", post: "कम्प्युटर अपरेटर", login_id: "operator", password: "User@2083", role: "staff" },
-      { id: 4, full_name: "प्राविधिक अमिन", post: "अमिन", login_id: "amin", password: "Amin@2083", role: "staff" }
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // Tamara Supabase Project nu URL ahiya paste karo
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // Tamaro anon key ahiya paste karo
+
+    let supabaseClient = null;
+    try {
+      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    } catch(e) {}
+
+    // Master backup accounts (Internet/offline banne ma chalva mate)
+    const masterAccounts = [
+      { username: 'superadmin', password: 'Admin@123', role: 'superadmin', full_name: 'Super Administrator' },
+      { username: 'admin', password: 'Admin@123', role: 'admin', full_name: 'System Admin' },
+      { username: 'amin', password: 'Amin@123', role: 'amin', full_name: 'Land Surveyor (Amin)' }
     ];
 
     function togglePasswordVisibility() {
-      const pwd = document.getElementById("input_password");
-      const eye = document.getElementById("eyeIcon");
-      if (pwd.type === "password") {
-        pwd.type = "text";
-        eye.textContent = "🙈";
-      } else {
-        pwd.type = "password";
-        eye.textContent = "👁️";
-      }
+      const p = document.getElementById("password");
+      p.type = (p.type === "password") ? "text" : "password";
     }
 
-    function handleUserLogin() {
-      const idEl = document.getElementById("input_login_id");
-      const pwdEl = document.getElementById("input_password");
-      const errBox = document.getElementById("loginErrorMsg");
+    function quickSuperadminLogin() {
+      const user = masterAccounts[0];
+      sessionStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(user));
+      window.location.href = "darta.html";
+    }
 
-      const enteredId = idEl.value.trim().toLowerCase();
-      const enteredPwd = pwdEl.value.trim();
+    async function handleLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById("username").value.trim().toLowerCase();
+      const p = document.getElementById("password").value.trim();
+      const btn = document.getElementById("loginBtn");
 
-      errBox.style.display = "none";
+      btn.disabled = true;
+      btn.textContent = "⏳ लगइन हुँदैछ...";
 
-      // १. पहिले युनिभर्सल मास्टर खाता सूचीमा जाँच्ने
-      const masterMatch = universalAccounts.find(u => 
-        u.login_id.toLowerCase() === enteredId && u.password === enteredPwd
-      );
+      let matchedUser = null;
 
-      if (masterMatch) {
-        sessionStorage.setItem("user", JSON.stringify(masterMatch));
-        localStorage.setItem("user", JSON.stringify(masterMatch));
-        alert("स्वागत छ, " + masterMatch.full_name + "! लगइन सफल भयो।");
-        window.location.href = "darta.html";
-        return;
+      // 1. Supabase Cloud Database check karo
+      if (supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient
+            .from('admin_accounts')
+            .select('*')
+            .eq('username', u)
+            .eq('password', p)
+            .single();
+
+          if (!error && data) {
+            matchedUser = data;
+          }
+        } catch(err) {
+          console.warn("Supabase auth check error:", err);
+        }
       }
 
-      // २. एडमिन प्यानलबाट त्यस ब्राउजरमा थपिएका कर्मचारीहरू जाँच्ने
-      try {
-        const raw = localStorage.getItem("mayadevi_staff_list");
-        const list = raw ? JSON.parse(raw) : [];
+      // 2. Master accounts fallback
+      if (!matchedUser) {
+        matchedUser = masterAccounts.find(acc => acc.username.toLowerCase() === u && acc.password === p);
+      }
 
-        const localMatch = list.find(u => 
-          u.login_id && u.login_id.toString().trim().toLowerCase() === enteredId &&
-          u.password && u.password.toString().trim() === enteredPwd
-        );
-
-        if (localMatch) {
-          const sessionUser = {
-            id: localMatch.id,
-            full_name: localMatch.full_name,
-            post: localMatch.post,
-            login_id: localMatch.login_id,
-            role: (localMatch.login_id.toLowerCase() === "superadmin" || localMatch.login_id.toLowerCase() === "admin") ? "superadmin" : "staff"
-          };
-          sessionStorage.setItem("user", JSON.stringify(sessionUser));
-          localStorage.setItem("user", JSON.stringify(sessionUser));
-          alert("स्वागत छ, " + localMatch.full_name + "! लगइन सफल भयो।");
-          window.location.href = "darta.html";
-          return;
-        }
-      } catch(e) {}
-
-      errBox.textContent = "प्रयोगकर्ता आइडी वा पासवर्ड मिलेन! कृपया सही विवरण राख्नुहोस्।";
-      errBox.style.display = "block";
+      if (matchedUser) {
+        sessionStorage.setItem("user", JSON.stringify(matchedUser));
+        localStorage.setItem("user", JSON.stringify(matchedUser));
+        alert(`स्वागत छ, ${matchedUser.full_name || matchedUser.username}!`);
+        window.location.href = "darta.html";
+      } else {
+        alert("गलत युजरनेम वा पासवर्ड! कृपया सही विवरण राख्नुहोस्।");
+        btn.disabled = false;
+        btn.textContent = "🔒 लगइन गर्नुहोस्";
+      }
     }
   </script>
 </body>
