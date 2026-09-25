@@ -6,7 +6,7 @@
   <title>Smart Mayadevi</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -55,7 +55,37 @@
     .brand-left { display: flex; align-items: center; gap: 12px; }
     .brand-left img { height: 52px !important; width: auto !important; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
-    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; }
+
+    /* नाराको ठीक २/४ ट्याब पछाडि Home बटन मिलाउने कन्टेनर */
+    .motto-home-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px; /* २/४ ट्याब बराबरको खुला ठाउँ */
+      margin-top: 2px;
+    }
+    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; margin: 0; }
+
+    .brand-home-badge {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff !important;
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .brand-home-badge:hover {
+      background: #2563eb;
+      border-color: #60a5fa;
+      transform: translateY(-1px);
+    }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
@@ -375,7 +405,6 @@
       padding: 2px 5px !important;
     }
 
-    /* हस्ताक्षर भाग २ स्टेप तल झारिएको */
     .cert-signatures-block {
       margin-top: 36px !important;
       margin-bottom: 2px !important;
@@ -531,17 +560,21 @@
 </head>
 <body>
 
+  <!-- Top Header with Motto followed by 2/4 Tab Spaced Home Button -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
           <h1>Smart Mayadevi</h1>
-          <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
+          <div class="motto-home-row">
+            <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
+            <a href="index.html" class="brand-home-badge" title="मुख्य गृहपृष्ठमा जानुहोस्">🏠 Home</a>
+          </div>
         </div>
       </div>
+      
       <div class="header-controls">
-        
         <div class="user-profile-badge" id="headerUserProfile">
           <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
           <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
@@ -557,6 +590,7 @@
         </div>
 
         <a href="darta.html" class="nav-btn active">📝 नयाँ दर्ता</a>
+        <a href="tippani.html" class="nav-btn">📄 टिप्पणी</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
         
@@ -576,7 +610,7 @@
 
       <div class="form-section-title">दर्ता तथा प्रमाण-पत्र विवरण</div>
       <div class="form-grid-2">
-        <div class="form-row"><label>पत्र संख्या</label><input type="text" id="in_patra" value="०८३/८4" oninput="updateLivePreview()"></div>
+        <div class="form-row"><label>पत्र संख्या</label><input type="text" id="in_patra" value="०८३/८४" oninput="updateLivePreview()"></div>
         <div class="form-row"><label>दर्ता मिति *</label><input type="text" id="in_date" value="२०८३/०६/०८" oninput="updateLivePreview()"></div>
       </div>
       <div class="form-grid-2">
@@ -924,7 +958,6 @@
                 </tr>
               </table>
 
-              <!-- हस्ताक्षर तथा QR ब्लक २ स्टेप तल झारिएको -->
               <div class="cert-signatures-block">
                 <div class="officers-signature-grid">
                   <div class="sign-item">
@@ -970,7 +1003,7 @@
               </div>
             </div>
 
-            <!-- Page 1 Footer Locked Directly at the Bottom -->
+            <!-- Page 1 Footer -->
             <footer class="cert-footer">
               सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
               वेभ साइटः- mayadevimunrupandehi.gov.np
@@ -1102,7 +1135,7 @@
     let currentPhotoBase64 = "";
     let currentNamsariPhotoBase64 = "";
     let currentZoomLevel = 0.82;
-    let editingOriginalRecord = null; // सम्पादन भइरहेको रेकर्ड
+    let editingOriginalRecord = null;
 
     function setZoom(lvl) {
       currentZoomLevel = lvl;
@@ -1157,7 +1190,6 @@
       } catch(e) {}
     }
 
-    // १००% चालु हुने प्रिन्ट फङ्सन
     window.executePrint = function() {
       try {
         const wrapper = document.getElementById("previewZoomWrapper");
@@ -1173,7 +1205,6 @@
       }
     };
 
-    // १००% चालु हुने रिसेट फङ्सन
     window.executeReset = function() {
       if (confirm("के तपाईं फारामका विवरणहरू खाली गरी नयाँ प्रविष्टि गर्न चाहनुहुन्छ?")) {
         sessionStorage.removeItem("view_record_id");
@@ -1182,7 +1213,6 @@
       }
     };
 
-    // नयाँ सुरक्षित गर्ने वा गल्ती सच्याएर अद्यावधिक गर्ने (Update) फङ्सन
     window.executeSave = async function() {
       const getVal = id => {
         const el = document.getElementById(id);
@@ -1207,7 +1237,6 @@
         saveBtn.textContent = "⏳ सुरक्षित हुँदैछ...";
       }
 
-      // यदि पुरानो रेकर्ड सच्याएको हो भने पुरानै ID र created_timestamp कायम राख्ने
       const nowTime = Date.now();
       const recordId = editingOriginalRecord ? editingOriginalRecord.id : nowTime;
       const createdTimestamp = editingOriginalRecord ? (editingOriginalRecord.created_timestamp || editingOriginalRecord.id) : nowTime;
@@ -1270,7 +1299,6 @@
         ns_photo: currentNamsariPhotoBase64
       };
 
-      // १. लोकल स्टोरेज अपडेट
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
         const existingIdx = records.findIndex(r => r.id === recordId || r.darta_no === dartaNo);
@@ -1283,7 +1311,6 @@
         localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
       } catch (err) {}
 
-      // २. सुपाबेसमा सिधै Upsert (नयाँ भए Insert, पुरानो भए Update)
       let savedInCloud = false;
       let cloudErrorMsg = "";
 
@@ -1594,7 +1621,6 @@
       window.location.href = "login.html";
     }
 
-    // सच्याउने (Edit) मोड जाँच्ने र फाराममा भर्ने
     async function checkEditMode() {
       try {
         const editId = sessionStorage.getItem("view_record_id");
@@ -1602,7 +1628,6 @@
 
         let item = null;
 
-        // १. सुपाबेसबाट खोज्ने
         if (supabaseClient) {
           try {
             const { data } = await supabaseClient
@@ -1614,7 +1639,6 @@
           } catch(e) {}
         }
 
-        // २. यदि सुपाबेसमा भेटिएन भने लोकलमा खोज्ने
         if (!item) {
           try {
             const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
@@ -1623,9 +1647,8 @@
         }
 
         if (item) {
-          editingOriginalRecord = item; // सम्पादन भइरहेको रेकर्ड सेट भयो
+          editingOriginalRecord = item;
 
-          // सच्याउने ब्यानर देखाउने
           const banner = document.getElementById("editBannerNotice");
           if (banner) banner.style.display = "block";
           const formTitle = document.getElementById("pageFormTitle");
