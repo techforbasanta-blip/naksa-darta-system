@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Mayadevi - Integrated Municipal Management System</title>
+  <title>Smart Mayadevi - डिजिटल कार्यप्रणाली तथा व्यवस्थापन</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -18,282 +17,278 @@
       --gov-blue: #07192f;
       --gov-navy: #1e3a8a;
       --bg: #f8fafc;
-      --sidebar-bg: #0b1e36;
       --card-bg: #ffffff;
-      --input-bg: #ffffff;
       --text-dark: #0f172a;
-      --text-light: #f8fafc;
       --border-color: #cbd5e1;
       --screen-font: 'Mukta', sans-serif;
-      --print-font: 'Kokila', 'Kalimati', 'Mukta', serif;
     }
 
     body.dark-mode {
       --bg: #07192f;
-      --sidebar-bg: #040e1a;
       --card-bg: #0d233e;
-      --input-bg: #07192f;
       --text-dark: #ffffff;
       --border-color: #1e3a8a;
     }
 
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
-    body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.2s, color 0.2s; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.2s, color 0.2s; }
 
     /* Top Master Header */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
-      padding: 6px 16px;
+      padding: 8px 20px;
       color: #ffffff;
       position: sticky;
       top: 0;
       z-index: 1000;
     }
     .header-inner {
+      max-width: 1720px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
     }
-    .brand-left { display: flex; align-items: center; gap: 10px; }
-    .brand-left img { height: 48px; width: auto; }
-    .brand-text h1 { font-size: 19px; font-weight: 800; color: #fff; line-height: 1.1; }
-    .brand-text p { font-size: 11px; color: #cbd5e1; font-weight: 500; }
+    .brand-left { display: flex; align-items: center; gap: 12px; }
+    .brand-left img { height: 50px; width: auto; }
+    .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
+    .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; }
 
-    /* Main Module Selector in Header */
-    .header-module-tabs {
-      display: flex;
-      gap: 6px;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 3px;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .module-tab-btn {
-      background: transparent;
-      color: #cbd5e1;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 4px;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-    .module-tab-btn.active {
-      background: #2563eb;
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-
-    .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     
     .user-badge {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 2px 8px;
-      border-radius: 20px;
+      padding: 3px 10px 3px 5px;
+      border-radius: 25px;
     }
-    .user-badge img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1.5px solid #38bdf8; }
+    .user-badge img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1.5px solid #38bdf8; }
     .user-badge-fallback {
-      width: 30px; height: 30px; border-radius: 50%; background: #0284c7; color: #fff;
+      width: 32px; height: 32px; border-radius: 50%; background: #0284c7; color: #fff;
       display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;
     }
-    .user-info { text-align: left; line-height: 1.1; }
-    .user-name { font-size: 11.5px; font-weight: 800; color: #fff; }
-    .user-role-tag { font-size: 9.5px; color: #7dd3fc; font-weight: 700; text-transform: uppercase; }
+    .user-info { text-align: left; line-height: 1.15; }
+    .user-name { font-size: 12px; font-weight: 800; color: #fff; }
+    .user-role-tag { font-size: 10px; color: #7dd3fc; font-weight: 700; }
 
     .header-clock-box {
       text-align: right;
       background: rgba(255, 255, 255, 0.1);
-      padding: 3px 8px;
+      padding: 4px 8px;
       border-radius: 4px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      line-height: 1.15;
+      line-height: 1.2;
     }
     .header-clock-box .h-date { font-size: 10.5px; color: #cbd5e1; font-weight: 600; }
     .header-clock-box .h-time { font-size: 12px; color: #ffffff; font-weight: 800; }
 
-    .btn-header-action {
-      background: #1e3a8a;
+    .btn-hdr {
+      background: #0d233e;
       color: #ffffff;
-      border: 1px solid #3b82f6;
+      border: 1px solid #1e3a8a;
       font-size: 12px;
       font-weight: 700;
-      padding: 5px 9px;
+      padding: 6px 12px;
       border-radius: 4px;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
-    .btn-header-action:hover { background: #2563eb; }
+    .btn-hdr:hover { background: #2563eb; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
-    /* App Body Container (Sidebar + Content Workspace) */
-    .app-body {
-      display: flex;
+    /* Main Welcome Section */
+    .dashboard-container {
+      max-width: 1280px;
+      width: 100%;
+      margin: 30px auto;
+      padding: 0 16px;
       flex: 1;
-      height: calc(100vh - 66px);
-      overflow: hidden;
-    }
-
-    /* Left Side Navigation */
-    .side-navbar {
-      width: 260px;
-      background: var(--sidebar-bg);
-      border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      flex-shrink: 0;
-      transition: width 0.2s;
+      align-items: center;
     }
-    .side-nav-header {
-      padding: 12px 14px;
-      font-size: 12px;
+
+    .welcome-banner {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .welcome-banner h2 {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--gov-crimson);
+      margin-bottom: 6px;
+    }
+    body.dark-mode .welcome-banner h2 { color: #f87171; }
+    .welcome-banner p {
+      font-size: 15.5px;
+      color: var(--text-dark);
+      font-weight: 600;
+      opacity: 0.85;
+    }
+
+    /* 2 Main Choice Cards (Ghar Naksa vs ID Card) */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+      max-width: 980px;
+      margin-bottom: 25px;
+    }
+
+    .module-choice-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 26px 20px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .module-choice-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.2);
+    }
+    .card-naksa:hover { border-color: #2563eb; }
+    .card-id:hover { border-color: #0891b2; }
+
+    .module-choice-card .icon-circle {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      margin: 0 auto 16px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+    }
+    .card-naksa .icon-circle { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
+    .card-id .icon-circle { background: rgba(8, 145, 178, 0.12); color: #0891b2; }
+
+    .module-choice-card h3 {
+      font-size: 21px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .card-naksa h3 { color: #1e3a8a; }
+    body.dark-mode .card-naksa h3 { color: #60a5fa; }
+    .card-id h3 { color: #0891b2; }
+    body.dark-mode .card-id h3 { color: #38bdf8; }
+
+    .module-choice-card p {
+      font-size: 13.5px;
+      color: var(--text-dark);
+      opacity: 0.8;
+      line-height: 1.45;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .btn-module-launch {
+      padding: 11px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
       font-weight: 800;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .card-naksa .btn-module-launch { background: #1e3a8a; }
+    .card-naksa .btn-module-launch:hover { background: #2563eb; }
+    .card-id .btn-module-launch { background: #0891b2; }
+    .card-id .btn-module-launch:hover { background: #0e7490; }
+
+    /* Sub-menu links modal/view container */
+    .module-options-container {
+      width: 100%;
+      max-width: 980px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 10px;
+      display: none;
+    }
+    .options-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-    .side-nav-menu {
-      list-style: none;
-      padding: 8px;
-      overflow-y: auto;
-      flex: 1;
-    }
-    .side-nav-menu li { margin-bottom: 4px; }
-    .side-nav-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 12px;
-      color: #e2e8f0;
-      text-decoration: none;
-      font-size: 13.5px;
-      font-weight: 700;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .side-nav-link:hover { background: rgba(255, 255, 255, 0.08); color: #38bdf8; }
-    .side-nav-link.active { background: #2563eb; color: #ffffff; }
-
-    .role-badge-pill {
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.15);
-      margin-left: auto;
+      border-bottom: 1.5px solid var(--border-color);
+      padding-bottom: 8px;
     }
 
-    /* Main Dynamic Content Workspace */
-    .main-workspace {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      background: var(--bg);
+    .action-links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
-
-    .view-panel { display: none; }
-    .view-panel.active { display: block; }
-
-    /* A4 Paper Styling for Nirnayarth Tippani (Jyoti.pdf Replica) */
-    .tippani-a4-sheet {
-      background: #ffffff !important;
-      color: #000000 !important;
-      width: 210mm !important;
-      min-height: 294mm !important;
-      margin: 0 auto 20px auto;
-      padding: 14mm 16mm 14mm 18mm !important;
-      border: 1px solid #cbd5e1;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      position: relative;
-    }
-    .tippani-a4-sheet * { color: #000000 !important; font-family: var(--print-font) !important; }
-
-    .tippani-header {
-      text-align: center;
-      border-bottom: 2px solid #000;
-      padding-bottom: 6px;
-      margin-bottom: 12px;
-      position: relative;
-    }
-    .tippani-header h2 { font-size: 24px; font-weight: 900; color: var(--gov-crimson) !important; }
-    .tippani-header h3 { font-size: 18px; font-weight: 800; color: #1e3a8a !important; }
-    .tippani-header p { font-size: 15px; font-weight: 700; }
-    .tippani-shriman { font-size: 17px; font-weight: 900; margin-bottom: 8px; text-decoration: underline; }
-    .tippani-subject { font-size: 18px; font-weight: 800; text-align: center; margin: 10px 0; text-decoration: underline; }
-
-    .tippani-body-para {
-      font-size: 16.5px;
-      line-height: 1.6;
-      text-align: justify;
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-
-    .tippani-sign-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 24px;
-    }
-    .tippani-sign-table td {
-      vertical-align: bottom;
-      padding: 10px 6px;
-      text-align: center;
-      width: 50%;
-    }
-    .sign-title { font-size: 16px; font-weight: 800; }
-    .sign-name { font-size: 17px; font-weight: 900; margin-top: 30px; border-top: 1px dotted #000; display: inline-block; padding-top: 3px; min-width: 180px; }
-    .sign-post { font-size: 15px; font-weight: 700; }
-
-    .tippani-footer-date {
-      margin-top: 30px;
-      font-size: 16px;
-      font-weight: 800;
-      text-align: left;
-    }
-
-    /* Action bar */
-    .action-floating-bar {
-      position: sticky;
-      bottom: 15px;
-      display: flex;
-      gap: 10px;
-      background: var(--card-bg);
+    .action-link-box {
+      background: rgba(0, 0, 0, 0.02);
       border: 1px solid var(--border-color);
-      padding: 10px 16px;
-      border-radius: 8px;
-      max-width: 600px;
-      margin: 0 auto;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      z-index: 500;
+      padding: 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: all 0.2s;
     }
-    .btn-act { flex: 1; padding: 10px; border: none; border-radius: 5px; font-size: 14px; font-weight: 800; cursor: pointer; color: #fff; }
+    .action-link-box:hover {
+      background: rgba(37, 99, 235, 0.06);
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+    .action-link-box strong { font-size: 15px; color: #1e3a8a; }
+    body.dark-mode .action-link-box strong { color: #60a5fa; }
+    .action-link-box span { font-size: 12px; opacity: 0.75; }
 
-    @media print {
-      @page { size: A4 portrait; margin: 0; }
-      body, html { background: #fff !important; width: 210mm !important; }
-      .gov-header, .side-navbar, .action-floating-bar, .no-print { display: none !important; }
-      .main-workspace { padding: 0 !important; overflow: visible !important; }
-      .tippani-a4-sheet { border: none !important; box-shadow: none !important; margin: 0 !important; width: 210mm !important; padding: 12mm 15mm !important; }
+    footer.site-footer {
+      background: #07192f;
+      color: #cbd5e1;
+      padding: 10px 18px;
+      font-size: 12px;
+      border-top: 3px solid #2563eb;
+      margin-top: auto;
+    }
+    .footer-inner {
+      max-width: 1720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Master Header -->
-  <header class="gov-header no-print">
+  <!-- Top Master Navigation Header -->
+  <header class="gov-header">
     <div class="header-inner">
       <div class="brand-left">
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -303,376 +298,224 @@
         </div>
       </div>
 
-      <!-- Main Module Selector Tabs -->
-      <div class="header-module-tabs">
-        <button type="button" class="module-tab-btn active" id="tabNaksaModule" onclick="switchMainModule('naksa')">
-          📐 घर नक्सा Module
-        </button>
-        <button type="button" class="module-tab-btn" id="tabIdModule" onclick="switchMainModule('idcard')">
-          🪪 ID Card Module
-        </button>
-      </div>
-
-      <!-- User Profile, Clock & Utilities -->
       <div class="header-controls">
-        <div class="user-badge" id="headerUserBadge">
+        <div class="user-badge" id="uBadgeBox">
           <div class="user-badge-fallback" id="uAvatarFallback">A</div>
           <img id="uAvatarImg" src="" alt="Profile" style="display:none;">
           <div class="user-info">
-            <div class="user-name" id="uFullName">Superadmin</div>
-            <div class="user-role-tag" id="uRoleTag">FULL ACCESS</div>
+            <div class="user-name" id="uNameText">कर्मचारी</div>
+            <div class="user-role-tag" id="uRoleText">सामान्य पहुँच</div>
           </div>
         </div>
 
         <div class="header-clock-box">
-          <div class="h-date" id="liveHDate">मिति: लोड हुँदैछ...</div>
-          <div class="h-time" id="liveHTime">समय: --:--:--</div>
+          <div class="h-date" id="liveNepaliDate">मिति: लोड हुँदैछ...</div>
+          <div class="h-time" id="liveNepaliTime">समय: --:--:--</div>
         </div>
 
-        <button type="button" class="btn-header-action" id="themeBtn" onclick="toggleTheme()">☾</button>
-        <button type="button" class="btn-header-action btn-logout" onclick="handleLogout()">🚪 लगआउट</button>
+        <a href="admin.html" id="superAdminLink" class="btn-hdr" style="display:none; background:#7c3aed; border-color:#8b5cf6;">⚙️ Super Admin Panel</a>
+        <button type="button" class="btn-hdr" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
+        <button type="button" class="btn-hdr btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
       </div>
     </div>
   </header>
 
-  <!-- App Body Layout (Side Navigation + Main Panel Workspace) -->
-  <div class="app-body">
-    
-    <!-- Left Side Navigation -->
-    <aside class="side-navbar no-print" id="sideNavbar">
-      <div class="side-nav-header">
-        <span id="sideNavModuleTitle">📐 घर नक्सा मेनु</span>
-        <span class="role-badge-pill" id="accessBadgePill">Full Access</span>
+  <!-- Main Dashboard Selection Area -->
+  <main class="dashboard-container">
+    <div class="welcome-banner">
+      <h2>मायादेवी गाउँपालिका डिजिटल कार्यप्रणाली</h2>
+      <p>कृपया आफूले कार्य गर्न चाहेको मुख्य मोड्युल छनोट गर्नुहोस्:</p>
+    </div>
+
+    <!-- 2 Big Choice Cards -->
+    <div class="modules-grid">
+      
+      <!-- Module 1: Ghar Naksa -->
+      <div class="module-choice-card card-naksa" onclick="openModuleActions('naksa')">
+        <div>
+          <div class="icon-circle">📐</div>
+          <h3>घर नक्सा मोड्युल (Ghar Naksa)</h3>
+          <p>घर नक्सा नयाँ दर्ता, आधिकारिक प्रमाण-पत्र, निर्णयार्थ पेश टिप्पणी (Jyoti.pdf), तथा पुराना अभिलेख व्यवस्थापन।</p>
+        </div>
+        <button type="button" class="btn-module-launch">
+          <span>📐 नक्सा कार्य सुरु गर्नुहोस्</span> ➜
+        </button>
       </div>
 
-      <!-- Ghar Naksa Submenus -->
-      <ul class="side-nav-menu" id="menuNaksaGroup">
-        <li>
-          <a class="side-nav-link active" onclick="loadView('viewDartaFrame', this)">
-            <span>📝</span> नयाँ नक्सा दर्ता (Praman Patra)
-          </a>
-        </li>
-        <li>
-          <a class="side-nav-link" onclick="loadView('viewTippaniPanel', this)">
-            <span>📄</span> निर्णयार्थ पेश टिप्पणी (Jyoti.pdf Format)
-          </a>
-        </li>
-        <li>
-          <a class="side-nav-link" onclick="loadView('viewRecordFrame', this)">
-            <span>📂</span> पुराना नक्सा अभिलेखहरू
-          </a>
-        </li>
-        <li id="sideNavAdminItem" style="display:none;">
-          <a class="side-nav-link" onclick="loadView('viewAdminFrame', this)">
-            <span>⚙️</span> Admin प्यानल (Superadmin Only)
-          </a>
-        </li>
-      </ul>
-
-      <!-- ID Card Submenus -->
-      <ul class="side-nav-menu" id="menuIdGroup" style="display:none;">
-        <li>
-          <a class="side-nav-link active" onclick="loadView('viewIdCreatePanel', this)">
-            <span>🪪</span> नयाँ ID Card सिर्जना (Employee/Citizen)
-          </a>
-        </li>
-        <li>
-          <a class="side-nav-link" onclick="loadView('viewIdRecordsPanel', this)">
-            <span>📋</span> जारी भएका ID Card सूची
-          </a>
-        </li>
-      </ul>
-    </aside>
-
-    <!-- Main Dynamic Content Workspace -->
-    <main class="main-workspace">
-      
-      <!-- Panel 1: Darta HTML Embedded Frame -->
-      <section class="view-panel active" id="viewDartaFrame">
-        <iframe src="darta.html" style="width:100%; height:calc(100vh - 100px); border:none; border-radius:6px;"></iframe>
-      </section>
-
-      <!-- Panel 2: Nirnayarth Pesh Tippani (Jyoti.pdf Exact Structure & Auto-pull Data) -->
-      <section class="view-panel" id="viewTippaniPanel">
-        <div class="no-print" style="max-width:210mm; margin:0 auto 12px auto; display:flex; gap:10px; align-items:center;">
-          <input type="text" id="autoPullDartaNo" placeholder="दर्ता नं. टाइप गरी डाटा तान्नुहोस् (उदा: २८/२०८३/०८४)" 
-                 style="flex:1; padding:8px 12px; border:1px solid #cbd5e1; border-radius:4px; font-size:13px;">
-          <button type="button" class="btn-header-action" style="background:#16a34a; padding:8px 16px;" onclick="autoPullDataForTippani()">
-            🔄 डाटा तान्नुहोस् (Auto-Pull)
-          </button>
+      <!-- Module 2: ID Card -->
+      <div class="module-choice-card card-id" onclick="openModuleActions('idcard')">
+        <div>
+          <div class="icon-circle">🪪</div>
+          <h3>स्मार्ट परिचय-पत्र मोड्युल (ID Card)</h3>
+          <p>गाउँपालिकाका कर्मचारी तथा नागरिकहरूको डिजिटल परिचय-पत्र (ID Card) सिर्जना, सम्पादन, तथा प्रिन्ट प्रणाली।</p>
         </div>
+        <button type="button" class="btn-module-launch">
+          <span>🪪 ID Card कार्य सुरु गर्नुहोस्</span> ➜
+        </button>
+      </div>
 
-        <div class="tippani-a4-sheet" id="tippaniPrintArea">
-          <div class="tippani-shriman">श्रीमान्</div>
+    </div>
 
-          <div class="tippani-header">
-            <h2>मायादेवी गाउँपालिका</h2>
-            <h3>Mayadevi Rural Municipality</h3>
-            <p>गाउँकार्यपालिकाको कार्यालय / Office of the Rural Municipal Executive</p>
-            <p>बरेवा, रुपन्देही / Barewa, Rupandehi</p>
-            <p>लुम्बिनी प्रदेश, नेपाल / Lumbini Province, Nepal</p>
-          </div>
+    <!-- Sub Actions Container: Ghar Naksa Sub-options -->
+    <div class="module-options-container" id="naksaOptionsContainer">
+      <div class="options-title">
+        <span style="color:#1e3a8a;">📐 घर नक्सा मोड्युलका कार्यहरू:</span>
+        <button type="button" class="btn-hdr" style="font-size:11px;" onclick="closeModuleActions()">✕ बन्द गर्नुहोस्</button>
+      </div>
+      <div class="action-links-grid">
+        <a href="darta.html" class="action-link-box">
+          <strong>📝 नयाँ नक्सा दर्ता (Praman Patra)</strong>
+          <span>१ देखि १८ विवरण भरी नयाँ प्रमाण-पत्र प्रिन्ट गर्नुहोस्।</span>
+        </a>
+        <a href="tippani.html" class="action-link-box">
+          <strong>📄 निर्णयार्थ पेश टिप्पणी (Tippani)</strong>
+          <span>अमिन, सब-इन्जिनियर, इन्जिनियर तथा अधिकृतको राय टिप्पणी पत्र।</span>
+        </a>
+        <a href="record.html" class="action-link-box">
+          <strong>📂 पुराना नक्सा अभिलेखहरू (Records)</strong>
+          <span>सबै एडमिनले सुरक्षित गरेका नक्सा सूची हेर्ने, सच्याउने र खोज्ने।</span>
+        </a>
+      </div>
+    </div>
 
-          <div class="tippani-subject">
-            विषयः घर सँरचना अभिलेखिकरण प्रमाण-पत्र दिने सम्बन्धमा ।
-          </div>
+    <!-- Sub Actions Container: ID Card Sub-options -->
+    <div class="module-options-container" id="idOptionsContainer">
+      <div class="options-title">
+        <span style="color:#0891b2;">🪪 परिचय-पत्र (ID Card) मोड्युलका कार्यहरू:</span>
+        <button type="button" class="btn-hdr" style="font-size:11px;" onclick="closeModuleActions()">✕ बन्द गर्नुहोस्</button>
+      </div>
+      <div class="action-links-grid">
+        <a href="javascript:void(0)" onclick="alert('नयाँ ID Card सिर्जना फाराम चाँडै आउँदैछ!');" class="action-link-box">
+          <strong>🪪 नयाँ परिचय-पत्र बनाउनुहोस्</strong>
+          <span>कर्मचारी तथा सेवाग्राहीको फोटोसहितको परिचय-पत्र बनाउने।</span>
+        </a>
+        <a href="javascript:void(0)" onclick="alert('जारी भएका ID Card हरू यहाँ देखिनेछन्!');" class="action-link-box">
+          <strong>📋 जारी भएका परिचय-पत्र सूची</strong>
+          <span>हालसम्म प्रिन्ट गरिएका सबै परिचय-पत्रहरूको विवरण हेर्ने।</span>
+        </a>
+      </div>
+    </div>
 
-          <p class="tippani-body-para">
-            मायादेवी गाउँपालिका वडा नं. <strong id="tp_ward">०८</strong> बस्ने श्री <strong id="tp_owner">ज्योती कर्ण</strong>ले 
-            निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="tp_sabik">हाटिबनगाई</strong> गा.वि.स. वडा नं. <strong id="tp_old_ward">५ क</strong> 
-            कि.न. <strong id="tp_kitta">२५२४</strong> को क्षे.फ. विगह क्रमशः <strong id="tp_land_area">०-०-१०</strong> जग्गामा मिति 
-            <strong id="tp_comp_date">२०८३/०१/०५</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति 
-            <strong id="tp_darta_date">२०८३/०५/१८</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति 
-            <strong id="tp_insp_date">२०८३/०६/०६</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण 
-            भएको पाईएको साथै मिति <strong id="tp_doc_date">२०८३/०६/१२</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई 
-            घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरीएको ।
-          </p>
+  </main>
 
-          <!-- Technical Officers Flow (Laxman, Tirtharaj, Prakash Thapa) -->
-          <table class="tippani-sign-table">
-            <tr>
-              <td>
-                <div class="sign-title">स्थलगत निरिक्षण</div>
-                <div class="sign-name" id="tp_eng1_name">लक्ष्मण घिमिरे</div>
-                <div class="sign-post" id="tp_eng1_role">अमिन</div>
-              </td>
-              <td>
-                <div class="sign-title">संरचना चेकजाँच गर्ने तथा रुजु गर्ने</div>
-                <div class="sign-name" id="tp_eng2_name">तिर्थराज पन्थी</div>
-                <div class="sign-post" id="tp_eng2_role">सब-ईन्जिनियर</div>
-              </td>
-            </tr>
-          </table>
-
-          <p class="tippani-body-para" style="margin-top:20px;">
-            उल्लेखित बिवरण अनुसारको निर्माण कार्यमा स्थलगत नापजाँच गर्ने प्रविधिकको राय बमोजिम निर्माण घर सँरचनाको
-            अभिलेखिकरण प्रमाण-पत्र प्रदान गर्न मनासिव देखिएकोले निर्णयार्थ पेश गर्दछु ।
-          </p>
-
-          <table class="tippani-sign-table">
-            <tr>
-              <td style="text-align:left;">
-                <div class="sign-name" id="tp_eng3_name" style="margin-top:20px;">प्रकाश थापा</div>
-                <div class="sign-post">ईन्जिनियर</div>
-              </td>
-              <td></td>
-            </tr>
-          </table>
-
-          <p class="tippani-body-para" style="margin-top:20px;">
-            प्रस्तुत प्राविधिक राय तथा सिफारिसका आधारमा घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्नेगरी सदर।
-          </p>
-
-          <table class="tippani-sign-table">
-            <tr>
-              <td></td>
-              <td>
-                <div class="sign-title">स्वीकृत गर्ने</div>
-                <div class="sign-name" id="tp_officer_name" style="margin-top:20px;">सुरेश भुसाल</div>
-                <div class="sign-post" id="tp_officer_role">प्रमुख प्रशासकीय अधिकृत</div>
-              </td>
-            </tr>
-          </table>
-
-          <div class="tippani-footer-date" id="tp_iti_footer">
-            ईति सम्बत २०८३ साल ०६ महिना १२ गते ०२ रोज शुभम् ।
-          </div>
-        </div>
-
-        <div class="action-floating-bar no-print">
-          <button type="button" class="btn-act" style="background:#1e3a8a;" onclick="window.print()">🖨 टिप्पणी प्रिन्ट गर्नुहोस्</button>
-        </div>
-      </section>
-
-      <!-- Panel 3: Old Records Frame -->
-      <section class="view-panel" id="viewRecordFrame">
-        <iframe src="record.html" style="width:100%; height:calc(100vh - 100px); border:none; border-radius:6px;"></iframe>
-      </section>
-
-      <!-- Panel 4: Superadmin Only Admin Frame -->
-      <section class="view-panel" id="viewAdminFrame">
-        <iframe src="admin.html" style="width:100%; height:calc(100vh - 100px); border:none; border-radius:6px;"></iframe>
-      </section>
-
-      <!-- Panel 5: ID Card Module Panel -->
-      <section class="view-panel" id="viewIdCreatePanel">
-        <div style="background:var(--card-bg); padding:20px; border-radius:8px; border:1px solid var(--border-color); max-width:800px; margin:0 auto;">
-          <h2 style="color:#1e3a8a; margin-bottom:12px;">🪪 स्मार्ट परिचय-पत्र (ID Card) सिर्जना मोड्युल</h2>
-          <p style="color:#64748b; font-size:14px; margin-bottom:16px;">कर्मचारी तथा नागरिक डिजिटल परिचय-पत्र कार्ड डिजाइन र प्रिन्ट गर्ने प्रणाली।</p>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-            <div><label style="font-weight:bold; font-size:12px;">नामथर</label><input type="text" placeholder="नामथर" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:4px;"></div>
-            <div><label style="font-weight:bold; font-size:12px;">पद / विवरण</label><input type="text" placeholder="पद" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:4px;"></div>
-          </div>
-          <button type="button" class="btn-act" style="background:#16a34a; margin-top:16px;" onclick="alert('ID Card डिजाइन प्रविष्टि सुरक्षित भयो!')">💾 ID Card सुरक्षित गर्नुस्</button>
-        </div>
-      </section>
-
-      <!-- Panel 6: ID Card Records -->
-      <section class="view-panel" id="viewIdRecordsPanel">
-        <div style="background:var(--card-bg); padding:20px; border-radius:8px; border:1px solid var(--border-color);">
-          <h3 style="color:#1e3a8a;">📋 जारी भएका परिचय-पत्रहरूको विवरण</h3>
-          <p style="color:#64748b; margin-top:10px;">हालसम्म जारी भएका डिजिटल परिचय-पत्रहरू यहाँ देखिनेछन्।</p>
-        </div>
-      </section>
-
-    </main>
-  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div><strong>Smart Mayadevi</strong> — एकीकृत स्थानीय सरकारी व्यवस्थापन प्रणाली | बरेवा, रुपन्देही</div>
+      <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
+    </div>
+  </footer>
 
   <script>
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
-    let currentUser = null;
+    // मोड्युल छानिएपछि विकल्प देखाउने
+    function openModuleActions(type) {
+      const naksaBox = document.getElementById("naksaOptionsContainer");
+      const idBox = document.getElementById("idOptionsContainer");
 
-    // Switch between Main Modules: Ghar Naksa vs ID Card
-    function switchMainModule(mod) {
-      const tabNaksa = document.getElementById("tabNaksaModule");
-      const tabId = document.getElementById("tabIdModule");
-      const menuNaksa = document.getElementById("menuNaksaGroup");
-      const menuId = document.getElementById("menuIdGroup");
-      const title = document.getElementById("sideNavModuleTitle");
-
-      if (mod === 'naksa') {
-        tabNaksa.classList.add("active");
-        tabId.classList.remove("active");
-        menuNaksa.style.display = "block";
-        menuId.style.display = "none";
-        title.textContent = "📐 घर नक्सा मेनु";
-        loadView('viewDartaFrame', menuNaksa.querySelector("a"));
+      if (type === 'naksa') {
+        naksaBox.style.display = "block";
+        idBox.style.display = "none";
+        naksaBox.scrollIntoView({ behavior: 'smooth' });
       } else {
-        tabId.classList.add("active");
-        tabNaksa.classList.remove("active");
-        menuId.style.display = "block";
-        menuNaksa.style.display = "none";
-        title.textContent = "🪪 ID Card मेनु";
-        loadView('viewIdCreatePanel', menuId.querySelector("a"));
+        idBox.style.display = "block";
+        naksaBox.style.display = "none";
+        idBox.scrollIntoView({ behavior: 'smooth' });
       }
     }
 
-    // Switch between Views inside Workspace
-    function loadView(panelId, linkEl) {
-      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
-      const target = document.getElementById(panelId);
-      if (target) target.classList.add("active");
-
-      document.querySelectorAll(".side-nav-link").forEach(l => l.classList.remove("active"));
-      if (linkEl) linkEl.classList.add("active");
+    function closeModuleActions() {
+      document.getElementById("naksaOptionsContainer").style.display = "none";
+      document.getElementById("idOptionsContainer").style.display = "none";
     }
 
-    // Auto-Pull data from saved Darta records for Jyoti.pdf Tippani format
-    function autoPullDataForTippani() {
-      const q = document.getElementById("autoPullDartaNo").value.trim().toLowerCase();
-      if (!q) {
-        alert("कृपया नक्सा दर्ता नं. लेख्नुहोस्!");
-        return;
-      }
-
-      let records = [];
+    // प्रयोगकर्ताको पहुँच नियन्त्रण (Superadmin Full vs Admin Half)
+    function checkUserPermissions() {
       try {
-        records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
-      } catch(e) {}
+        const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
+        if (!raw) {
+          // लगइन छैन भने पनि गेस्टको रूपमा पेज नरोक्ने
+          document.getElementById("uNameText").textContent = "अतिथि प्रयोगकर्ता";
+          document.getElementById("uRoleText").textContent = "DEMO ACCESS";
+          return;
+        }
 
-      const found = records.find(r => r.darta_no && r.darta_no.trim().toLowerCase() === q);
-      if (found) {
-        document.getElementById("tp_ward").textContent = found.ward || "०८";
-        document.getElementById("tp_owner").textContent = found.owner_name || found.house_owner || "ज्योती कर्ण";
-        document.getElementById("tp_sabik").textContent = found.sabik || "हाटिबनगाई";
-        document.getElementById("tp_kitta").textContent = found.kitta || "२५२४";
-        document.getElementById("tp_land_area").textContent = found.land_area || "०-०-१०";
-        document.getElementById("tp_comp_date").textContent = found.comp_date || "२०८३/०१/०५";
-        document.getElementById("tp_darta_date").textContent = found.reg_date || "२०८३/०५/१८";
-        document.getElementById("tp_eng1_name").textContent = found.eng1 || "लक्ष्मण घिमिरे";
-        document.getElementById("tp_eng1_role").textContent = found.eng1_role || "अमिन";
-        document.getElementById("tp_eng2_name").textContent = found.eng2 || "तिर्थराज पन्थी";
-        document.getElementById("tp_eng2_role").textContent = found.eng2_role || "सब-ईन्जिनियर";
-        document.getElementById("tp_officer_name").textContent = found.officer || "सुरेश भुसाल";
-        document.getElementById("tp_officer_role").textContent = found.officer_role || "प्रमुख प्रशासकीय अधिकृत";
-        alert(`दर्ता नं. "${found.darta_no}" को विवरण सफलतापूर्वक तानियो!`);
-      } else {
-        alert("यो दर्ता नम्बरको नक्सा भेटिएन। पुरानो डिफाल्ट ढाँचा देखाइएको छ।");
+        const u = JSON.parse(raw);
+        const nameEl = document.getElementById("uNameText");
+        const roleEl = document.getElementById("uRoleText");
+        const avatarImg = document.getElementById("uAvatarImg");
+        const fallback = document.getElementById("uAvatarFallback");
+        const superBtn = document.getElementById("superAdminLink");
+
+        if (nameEl) nameEl.textContent = u.full_name || u.username;
+
+        if (u.photo && avatarImg) {
+          avatarImg.src = u.photo;
+          avatarImg.style.display = "block";
+          if (fallback) fallback.style.display = "none";
+        } else if (fallback) {
+          if (avatarImg) avatarImg.style.display = "none";
+          fallback.style.display = "flex";
+          fallback.textContent = (u.full_name || u.username || 'A').charAt(0).toUpperCase();
+        }
+
+        const isSuper = (u.username && u.username.toLowerCase() === "superadmin");
+        if (isSuper) {
+          if (roleEl) roleEl.textContent = "SUPERADMIN (FULL ACCESS)";
+          if (superBtn) superBtn.style.display = "inline-flex";
+        } else {
+          if (roleEl) roleEl.textContent = "ADMIN (HALF ACCESS)";
+          if (superBtn) superBtn.style.display = "none";
+        }
+      } catch(e) {
+        console.warn("User auth read error:", e);
       }
     }
 
     function updateClock() {
-      const now = new Date();
-      const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
-      let h = now.getHours();
-      const m = String(now.getMinutes()).padStart(2, "0");
-      const s = String(now.getSeconds()).padStart(2, "0");
-      let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
-      
-      document.getElementById("liveHDate").textContent = `मिति: २०८३ असोज १२ (${nepDays[now.getDay()]})`;
-      document.getElementById("liveHTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+      try {
+        const now = new Date();
+        const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
+        let h = now.getHours();
+        const m = String(now.getMinutes()).padStart(2, "0");
+        const s = String(now.getSeconds()).padStart(2, "0");
+        let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
+        
+        document.getElementById("liveNepaliDate").textContent = `मिति: २०८३ असोज १२ (${nepDays[now.getDay()]})`;
+        document.getElementById("liveNepaliTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+      } catch(e) {}
     }
 
     function toggleTheme() {
       document.body.classList.toggle("dark-mode");
       const isDark = document.body.classList.contains("dark-mode");
       localStorage.setItem("mayadevi_naksa_theme", isDark ? "dark" : "light");
-      document.getElementById("themeBtn").textContent = isDark ? "☀" : "☾";
+      document.getElementById("themeToggleBtn").textContent = isDark ? "☀" : "☾";
     }
 
     function applySavedTheme() {
       const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
+      const btn = document.getElementById("themeToggleBtn");
       if (saved === "dark") {
         document.body.classList.add("dark-mode");
-        document.getElementById("themeBtn").textContent = "☀";
+        if (btn) btn.textContent = "☀";
+      } else {
+        document.body.classList.remove("dark-mode");
+        if (btn) btn.textContent = "☾";
       }
     }
 
-    // Role-based Access Control Check (Superadmin Full vs Admin Half Access)
-    function setupRoleAccess() {
-      const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
-      if (!raw) {
-        window.location.href = "login.html";
-        return;
-      }
-      currentUser = JSON.parse(raw);
-
-      const nameEl = document.getElementById("uFullName");
-      const roleTag = document.getElementById("uRoleTag");
-      const pill = document.getElementById("accessBadgePill");
-      const adminNav = document.getElementById("sideNavAdminItem");
-      const avatarImg = document.getElementById("uAvatarImg");
-      const fallback = document.getElementById("uAvatarFallback");
-
-      nameEl.textContent = currentUser.full_name || currentUser.username;
-
-      if (currentUser.photo) {
-        avatarImg.src = currentUser.photo;
-        avatarImg.style.display = "block";
-        fallback.style.display = "none";
-      } else {
-        avatarImg.style.display = "none";
-        fallback.style.display = "flex";
-        fallback.textContent = (currentUser.full_name || currentUser.username || 'A').charAt(0).toUpperCase();
-      }
-
-      // STRICT PERMISSION CHECK
-      const isSuper = (currentUser.username && currentUser.username.toLowerCase() === "superadmin");
-      if (isSuper) {
-        roleTag.textContent = "SUPERADMIN (FULL ACCESS)";
-        pill.textContent = "Full Access";
-        pill.style.background = "#16a34a";
-        if (adminNav) adminNav.style.display = "block"; // Superadmin can access Admin Panel
-      } else {
-        roleTag.textContent = "ADMIN (HALF ACCESS)";
-        pill.textContent = "Half Access";
-        pill.style.background = "#d97706";
-        if (adminNav) adminNav.style.display = "none"; // Normal Admins cannot access Admin Panel
-      }
-    }
-
-    function handleLogout() {
+    function handleSafeLogout() {
       sessionStorage.clear();
       localStorage.removeItem("user");
       alert("सफलतापूर्वक लगआउट भयो!");
       window.location.href = "login.html";
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      setupRoleAccess();
+    document.addEventListener("DOMContentLoaded", function() {
       applySavedTheme();
+      checkUserPermissions();
       setInterval(updateClock, 1000);
       updateClock();
     });
