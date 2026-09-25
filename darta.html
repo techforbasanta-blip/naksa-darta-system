@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>घर नक्सा दर्ता तथा Live A4 Preview | मायादेवी गाउँपालिका</title>
+  <title>Smart Mayadevi</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Supabase Cloud SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
@@ -36,61 +38,66 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
+    /* Single Clean Government Header */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
-      padding: 10px 20px;
+      padding: 8px 18px;
       color: #ffffff;
     }
     .header-inner {
-      max-width: 1560px;
+      max-width: 1720px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .brand-left { display: flex; align-items: center; gap: 14px; }
-    .brand-left img { height: 58px !important; width: auto !important; }
-    .brand-text h1 { font-size: 19px; font-weight: 800; color: #fff; line-height: 1.2; }
-    .brand-text p { font-size: 12.5px; color: #cbd5e1; }
+    .brand-left { display: flex; align-items: center; gap: 12px; }
+    .brand-left img { height: 50px !important; width: auto !important; }
+    .brand-text h1 { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.2; }
+    .brand-text p { font-size: 12px; color: #cbd5e1; }
 
-    .header-controls { display: flex; align-items: center; gap: 10px; }
+    .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .header-clock-box {
       text-align: right;
       background: rgba(255, 255, 255, 0.1);
-      padding: 4px 10px;
+      padding: 4px 8px;
       border-radius: 4px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      line-height: 1.25;
+      line-height: 1.2;
     }
-    .header-clock-box .h-date { font-size: 11.5px; color: #cbd5e1; font-weight: 600; }
-    .header-clock-box .h-time { font-size: 13px; color: #ffffff; font-weight: 800; }
+    .header-clock-box .h-date { font-size: 11px; color: #cbd5e1; font-weight: 600; }
+    .header-clock-box .h-time { font-size: 12.5px; color: #ffffff; font-weight: 800; }
 
     .nav-btn {
       background: #0d233e;
       color: #ffffff;
       text-decoration: none;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 700;
-      padding: 6px 12px;
+      padding: 6px 11px;
       border-radius: 4px;
       border: 1px solid #1e3a8a;
       display: inline-flex;
       align-items: center;
       cursor: pointer;
+      white-space: nowrap;
     }
     .nav-btn:hover, .nav-btn.active { background: #2563eb; border-color: #3b82f6; }
-    .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 14px !important; padding: 5px 10px !important; }
+    .btn-idcard { background: #0891b2 !important; border-color: #06b6d4 !important; }
+    .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
     .workspace-grid {
-      max-width: 1700px;
+      max-width: 1720px;
       width: 100%;
-      margin: 10px auto;
-      padding: 0 12px;
+      margin: 8px auto;
+      padding: 0 10px;
       display: grid;
-      grid-template-columns: 460px 1fr;
-      gap: 14px;
+      grid-template-columns: 450px 1fr;
+      gap: 12px;
       flex: 1;
     }
 
@@ -98,72 +105,71 @@
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 6px;
-      padding: 14px;
-      height: 89vh;
+      padding: 12px;
+      height: 90vh;
       overflow-y: auto;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       transition: background 0.25s, border-color 0.25s;
     }
     .entry-title {
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 800;
       color: #1e3a8a;
       border-bottom: 2px solid var(--border-color);
       padding-bottom: 4px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     body.dark-mode .entry-title { color: #60a5fa; }
 
     .form-section-title {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 800;
       color: var(--gov-crimson);
       background: rgba(183, 28, 28, 0.08);
-      padding: 4px 8px;
+      padding: 3px 6px;
       border-left: 3px solid var(--gov-crimson);
-      margin: 10px 0 6px 0;
+      margin: 8px 0 5px 0;
       border-radius: 2px;
     }
     body.dark-mode .form-section-title { color: #fca5a5; background: rgba(220, 38, 38, 0.22); }
 
     .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px; }
     .form-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 4px; }
-    .form-row { margin-bottom: 6px; }
-    .form-row label { display: block; font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+    .form-row { margin-bottom: 5px; }
+    .form-row label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
     .form-row input, .form-row select {
       width: 100%;
-      padding: 6px 8px;
+      padding: 5px 7px;
       border: 1px solid var(--border-color);
       border-radius: 4px;
-      font-size: 12.5px;
+      font-size: 12px;
       background: var(--input-bg);
       color: var(--text-dark);
-      transition: background 0.25s, color 0.25s;
     }
 
     .form-actions {
       display: flex;
       gap: 6px;
-      margin-top: 10px;
+      margin-top: 8px;
       position: sticky;
       bottom: 0;
       background: var(--card-bg);
       padding-top: 6px;
     }
-    .btn-act { flex: 1; padding: 8px; border: none; border-radius: 4px; font-weight: 700; font-size: 13px; cursor: pointer; }
+    .btn-act { flex: 1; padding: 7px; border: none; border-radius: 4px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
     .btn-save { background: #16a34a; color: #fff; }
     .btn-save:hover { background: #15803d; }
     .btn-print { background: #1e3a8a; color: #fff; }
     .btn-print:hover { background: #2563eb; }
     .btn-reset { background: #64748b; color: #fff; }
 
-    /* PREVIEW CONTAINER - Live Preview फिट हुने गरी मिलाइएको */
+    /* PREVIEW CONTAINER */
     .preview-card {
       background: #0f1e33;
       border: 1px solid var(--border-color);
       border-radius: 6px;
-      padding: 10px;
-      height: 89vh;
+      padding: 8px;
+      height: 90vh;
       overflow-y: auto;
       overflow-x: auto;
       display: flex;
@@ -176,15 +182,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       padding: 0 4px;
     }
-    .preview-title { font-size: 13.5px; font-weight: 800; color: #ffffff; }
+    .preview-title { font-size: 13px; font-weight: 800; color: #ffffff; }
     .zoom-controls { display: flex; gap: 4px; }
-    .btn-zoom { background: #1e3a8a; color: white; border: 1px solid #3b82f6; padding: 3px 8px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold; }
+    .btn-zoom { background: #1e3a8a; color: white; border: 1px solid #3b82f6; padding: 3px 8px; border-radius: 4px; font-size: 11.5px; cursor: pointer; font-weight: bold; }
     .btn-zoom:hover { background: #2563eb; }
 
-    /* स्केल र्यापर जसले स्क्रिनमा पूरै A4 देखाउँछ */
     .preview-zoom-wrapper {
       transform-origin: top center;
       transition: transform 0.2s ease;
@@ -193,7 +198,7 @@
       align-items: center;
     }
 
-    /* A4 पाना */
+    /* STRICT A4 ENGINE (Page 1 र Page 2 को पूर्ण फिटिङ) */
     .a4-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -203,8 +208,8 @@
       height: 294mm !important;
       min-height: 294mm !important;
       max-height: 294mm !important;
-      margin: 0 auto 20px auto !important;
-      padding: 8mm 6mm 4mm 13mm !important;
+      margin: 0 auto 16px auto !important;
+      padding: 6mm 6mm 3mm 12mm !important;
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
       position: relative !important;
@@ -223,10 +228,10 @@
       left: 52% !important;
       top: 50% !important;
       transform: translate(-50%, -50%) !important;
-      width: 125mm !important;
-      height: 125mm !important;
-      max-width: 125mm !important;
-      max-height: 125mm !important;
+      width: 120mm !important;
+      height: 120mm !important;
+      max-width: 120mm !important;
+      max-height: 120mm !important;
       object-fit: contain !important;
       opacity: 0.15 !important;
       pointer-events: none !important;
@@ -235,67 +240,67 @@
     }
 
     .cert-content-top { position: relative !important; z-index: 2 !important; display: flex; flex-direction: column; flex: 1 1 auto; background: transparent; }
-    .cert-top-center-motto { text-align: center; margin-bottom: 3px; }
-    .cert-motto { font-size: 15px; font-weight: 800; line-height: 1; }
+    .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
+    .cert-motto { font-size: 14.5px; font-weight: 800; line-height: 1; }
 
     .cert-header {
       display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 2.2px solid var(--gov-crimson); padding-bottom: 3px; margin-bottom: 3px;
+      border-bottom: 2px solid var(--gov-crimson); padding-bottom: 2px; margin-bottom: 2px;
     }
     .logo-box-left, .logo-box-right {
-      width: 72px !important; height: 72px !important; flex: 0 0 72px !important;
+      width: 68px !important; height: 68px !important; flex: 0 0 68px !important;
       display: flex; align-items: center; justify-content: center;
     }
     .logo-box-left img, .logo-box-right img {
-      width: 72px !important; height: 72px !important; max-width: 72px !important; max-height: 72px !important; object-fit: contain !important;
+      width: 68px !important; height: 68px !important; max-width: 68px !important; max-height: 68px !important; object-fit: contain !important;
     }
-    .header-titles { text-align: center; flex: 1; padding: 0 6px; }
-    .header-titles .gov-sub { font-size: 15px; font-weight: 800; line-height: 1; }
-    .header-titles .palika-title { font-size: 23px; font-weight: 900; line-height: 1.1; }
-    .header-titles .office-title { font-size: 29px !important; font-weight: 900 !important; line-height: 1.15; }
-    .header-titles .address-text { font-size: 15px; font-weight: 700; margin-top: 1px; }
+    .header-titles { text-align: center; flex: 1; padding: 0 4px; }
+    .header-titles .gov-sub { font-size: 14.5px; font-weight: 800; line-height: 1; }
+    .header-titles .palika-title { font-size: 22px; font-weight: 900; line-height: 1.1; }
+    .header-titles .office-title { font-size: 28px !important; font-weight: 900 !important; line-height: 1.15; }
+    .header-titles .address-text { font-size: 14.5px; font-weight: 700; margin-top: 1px; }
 
-    .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 3px 0; }
-    .ref-col { font-size: 15.5px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
+    .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 2px 0; }
+    .ref-col { font-size: 14.5px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
     .passport-frame {
-      width: 25mm !important; height: 28mm !important; border: 1.2px solid #334155;
+      width: 24mm !important; height: 27mm !important; border: 1.2px solid #334155;
       background: rgba(255, 255, 255, 0.45); display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
     .passport-frame img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
 
-    .cert-title-container { text-align: center; margin: 3px 0; }
+    .cert-title-container { text-align: center; margin: 2px 0; }
     .cert-title-text {
-      display: inline-block; font-size: 21px; font-weight: 900;
-      border-bottom: 2.2px solid #000; padding: 0 14px; line-height: 1.15;
+      display: inline-block; font-size: 20px; font-weight: 900;
+      border-bottom: 2px solid #000; padding: 0 12px; line-height: 1.15;
     }
-    .cert-intro { font-size: 16px !important; line-height: 1.35; text-align: justify; margin-bottom: 4px; font-weight: 600; }
+    .cert-intro { font-size: 15px !important; line-height: 1.35; text-align: justify; margin-bottom: 3px; font-weight: 600; }
 
     .cert-table, .floor-detail-table {
-      width: 100%; border-collapse: collapse; font-size: 16px !important; margin-bottom: 3px; table-layout: fixed; background: transparent !important;
+      width: 100%; border-collapse: collapse; font-size: 15px !important; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
     }
     .cert-table td, .cert-table th, .floor-detail-table td, .floor-detail-table th {
-      padding: 3px 6px !important; border: 1.2px solid #0f172a !important; vertical-align: middle; line-height: 1.22; background: transparent !important; color: #000000 !important;
+      padding: 2.2px 5px !important; border: 1.2px solid #0f172a !important; vertical-align: middle; line-height: 1.2; background: transparent !important; color: #000000 !important;
     }
-    .cert-table td.lbl { font-weight: 800; width: 27%; font-size: 16px !important; }
-    .cert-table td.val { font-weight: 700; width: 23%; font-size: 16px !important; }
-    .floor-detail-table th { font-weight: 800; text-align: left; font-size: 16px !important; }
+    .cert-table td.lbl { font-weight: 800; width: 27%; font-size: 15px !important; }
+    .cert-table td.val { font-weight: 700; width: 23%; font-size: 15px !important; }
+    .floor-detail-table th { font-weight: 800; text-align: left; font-size: 15px !important; }
     
     .total-row td {
       font-weight: 900 !important;
-      font-size: 16.5px !important;
+      font-size: 15.5px !important;
       background: #f1f5f9 !important;
       color: #000000 !important;
     }
 
     .legal-notice-cell {
-      font-size: 14px !important;
-      line-height: 1.38 !important;
+      font-size: 13px !important;
+      line-height: 1.32 !important;
       font-weight: 700 !important;
-      padding: 4px 6px !important;
+      padding: 3px 5px !important;
     }
 
     .cert-signatures-block {
-      margin-top: 18px !important;
+      margin-top: 12px !important;
       margin-bottom: 2px !important;
     }
     .officers-signature-grid {
@@ -303,70 +308,70 @@
       grid-template-columns: 32% 32% 36%;
       gap: 6px;
       align-items: flex-end;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .sign-item { text-align: center; }
-    .sign-space-area { height: 16px; }
-    .sign-dotted-line { border-top: 1.2px dotted #1e293b; width: 75%; margin: 0 auto 3px auto; }
-    .sign-title-text { font-size: 14.5px !important; font-weight: 700; line-height: 1.3; }
-    .sign-title-text strong { font-size: 15.5px !important; font-weight: 800; }
+    .sign-space-area { height: 14px; }
+    .sign-dotted-line { border-top: 1.2px dotted #1e293b; width: 75%; margin: 0 auto 2px auto; }
+    .sign-title-text { font-size: 13.5px !important; font-weight: 700; line-height: 1.25; }
+    .sign-title-text strong { font-size: 14.5px !important; font-weight: 800; }
 
     .bottom-owner-qr-flex {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       border-top: 1px solid #cbd5e1;
-      padding-top: 4px;
+      padding-top: 3px;
     }
-    .owner-space-area { height: 6px; }
-    .owner-dots { font-size: 14.5px; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: bold; }
-    .owner-label { font-size: 15px !important; font-weight: 800; }
+    .owner-space-area { height: 4px; }
+    .owner-dots { font-size: 13.5px; letter-spacing: 0.5px; margin-bottom: 1px; font-weight: bold; }
+    .owner-label { font-size: 14.5px !important; font-weight: 800; }
 
     #cert_qr_div {
-      width: 68px !important; height: 68px !important; border: 1px solid #94a3b8;
+      width: 62px !important; height: 62px !important; border: 1px solid #94a3b8;
       border-radius: 4px; background: #fff !important; display: flex !important;
       align-items: center !important; justify-content: center !important; overflow: hidden !important;
     }
-    #cert_qr_div img { width: 64px !important; height: 64px !important; }
-    .qr-caption { font-size: 8.5px; font-weight: 700; text-align: center; margin-top: 2px; }
+    #cert_qr_div img { width: 58px !important; height: 58px !important; }
+    .qr-caption { font-size: 8px; font-weight: 700; text-align: center; margin-top: 1px; }
 
     .cert-footer {
       border-top: 1.5px solid var(--gov-crimson) !important;
-      padding-top: 3px !important;
+      padding-top: 2px !important;
       text-align: center !important;
-      font-size: 11.5px !important;
+      font-size: 11px !important;
       font-weight: 700 !important;
       background: transparent !important;
-      line-height: 1.25 !important;
+      line-height: 1.2 !important;
     }
 
     /* PAGE 2 */
     .a4-sheet.back-page {
       page-break-before: always !important;
       justify-content: flex-start !important;
-      gap: 6px !important;
-      padding-top: 7mm !important;
+      gap: 5px !important;
+      padding-top: 6mm !important;
     }
-    .kabuliyat-section { border: 1.2px solid #334155; padding: 6px 8px; background: transparent; }
-    .kabuliyat-title { text-align: center; font-size: 19px; font-weight: 800; text-decoration: underline; margin-bottom: 2px; }
-    .shriman-title { text-align: left; font-size: 16px; font-weight: 800; margin-bottom: 2px; }
+    .kabuliyat-section { border: 1.2px solid #334155; padding: 5px 8px; background: transparent; }
+    .kabuliyat-title { text-align: center; font-size: 18px; font-weight: 800; text-decoration: underline; margin-bottom: 2px; }
+    .shriman-title { text-align: left; font-size: 15px; font-weight: 800; margin-bottom: 2px; }
     
     .kabuliyat-body {
-      font-size: 15.5px !important;
-      line-height: 1.55 !important;
+      font-size: 15px !important;
+      line-height: 1.5 !important;
       text-align: justify;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       font-weight: 600;
     }
-    .kabuliyat-sign-grid { display: grid; grid-template-columns: 52% 48%; gap: 6px; align-items: flex-end; border-top: 1.2px dotted #64748b; padding-top: 4px; }
-    .sign-left .sign-field { font-size: 14.5px; line-height: 1.45; margin-bottom: 2px; }
+    .kabuliyat-sign-grid { display: grid; grid-template-columns: 54% 46%; gap: 6px; align-items: flex-end; border-top: 1.2px dotted #64748b; padding-top: 3px; }
+    .sign-left .sign-field { font-size: 14px; line-height: 1.4; margin-bottom: 2px; }
 
     .iti-date-text-left {
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 800;
-      margin-top: 5px;
+      margin-top: 4px;
       color: #0f172a;
-      line-height: 1.35;
+      line-height: 1.3;
     }
 
     .sign-right-centered {
@@ -378,37 +383,36 @@
     }
     .thumb-frame-wrapper {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       justify-content: center;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
     .thumb-frame {
-      width: 90px !important;
-      height: 110px !important;
+      width: 86px !important;
+      height: 104px !important;
       border: 1.8px dashed #0f172a !important;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 17px !important;
+      font-size: 16px !important;
       font-weight: 900 !important;
       background: rgba(255, 255, 255, 0.65);
-      border-radius: 5px;
+      border-radius: 4px;
     }
-    .thumb-label { font-size: 14.5px; font-weight: 800; margin-top: 2px; letter-spacing: 0.5px; }
+    .thumb-label { font-size: 14px; font-weight: 800; margin-top: 2px; }
 
     .namsari-section {
       border: 1.2px solid #334155;
-      padding: 5px 8px;
+      padding: 4px 8px;
       background: transparent;
-      margin-top: 4px;
+      margin-top: 3px;
     }
-    .namsari-header-title { text-align: center; font-size: 16.5px; font-weight: 800; margin-bottom: 3px; text-decoration: underline; }
-    .namsari-table { width: 100%; border-collapse: collapse; font-size: 13px; background: transparent; }
-    .namsari-table th, .namsari-table td { border: 1.2px solid #475569; padding: 4px 6px; vertical-align: middle; background: transparent; line-height: 1.25; }
-    .namsari-table th { font-weight: 800; text-align: center; font-size: 13.5px; background: rgba(0,0,0,0.03); }
-    .namsari-photo-box { width: 23mm; height: 26mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #64748b; font-weight: bold; }
+    .namsari-header-title { text-align: center; font-size: 16px; font-weight: 800; margin-bottom: 2px; text-decoration: underline; }
+    .namsari-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: transparent; }
+    .namsari-table th, .namsari-table td { border: 1.2px solid #475569; padding: 3px 5px; vertical-align: middle; background: transparent; line-height: 1.2; }
+    .namsari-table th { font-weight: 800; text-align: center; font-size: 13px; background: rgba(0,0,0,0.03); }
+    .namsari-photo-box { width: 22mm; height: 25mm; border: 1.2px dashed #64748b; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: #64748b; font-weight: bold; }
 
-    /* PRINT RULE - १००% A4 Locked */
     @media print {
       @page { size: A4 portrait; margin: 0mm !important; }
       *, .a4-sheet, .a4-sheet * { font-family: var(--print-font) !important; }
@@ -430,7 +434,7 @@
       #printAreaContainer { display: block !important; width: 210mm !important; margin: 0 !important; padding: 0 !important; }
       .a4-sheet {
         width: 210mm !important; height: 294mm !important; max-height: 294mm !important;
-        margin: 0 auto !important; padding: 8mm 6mm 4mm 13mm !important;
+        margin: 0 auto !important; padding: 6mm 6mm 3mm 12mm !important;
         border: 1.5px solid #000000 !important; box-shadow: none !important; overflow: hidden !important; display: flex !important;
       }
       #a4CertificatePaper { page-break-after: always !important; break-after: page !important; }
@@ -439,11 +443,11 @@
     }
 
     footer.site-footer {
-      background: #07192f; color: #cbd5e1; padding: 10px 20px; font-size: 12px;
+      background: #07192f; color: #cbd5e1; padding: 8px 18px; font-size: 11.5px;
       border-top: 3px solid #2563eb; margin-top: auto;
     }
     .footer-inner {
-      max-width: 1560px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
+      max-width: 1720px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
     }
   </style>
 </head>
@@ -452,9 +456,9 @@
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
-        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल सरकार" onerror="this.src='assets/nishan%20chap.jpg';">
+        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
-          <h1>मायादेवी गाउँपालिका — नक्सा दर्ता तथा अभिलेखीकरण प्रणाली</h1>
+          <h1>Mayadevi rural Mun Office</h1>
           <p>गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही | Staff Desk</p>
         </div>
       </div>
@@ -466,7 +470,8 @@
 
         <a href="darta.html" class="nav-btn active">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
-        <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
+        <a href="admin.html" id="adminMenuBtn" class="nav-btn">⚙️ Admin</a>
+        <button type="button" class="nav-btn btn-idcard" onclick="alert('ID Card Module चाँडै आउँदैछ!');">🪪 ID Card Create</button>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
@@ -561,7 +566,7 @@
       </div>
       <div class="form-row">
         <label><strong>१०) जम्मा निर्माण क्षेत्रफल (Total Area):</strong></label>
-        <input type="text" id="in_total_area" value="०.००" readonly style="background:#e2e8f0; color:#000000; font-weight:800; font-size:14px; text-align:center;">
+        <input type="text" id="in_total_area" value="०.००" readonly style="background:#e2e8f0; color:#000000; font-weight:800; font-size:13.5px; text-align:center;">
       </div>
 
       <div class="form-section-title">११ देखि १८ सम्मका अन्य विवरण</div>
@@ -627,18 +632,18 @@
       </div>
 
       <div class="form-actions">
-        <button type="button" class="btn-act btn-save" onclick="saveRecordToDatabase()">💾 सुरक्षित गर्नुहोस्</button>
+        <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="saveRecordToDatabase()">💾 सुरक्षित गर्नुहोस् (Cloud)</button>
         <button type="button" class="btn-act btn-print" onclick="window.print()">🖨 प्रिन्ट गर्नुहोस्</button>
         <button type="button" class="btn-act btn-reset" onclick="location.reload()">↺ Reset</button>
       </div>
     </section>
 
-    <!-- RIGHT LIVE PREVIEW - पूर्ण देखिने कन्टेनर -->
+    <!-- RIGHT LIVE PREVIEW -->
     <section class="preview-card">
       <div class="preview-header-bar no-print">
-        <div class="preview-title">📄 आधिकारिक प्रमाण-पत्र Live A4 Preview (Strict 2 Pages)</div>
+        <div class="preview-title">📄 आधिकारिक प्रमाण-पत्र Live A4 Preview (Exact 2 Pages)</div>
         <div class="zoom-controls">
-          <button type="button" class="btn-zoom" onclick="setZoom(0.85)">फिट स्क्रिन (Fit)</button>
+          <button type="button" class="btn-zoom" onclick="setZoom(0.82)">फिट स्क्रिन</button>
           <button type="button" class="btn-zoom" onclick="changeZoom(-0.05)">- सानो</button>
           <button type="button" class="btn-zoom" onclick="changeZoom(0.05)">+ ठूलो</button>
           <button type="button" class="btn-zoom" onclick="setZoom(1.0)">१००%</button>
@@ -655,12 +660,12 @@
 
             <div class="cert-content-top">
               <div class="cert-top-center-motto">
-                <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>[cite: 1]
+                <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
               </div>
 
               <header class="cert-header">
                 <div class="logo-box-left">
-                  <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल निशान छाप" onerror="this.src='assets/nishan%20chap.jpg';">
+                  <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
                 </div>
                 <div class="header-titles">
                   <div class="gov-sub">स्थानीय सरकार</div>[cite: 1]
@@ -669,7 +674,7 @@
                   <div class="address-text">बरेवा, रुपन्देही, लुम्बिनी प्रदेश, नेपाल ।</div>[cite: 1]
                 </div>
                 <div class="logo-box-right">
-                  <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="गाउँपालिका लोगो" onerror="this.src='assets/palika%20logo.jpg';">
+                  <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Logo" onerror="this.src='assets/palika%20logo.jpg';">
                 </div>
               </header>
 
@@ -682,7 +687,7 @@
                 </div>
                 <div class="passport-frame">
                   <img id="certPhoto" src="" alt="" style="display:none;">
-                  <span id="photoText" style="font-size:12.5px; color:#64748b; font-weight:bold;">फोटो</span>[cite: 1]
+                  <span id="photoText" style="font-size:12px; color:#64748b; font-weight:bold;">फोटो</span>[cite: 1]
                 </div>
               </div>
 
@@ -715,7 +720,7 @@
                 </tr>
                 <tr>
                   <td class="lbl">६) स्विकृत क्षेत्रफलः</td>[cite: 1]
-                  <td colspan="3" class="val" id="out_approved_area_full" style="line-height: 1.35; padding: 4px 6px !important;">
+                  <td colspan="3" class="val" id="out_approved_area_full" style="line-height: 1.35; padding: 3px 6px !important;">
                     कि.नं. <span id="out_kitta2">....</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट[cite: 1]
                   </td>
                 </tr>
@@ -831,6 +836,7 @@
               </div>
             </div>
 
+            <!-- Page 1 Footer Lock -->
             <footer class="cert-footer">
               सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>[cite: 1]
               वेभ साइटः- mayadevimunrupandehi.gov.np[cite: 1]
@@ -876,6 +882,7 @@
                 </div>
               </section>
 
+              <!-- 5 Large Namsari Boxes -->
               <section class="namsari-section">
                 <div class="namsari-header-title">नामसारी विवरण</div>[cite: 1]
                 <table class="namsari-table">
@@ -937,12 +944,25 @@
 
   <footer class="site-footer no-print">
     <div class="footer-inner">
-      <div><strong>मायादेवी गाउँपालिका</strong> — नक्सा दर्ता तथा अभिलेखीकरण प्रणाली | बरेवा, रुपन्देही</div>
+      <div><strong>Mayadevi rural Mun Office</strong> — नक्सा दर्ता प्रणाली | बरेवा, रुपन्देही</div>
       <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
     </div>
   </footer>
 
   <script>
+    // =========================================================================
+    // SUPABASE CLOUD CONFIGURATION (तपाईंको Supabase को विवरण यहाँ राख्न सक्नुहुन्छ)
+    // =========================================================================
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // तपाईंको Supabase Project URL यहाँ राख्नुहोस्
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // तपाईंको Supabase Anon Key यहाँ राख्नुहोस्
+    
+    let supabaseClient = null;
+    try {
+      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    } catch(e) { console.warn("Supabase जडान प्रतीक्षामा:", e); }
+
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
@@ -952,7 +972,7 @@
     ];
 
     let currentPhotoBase64 = "";
-    let currentZoomLevel = 0.85; // स्क्रिनमा पूरै देखिन डिफलट ८५% जुम
+    let currentZoomLevel = 0.82;
 
     function setZoom(lvl) {
       currentZoomLevel = lvl;
@@ -966,14 +986,13 @@
       if (el) el.style.transform = `scale(${currentZoomLevel})`;
     }
 
-    // स्क्रिनको चौडाइ हेरेर स्वतः प्रिभ्यू फिट गर्ने
     function autoFitPreview() {
       const card = document.querySelector(".preview-card");
       if (card && window.innerWidth > 900) {
-        const availableWidth = card.clientWidth - 40;
-        const a4WidthPx = 794; // approx 210mm in px
+        const availableWidth = card.clientWidth - 30;
+        const a4WidthPx = 794;
         const idealScale = Math.min(1.0, availableWidth / a4WidthPx);
-        setZoom(idealScale > 0.6 ? idealScale : 0.85);
+        setZoom(idealScale > 0.6 ? idealScale : 0.82);
       }
     }
 
@@ -1141,6 +1160,7 @@
       document.getElementById("out_third").textContent = f3 > 0 ? toNepNum(f3.toFixed(2)) : "-";
     }
 
+    // QR स्क्यान गर्दा verify.html मा पुग्ने डाइनामिक लिङ्क
     function generateQR() {
       const qrDiv = document.getElementById("cert_qr_div");
       if (!qrDiv) return;
@@ -1148,7 +1168,7 @@
       const darta = document.getElementById("in_darta").value || '२८/२०८३/०८४';
       const verifyUrl = `${window.location.origin}${window.location.pathname.replace('darta.html', 'verify.html')}?darta=${encodeURIComponent(darta)}`;
 
-      qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(verifyUrl)}" alt="QR Code" style="width:64px; height:64px; display:block;">`;
+      qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(verifyUrl)}" alt="QR Code" style="width:58px; height:58px; display:block;">`;
     }
 
     function loadPhoto(e) {
@@ -1166,7 +1186,8 @@
       }
     }
 
-    function saveRecordToDatabase() {
+    // SUPABASE CLOUD SYNC + LOCAL MEMORY BACKUP
+    async function saveRecordToDatabase() {
       const dartaNo = document.getElementById("in_darta").value.trim();
       const houseOwner = document.getElementById("in_house_owner").value.trim() || document.getElementById("in_owner_name").value.trim();
 
@@ -1178,6 +1199,10 @@
         alert("कृपया घरधनी वा जग्गाधनीको नाम अनिवार्य भर्नुहोस्!");
         return;
       }
+
+      const saveBtn = document.getElementById("saveBtnMain");
+      saveBtn.disabled = true;
+      saveBtn.textContent = "⏳ सुरक्षित हुँदैछ...";
 
       const recordItem = {
         id: Date.now(),
@@ -1228,6 +1253,7 @@
         photo: currentPhotoBase64
       };
 
+      // १. लोकल मेमोरीमा ब्याकअप राख्ने
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
         const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
@@ -1236,15 +1262,26 @@
         } else {
           records.unshift(recordItem);
         }
-
         localStorage.setItem("naksa_records", JSON.stringify(records));
         localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
+      } catch (err) { console.warn("Local storage त्रुटि:", err); }
 
-        alert(`नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) सफलतापूर्वक सुरक्षित भयो!\nअब "पुरानो हेर्नुस्" र "भेरिफाइ" दुवैमा सुरक्षित रूपमा देखिनेछ।`);
-      } catch (err) {
-        console.error(err);
-        alert("रेकर्ड सुरक्षित गर्दा त्रुटि भयो!");
+      // २. सुपाबेस क्लाउडमा सिंक गर्ने
+      if (supabaseClient) {
+        try {
+          const { error } = await supabaseClient
+            .from('naksa_records')
+            .upsert(recordItem, { onConflict: 'darta_no' });
+
+          if (error) throw error;
+        } catch (cloudErr) {
+          console.error("Supabase क्लाउड त्रुटि:", cloudErr);
+        }
       }
+
+      saveBtn.disabled = false;
+      saveBtn.textContent = "💾 सुरक्षित गर्नुहोस् (Cloud)";
+      alert(`नक्सा दर्ता नं. "${dartaNo}" (${houseOwner}) सफलतापूर्वक सुरक्षित भयो!\nअब जुनसुकै कम्प्युटरबाट पुरानो रेकर्ड हेर्न र Verify गर्न सकिन्छ।`);
     }
 
     function handleSafeLogout() {
@@ -1254,72 +1291,88 @@
       window.location.href = "login.html";
     }
 
-    function checkEditMode() {
+    async function checkEditMode() {
       const editId = sessionStorage.getItem("view_record_id");
       if (!editId) return;
 
+      let item = null;
+
+      // पहिले लोकल मेमोरीमा हेर्ने
       try {
         const records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
-        const item = records.find(r => r.id.toString() === editId.toString());
-        if (item) {
-          document.getElementById("in_patra").value = item.patra_no || "";
-          document.getElementById("in_date").value = item.reg_date || "";
-          document.getElementById("in_darta").value = item.darta_no || "";
-          document.getElementById("in_praman").value = item.praman_no || "";
-          document.getElementById("in_owner_name").value = item.owner_name || "";
-          document.getElementById("in_owner_cit").value = item.owner_cit || "";
-          document.getElementById("in_house_owner").value = item.house_owner || "";
-          document.getElementById("in_house_cit").value = item.house_cit || "";
-          document.getElementById("in_cit_district").value = item.cit_district || "रुपन्देही";
-          document.getElementById("in_phone").value = item.phone || "";
-          document.getElementById("in_sabik").value = item.sabik || "";
-          document.getElementById("in_ward").value = item.ward || "०१";
-          document.getElementById("in_kitta").value = item.kitta || "";
-          document.getElementById("in_land_area").value = item.land_area || "";
-          document.getElementById("in_approved_area").value = item.approved_area || "";
-          document.getElementById("in_land_use").value = item.land_use || "आवासीय";
-          document.getElementById("in_b_class").value = item.b_class || "(ख)";
-          document.getElementById("in_struct").value = item.struct || "फ्रेम स्ट्रक्चर";
-          document.getElementById("in_comp_date").value = item.comp_date || "";
-          document.getElementById("in_east").value = item.east || "";
-          document.getElementById("in_west").value = item.west || "";
-          document.getElementById("in_north").value = item.north || "";
-          document.getElementById("in_south").value = item.south || "";
+        item = records.find(r => r.id.toString() === editId.toString());
+      } catch (e) {}
 
-          document.getElementById("in_b1").value = item.b1 || 0;
-          document.getElementById("in_b2").value = item.b2 || 0;
-          document.getElementById("in_ground").value = item.ground || 0;
-          document.getElementById("in_first").value = item.first || 0;
-          document.getElementById("in_second").value = item.second || 0;
-          document.getElementById("in_third").value = item.third || 0;
+      // यदि लोकलमा भेटिएन भने सुपाबेस क्लाउडबाट तान्ने
+      if (!item && supabaseClient) {
+        try {
+          const { data } = await supabaseClient
+            .from('naksa_records')
+            .select('*')
+            .eq('id', editId)
+            .single();
+          if (data) item = data;
+        } catch(e) {}
+      }
 
-          document.getElementById("in_plinth").value = item.plinth || "";
-          document.getElementById("in_coverage").value = item.coverage || "";
-          document.getElementById("in_height").value = item.height || "";
-          document.getElementById("in_rd_dist").value = item.rd_dist || "";
-          document.getElementById("in_elec_dist").value = item.elec_dist || "";
-          document.getElementById("in_riv_dist").value = item.riv_dist || "";
-          document.getElementById("in_septic").value = item.septic || "भएको";
-          document.getElementById("in_dec_date").value = item.dec_date || "";
-          document.getElementById("in_eng1").value = item.eng1 || "";
-          document.getElementById("in_eng1_role").value = item.eng1_role || "इन्जिनियर";
-          document.getElementById("in_eng2").value = item.eng2 || "";
-          document.getElementById("in_eng2_role").value = item.eng2_role || "इन्जिनियर";
-          document.getElementById("in_officer").value = item.officer || "";
-          document.getElementById("in_officer_role").value = item.officer_role || "प्रमुख प्रशासकीय अधिकृत";
+      if (item) {
+        document.getElementById("in_patra").value = item.patra_no || "";
+        document.getElementById("in_date").value = item.reg_date || "";
+        document.getElementById("in_darta").value = item.darta_no || "";
+        document.getElementById("in_praman").value = item.praman_no || "";
+        document.getElementById("in_owner_name").value = item.owner_name || "";
+        document.getElementById("in_owner_cit").value = item.owner_cit || "";
+        document.getElementById("in_house_owner").value = item.house_owner || "";
+        document.getElementById("in_house_cit").value = item.house_cit || "";
+        document.getElementById("in_cit_district").value = item.cit_district || "रुपन्देही";
+        document.getElementById("in_phone").value = item.phone || "";
+        document.getElementById("in_sabik").value = item.sabik || "";
+        document.getElementById("in_ward").value = item.ward || "०१";
+        document.getElementById("in_kitta").value = item.kitta || "";
+        document.getElementById("in_land_area").value = item.land_area || "";
+        document.getElementById("in_approved_area").value = item.approved_area || "";
+        document.getElementById("in_land_use").value = item.land_use || "आवासीय";
+        document.getElementById("in_b_class").value = item.b_class || "(ख)";
+        document.getElementById("in_struct").value = item.struct || "फ्रेम स्ट्रक्चर";
+        document.getElementById("in_comp_date").value = item.comp_date || "";
+        document.getElementById("in_east").value = item.east || "";
+        document.getElementById("in_west").value = item.west || "";
+        document.getElementById("in_north").value = item.north || "";
+        document.getElementById("in_south").value = item.south || "";
 
-          if (item.photo) {
-            currentPhotoBase64 = item.photo;
-            const img = document.getElementById("certPhoto");
-            img.src = item.photo;
-            img.style.display = "block";
-            document.getElementById("photoText").style.display = "none";
-          }
+        document.getElementById("in_b1").value = item.b1 || 0;
+        document.getElementById("in_b2").value = item.b2 || 0;
+        document.getElementById("in_ground").value = item.ground || 0;
+        document.getElementById("in_first").value = item.first || 0;
+        document.getElementById("in_second").value = item.second || 0;
+        document.getElementById("in_third").value = item.third || 0;
 
-          sessionStorage.removeItem("view_record_id");
+        document.getElementById("in_plinth").value = item.plinth || "";
+        document.getElementById("in_coverage").value = item.coverage || "";
+        document.getElementById("in_height").value = item.height || "";
+        document.getElementById("in_rd_dist").value = item.rd_dist || "";
+        document.getElementById("in_elec_dist").value = item.elec_dist || "";
+        document.getElementById("in_riv_dist").value = item.riv_dist || "";
+        document.getElementById("in_septic").value = item.septic || "भएको";
+        document.getElementById("in_dec_date").value = item.dec_date || "";
+        document.getElementById("in_eng1").value = item.eng1 || "";
+        document.getElementById("in_eng1_role").value = item.eng1_role || "इन्जिनियर";
+        document.getElementById("in_eng2").value = item.eng2 || "";
+        document.getElementById("in_eng2_role").value = item.eng2_role || "इन्जिनियर";
+        document.getElementById("in_officer").value = item.officer || "";
+        document.getElementById("in_officer_role").value = item.officer_role || "प्रमुख प्रशासकीय अधिकृत";
+
+        if (item.photo) {
+          currentPhotoBase64 = item.photo;
+          const img = document.getElementById("certPhoto");
+          img.src = item.photo;
+          img.style.display = "block";
+          document.getElementById("photoText").style.display = "none";
         }
-      } catch (e) {
-        console.error(e);
+
+        sessionStorage.removeItem("view_record_id");
+        updateLivePreview();
+        calcTotalArea();
       }
     }
 
@@ -1329,12 +1382,6 @@
         window.location.href = "login.html";
         return;
       }
-      try {
-        const u = JSON.parse(raw);
-        if (u.login_id && (u.login_id.toLowerCase() === "superadmin" || u.login_id.toLowerCase() === "admin")) {
-          document.getElementById("adminMenuBtn").style.display = "inline-flex";
-        }
-      } catch(e) {}
 
       applySavedTheme();
       setInterval(updateClock, 1000);
