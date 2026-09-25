@@ -113,8 +113,15 @@
       border-bottom: 2px solid var(--border-color);
       padding-bottom: 4px;
       margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     body.dark-mode .entry-title { color: #60a5fa; }
+
+    .saved-list-btn {
+      background: #0284c7; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11.5px; cursor: pointer; font-weight: bold;
+    }
 
     .auto-pull-box {
       background: rgba(30, 58, 138, 0.08);
@@ -159,7 +166,7 @@
 
     .form-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       margin-top: 10px;
       position: sticky;
       bottom: 0;
@@ -170,11 +177,28 @@
       border-top: 2px solid var(--border-color);
     }
     .btn-act {
-      flex: 1; padding: 10px 4px; border: none; border-radius: 4px; font-weight: 800; font-size: 14px; cursor: pointer; text-align: center; color: #fff;
+      flex: 1; padding: 9px 4px; border: none; border-radius: 4px; font-weight: 800; font-size: 13px; cursor: pointer; text-align: center; color: #fff;
     }
     .btn-save { background: #16a34a !important; }
     .btn-print { background: #1e3a8a !important; }
+    .btn-del { background: #dc2626 !important; }
     .btn-reset { background: #64748b !important; }
+
+    /* Saved Tippani Drawer / Popup Modal */
+    .tippani-list-modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;
+    }
+    .tippani-modal-content {
+      background: var(--card-bg); width: 90%; max-width: 600px; max-height: 80vh; border-radius: 8px;
+      padding: 16px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .modal-header-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--border-color); padding-bottom: 8px; margin-bottom: 10px; }
+    .tippani-list-container { overflow-y: auto; flex: 1; }
+    .tippani-item-row {
+      display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-bottom: 1px solid var(--border-color);
+    }
+    .tippani-item-row:hover { background: rgba(30, 58, 138, 0.05); }
 
     .preview-card {
       background: #0f1e33;
@@ -202,7 +226,6 @@
       align-items: center;
     }
 
-    /* A4 Paper Sheet - Punching margin left 26mm & Kokila font */
     .a4-tippani-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -260,29 +283,13 @@
       width: 100% !important;
     }
     .logo-box-left, .logo-box-right {
-      width: 68px !important;
-      height: 68px !important;
-      flex: 0 0 68px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
+      width: 68px !important; height: 68px !important; flex: 0 0 68px !important;
+      display: flex !important; align-items: center !important; justify-content: center !important;
     }
-    .logo-box-left img, .logo-box-right img {
-      width: 68px !important;
-      height: 68px !important;
-      max-width: 68px !important;
-      max-height: 68px !important;
-      object-fit: contain !important;
-      display: block !important;
-    }
+    .logo-box-left img, .logo-box-right img { width: 68px !important; height: 68px !important; object-fit: contain !important; }
     .header-titles {
-      text-align: center !important;
-      flex: 1 !important;
-      padding: 0 6px !important;
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      justify-content: center !important;
+      text-align: center !important; flex: 1 !important; padding: 0 6px !important;
+      display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
     }
     .header-titles .gov-sub { font-size: 17px !important; font-weight: 800 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
     .header-titles .palika-title { font-size: 26.5px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
@@ -290,42 +297,26 @@
     .header-titles .address-text { font-size: 17px !important; font-weight: 800 !important; color: #1e3a8a !important; margin-top: 1px !important; line-height: 1.15 !important; }
 
     .tippani-top-shriman {
-      font-size: 21px !important;
-      font-weight: 900 !important;
-      text-align: left !important;
-      margin-top: 4px !important;
-      margin-bottom: 2px !important;
-      text-decoration: none !important;
-      line-height: 1.2 !important;
+      font-size: 21px !important; font-weight: 900 !important; text-align: left !important;
+      margin-top: 4px !important; margin-bottom: 2px !important; text-decoration: none !important; line-height: 1.2 !important;
     }
 
     .tippani-subject-box { text-align: center !important; margin: 3px 0 6px 0 !important; }
     .tippani-subject {
-      font-size: 21.5px !important;
-      font-weight: 900 !important;
-      text-decoration: underline !important;
-      display: inline-block !important;
+      font-size: 21.5px !important; font-weight: 900 !important; text-decoration: underline !important; display: inline-block !important;
     }
 
     .common-para-text {
-      font-size: 20px !important;
-      line-height: 1.5 !important;
-      text-align: justify !important;
-      text-justify: inter-word !important;
-      font-weight: 600 !important;
+      font-size: 20px !important; line-height: 1.5 !important; text-align: justify !important; text-justify: inter-word !important; font-weight: 600 !important;
     }
     .tippani-body-para {
-      margin-bottom: 10px !important;
-      text-indent: 45px !important;
+      margin-bottom: 10px !important; text-indent: 45px !important;
     }
     .tippani-body-para strong { font-weight: 900 !important; }
 
     .two-col-sign-grid {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
-      gap: 16px !important;
-      margin-top: 18px !important;
-      margin-bottom: 12px !important;
+      display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px !important;
+      margin-top: 18px !important; margin-bottom: 12px !important;
     }
     .sign-item-col { text-align: center !important; }
     .sign-dots-top { font-size: 15px !important; letter-spacing: 1px !important; font-weight: bold !important; margin-bottom: 2px !important; }
@@ -336,56 +327,36 @@
     .engineer-ray-para { margin-top: 12px !important; margin-bottom: 4px !important; }
 
     .engineer-right-block {
-      text-align: right !important;
-      margin-top: 20px !important;
-      margin-bottom: 12px !important;
-      padding-right: 14px !important;
+      text-align: right !important; margin-top: 20px !important; margin-bottom: 12px !important; padding-right: 14px !important;
     }
     .engineer-right-block .inner-sign-wrap {
-      display: inline-flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      min-width: 220px !important;
+      display: inline-flex !important; flex-direction: column !important; align-items: center !important; min-width: 220px !important;
     }
 
     .approval-opinion-para { margin-top: 10px !important; margin-bottom: 4px !important; }
 
     .approval-right-block {
-      text-align: right !important;
-      margin-top: 22px !important;
-      margin-bottom: 8px !important;
-      padding-right: 14px !important;
+      text-align: right !important; margin-top: 22px !important; margin-bottom: 8px !important; padding-right: 14px !important;
     }
     .approval-right-block .inner-sign-wrap {
-      display: inline-flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      min-width: 240px !important;
+      display: inline-flex !important; flex-direction: column !important; align-items: center !important; min-width: 240px !important;
     }
 
     .final-iti-center-line {
-      text-align: center !important;
-      font-size: 18px !important;
-      font-weight: 900 !important;
-      color: #000 !important;
-      margin-top: 36px !important;
-      margin-bottom: 10px !important;
+      text-align: center !important; font-size: 18px !important; font-weight: 900 !important; color: #000 !important;
+      margin-top: 36px !important; margin-bottom: 10px !important;
     }
 
     .cert-footer {
-      border-top: 1.5px solid var(--gov-crimson) !important;
-      padding-top: 2px !important;
-      text-align: center !important;
-      font-size: 11.5px !important;
-      font-weight: 700 !important;
-      background: transparent !important;
-      line-height: 1.2 !important;
+      border-top: 1.5px solid var(--gov-crimson) !important; padding-top: 2px !important;
+      text-align: center !important; font-size: 11.5px !important; font-weight: 700 !important;
+      background: transparent !important; line-height: 1.2 !important;
     }
 
     @media print {
       @page { size: A4 portrait; margin: 0mm !important; }
       html, body { background: #ffffff !important; width: 210mm !important; height: 100% !important; margin: 0 !important; padding: 0 !important; }
-      .gov-header, .entry-card, .preview-header-bar, .no-print { display: none !important; }
+      .gov-header, .entry-card, .preview-header-bar, .no-print, .tippani-list-modal { display: none !important; }
       .workspace-grid, .preview-card { display: block !important; margin: 0 !important; padding: 0 !important; border: none !important; width: 210mm !important; }
       .preview-zoom-wrapper { transform: none !important; width: 210mm !important; }
       .a4-tippani-sheet {
@@ -397,7 +368,7 @@
 </head>
 <body>
 
-  <!-- Top Header with 🏠 Home Link -->
+  <!-- Top Header with Home Button -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
@@ -427,12 +398,17 @@
 
   <main class="workspace-grid">
     <section class="entry-card no-print">
-      <h2 class="entry-title">📄 निर्णयार्थ पेश टिप्पणी प्रविष्टि फाराम</h2>
+      <div class="entry-title">
+        <span>📄 निर्णयार्थ पेश टिप्पणी फाराम</span>
+        <button type="button" class="saved-list-btn" onclick="openSavedTippaniModal()">📂 नाम अनुसार टिप्पणी खोज्नुस्</button>
+      </div>
 
       <div class="auto-pull-box">
         <input type="text" id="pull_darta_no" placeholder="दर्ता नं. टाइप गरी डाटा तान्नुहोस् (उदा: २८/२०८३/०८४)">
         <button type="button" class="btn-pull" onclick="pullDataFromDarta()">🔄 डाटा तान्नुहोस्</button>
       </div>
+
+      <input type="hidden" id="current_tippani_id" value="">
 
       <div class="form-section-title">निवेदक तथा जग्गा विवरण</div>
       <div class="form-grid-2">
@@ -482,7 +458,7 @@
         </div>
       </div>
 
-      <div class="form-section-title">प्राविधिक तथा प्रशासनिक अधिकारीहरू (Default: मायादेवी गाउँपालिका)</div>
+      <div class="form-section-title">प्राविधिक तथा प्रशासनिक अधिकारीहरू</div>
       
       <div class="form-row">
         <label>१) स्थलगत निरीक्षण गर्ने (पद र नाम)</label>
@@ -530,9 +506,11 @@
         </div>
       </div>
 
+      <!-- Action Buttons: Save, Print, Delete, Reset -->
       <div class="form-actions">
-        <button type="button" class="btn-act btn-save" onclick="saveTippaniToCloud()">💾 सुरक्षित गर्नुहोस्</button>
-        <button type="button" class="btn-act btn-print" onclick="printTippaniPaper()">🖨 प्रिन्ट गर्नुहोस्</button>
+        <button type="button" class="btn-act btn-save" onclick="saveTippaniToCloud()">💾 सुरक्षित</button>
+        <button type="button" class="btn-act btn-print" onclick="printTippaniPaper()">🖨 प्रिन्ट</button>
+        <button type="button" class="btn-act btn-del" onclick="deleteCurrentTippani()">🗑️ मेटाउने</button>
         <button type="button" class="btn-act btn-reset" onclick="resetTippaniForm()">↺ Reset</button>
       </div>
     </section>
@@ -556,7 +534,6 @@
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
 
           <div class="cert-content-top">
-            <!-- 1. LETTERHEAD HEADER -->
             <header class="cert-header">
               <div class="logo-box-left">
                 <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -572,20 +549,16 @@
               </div>
             </header>
 
-            <!-- 2. SHRIMAN -->
             <div class="tippani-top-shriman">श्रीमान्</div>
 
-            <!-- 3. SUBJECT LINE -->
             <div class="tippani-subject-box">
               <span class="tippani-subject">विषयः घर सँरचना अभिलेखिकरण प्रमाण-पत्र दिने सम्बन्धमा ।</span>
             </div>
 
-            <!-- 4. MAIN PARAGRAPH -->
             <p class="common-para-text tippani-body-para">
               मायादेवी गाउँपालिका वडा नं.<strong id="out_ward">०८</strong> बस्ने श्री <strong id="out_owner">ज्योती कर्ण</strong>ले निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="out_sabik">हाटिबनगाई गा.वि.स. वडा नं.५ क</strong> कि.न. <strong id="out_kitta">२५२४</strong> को क्षे.फ. <strong id="out_area">विगह क्रमशः ०-०-१०</strong> जग्गामा मिति <strong id="out_comp_date">२०८३/०१/०५</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति <strong id="out_darta_date">२०८३/०५/१८</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति <strong id="out_insp_date">२०८३/०६/०६</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण भएको पाईएको साथै मिति <strong id="out_dec_date">२०८३/०६/१२</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरीएको ।
             </p>
 
-            <!-- 5. TWO COLUMNS INSPECTION SIGNATURES -->
             <div class="two-col-sign-grid">
               <div class="sign-item-col">
                 <div class="sign-dots-top">........................................</div>
@@ -601,12 +574,10 @@
               </div>
             </div>
 
-            <!-- 6. TECHNICAL RECOMMENDATION -->
             <p class="common-para-text engineer-ray-para">
               उल्लेखित बिवरण अनुसारको निर्माण कार्यमा स्थलगत नापजाँच गर्ने प्रविधिकको राय बमोजिम निर्माण घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्न मनासिव देखिएकोले निर्णयार्थ पेश गर्दछु ।
             </p>
 
-            <!-- 7. ENGINEER BLOCK -->
             <div class="engineer-right-block">
               <div class="inner-sign-wrap">
                 <div class="sign-dots-top">........................................</div>
@@ -615,12 +586,10 @@
               </div>
             </div>
 
-            <!-- 8. ORDER APPROVAL -->
             <p class="common-para-text approval-opinion-para">
               प्रस्तुत प्राविधिक राय तथा सिफारिसका आधारमा घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्नेगरी सदर ।
             </p>
 
-            <!-- 9. APPROVAL BLOCK -->
             <div class="approval-right-block">
               <div class="inner-sign-wrap">
                 <div class="sign-dots-top">................................................</div>
@@ -630,7 +599,6 @@
               </div>
             </div>
 
-            <!-- 10. ITI SAMBHAT -->
             <div class="final-iti-center-line" id="out_iti_footer">
               ईति सम्बत २०८३ साल ०६ महिना १२ गते ०२ रोज शुभम् ।
             </div>
@@ -644,6 +612,18 @@
       </div>
     </section>
   </main>
+
+  <!-- Saved Tippani Modal (नाम अनुसार खोज्ने) -->
+  <div class="tippani-list-modal" id="tippaniModal">
+    <div class="tippani-modal-content">
+      <div class="modal-header-bar">
+        <h3 style="color:#1e3a8a;">📂 सुरक्षित गरिएका टिप्पणीहरूको सूची (नाम अनुसार)</h3>
+        <button type="button" style="background:#dc2626; color:#fff; border:none; padding:4px 10px; border-radius:4px; cursor:pointer;" onclick="closeSavedTippaniModal()">✕ बन्द गर्नुहोस्</button>
+      </div>
+      <input type="text" id="modalSearchName" placeholder="🔍 नाम वा कित्ता नम्बरबाट खोज्नुहोस्..." oninput="filterModalTippani()" style="width:100%; padding:8px; margin-bottom:10px; border:1px solid #cbd5e1; border-radius:4px;">
+      <div class="tippani-list-container" id="tippaniListBody"></div>
+    </div>
+  </div>
 
   <script>
     const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
@@ -684,7 +664,7 @@
         const d = parseInt(parts[2], 10);
 
         const bsDaysInMonth = [0, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30];
-        const refY = 2083, refM = 6, refD = 12, refRoj = 2;
+        const refY = 2083, refM = 6, refD = 12, refRoj = 2; // सोमबार
         let diffDays = (y - refY) * 365 + (d - refD);
         if (m > refM) {
           for (let i = refM; i < m; i++) diffDays += bsDaysInMonth[i] || 30;
@@ -744,14 +724,9 @@
       }
 
       let found = null;
-
       if (supabaseClient) {
         try {
-          const { data } = await supabaseClient
-            .from('naksa_records')
-            .select('*')
-            .ilike('darta_no', q)
-            .limit(1);
+          const { data } = await supabaseClient.from('naksa_records').select('*').ilike('darta_no', q).limit(1);
           if (data && data.length > 0) found = data[0];
         } catch(e) {}
       }
@@ -773,13 +748,6 @@
         document.getElementById("in_darta_date").value = found.reg_date || "२०८३/०५/१८";
         document.getElementById("in_dec_date").value = found.dec_date || "२०८३/०६/१२";
 
-        document.getElementById("in_eng1_name").value = found.eng1 || "मायादेवी गाउँपालिका";
-        if (found.eng1_role) document.getElementById("in_eng1_role").value = found.eng1_role;
-        document.getElementById("in_eng2_name").value = found.eng2 || "मायादेवी गाउँपालिका";
-        document.getElementById("in_eng3_name").value = "मायादेवी गाउँपालिका";
-        document.getElementById("in_off_name").value = found.officer || "मायादेवी गाउँपालिका";
-        if (found.officer_role) document.getElementById("in_off_role").value = found.officer_role;
-
         updateTippaniLive();
         alert(`दर्ता नं. "${found.darta_no}" को विवरण प्रमाणपत्रबाट स्वतः तानियो!`);
       } else {
@@ -787,19 +755,25 @@
       }
     }
 
+    // टिप्पणी सेभ गर्ने / अद्यावधिक गर्ने (Save/Update)
     async function saveTippaniToCloud() {
-      const dartaNo = document.getElementById("pull_darta_no").value.trim() || document.getElementById("in_kitta").value.trim();
       const owner = document.getElementById("in_owner").value.trim();
+      const kitta = document.getElementById("in_kitta").value.trim();
+      const currentId = document.getElementById("current_tippani_id").value;
 
-      const nowTime = Date.now();
+      if (!owner) {
+        alert("कृपया निवेदकको नाम अनिवार्य भर्नुहोस्!");
+        return;
+      }
+
+      const nowTime = currentId ? parseInt(currentId, 10) : Date.now();
       const tippaniItem = {
         id: nowTime,
         created_timestamp: nowTime,
-        darta_no: dartaNo,
         owner_name: owner,
         ward: document.getElementById("in_ward").value.trim(),
         sabik: document.getElementById("in_sabik").value.trim(),
-        kitta: document.getElementById("in_kitta").value.trim(),
+        kitta: kitta,
         land_area: document.getElementById("in_area").value.trim(),
         comp_date: document.getElementById("in_comp_date").value.trim(),
         reg_date: document.getElementById("in_darta_date").value.trim(),
@@ -814,23 +788,164 @@
         officer_role: document.getElementById("in_off_role").value
       };
 
-      let cloudOk = false;
-      if (supabaseClient) {
-        try {
-          const { error } = await supabaseClient
-            .from('naksa_records')
-            .upsert(tippaniItem, { onConflict: 'darta_no' });
-          if (!error) cloudOk = true;
-        } catch(e) {}
-      }
+      document.getElementById("current_tippani_id").value = nowTime;
 
+      // Local storage save
       try {
         let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
-        list.unshift(tippaniItem);
+        const existIdx = list.findIndex(item => item.id === nowTime);
+        if (existIdx !== -1) {
+          list[existIdx] = tippaniItem;
+        } else {
+          list.unshift(tippaniItem);
+        }
         localStorage.setItem("naksa_tippani_list", JSON.stringify(list));
       } catch(e) {}
 
-      alert(`टिप्पणी (${owner}) ${cloudOk ? 'सुपाबेस क्लाउडमा' : 'लोकलमा'} सफलतापूर्वक सुरक्षित भयो! (७ दिनपछि स्वतः मेटिनेछ)`);
+      // Supabase save
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('tippani_records').upsert(tippaniItem);
+        } catch(e) {}
+      }
+
+      alert(`टिप्पणी (${owner}) सफलतापूर्वक सुरक्षित भयो!`);
+    }
+
+    // टिप्पणी मेटाउने (Delete)
+    async function deleteCurrentTippani() {
+      const currentId = document.getElementById("current_tippani_id").value;
+      const owner = document.getElementById("in_owner").value.trim();
+
+      if (!currentId) {
+        alert("पहिले सुरक्षित भएको टिप्पणी लोड गर्नुहोस् वा खाली गर्न Reset थिच्नुहोस्!");
+        return;
+      }
+
+      if (!confirm(`के तपाईं "${owner}" को यो टिप्पणी मेटाउन चाहनुहुन्छ?`)) return;
+
+      try {
+        let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
+        list = list.filter(item => item.id.toString() !== currentId.toString());
+        localStorage.setItem("naksa_tippani_list", JSON.stringify(list));
+      } catch(e) {}
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('tippani_records').delete().eq('id', currentId);
+        } catch(e) {}
+      }
+
+      alert("टिप्पणी सफलतापूर्वक मेटाइयो!");
+      resetTippaniForm();
+    }
+
+    function resetTippaniForm() {
+      document.getElementById("current_tippani_id").value = "";
+      document.getElementById("in_owner").value = "ज्योती कर्ण";
+      document.getElementById("in_ward").value = "०८";
+      document.getElementById("in_sabik").value = "हाटिबनगाई गा.वि.स. वडा नं.५ क";
+      document.getElementById("in_kitta").value = "२५२४";
+      document.getElementById("in_area").value = "विगह क्रमशः ०-०-१०";
+      document.getElementById("in_comp_date").value = "२०८३/०१/०५";
+      document.getElementById("in_darta_date").value = "२०८३/०५/१८";
+      document.getElementById("in_insp_date").value = "२०८३/०६/०६";
+      document.getElementById("in_dec_date").value = "२०८३/०६/१२";
+      document.getElementById("pull_darta_no").value = "";
+      updateTippaniLive();
+    }
+
+    // सुरक्षित गरिएका टिप्पणीहरूको मोडल खोल्ने
+    function openSavedTippaniModal() {
+      document.getElementById("tippaniModal").style.display = "flex";
+      renderModalTippaniList();
+    }
+
+    function closeSavedTippaniModal() {
+      document.getElementById("tippaniModal").style.display = "none";
+    }
+
+    function renderModalTippaniList() {
+      const container = document.getElementById("tippaniListBody");
+      container.innerHTML = "";
+
+      let list = [];
+      try {
+        list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
+      } catch(e) {}
+
+      if (list.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:20px; color:#64748b;">कुनै पनि सुरक्षित टिप्पणी भेटिएन।</div>`;
+        return;
+      }
+
+      list.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "tippani-item-row";
+        div.innerHTML = `
+          <div>
+            <strong>${item.owner_name}</strong> (वडा नं. ${item.ward || '-'})<br>
+            <span style="font-size:12px; color:#64748b;">कित्ता: ${item.kitta || '-'} | मिति: ${item.dec_date || '-'}</span>
+          </div>
+          <div>
+            <button style="background:#1e3a8a; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer;" onclick="loadTippaniIntoForm(${item.id})">हेर्नुस् / Edit</button>
+            <button style="background:#dc2626; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; margin-left:4px;" onclick="deleteTippaniFromModal(${item.id}, '${item.owner_name}')">मेटाउने</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function filterModalTippani() {
+      const q = document.getElementById("modalSearchName").value.trim().toLowerCase();
+      let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
+      const filtered = list.filter(item => (item.owner_name && item.owner_name.toLowerCase().includes(q)) || (item.kitta && item.kitta.includes(q)));
+      
+      const container = document.getElementById("tippaniListBody");
+      container.innerHTML = "";
+      filtered.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "tippani-item-row";
+        div.innerHTML = `
+          <div>
+            <strong>${item.owner_name}</strong> (वडा नं. ${item.ward || '-'})<br>
+            <span style="font-size:12px; color:#64748b;">कित्ता: ${item.kitta || '-'} | मिति: ${item.dec_date || '-'}</span>
+          </div>
+          <div>
+            <button style="background:#1e3a8a; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer;" onclick="loadTippaniIntoForm(${item.id})">हेर्नुस् / Edit</button>
+            <button style="background:#dc2626; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; margin-left:4px;" onclick="deleteTippaniFromModal(${item.id}, '${item.owner_name}')">मेटाउने</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function loadTippaniIntoForm(id) {
+      let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
+      const item = list.find(t => t.id === id);
+      if (item) {
+        document.getElementById("current_tippani_id").value = item.id;
+        document.getElementById("in_ward").value = item.ward || "";
+        document.getElementById("in_owner").value = item.owner_name || "";
+        document.getElementById("in_sabik").value = item.sabik || "";
+        document.getElementById("in_kitta").value = item.kitta || "";
+        document.getElementById("in_area").value = item.land_area || "";
+        document.getElementById("in_comp_date").value = item.comp_date || "";
+        document.getElementById("in_darta_date").value = item.reg_date || "";
+        document.getElementById("in_insp_date").value = item.insp_date || "";
+        document.getElementById("in_dec_date").value = item.dec_date || "";
+
+        updateTippaniLive();
+        closeSavedTippaniModal();
+      }
+    }
+
+    function deleteTippaniFromModal(id, name) {
+      if (!confirm(`के तपाईं "${name}" को टिप्पणी मेटाउन चाहनुहुन्छ?`)) return;
+      let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
+      list = list.filter(item => item.id !== id);
+      localStorage.setItem("naksa_tippani_list", JSON.stringify(list));
+      renderModalTippaniList();
     }
 
     function printTippaniPaper() {
@@ -842,12 +957,6 @@
           if (wrapper) wrapper.style.transform = `scale(${currentZoomLevel})`;
         }, 500);
       }, 100);
-    }
-
-    function resetTippaniForm() {
-      if (confirm("के तपाईं टिप्पणी फाराम खाली गर्न चाहनुहुन्छ?")) {
-        window.location.reload();
-      }
     }
 
     function updateClock() {
