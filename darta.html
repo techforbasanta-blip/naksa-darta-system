@@ -240,7 +240,7 @@
     .cert-motto { font-size: 15px; font-weight: 800; line-height: 1; }
 
     .cert-header {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex align-items: center; justify-content: space-between;
       border-bottom: 2px solid var(--gov-crimson); padding-bottom: 2px; margin-bottom: 2px;
     }
     .logo-box-left, .logo-box-right {
@@ -466,7 +466,10 @@
 
         <a href="darta.html" class="nav-btn active">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
-        <a href="admin.html" id="adminMenuBtn" class="nav-btn">⚙️ Admin</a>
+        
+        <!-- यो बटन सुरुमा लुकेको हुन्छ, केवल superadmin ले लगइन गर्दा मात्र खुल्छ -->
+        <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
+        
         <button type="button" class="nav-btn btn-idcard" onclick="alert('ID Card Module चाँडै आउँदैछ!');">🪪 ID Card Create</button>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
@@ -1003,8 +1006,7 @@
   </footer>
 
   <script>
-    // Supabase Credentials
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase Project URL यहाँ राख्नुहोस्
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
 
     let supabaseClient = null;
@@ -1190,7 +1192,6 @@
       document.getElementById("out_officer").textContent = getVal("in_officer", "....................");
       document.getElementById("out_officer_role").textContent = document.getElementById("in_officer_role").value;
 
-      // Namsari Table Updates
       document.getElementById("out_ns_date").textContent = getVal("in_ns_date", "....");
       document.getElementById("out_ns_from").textContent = getVal("in_ns_from", "....");
       document.getElementById("out_ns_to").textContent = getVal("in_ns_to", "....");
@@ -1234,7 +1235,6 @@
       qrDiv.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(verifyUrl)}" alt="QR Code" style="width:54px; height:54px; display:block;">`;
     }
 
-    // फोटो कम्प्रेस गर्ने (साइज धेरै ठूलो हुन नदिने)
     function compressImageFile(file, callback) {
       const reader = new FileReader();
       reader.onload = function(evt) {
@@ -1242,7 +1242,7 @@
         img.onload = function() {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
-          const maxW = 400, maxH = 400;
+          const maxW = 350, maxH = 350;
           let w = img.width, h = img.height;
           if (w > h) {
             if (w > maxW) { h *= maxW / w; w = maxW; }
@@ -1358,7 +1358,6 @@
         ns_photo: currentNamsariPhotoBase64
       };
 
-      // १. लोकल स्टोरेजमा अनिवार्य सुरक्षित गर्ने
       try {
         let records = JSON.parse(localStorage.getItem("naksa_records") || "[]");
         const existingIdx = records.findIndex(r => r.darta_no === dartaNo);
@@ -1371,7 +1370,6 @@
         localStorage.setItem("last_verified_record", JSON.stringify(recordItem));
       } catch (err) { console.warn("Local storage error:", err); }
 
-      // २. सुपाबेस क्लाउड डाटाबेसमा सुरक्षित गर्ने
       let savedInCloud = false;
       if (supabaseClient) {
         try {
@@ -1506,6 +1504,14 @@
         window.location.href = "login.html";
         return;
       }
+
+      // केवल superadmin खाता भएको व्यक्तिलाई मात्र हेडरमा Admin बटन देखाउने
+      try {
+        const u = JSON.parse(raw);
+        if (u.username && u.username.toLowerCase() === "superadmin") {
+          document.getElementById("adminMenuBtn").style.display = "inline-flex";
+        }
+      } catch(e) {}
 
       applySavedTheme();
       setInterval(updateClock, 1000);
