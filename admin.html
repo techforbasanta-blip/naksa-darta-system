@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Supabase Cloud SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -36,7 +35,6 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
-    /* Exactly Same Top Header as darta.html */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
@@ -88,7 +86,7 @@
     .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
-    .container { max-width: 1400px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
+    .container { max-width: 1440px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -112,13 +110,13 @@
 
     .form-grid-admin {
       display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr 1fr auto;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr 1.2fr auto;
       gap: 10px;
       align-items: flex-end;
     }
     .form-group { display: flex; flex-direction: column; }
     .form-group label { font-size: 12.5px; font-weight: 700; margin-bottom: 4px; color: var(--text-dark); }
-    .form-group input, .form-group select {
+    .form-group input {
       padding: 9px 10px;
       border: 1px solid var(--border-color);
       border-radius: 5px;
@@ -136,11 +134,12 @@
       cursor: pointer;
       font-size: 13.5px;
       height: 40px;
+      white-space: nowrap;
     }
     .btn-add:hover { background: #15803d; }
 
     table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; }
-    th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; }
+    th, td { border: 1px solid var(--border-color); padding: 9px 12px; text-align: left; vertical-align: middle; }
     th { background: rgba(30, 58, 138, 0.08); font-weight: 800; }
     body.dark-mode th { background: rgba(255, 255, 255, 0.08); }
 
@@ -155,13 +154,40 @@
       font-weight: 700;
     }
     .btn-del:hover { background: #b91c1c; }
+
     .badge-role {
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 4px;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 800;
       background: #e2e8f0;
       color: #0f172a;
+      display: inline-block;
+    }
+
+    /* Staff Photo (PP) Avatar */
+    .admin-pp-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #1e3a8a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      cursor: pointer;
+      display: block;
+    }
+    .admin-pp-placeholder {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: bold;
+      border: 1.5px dashed #94a3b8;
     }
 
     footer.site-footer {
@@ -202,7 +228,7 @@
   </header>
 
   <div class="container">
-    <!-- नयाँ एडमिन/कर्मचारी खाता बनाउने फाराम -->
+    <!-- Naya Staff/Admin Add Form -->
     <div class="card">
       <div class="card-title">
         <span>➕ नयाँ कर्मचारी / एडमिन खाता थप्नुहोस् (Auto-Sync to Cloud)</span>
@@ -211,48 +237,49 @@
         <div class="form-grid-admin">
           <div class="form-group">
             <label>कर्मचारीको पूरा नामथर</label>
-            <input type="text" id="new_fullname" placeholder="पूरा नाम लेख्नुहोस्" required>
+            <input type="text" id="new_fullname" placeholder="उदा: राम बहादुर चौधरी" required>
           </div>
           <div class="form-group">
             <label>प्रयोगकर्ता नाम (Username)</label>
-            <input type="text" id="new_username" placeholder="उदा: operator1" required>
+            <input type="text" id="new_username" placeholder="उदा: ram_engineer" required>
           </div>
           <div class="form-group">
             <label>गोप्य पासवर्ड (Password)</label>
-            <input type="text" id="new_password" placeholder="पासवर्ड राख्नुहोस्" required>
+            <input type="text" id="new_password" placeholder="पासवर्ड" required>
           </div>
           <div class="form-group">
-            <label>भूमिका / पद (Role)</label>
-            <select id="new_role">
-              <option value="admin">Admin</option>
-              <option value="amin">Amin (अमिन)</option>
-              <option value="operator">Operator</option>
-            </select>
+            <label>पद (Custom Role/Post टाइप गर्नुहोस्)</label>
+            <input type="text" id="new_role" placeholder="उदा: इन्जिनियर, अमिन, अपरेटर..." required>
+          </div>
+          <div class="form-group">
+            <label>फोटो (PP Upload)</label>
+            <input type="file" id="new_photo_file" accept="image/*" onchange="previewAdminPhoto(event)">
           </div>
           <button type="submit" id="addBtn" class="btn-add">थप्नुहोस्</button>
         </div>
       </form>
     </div>
 
-    <!-- सक्रिय खाताहरूको सूची -->
+    <!-- Active Cloud Users List with PP -->
     <div class="card">
       <div class="card-title">
-        <span>👥 सक्रिय कर्मचारी खाताहरू (संसारभरबाट लगइन हुनसक्ने)</span>
+        <span>👥 सक्रिय कर्मचारी तथा एडमिन खाताहरू (Photo & Details)</span>
         <span id="userCount" style="font-size:12.5px; background:rgba(30,58,138,0.1); padding:3px 10px; border-radius:15px; font-weight:bold;">लोड हुँदैछ...</span>
       </div>
       <table>
         <thead>
           <tr>
             <th style="width: 50px;">क्र.सं.</th>
+            <th style="width: 70px; text-align: center;">फोटो (PP)</th>
             <th>कर्मचारीको नामथर</th>
             <th>Username</th>
             <th>Password</th>
-            <th>Role</th>
+            <th>पद (Role / Post)</th>
             <th style="text-align:center; width: 140px;">कार्य (Action)</th>
           </tr>
         </thead>
         <tbody id="userTableBody">
-          <tr><td colspan="6" style="text-align:center;">विवरण लोड हुँदैछ...</td></tr>
+          <tr><td colspan="7" style="text-align:center;">विवरण लोड हुँदैछ...</td></tr>
         </tbody>
       </table>
     </div>
@@ -266,9 +293,8 @@
   </footer>
 
   <script>
-    // तपाईंको Supabase जडान
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // Tamara Supabase nu URL
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // Tamaro anon key
 
     let supabaseClient = null;
     try {
@@ -280,11 +306,23 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
-    // सुपरएडमिनको डिफलट ब्याकअप खाता
+    let tempPhotoBase64 = "";
+
+    function previewAdminPhoto(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          tempPhotoBase64 = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
     const defaultMaster = [
-      { id: 1, full_name: 'Super Administrator', username: 'superadmin', password: 'Admin@123', role: 'superadmin' },
-      { id: 2, full_name: 'System Admin', username: 'admin', password: 'Admin@123', role: 'admin' },
-      { id: 3, full_name: 'Land Surveyor (Amin)', username: 'amin', password: 'Amin@123', role: 'amin' }
+      { id: 1, full_name: 'Super Administrator', username: 'superadmin', password: 'Admin@123', role: 'Superadmin', photo: '' },
+      { id: 2, full_name: 'System Admin', username: 'admin', password: 'Admin@123', role: 'IT Admin', photo: '' },
+      { id: 3, full_name: 'Land Surveyor (Amin)', username: 'amin', password: 'Amin@123', role: 'अमिन', photo: '' }
     ];
 
     let allUsers = [];
@@ -303,7 +341,6 @@
     async function loadAccounts() {
       let loaded = [];
 
-      // १. पहिले Supabase क्लाउड डाटाबेसबाट सबै खाताहरू तान्ने
       if (supabaseClient) {
         try {
           const { data, error } = await supabaseClient
@@ -320,7 +357,6 @@
         }
       }
 
-      // २. यदि इन्टरनेट नभए लोकल मेमोरीबाट तान्ने
       if (loaded.length === 0) {
         try {
           const raw = localStorage.getItem("local_admin_accounts");
@@ -343,12 +379,17 @@
         const tr = document.createElement("tr");
         const isPermanent = u.username.toLowerCase() === 'superadmin';
 
+        const photoHtml = u.photo 
+          ? `<img src="${u.photo}" class="admin-pp-thumb" onclick="window.open('${u.photo}')" title="फोटो ठूलो हेर्न क्लिक गर्नुहोस्">`
+          : `<div class="admin-pp-placeholder">फोटो छैन</div>`;
+
         tr.innerHTML = `
           <td>${toNepNum(i + 1)}</td>
+          <td style="text-align:center;">${photoHtml}</td>
           <td><strong>${u.full_name || '-'}</strong></td>
           <td><code>${u.username}</code></td>
           <td><span style="letter-spacing: 2px;">••••••••</span></td>
-          <td><span class="badge-role">${u.role}</span></td>
+          <td><span class="badge-role">${u.role || 'कर्मचारी'}</span></td>
           <td style="text-align:center;">
             ${isPermanent ? '<small style="color:#64748b; font-weight:bold;">(स्थायी मुख्य खाता)</small>' : `<button class="btn-del" onclick="deleteAccount(${u.id}, '${u.username}')">हटाउने</button>`}
           </td>
@@ -357,13 +398,12 @@
       });
     }
 
-    // यहीँ admin.html बाट थप्दा सिधै Supabase मा Auto-Update हुने फङ्सन
     async function handleCreateUser(e) {
       e.preventDefault();
       const fn = document.getElementById("new_fullname").value.trim();
       const un = document.getElementById("new_username").value.trim().toLowerCase();
       const pw = document.getElementById("new_password").value.trim();
-      const rl = document.getElementById("new_role").value;
+      const rl = document.getElementById("new_role").value.trim();
 
       const addBtn = document.getElementById("addBtn");
       addBtn.disabled = true;
@@ -374,10 +414,10 @@
         full_name: fn,
         username: un,
         password: pw,
-        role: rl
+        role: rl,
+        photo: tempPhotoBase64
       };
 
-      // १. Supabase Cloud Database मा Auto-Update गर्ने
       if (supabaseClient) {
         try {
           const { error } = await supabaseClient
@@ -395,7 +435,6 @@
         }
       }
 
-      // २. लोकल मेमोरी ब्याकअप
       allUsers.push(newAccount);
       localStorage.setItem("local_admin_accounts", JSON.stringify(allUsers));
       renderUserTable();
@@ -403,13 +442,16 @@
       document.getElementById("new_fullname").value = "";
       document.getElementById("new_username").value = "";
       document.getElementById("new_password").value = "";
+      document.getElementById("new_role").value = "";
+      document.getElementById("new_photo_file").value = "";
+      tempPhotoBase64 = "";
+
       addBtn.disabled = false;
       addBtn.textContent = "थप्नुहोस्";
 
-      alert(`बधाई छ! खाता "${un}" सफलतापूर्वक सुरक्षित भयो।\nअब जुनसुकै कम्प्युटर वा मोबाइलबाट login.html खोल्दा यो खाताले लगइन गर्न सकिनेछ।`);
+      alert(`बधाई छ! खाता "${un}" (पद: ${rl}) फोटो सहित सुरक्षित भयो। अब जुनसुकै PC बाट यो खाताले लगइन गर्न सकिनेछ।`);
     }
 
-    // डिलिट गर्दा पनि Supabase बाटै डिलिट हुने
     async function deleteAccount(id, username) {
       if (!confirm(`के तपाईं खाता "${username}" हटाउन चाहनुहुन्छ?`)) return;
 
