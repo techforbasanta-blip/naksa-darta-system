@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>कर्मचारी तथा एडमिन व्यवस्थापन | मायादेवी गाउँपालिका</title>
+  <title>कर्मचारी तथा एडमिन व्यवस्थापन | Smart Maydevi</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
@@ -19,164 +20,164 @@
       --input-bg: #ffffff;
       --text-dark: #0f172a;
       --border-color: #cbd5e1;
-      --table-th: #f8fafc;
       --screen-font: 'Mukta', sans-serif;
     }
+
     body.dark-mode {
       --bg: #07192f;
       --card-bg: #0d233e;
       --input-bg: #07192f;
       --text-dark: #ffffff;
       --border-color: #1e3a8a;
-      --table-th: #132743;
     }
+
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
-      padding: 10px 20px;
+      padding: 8px 18px;
       color: #ffffff;
     }
     .header-inner {
-      max-width: 1560px;
+      max-width: 1720px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .brand-left { display: flex; align-items: center; gap: 12px; }
     .brand-left img { height: 50px !important; width: auto !important; }
-    .brand-text h1 { font-size: 19px; font-weight: 800; color: #fff; line-height: 1.2; }
-    .brand-text p { font-size: 12.5px; color: #cbd5e1; }
+    .brand-text h1 { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
+    .brand-text p { font-size: 12px; color: #cbd5e1; }
 
-    .header-controls { display: flex; align-items: center; gap: 10px; }
+    .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .header-clock-box {
       text-align: right;
       background: rgba(255, 255, 255, 0.1);
-      padding: 4px 10px;
+      padding: 4px 8px;
       border-radius: 4px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      line-height: 1.25;
+      line-height: 1.2;
     }
-    .header-clock-box .h-date { font-size: 11.5px; color: #cbd5e1; font-weight: 600; }
-    .header-clock-box .h-time { font-size: 13px; color: #ffffff; font-weight: 800; }
+    .header-clock-box .h-date { font-size: 11px; color: #cbd5e1; font-weight: 600; }
+    .header-clock-box .h-time { font-size: 12.5px; color: #ffffff; font-weight: 800; }
 
     .nav-btn {
       background: #0d233e;
       color: #ffffff;
       text-decoration: none;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 700;
-      padding: 6px 12px;
+      padding: 6px 11px;
       border-radius: 4px;
       border: 1px solid #1e3a8a;
       display: inline-flex;
       align-items: center;
       cursor: pointer;
+      white-space: nowrap;
     }
     .nav-btn:hover, .nav-btn.active { background: #2563eb; border-color: #3b82f6; }
-    .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 14px !important; padding: 5px 10px !important; }
+    .btn-idcard { background: #0891b2 !important; border-color: #06b6d4 !important; }
+    .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
-    .container { max-width: 1560px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
+    .container { max-width: 1300px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 18px;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
     .card-title {
       font-size: 17px;
       font-weight: 800;
       color: #1e3a8a;
-      margin-bottom: 14px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 6px;
+      margin-bottom: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px solid var(--border-color);
-      padding-bottom: 6px;
     }
     body.dark-mode .card-title { color: #60a5fa; }
 
-    .form-grid {
+    .form-grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
+      grid-template-columns: 1fr 1fr 1fr 1fr auto;
+      gap: 10px;
       align-items: flex-end;
     }
-    .form-group { display: flex; flex-direction: column; gap: 4px; }
-    .form-group label { font-size: 12.5px; font-weight: 700; color: var(--text-dark); }
-    .form-group input {
+    .form-group { display: flex; flex-direction: column; }
+    .form-group label { font-size: 12.5px; font-weight: 700; margin-bottom: 4px; }
+    .form-group input, .form-group select {
       padding: 8px 10px;
       border: 1px solid var(--border-color);
-      border-radius: 4px;
-      font-size: 13px;
+      border-radius: 5px;
       background: var(--input-bg);
       color: var(--text-dark);
+      font-size: 13px;
     }
-
     .btn-add {
       background: #16a34a;
       color: #ffffff;
       border: none;
-      padding: 9px 16px;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 13.5px;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-weight: 800;
       cursor: pointer;
+      font-size: 13px;
       height: 38px;
     }
     .btn-add:hover { background: #15803d; }
 
-    .sync-tools {
-      display: flex; gap: 8px; margin-top: 10px; padding: 10px; background: rgba(30, 58, 138, 0.05); border-radius: 4px; border: 1px dashed var(--border-color);
-    }
-    .btn-sync { background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 12px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; }
+    th, td { border: 1px solid var(--border-color); padding: 9px 12px; text-align: left; }
+    th { background: rgba(30, 58, 138, 0.08); font-weight: 800; }
+    body.dark-mode th { background: rgba(255, 255, 255, 0.08); }
 
-    .table-responsive { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px; }
-    th, td { border: 1px solid var(--border-color); padding: 8px 6px; text-align: left; }
-    th { background: var(--table-th); font-weight: 800; color: var(--text-dark); }
-    
-    .table-input {
-      width: 100%;
-      padding: 5px 6px;
-      border: 1px solid var(--border-color);
+    .btn-del {
+      background: #dc2626;
+      color: #fff;
+      border: none;
+      padding: 4px 8px;
       border-radius: 4px;
-      font-size: 12.5px;
-      background: var(--input-bg);
-      color: var(--text-dark);
+      cursor: pointer;
+      font-size: 11.5px;
+      font-weight: 700;
     }
-
-    .btn-update { background: #1e3a8a; color: #fff; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 12px; }
-    .btn-del { background: var(--gov-crimson); color: #fff; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 12px; margin-left: 4px; }
+    .badge-role {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      background: #e2e8f0;
+      color: #0f172a;
+    }
 
     footer.site-footer {
-      background: #07192f;
-      color: #cbd5e1;
-      padding: 10px 20px;
-      font-size: 12px;
-      border-top: 3px solid #2563eb;
-      margin-top: auto;
+      background: #07192f; color: #cbd5e1; padding: 8px 18px; font-size: 11.5px;
+      border-top: 3px solid #2563eb; margin-top: auto;
     }
     .footer-inner {
-      max-width: 1560px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
+      max-width: 1720px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
     }
   </style>
 </head>
 <body>
 
-  <header class="gov-header">
+  <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
-        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="नेपाल सरकार" onerror="this.src='assets/nishan%20chap.jpg';">
+        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
-          <h1>मायादेवी गाउँपालिका — नक्सा दर्ता प्रणाली</h1>
-          <p>कर्मचारी तथा एडमिन व्यवस्थापन प्यानल | Admin Dashboard</p>
+          <h1>Smart Maydevi</h1>
+          <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
         </div>
       </div>
       <div class="header-controls">
@@ -185,9 +186,10 @@
           <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
         </div>
 
-        <a href="darta.html" class="nav-btn">📝 नक्सा दर्ता</a>
+        <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
-        <a href="admin.html" class="nav-btn active">⚙️ Admin Panel</a>
+        <a href="admin.html" class="nav-btn active">⚙️ Admin</a>
+        <button type="button" class="nav-btn btn-idcard" onclick="alert('ID Card Module चाँडै आउँदैछ!');">🪪 ID Card Create</button>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
@@ -196,250 +198,190 @@
   </header>
 
   <div class="container">
+    <!-- Naya Account Create Karva mate Form -->
     <div class="card">
       <div class="card-title">
-        <span>➕ नयाँ एडमिन / कर्मचारी दर्ता फाराम</span>
+        <span>➕ नयाँ कर्मचारी / एडमिन खाता थप्नुहोस् (Cloud Database)</span>
       </div>
-      <form id="newAdminForm" onsubmit="event.preventDefault(); createNewAdminUser();" autocomplete="off">
-        <div class="form-grid">
+      <form onsubmit="handleCreateUser(event)">
+        <div class="form-grid-3">
           <div class="form-group">
-            <label>कर्मचारीको पूरा नाम *</label>
-            <input type="text" id="new_name" placeholder="उदा: राम बहादुर चौधरी" required>
+            <label>पूरा नामथर</label>
+            <input type="text" id="new_fullname" placeholder="कर्मचारीको नाम" required>
           </div>
           <div class="form-group">
-            <label>पद *</label>
-            <input type="text" id="new_post" placeholder="उदा: अमिन / इन्जिनियर" required>
+            <label>प्रयोगकर्ता नाम (Username)</label>
+            <input type="text" id="new_username" placeholder="उदा: operator1" required>
           </div>
           <div class="form-group">
-            <label>सम्पर्क नं. *</label>
-            <input type="text" id="new_phone" placeholder="९८xxxxxxxx" required>
+            <label>गोप्य पासवर्ड (Password)</label>
+            <input type="text" id="new_password" placeholder="पासवर्ड" required>
           </div>
           <div class="form-group">
-            <label>Gmail / इमेल *</label>
-            <input type="email" id="new_email" placeholder="example@gmail.com" required>
+            <label>पद / भूमिका (Role)</label>
+            <select id="new_role">
+              <option value="admin">Admin</option>
+              <option value="amin">Amin (अमिन)</option>
+              <option value="operator">Operator</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label>प्रयोगकर्ता आइडी (Login ID) *</label>
-            <input type="text" id="new_loginid" placeholder="Login ID" required>
-          </div>
-          <div class="form-group">
-            <label>पासवर्ड (Password) *</label>
-            <input type="password" id="new_password" placeholder="Password" required>
-          </div>
-          <div class="form-group">
-            <label>कैफियत (Remarks)</label>
-            <input type="text" id="new_remarks" placeholder="कैफियत">
-          </div>
-          <button type="submit" class="btn-add">💾 सुरक्षित गर्नुहोस्</button>
+          <button type="submit" id="addBtn" class="btn-add">थप्नुहोस्</button>
         </div>
       </form>
     </div>
 
+    <!-- Active Cloud Users List -->
     <div class="card">
       <div class="card-title">
-        <span>👥 दर्ता भएका एडमिन तथा कर्मचारीहरूको सूची</span>
-        <span id="slotStatusBadge" style="font-size: 13px; background: rgba(30, 58, 138, 0.2); padding: 3px 10px; border-radius: 20px; font-weight: bold;">कुल: १ / १०</span>
+        <span>👥 सक्रिय कर्मचारी खाताहरू (Active Cloud Accounts)</span>
+        <span id="userCount" style="font-size:12.5px; background:rgba(30,58,138,0.1); padding:3px 10px; border-radius:15px; font-weight:bold;">लोड हुँदैछ...</span>
       </div>
-
-      <!-- अन्य कम्प्युटरमा सजिलै डाटा ट्रान्सफर गर्ने टूल -->
-      <div class="sync-tools">
-        <button type="button" class="btn-sync" onclick="exportStaffData()">📤 यो PC को डाटा कोड कपि गर्नुहोस् (Export)</button>
-        <button type="button" class="btn-sync" onclick="importStaffData()">📥 अर्को PC मा डाटा पेस गर्नुहोस् (Import)</button>
-      </div>
-
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 40px; text-align: center;">क्र.सं.</th>
-              <th>कर्मचारीको नाम</th>
-              <th>पद</th>
-              <th>सम्पर्क नं.</th>
-              <th>इमेल (Gmail)</th>
-              <th>Login ID</th>
-              <th>पासवर्ड</th>
-              <th>कैफियत</th>
-              <th style="width: 130px; text-align: center;">कार्य</th>
-            </tr>
-          </thead>
-          <tbody id="userTableBody"></tbody>
-        </table>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>क्र.सं.</th>
+            <th>कर्मचारीको नाम</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th style="text-align:center;">कार्य (Action)</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody">
+          <tr><td colspan="6" style="text-align:center;">विवरण लोड हुँदैछ...</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <footer class="site-footer">
+  <footer class="site-footer no-print">
     <div class="footer-inner">
-      <div><strong>मायादेवी गाउँपालिका</strong> — नक्सा दर्ता प्रणाली | बरेवा, रुपन्देही</div>
+      <div><strong>Smart Maydevi</strong> — एडमिन प्यानल | बरेवा, रुपन्देही</div>
       <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
     </div>
   </footer>
 
   <script>
-    const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
-    function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // Tamara Supabase Project nu URL ahiya paste karo
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // Tamaro anon key ahiya paste karo
 
-    const defaultMasterAdmin = {
-      id: 1,
-      full_name: "सुपर एडमिन",
-      post: "कम्प्युटर अपरेटर",
-      phone: "९७४३६५३६४४",
-      email: "basantabashyalo@gmail.com",
-      login_id: "superadmin",
-      password: "Admin@2083",
-      remarks: "प्रणाली व्यवस्थापक (Master Account)"
-    };
+    let supabaseClient = null;
+    try {
+      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    } catch(e) {}
 
-    function getStoredStaffList() {
-      try {
-        const stored = localStorage.getItem('mayadevi_staff_list');
-        if (stored) {
-          let list = JSON.parse(stored);
-          if (Array.isArray(list) && list.length > 0) {
-            const sIdx = list.findIndex(u => u.login_id && u.login_id.toLowerCase() === 'superadmin');
-            if (sIdx !== -1) {
-              list[sIdx].post = "कम्प्युटर अपरेटर";
-              list[sIdx].email = "basantabashyalo@gmail.com";
-              list[sIdx].phone = "९७४३६५३६४४";
-            } else {
-              list.unshift(defaultMasterAdmin);
-            }
-            return list;
+    let allUsers = [];
+
+    async function loadAccounts() {
+      if (supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient
+            .from('admin_accounts')
+            .select('*')
+            .order('id', { ascending: true });
+
+          if (!error && data) {
+            allUsers = data;
           }
+        } catch(e) {
+          console.error("Cloud fetch error:", e);
         }
-      } catch (e) {}
+      }
 
-      localStorage.setItem('mayadevi_staff_list', JSON.stringify([defaultMasterAdmin]));
-      return [defaultMasterAdmin];
+      renderUserTable();
     }
 
-    let usersList = getStoredStaffList();
-
-    function renderTable() {
+    function renderUserTable() {
       const tbody = document.getElementById("userTableBody");
-      const badge = document.getElementById("slotStatusBadge");
-      if (!tbody) return;
-
       tbody.innerHTML = "";
-      if (badge) badge.textContent = `कुल एडमिन/कर्मचारी: ${usersList.length} / १०`;
+      document.getElementById("userCount").textContent = `कुल खाता: ${allUsers.length}`;
 
-      usersList.forEach((u, idx) => {
-        const isMaster = (u.login_id && u.login_id.toLowerCase() === "superadmin");
+      if (allUsers.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#64748b;">कुनै कर्मचारी खाता फेला परेन।</td></tr>`;
+        return;
+      }
+
+      allUsers.forEach((u, i) => {
         const tr = document.createElement("tr");
-
         tr.innerHTML = `
-          <td style="text-align:center; font-weight:bold;">${toNepNum(idx + 1)}</td>
-          <td><input type="text" class="table-input" id="tbl-name-${u.id}" value="${u.full_name}"></td>
-          <td><input type="text" class="table-input" id="tbl-post-${u.id}" value="${u.post}"></td>
-          <td><input type="text" class="table-input" id="tbl-phone-${u.id}" value="${u.phone}"></td>
-          <td><input type="email" class="table-input" id="tbl-email-${u.id}" value="${u.email}"></td>
-          <td><input type="text" class="table-input" id="tbl-loginid-${u.id}" value="${u.login_id}" ${isMaster ? 'readonly style="background:rgba(0,0,0,0.06);"' : ''}></td>
-          <td><input type="text" class="table-input" id="tbl-pwd-${u.id}" value="${u.password}" style="width: 100px;"></td>
-          <td><input type="text" class="table-input" id="tbl-remarks-${u.id}" value="${u.remarks || ''}"></td>
-          <td style="text-align: center; white-space: nowrap;">
-            <button type="button" class="btn-update" onclick="updateExistingUser(${u.id})">अपडेट</button>
-            ${!isMaster ? `<button type="button" class="btn-del" onclick="deleteUser(${u.id})">हटाउने</button>` : ''}
+          <td>${i + 1}</td>
+          <td><strong>${u.full_name || '-'}</strong></td>
+          <td><code>${u.username}</code></td>
+          <td>••••••••</td>
+          <td><span class="badge-role">${u.role}</span></td>
+          <td style="text-align:center;">
+            ${u.username.toLowerCase() === 'superadmin' ? '<small style="color:#64748b;">(स्थायी खाता)</small>' : `<button class="btn-del" onclick="deleteAccount(${u.id}, '${u.username}')">हटाउने</button>`}
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    function createNewAdminUser() {
-      usersList = getStoredStaffList();
-      if (usersList.length >= 10) {
-        alert("अधिकतम १० जना सम्म मात्र एडमिन/कर्मचारी राख्न मिल्छ!");
-        return;
-      }
+    async function handleCreateUser(e) {
+      e.preventDefault();
+      const fn = document.getElementById("new_fullname").value.trim();
+      const un = document.getElementById("new_username").value.trim().toLowerCase();
+      const pw = document.getElementById("new_password").value.trim();
+      const rl = document.getElementById("new_role").value;
 
-      const name = document.getElementById("new_name").value.trim();
-      const post = document.getElementById("new_post").value.trim();
-      const phone = document.getElementById("new_phone").value.trim();
-      const email = document.getElementById("new_email").value.trim();
-      const loginId = document.getElementById("new_loginid").value.trim();
-      const pwd = document.getElementById("new_password").value.trim();
-      const remarks = document.getElementById("new_remarks").value.trim();
+      const addBtn = document.getElementById("addBtn");
+      addBtn.disabled = true;
+      addBtn.textContent = "⏳...";
 
-      const exists = usersList.some(u => u.login_id && u.login_id.toLowerCase() === loginId.toLowerCase());
-      if (exists) {
-        alert(`यो Login ID (${loginId}) पहिले नै दर्ता भइसकेको छ। फरक ID राख्नुहोस्!`);
-        return;
-      }
-
-      const newUser = {
+      const newAccount = {
         id: Date.now(),
-        full_name: name,
-        post: post,
-        phone: phone,
-        email: email,
-        login_id: loginId,
-        password: pwd,
-        remarks: remarks
+        full_name: fn,
+        username: un,
+        password: pw,
+        role: rl
       };
 
-      usersList.push(newUser);
-      localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
-
-      document.getElementById("newAdminForm").reset();
-      alert(`कर्मचारी "${name}" सुरक्षित भयो!`);
-      renderTable();
-    }
-
-    function updateExistingUser(id) {
-      usersList = getStoredStaffList();
-      const user = usersList.find(u => u.id === id);
-      if (user) {
-        user.full_name = document.getElementById(`tbl-name-${id}`).value.trim();
-        user.post = document.getElementById(`tbl-post-${id}`).value.trim();
-        user.phone = document.getElementById(`tbl-phone-${id}`).value.trim();
-        user.email = document.getElementById(`tbl-email-${id}`).value.trim();
-        user.login_id = document.getElementById(`tbl-loginid-${id}`).value.trim();
-        user.password = document.getElementById(`tbl-pwd-${id}`).value.trim();
-        user.remarks = document.getElementById(`tbl-remarks-${id}`).value.trim();
-
-        localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
-        alert("विवरण सफलतापूर्वक अद्यावधिक भयो!");
-        renderTable();
-      }
-    }
-
-    function deleteUser(id) {
-      usersList = getStoredStaffList();
-      const target = usersList.find(u => u.id === id);
-      if (!target) return;
-
-      if (confirm(`के तपाईं "${target.full_name}" लाई सूचीबाट हटाउन चाहनुहुन्छ?`)) {
-        usersList = usersList.filter(u => u.id !== id);
-        localStorage.setItem('mayadevi_staff_list', JSON.stringify(usersList));
-        renderTable();
-      }
-    }
-
-    // १-क्लिकमा अर्को कम्प्युटरमा डाटा लैजाने प्रणाली
-    function exportStaffData() {
-      const dataStr = JSON.stringify(usersList);
-      navigator.clipboard.writeText(dataStr).then(() => {
-        alert("सबै कर्मचारी डाटा कपि भयो! अब अर्को कम्प्युटरमा admin.html खोलेर '📥 Import' बटन थिची यो कोड पेस्ट गर्नुहोस्।");
-      }).catch(() => {
-        prompt("यो कोड कपि गर्नुहोस्:", dataStr);
-      });
-    }
-
-    function importStaffData() {
-      const pasteData = prompt("अघिल्लो कम्प्युटरबाट कपि गरेको डाटा कोड यहाँ पेस्ट गर्नुहोस्:");
-      if (pasteData) {
+      if (supabaseClient) {
         try {
-          const parsed = JSON.parse(pasteData);
-          if (Array.isArray(parsed)) {
-            localStorage.setItem('mayadevi_staff_list', JSON.stringify(parsed));
-            usersList = parsed;
-            renderTable();
-            alert("बधाई छ! सबै कर्मचारी डाटा यो नयाँ कम्प्युटरमा तुरुन्तै सुरक्षित भयो। अब सबै आइडी खुल्नेछ!");
+          const { error } = await supabaseClient
+            .from('admin_accounts')
+            .insert([newAccount]);
+
+          if (error) {
+            alert("यो Username पहिले नै प्रयोगमा छ वा त्रुटि भयो!");
+            addBtn.disabled = false;
+            addBtn.textContent = "थप्नुहोस्";
+            return;
           }
-        } catch(e) {
-          alert("अमान्य डाटा कोड!");
+        } catch(err) {
+          alert("क्लाउडमा सुरक्षित गर्दा त्रुटि भयो!");
         }
       }
+
+      allUsers.push(newAccount);
+      renderUserTable();
+
+      document.getElementById("new_fullname").value = "";
+      document.getElementById("new_username").value = "";
+      document.getElementById("new_password").value = "";
+      addBtn.disabled = false;
+      addBtn.textContent = "थप्नुहोस्";
+
+      alert(`खाता "${un}" सफलतापूर्वक Cloud मा सुरक्षित भयो! अब जुनसुकै ठाउँबाट यो खाताले लगइन गर्न सकिनेछ।`);
+    }
+
+    async function deleteAccount(id, username) {
+      if (!confirm(`के तपाईं खाता "${username}" हटाउन चाहनुहुन्छ?`)) return;
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient
+            .from('admin_accounts')
+            .delete()
+            .eq('id', id);
+        } catch(e) {}
+      }
+
+      allUsers = allUsers.filter(u => u.id !== id);
+      renderUserTable();
+      alert("खाता सफलतापूर्वक हटाइयो!");
     }
 
     function toggleTheme() {
@@ -449,15 +391,12 @@
       document.getElementById("themeToggleBtn").textContent = isDark ? "☀" : "☾";
     }
 
-    function updateClock() {
-      const now = new Date();
-      const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
-      let h = now.getHours();
-      const m = String(now.getMinutes()).padStart(2, "0");
-      const s = String(now.getSeconds()).padStart(2, "0");
-      let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
-      document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
-      document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+    function applySavedTheme() {
+      const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
+      if (saved === "dark") {
+        document.body.classList.add("dark-mode");
+        document.getElementById("themeToggleBtn").textContent = "☀";
+      }
     }
 
     function handleSafeLogout() {
@@ -472,9 +411,8 @@
         window.location.href = "login.html";
         return;
       }
-      setInterval(updateClock, 1000);
-      updateClock();
-      renderTable();
+      applySavedTheme();
+      loadAccounts();
     });
   </script>
 </body>
