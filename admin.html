@@ -56,6 +56,52 @@
     .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    
+    /* Header Active User Profile Box */
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 3px 9px 3px 4px;
+      border-radius: 25px;
+    }
+    .user-profile-badge img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #38bdf8;
+    }
+    .user-profile-avatar-fallback {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #0284c7;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1.5px solid #38bdf8;
+    }
+    .user-profile-info {
+      text-align: left;
+      line-height: 1.15;
+    }
+    .user-profile-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .user-profile-role {
+      font-size: 10.5px;
+      color: #7dd3fc;
+      font-weight: 600;
+    }
+
     .header-clock-box {
       text-align: right;
       background: rgba(255, 255, 255, 0.1);
@@ -143,11 +189,24 @@
     th { background: rgba(30, 58, 138, 0.08); font-weight: 800; }
     body.dark-mode th { background: rgba(255, 255, 255, 0.08); }
 
+    .btn-edit {
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      padding: 5px 9px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+    .btn-edit:hover { background: #0369a1; }
+
     .btn-del {
       background: #dc2626;
       color: #fff;
       border: none;
-      padding: 5px 10px;
+      padding: 5px 9px;
       border-radius: 4px;
       cursor: pointer;
       font-size: 12px;
@@ -159,12 +218,12 @@
       background: #1e3a8a;
       color: #fff;
       border: none;
-      padding: 4px 8px;
+      padding: 3px 6px;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
-      margin-top: 4px;
+      margin-top: 3px;
       display: inline-block;
     }
     .btn-view-pp:hover { background: #2563eb; }
@@ -208,7 +267,8 @@
       margin: 0 auto;
     }
 
-    .pp-modal-overlay {
+    /* Modal Popups */
+    .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.75);
@@ -218,31 +278,52 @@
       z-index: 9999;
       backdrop-filter: blur(3px);
     }
-    .pp-modal-box {
-      background: #ffffff;
+    .modal-box {
+      background: var(--card-bg);
+      color: var(--text-dark);
       border-radius: 10px;
-      padding: 20px;
-      max-width: 360px;
+      padding: 22px;
+      max-width: 420px;
       width: 90%;
-      text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.4);
       position: relative;
     }
     .pp-modal-img {
-      width: 180px;
-      height: 210px;
+      width: 190px;
+      height: 220px;
       object-fit: cover;
       border-radius: 8px;
       border: 3px solid #1e3a8a;
-      margin-bottom: 12px;
+      margin: 0 auto 12px auto;
+      display: block;
     }
-    .pp-modal-close {
+    .modal-close {
       position: absolute;
       top: 10px; right: 12px;
       background: #dc2626; color: #fff;
       border: none; border-radius: 50%;
       width: 28px; height: 28px; font-weight: bold;
       cursor: pointer; font-size: 14px;
+    }
+
+    .edit-form-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .edit-form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .edit-form-group input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 13px;
+      background: var(--input-bg);
+      color: var(--text-dark);
     }
 
     footer.site-footer {
@@ -266,6 +347,17 @@
         </div>
       </div>
       <div class="header-controls">
+        
+        <!-- Logged In User Profile Block -->
+        <div class="user-profile-badge" id="headerUserProfile">
+          <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
+          <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
+          <div class="user-profile-info">
+            <div class="user-profile-name" id="headerUserName">Superadmin</div>
+            <div class="user-profile-role" id="headerUserRole">व्यवस्थापक</div>
+          </div>
+        </div>
+
         <div class="header-clock-box">
           <div class="h-date" id="liveNepaliHeaderDate">मिति: लोड हुँदैछ...</div>
           <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
@@ -283,6 +375,7 @@
   </header>
 
   <div class="container">
+    <!-- नयाँ एडमिन/कर्मचारी फाराम -->
     <div class="card">
       <div class="card-title">
         <span>➕ नयाँ कर्मचारी / एडमिन खाता थप्नुहोस् (Auto-Sync to Cloud)</span>
@@ -307,16 +400,17 @@
           </div>
           <div class="form-group">
             <label>फोटो (PP Upload)</label>
-            <input type="file" id="new_photo_file" accept="image/*" onchange="previewAdminPhoto(event)">
+            <input type="file" id="new_photo_file" accept="image/*" onchange="previewAdminPhoto(event, 'new')">
           </div>
           <button type="submit" id="addBtn" class="btn-add">थप्नुहोस्</button>
         </div>
       </form>
     </div>
 
+    <!-- सक्रिय खाताहरूको सूची -->
     <div class="card">
       <div class="card-title">
-        <span>👥 सक्रिय कर्मचारी तथा एडमिन खाताहरू <span style="color:#16a34a; font-size:13px;">(Superadmin Verified: PP Access Active)</span></span>
+        <span>👥 सक्रिय कर्मचारी तथा एडमिन खाताहरू <span style="color:#16a34a; font-size:13px;">(Superadmin: सम्पादन तथा PP हेर्ने पूर्ण पहुँच)</span></span>
         <span id="userCount" style="font-size:12.5px; background:rgba(30,58,138,0.1); padding:3px 10px; border-radius:15px; font-weight:bold;">लोड हुँदैछ...</span>
       </div>
       <table>
@@ -328,7 +422,7 @@
             <th>Username</th>
             <th>Password</th>
             <th>पद (Role / Post)</th>
-            <th style="text-align:center; width: 140px;">कार्य (Action)</th>
+            <th style="text-align:center; width: 170px;">कार्य (Action)</th>
           </tr>
         </thead>
         <tbody id="userTableBody">
@@ -338,14 +432,51 @@
     </div>
   </div>
 
-  <div class="pp-modal-overlay" id="ppModal" onclick="closePPModal()">
-    <div class="pp-modal-box" onclick="event.stopPropagation()">
-      <button type="button" class="pp-modal-close" onclick="closePPModal()">✕</button>
+  <!-- PP View Modal -->
+  <div class="modal-overlay" id="ppModal" onclick="closePPModal()">
+    <div class="modal-box" onclick="event.stopPropagation()" style="text-align:center;">
+      <button type="button" class="modal-close" onclick="closePPModal()">✕</button>
       <h3 id="modalName" style="color:#1e3a8a; margin-bottom:4px; font-size:18px;"></h3>
       <p id="modalRole" style="color:#64748b; font-size:13px; font-weight:bold; margin-bottom:12px;"></p>
       <img id="modalImg" src="" class="pp-modal-img" alt="Profile Photo">
-      <br>
       <button type="button" class="nav-btn" style="background:#1e3a8a; padding:6px 14px;" onclick="downloadModalImg()">💾 डाउनलोड गर्नुहोस्</button>
+    </div>
+  </div>
+
+  <!-- Superadmin Edit Admin Modal -->
+  <div class="modal-overlay" id="editModal" onclick="closeEditModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close" onclick="closeEditModal()">✕</button>
+      <h3 style="color:#1e3a8a; margin-bottom:12px; font-size:17px; border-bottom:1.5px solid #cbd5e1; padding-bottom:6px;">
+        ✏️ कर्मचारी / एडमिन खाता सम्पादन
+      </h3>
+      <form onsubmit="handleSaveEdit(event)">
+        <input type="hidden" id="edit_id">
+        <div class="edit-form-group">
+          <label>कर्मचारीको पूरा नामथर</label>
+          <input type="text" id="edit_fullname" required>
+        </div>
+        <div class="edit-form-group">
+          <label>प्रयोगकर्ता नाम (Username)</label>
+          <input type="text" id="edit_username" required>
+        </div>
+        <div class="edit-form-group">
+          <label>नयाँ पासवर्ड (Password)</label>
+          <input type="text" id="edit_password" required>
+        </div>
+        <div class="edit-form-group">
+          <label>पद (Role / Post)</label>
+          <input type="text" id="edit_role" required>
+        </div>
+        <div class="edit-form-group">
+          <label>नयाँ प्रोफाइल फोटो (PP परिवर्तन गर्न चाहेमा मात्र)</label>
+          <input type="file" id="edit_photo_file" accept="image/*" onchange="previewAdminPhoto(event, 'edit')">
+        </div>
+        <div style="display:flex; gap:8px; margin-top:14px;">
+          <button type="submit" id="saveEditBtn" class="btn-add" style="flex:1;">💾 अद्यावधिक (Update) गर्नुहोस्</button>
+          <button type="button" class="btn-del" onclick="closeEditModal()" style="padding:9px 14px;">रद्द</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -357,8 +488,8 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
 
     let supabaseClient = null;
     try {
@@ -370,9 +501,10 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
-    let tempPhotoBase64 = "";
+    let tempNewPhotoBase64 = "";
+    let tempEditPhotoBase64 = "";
 
-    function previewAdminPhoto(e) {
+    function previewAdminPhoto(e, mode) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
@@ -381,7 +513,7 @@
           img.onload = function() {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
-            const maxW = 300, maxH = 300;
+            const maxW = 320, maxH = 320;
             let w = img.width, h = img.height;
             if (w > h) {
               if (w > maxW) { h *= maxW / w; w = maxW; }
@@ -390,7 +522,12 @@
             }
             canvas.width = w; canvas.height = h;
             ctx.drawImage(img, 0, 0, w, h);
-            tempPhotoBase64 = canvas.toDataURL("image/jpeg", 0.7);
+            const compressed = canvas.toDataURL("image/jpeg", 0.75);
+            if (mode === 'edit') {
+              tempEditPhotoBase64 = compressed;
+            } else {
+              tempNewPhotoBase64 = compressed;
+            }
           };
           img.src = evt.target.result;
         };
@@ -403,6 +540,33 @@
     ];
 
     let allUsers = [];
+
+    // Header User Profile Rendering
+    function renderHeaderUser() {
+      const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
+      if (!raw) return;
+      try {
+        const u = JSON.parse(raw);
+        const nameEl = document.getElementById("headerUserName");
+        const roleEl = document.getElementById("headerUserRole");
+        const avatarImg = document.getElementById("headerUserAvatarImg");
+        const fallback = document.getElementById("headerUserAvatarFallback");
+
+        if (nameEl) nameEl.textContent = u.full_name || u.username;
+        if (roleEl) roleEl.textContent = u.role || "कर्मचारी";
+
+        if (u.photo) {
+          avatarImg.src = u.photo;
+          avatarImg.style.display = "block";
+          fallback.style.display = "none";
+        } else {
+          avatarImg.style.display = "none";
+          fallback.style.display = "flex";
+          const firstLetter = (u.full_name || u.username || 'A').charAt(0).toUpperCase();
+          fallback.textContent = firstLetter;
+        }
+      } catch(e) {}
+    }
 
     function updateClock() {
       const now = new Date();
@@ -474,8 +638,9 @@
           <td><code>${u.username}</code></td>
           <td><span style="letter-spacing: 2px;">••••••••</span></td>
           <td><span class="badge-role">${u.role || 'कर्मचारी'}</span></td>
-          <td style="text-align:center;">
-            ${isPermanent ? '<small style="color:#64748b; font-weight:bold;">(स्थायी मुख्य खाता)</small>' : `<button class="btn-del" onclick="deleteAccount(${u.id}, '${u.username}')">हटाउने</button>`}
+          <td style="text-align:center; white-space:nowrap;">
+            <button class="btn-edit" onclick="openEditModal(${u.id})">✏️ Edit</button>
+            ${isPermanent ? '<small style="color:#64748b; font-weight:bold;">(स्थायी)</small>' : `<button class="btn-del" onclick="deleteAccount(${u.id}, '${u.username}')">हटाउने</button>`}
           </td>
         `;
         tbody.appendChild(tr);
@@ -504,6 +669,90 @@
       document.body.removeChild(a);
     }
 
+    function openEditModal(id) {
+      const u = allUsers.find(acc => acc.id === id);
+      if (!u) return;
+
+      document.getElementById("edit_id").value = u.id;
+      document.getElementById("edit_fullname").value = u.full_name || "";
+      document.getElementById("edit_username").value = u.username || "";
+      document.getElementById("edit_password").value = u.password || "";
+      document.getElementById("edit_role").value = u.role || "";
+      document.getElementById("edit_photo_file").value = "";
+      tempEditPhotoBase64 = "";
+
+      document.getElementById("editModal").style.display = "flex";
+    }
+
+    function closeEditModal() {
+      document.getElementById("editModal").style.display = "none";
+    }
+
+    async function handleSaveEdit(e) {
+      e.preventDefault();
+      const id = parseInt(document.getElementById("edit_id").value, 10);
+      const fn = document.getElementById("edit_fullname").value.trim();
+      const un = document.getElementById("edit_username").value.trim().toLowerCase();
+      const pw = document.getElementById("edit_password").value.trim();
+      const rl = document.getElementById("edit_role").value.trim();
+
+      const btn = document.getElementById("saveEditBtn");
+      btn.disabled = true;
+      btn.textContent = "⏳ अद्यावधिक हुँदैछ...";
+
+      const target = allUsers.find(acc => acc.id === id);
+      if (!target) return;
+
+      const updatedAccount = {
+        full_name: fn,
+        username: un,
+        password: pw,
+        role: rl,
+        photo: tempEditPhotoBase64 ? tempEditPhotoBase64 : target.photo
+      };
+
+      if (supabaseClient) {
+        try {
+          const { error } = await supabaseClient
+            .from('admin_accounts')
+            .update(updatedAccount)
+            .eq('id', id);
+
+          if (error) {
+            alert(`सुपाबेस त्रुटि: ${error.message}`);
+            btn.disabled = false;
+            btn.textContent = "💾 अद्यावधिक (Update) गर्नुहोस्";
+            return;
+          }
+        } catch(err) {
+          console.error("Supabase edit error:", err);
+        }
+      }
+
+      target.full_name = fn;
+      target.username = un;
+      target.password = pw;
+      target.role = rl;
+      if (tempEditPhotoBase64) target.photo = tempEditPhotoBase64;
+
+      localStorage.setItem("local_admin_accounts", JSON.stringify(allUsers));
+      
+      // यदि स्वयं superadmin ले आफ्नै विवरण सम्पादन गरेको भए सेशन पनि अपडेट गर्ने
+      const loggedUser = JSON.parse(sessionStorage.getItem("user") || "{}");
+      if (loggedUser.id === id) {
+        sessionStorage.setItem("user", JSON.stringify(target));
+        localStorage.setItem("user", JSON.stringify(target));
+        renderHeaderUser();
+      }
+
+      renderUserTable();
+
+      btn.disabled = false;
+      btn.textContent = "💾 अद्यावधिक (Update) गर्नुहोस्";
+      closeEditModal();
+      alert(`खाता "${un}" सफलतापूर्वक अद्यावधिक (Update) भयो!`);
+    }
+
     async function handleCreateUser(e) {
       e.preventDefault();
       const fn = document.getElementById("new_fullname").value.trim();
@@ -521,7 +770,7 @@
         username: un,
         password: pw,
         role: rl,
-        photo: tempPhotoBase64
+        photo: tempNewPhotoBase64
       };
 
       let savedInCloud = false;
@@ -533,8 +782,7 @@
             .insert([newAccount]);
 
           if (error) {
-            console.error("Supabase Error:", error);
-            alert(`सुपाबेस त्रुटि: ${error.message}\nकृपया टेबलमा कोलम मिलेको छ कि छैन जाँच्नुहोस्।`);
+            alert(`त्रुटि: यो Username (${un}) पहिले नै प्रयोगमा हुन सक्छ!`);
             addBtn.disabled = false;
             addBtn.textContent = "थप्नुहोस्";
             return;
@@ -555,7 +803,7 @@
       document.getElementById("new_password").value = "";
       document.getElementById("new_role").value = "";
       document.getElementById("new_photo_file").value = "";
-      tempPhotoBase64 = "";
+      tempNewPhotoBase64 = "";
 
       addBtn.disabled = false;
       addBtn.textContent = "थप्नुहोस्";
@@ -603,7 +851,6 @@
       window.location.href = "login.html";
     }
 
-    // कडा सुरक्षा जाँच: Superadmin बाहेक कसैलाई पनि admin.html खोल्न नदिने
     document.addEventListener("DOMContentLoaded", () => {
       const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
       if (!raw) {
@@ -623,6 +870,7 @@
         return;
       }
 
+      renderHeaderUser();
       applySavedTheme();
       setInterval(updateClock, 1000);
       updateClock();
