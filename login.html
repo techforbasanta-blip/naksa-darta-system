@@ -18,7 +18,7 @@
       --gov-navy: #1e3a8a;
       --gov-accent: #2563eb;
       --bg-gradient: linear-gradient(135deg, #07192f 0%, #0d2847 50%, #1e3a8a 100%);
-      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-bg: rgba(255, 255, 255, 0.96);
       --card-border: rgba(255, 255, 255, 0.6);
       --text-dark: #0f172a;
       --label-color: #1e293b;
@@ -30,7 +30,7 @@
 
     body.dark-mode {
       --bg-gradient: linear-gradient(135deg, #030a14 0%, #07192f 50%, #0b2545 100%);
-      --card-bg: rgba(13, 35, 62, 0.95);
+      --card-bg: rgba(13, 35, 62, 0.96);
       --card-border: rgba(30, 58, 138, 0.6);
       --text-dark: #ffffff;
       --label-color: #e2e8f0;
@@ -161,7 +161,7 @@
       border-radius: 16px;
       width: 100%;
       max-width: 440px;
-      padding: 32px 28px;
+      padding: 30px 26px;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45), 0 0 25px rgba(37, 99, 235, 0.15);
       backdrop-filter: blur(12px);
       animation: cardAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -176,7 +176,7 @@
 
     .card-top {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .card-top .emblem {
       width: 68px;
@@ -196,8 +196,30 @@
     .card-top p { font-size: 13.5px; color: #64748b; font-weight: 700; }
     body.dark-mode .card-top p { color: #94a3b8; }
 
+    /* लगातार ३ पटक गलत पासवर्डको लक अलर्ट */
+    .lockout-alert {
+      display: none;
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1.5px solid #ef4444;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      text-align: center;
+      line-height: 1.4;
+      animation: shake 0.3s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       position: relative;
     }
     .form-group label {
@@ -218,11 +240,10 @@
       font-size: 16px;
       color: #64748b;
       pointer-events: none;
-      transition: color 0.2s;
     }
     .form-group input {
       width: 100%;
-      padding: 11px 12px 11px 38px;
+      padding: 11px 40px 11px 38px;
       border: 1.8px solid var(--border-color);
       border-radius: 8px;
       font-size: 14.5px;
@@ -236,9 +257,35 @@
       border-color: var(--gov-accent);
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
     }
-    .form-group input:focus + .input-icon {
-      color: var(--gov-accent);
+
+    /* पासवर्ड देखाउने / लुकाउने आँखा (Toggle Eye) */
+    .eye-toggle-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #64748b;
+      padding: 0;
+      user-select: none;
     }
+    .eye-toggle-btn:hover { color: var(--gov-accent); }
+
+    .forgot-link-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 4px;
+      margin-bottom: 14px;
+    }
+    .forgot-link {
+      font-size: 12.5px;
+      color: #2563eb;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .forgot-link:hover { text-decoration: underline; color: #1d4ed8; }
 
     .btn-submit {
       width: 100%;
@@ -256,21 +303,22 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-top: 6px;
     }
-    .btn-submit:hover {
+    .btn-submit:hover:not(:disabled) {
       background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
     }
-    .btn-submit:active {
-      transform: translateY(0);
+    .btn-submit:disabled {
+      background: #94a3b8 !important;
+      cursor: not-allowed;
+      box-shadow: none;
     }
 
     .recovery-divider {
       display: flex;
       align-items: center;
-      margin: 22px 0 14px 0;
+      margin: 20px 0 14px 0;
       color: #94a3b8;
       font-size: 12px;
     }
@@ -322,7 +370,7 @@
 </head>
 <body>
 
-  <!-- हेडर (डार्क/लाइट मोड बटन सहित) -->
+  <!-- हेडर -->
   <header class="gov-header">
     <div class="header-inner">
       <div class="brand-box">
@@ -339,13 +387,12 @@
           <div id="liveNepTime" style="color:#ffffff; font-weight:bold;">--:--:--</div>
         </div>
 
-        <!-- Dark/Light Mode Toggle Button -->
         <button type="button" class="btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="मोड परिवर्तन गर्नुहोस्">☾</button>
       </div>
     </div>
   </header>
 
-  <!-- लगइन फाराम -->
+  <!-- मुख्य लगइन कार्ड -->
   <main class="login-wrapper">
     <div class="login-card">
       <div class="card-top">
@@ -355,12 +402,18 @@
         <p>मायादेवी गाउँकार्यपालिकाको कार्यालय, बरेवा</p>
       </div>
 
+      <!-- ३ पटक गलत भएमा देखिने रातो चेतावनी -->
+      <div class="lockout-alert" id="lockoutNotice">
+        ⛔ ३ पटक भन्दा बढी गलत पासवर्ड प्रविष्ट भयो!<br>
+        कृपया आफ्नो Superadmin लाई सम्पर्क गर्नुहोस् (Contact your Superadmin)।
+      </div>
+
       <form id="loginForm" onsubmit="handleMainLogin(event)">
         <div class="form-group">
           <label for="username">प्रयोगकर्ताको नाम (Username)</label>
           <div class="input-wrap">
             <span class="input-icon">👤</span>
-            <input type="text" id="username" placeholder="उदा: superadmin" required autocomplete="username">
+            <input type="text" id="username" placeholder="उदा: superadmin वा admin" required autocomplete="username">
           </div>
         </div>
 
@@ -369,6 +422,11 @@
           <div class="input-wrap">
             <span class="input-icon">🔑</span>
             <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+            <!-- पासवर्ड हेर्ने/लुकाउने बटन -->
+            <button type="button" class="eye-toggle-btn" id="eyeToggleBtn" onclick="togglePasswordVisibility()" title="पासवर्ड हेर्नुहोस्">👁️</button>
+          </div>
+          <div class="forgot-link-wrap">
+            <span class="forgot-link" onclick="handleForgotPassword()">पासवर्ड बिर्सिनुभयो? (Forgot Password?)</span>
           </div>
         </div>
 
@@ -381,20 +439,30 @@
         <span>वा</span>
       </div>
 
-      <!-- गोप्य मास्टर पिन रिकभरी (Master PIN: 0707 वा Sarkar@#07) -->
+      <!-- गोप्य मास्टर रिकभरी (Master PIN: 0707 वा Sarkar@#07) -->
       <a href="javascript:void(0)" class="recovery-btn" onclick="handleDirectRecoveryLogin()">
         🔒 Admin Direct Recovery Login
       </a>
     </div>
   </main>
 
-  <!-- परिमार्जित आधिकारिक फुटर -->
   <footer class="site-footer">
     Smart Mayadevi — एकीकृत स्थानीय सरकारी व्यवस्थापन प्रणाली | बरेवा, रुपन्देही | Powered by <strong>Tech for Basanta</strong>
   </footer>
 
   <script>
-    // १. वेब अडियो एपीआई (Typing & Click Sounds)
+    // १. आधिकारिक Supabase Credentials जडान
+    const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
+    
+    let supabaseClient = null;
+    try {
+      if (typeof supabase !== 'undefined') {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    } catch(e) {}
+
+    // २. Web Audio API (Typing & Click Sounds)
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     function playTypeSound() {
@@ -434,7 +502,156 @@
       inp.addEventListener('keydown', playTypeSound);
     });
 
-    // २. डार्क/लाइट मोड (Theme Toggle & State Save)
+    // ३. पासवर्ड देखाउने वा लुकाउने लजिक (Show / Hide Password)
+    function togglePasswordVisibility() {
+      playClickSound();
+      const pwdInput = document.getElementById("password");
+      const eyeBtn = document.getElementById("eyeToggleBtn");
+      if (pwdInput.type === "password") {
+        pwdInput.type = "text";
+        eyeBtn.textContent = "🙈";
+        eyeBtn.title = "पासवर्ड लुकाउनुहोस्";
+      } else {
+        pwdInput.type = "password";
+        eyeBtn.textContent = "👁️";
+        eyeBtn.title = "पासवर्ड हेर्नुहोस्";
+      }
+    }
+
+    // ४. पासवर्ड बिर्सिएमा (Forgot Password)
+    function handleForgotPassword() {
+      playClickSound();
+      alert("🔐 पासवर्ड रिसेट गर्नको लागि कृपया आफ्नो सुपरएडमिन (Superadmin) सँग सम्पर्क गर्नुहोस्!");
+    }
+
+    // ५. गलत प्रयास गन्ने र ३ पटक भए लक गर्ने लजिक
+    let failedAttempts = parseInt(sessionStorage.getItem("login_failed_attempts") || "0", 10);
+
+    function checkLockoutStatus() {
+      if (failedAttempts >= 3) {
+        document.getElementById("lockoutNotice").style.display = "block";
+        document.getElementById("username").disabled = true;
+        document.getElementById("password").disabled = true;
+        document.getElementById("loginBtn").disabled = true;
+        document.getElementById("loginBtn").innerHTML = "⛔ खाता लक भयो";
+      }
+    }
+
+    // ६. मुख्य लगइन प्रक्रिया (सुपाबेस डाटाबेस + लोकल प्रमाणीकरण)
+    async function handleMainLogin(e) {
+      e.preventDefault();
+      playClickSound();
+
+      if (failedAttempts >= 3) {
+        alert("⛔ तपाईंको ३ वटा प्रयास समाप्त भएको छ। कृपया आफ्नो Superadmin लाई सम्पर्क गर्नुहोस् (Contact your Superadmin)!");
+        return;
+      }
+
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+      const btn = document.getElementById("loginBtn");
+
+      btn.disabled = true;
+      btn.innerHTML = "⏳ जाँच हुँदैछ...";
+
+      let authenticatedUser = null;
+
+      // १. पहिले सुपाबेस क्लाउडबाट जाँच्ने
+      if (supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient
+            .from('admin_users')
+            .select('*')
+            .ilike('username', u)
+            .limit(1);
+
+          if (!error && data && data.length > 0) {
+            const dbUser = data[0];
+            if (dbUser.password === p) {
+              authenticatedUser = {
+                username: dbUser.username,
+                full_name: dbUser.full_name || dbUser.username,
+                role: dbUser.role || (dbUser.username.toLowerCase() === "superadmin" ? "Superadmin" : "Admin"),
+                photo: dbUser.photo || localStorage.getItem("superadmin_profile_photo") || ""
+              };
+            }
+          }
+        } catch(err) {}
+      }
+
+      // २. यदि सुपाबेसमा भेटिएन भने सुपरएडमिनको हार्डकोड पासवर्ड (Sarkar@#07) वा लोकल जाँच्ने
+      if (!authenticatedUser) {
+        if (u.toLowerCase() === "superadmin" && (p === "Sarkar@#07" || p === "superadmin")) {
+          authenticatedUser = {
+            username: "superadmin",
+            full_name: "Super Admin",
+            role: "Superadmin",
+            photo: localStorage.getItem("superadmin_profile_photo") || ""
+          };
+        } else if (u.toLowerCase() === "admin" && p === "admin123") {
+          authenticatedUser = {
+            username: "admin",
+            full_name: "कर्मचारी एडमिन",
+            role: "Admin",
+            photo: ""
+          };
+        }
+      }
+
+      // ३. नतिजा मूल्याङ्कन
+      if (authenticatedUser) {
+        sessionStorage.removeItem("login_failed_attempts");
+        sessionStorage.setItem("user", JSON.stringify(authenticatedUser));
+        localStorage.setItem("user", JSON.stringify(authenticatedUser));
+        
+        btn.innerHTML = "✓ सफल!";
+        setTimeout(() => { window.location.href = "index.html"; }, 300);
+      } else {
+        failedAttempts++;
+        sessionStorage.setItem("login_failed_attempts", failedAttempts.toString());
+
+        if (failedAttempts >= 3) {
+          checkLockoutStatus();
+          alert("⛔ ३ पटक भन्दा बढी गलत पासवर्ड प्रविष्ट भयो! कृपया आफ्नो Superadmin लाई सम्पर्क गर्नुहोस् (Contact your Superadmin)।");
+        } else {
+          const remaining = 3 - failedAttempts;
+          alert(`❌ गलत प्रयोगकर्ताको नाम वा पासवर्ड! (बाँकी प्रयास: ${remaining})`);
+          btn.disabled = false;
+          btn.innerHTML = "<span>प्रवेश गर्नुहोस्</span> ➜";
+        }
+      }
+    }
+
+    // ७. आपतकालीन मास्टर पिन रिकभरी (Master PIN: 0707 वा Sarkar@#07)
+    function handleDirectRecoveryLogin() {
+      playClickSound();
+      const MASTER_PIN = "0707";
+      const MASTER_PASS = "Sarkar@#07";
+
+      const pin = prompt("कृपया आपतकालीन मास्टर पिन (Master PIN) प्रविष्ट गर्नुहोस्:");
+      if (pin === null) return;
+
+      if (pin.trim() === MASTER_PIN || pin.trim() === MASTER_PASS) {
+        // मास्टर पिनले लक भएको खण्डमा पनि रिसेट गरिदिन्छ
+        sessionStorage.removeItem("login_failed_attempts");
+        
+        const superAdminUser = {
+          username: "superadmin",
+          full_name: "Super Admin",
+          role: "Superadmin",
+          photo: localStorage.getItem("superadmin_profile_photo") || ""
+        };
+        sessionStorage.setItem("user", JSON.stringify(superAdminUser));
+        localStorage.setItem("user", JSON.stringify(superAdminUser));
+
+        alert("🔓 मास्टर पिन प्रमाणिकरण सफल! आपतकालीन Superadmin पहुँच प्रदान गरियो।");
+        window.location.href = "index.html";
+      } else {
+        alert("❌ गलत मास्टर पिन! पहुँच अस्वीकृत गरियो।");
+      }
+    }
+
+    // ८. डार्क/लाइट मोड
     function toggleTheme() {
       playClickSound();
       document.body.classList.toggle("dark-mode");
@@ -454,77 +671,6 @@
       } else {
         document.body.classList.remove("dark-mode");
         if (btn) btn.textContent = "☾";
-      }
-    }
-
-    // ३. मुख्य लगइन प्रक्रिया
-    function handleMainLogin(e) {
-      e.preventDefault();
-      playClickSound();
-
-      const u = document.getElementById("username").value.trim();
-      const p = document.getElementById("password").value.trim();
-      const btn = document.getElementById("loginBtn");
-
-      btn.disabled = true;
-      btn.innerHTML = "⏳ जाँच हुँदैछ...";
-
-      setTimeout(() => {
-        if (u.toLowerCase() === "superadmin" && (p === "Sarkar@#07" || p === "superadmin")) {
-          const userObj = {
-            username: "superadmin",
-            full_name: "Super Admin",
-            role: "Superadmin",
-            photo: localStorage.getItem("superadmin_profile_photo") || ""
-          };
-          sessionStorage.setItem("user", JSON.stringify(userObj));
-          localStorage.setItem("user", JSON.stringify(userObj));
-          
-          btn.innerHTML = "✓ सफल!";
-          setTimeout(() => { window.location.href = "index.html"; }, 300);
-        } else if (u.toLowerCase() === "admin" && p === "admin123") {
-          const userObj = {
-            username: "admin",
-            full_name: "कर्मचारी एडमिन",
-            role: "Admin",
-            photo: ""
-          };
-          sessionStorage.setItem("user", JSON.stringify(userObj));
-          localStorage.setItem("user", JSON.stringify(userObj));
-          
-          btn.innerHTML = "✓ सफल!";
-          setTimeout(() => { window.location.href = "index.html"; }, 300);
-        } else {
-          alert("❌ गलत प्रयोगकर्ताको नाम वा पासवर्ड!");
-          btn.disabled = false;
-          btn.innerHTML = "<span>प्रवेश गर्नुहोस्</span> ➜";
-        }
-      }, 400);
-    }
-
-    // ४. गोप्य मास्टर पिन रिकभरी (Master PIN: 0707 वा Sarkar@#07)
-    function handleDirectRecoveryLogin() {
-      playClickSound();
-      const MASTER_PIN = "0707";
-      const MASTER_PASS = "Sarkar@#07";
-
-      const pin = prompt("कृपया आपतकालीन मास्टर पिन (Master PIN) प्रविष्ट गर्नुहोस्:");
-      if (pin === null) return;
-
-      if (pin.trim() === MASTER_PIN || pin.trim() === MASTER_PASS) {
-        const superAdminUser = {
-          username: "superadmin",
-          full_name: "Super Admin",
-          role: "Superadmin",
-          photo: localStorage.getItem("superadmin_profile_photo") || ""
-        };
-        sessionStorage.setItem("user", JSON.stringify(superAdminUser));
-        localStorage.setItem("user", JSON.stringify(superAdminUser));
-
-        alert("🔓 मास्टर पिन प्रमाणिकरण सफल! आपतकालीन Superadmin पहुँच प्रदान गरियो।");
-        window.location.href = "index.html";
-      } else {
-        alert("❌ गलत मास्टर पिन! पहुँच अस्वीकृत गरियो।");
       }
     }
 
@@ -548,6 +694,7 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       applySavedTheme();
+      checkLockoutStatus();
       setInterval(updateClock, 1000);
       updateClock();
     });
