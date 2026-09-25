@@ -196,7 +196,7 @@
       align-items: center;
     }
 
-    /* A4 CERTIFICATE ENGINE */
+    /* A4 CERTIFICATE ENGINE - EXACT 294mm LOCK */
     .a4-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -207,7 +207,7 @@
       min-height: 294mm !important;
       max-height: 294mm !important;
       margin: 0 auto 16px auto !important;
-      padding: 5mm 6mm 2mm 12mm !important;
+      padding: 4mm 6mm 2mm 12mm !important;
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
       position: relative !important;
@@ -238,34 +238,32 @@
     }
 
     .cert-content-top { position: relative !important; z-index: 2 !important; display: flex; flex-direction: column; flex: 1 1 auto; background: transparent; }
-    .cert-top-center-motto { text-align: center; margin-bottom: 2px; }
-    .cert-motto { font-size: 15px; font-weight: 800; line-height: 1; }
+    .cert-top-center-motto { text-align: center; margin-bottom: 1px; }
+    .cert-motto { font-size: 14.5px; font-weight: 800; line-height: 1; }
 
-    /* =========================================================
-       FIXED OFFICIAL LETTERHEAD (सच्याइएको आधिकारिक लेटरहेड)
-       ========================================================= */
+    /* सच्याइएको आधिकारिक लेटरहेड */
     .cert-header {
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
       border-bottom: 2.2px solid var(--gov-crimson) !important;
       padding-bottom: 2px !important;
-      margin-bottom: 3px !important;
+      margin-bottom: 2px !important;
       width: 100% !important;
     }
     .logo-box-left, .logo-box-right {
-      width: 68px !important;
-      height: 68px !important;
-      flex: 0 0 68px !important;
+      width: 66px !important;
+      height: 66px !important;
+      flex: 0 0 66px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
     }
     .logo-box-left img, .logo-box-right img {
-      width: 68px !important;
-      height: 68px !important;
-      max-width: 68px !important;
-      max-height: 68px !important;
+      width: 66px !important;
+      height: 66px !important;
+      max-width: 66px !important;
+      max-height: 66px !important;
       object-fit: contain !important;
       display: block !important;
     }
@@ -279,71 +277,75 @@
       justify-content: center !important;
     }
     .header-titles .gov-sub {
-      font-size: 16px !important;
+      font-size: 15.5px !important;
       font-weight: 800 !important;
       line-height: 1.15 !important;
       margin: 0 !important;
     }
     .header-titles .palika-title {
-      font-size: 24px !important;
+      font-size: 23.5px !important;
       font-weight: 900 !important;
       line-height: 1.15 !important;
       margin: 0 !important;
     }
     .header-titles .office-title {
-      font-size: 30px !important;
+      font-size: 29.5px !important;
       font-weight: 900 !important;
       line-height: 1.15 !important;
       margin: 0 !important;
     }
     .header-titles .address-text {
-      font-size: 16px !important;
+      font-size: 15.5px !important;
       font-weight: 700 !important;
       margin-top: 1px !important;
       line-height: 1.15 !important;
     }
 
-    .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 2px 0; }
-    .ref-col { font-size: 16px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.25; }
+    .ref-photo-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 1px 0; }
+    .ref-col { font-size: 15.5px; font-weight: 700; display: flex; flex-direction: column; line-height: 1.22; }
     .passport-frame {
-      width: 24mm !important; height: 27mm !important; border: 1.2px solid #334155;
+      width: 23mm !important; height: 26mm !important; border: 1.2px solid #334155;
       background: rgba(255, 255, 255, 0.45); display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
     .passport-frame img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
 
-    .cert-title-container { text-align: center; margin: 2px 0; }
+    .cert-title-container { text-align: center; margin: 1px 0; }
     .cert-title-text {
-      display: inline-block; font-size: 22px; font-weight: 900;
+      display: inline-block; font-size: 21px; font-weight: 900;
       border-bottom: 2px solid #000; padding: 0 12px; line-height: 1.15;
     }
-    .cert-intro { font-size: 16px !important; line-height: 1.35; text-align: justify; margin-bottom: 3px; font-weight: 600; }
+    .cert-intro { font-size: 15.5px !important; line-height: 1.32; text-align: justify; margin-bottom: 2px; font-weight: 600; }
 
+    /* पहिलो पेजको टेबल फन्ट साइज १६.२px */
     .cert-table, .floor-detail-table {
-      width: 100%; border-collapse: collapse; font-size: 16.5px !important; margin-bottom: 2px; table-layout: fixed; background: transparent !important;
+      width: 100%; border-collapse: collapse; font-size: 16.2px !important; margin-bottom: 1.5px; table-layout: fixed; background: transparent !important;
     }
     .cert-table td, .cert-table th, .floor-detail-table td, .floor-detail-table th {
-      padding: 2.2px 5px !important; border: 1.2px solid #0f172a !important; vertical-align: middle; line-height: 1.18; background: transparent !important; color: #000000 !important;
+      padding: 1.8px 5px !important; border: 1.2px solid #0f172a !important; vertical-align: middle; line-height: 1.16; background: transparent !important; color: #000000 !important;
     }
-    .cert-table td.lbl { font-weight: 800; width: 27%; font-size: 16.5px !important; }
-    .cert-table td.val { font-weight: 700; width: 23%; font-size: 16.5px !important; }
-    .floor-detail-table th { font-weight: 800; text-align: left; font-size: 16.5px !important; }
+    .cert-table td.lbl { font-weight: 800; width: 27%; font-size: 16.2px !important; }
+    .cert-table td.val { font-weight: 700; width: 23%; font-size: 16.2px !important; }
+    .floor-detail-table th { font-weight: 800; text-align: left; font-size: 16.2px !important; }
     
     .total-row td {
       font-weight: 900 !important;
-      font-size: 17px !important;
+      font-size: 16.8px !important;
       background: #f1f5f9 !important;
       color: #000000 !important;
     }
 
     .legal-notice-cell {
-      font-size: 14.5px !important;
-      line-height: 1.3 !important;
+      font-size: 14px !important;
+      line-height: 1.28 !important;
       font-weight: 700 !important;
-      padding: 3px 5px !important;
+      padding: 2.5px 5px !important;
     }
 
+    /* =========================================================
+       २ STEP TALA JHARIEKO SIGNATURE & QR BLOCK
+       ========================================================= */
     .cert-signatures-block {
-      margin-top: 10px !important;
+      margin-top: 22px !important; /* २ स्टेप तल झारिएको (Margin enlarged) */
       margin-bottom: 2px !important;
     }
     .officers-signature-grid {
@@ -351,12 +353,12 @@
       grid-template-columns: 32% 32% 36%;
       gap: 6px;
       align-items: flex-end;
-      margin-bottom: 6px;
+      margin-bottom: 10px; /* हस्ताक्षर मुनिको ग्याप २ स्टेप खुला गरिएको */
     }
     .sign-item { text-align: center; }
-    .sign-space-area { height: 12px; }
-    .sign-dotted-line { border-top: 1.2px dotted #1e293b; width: 75%; margin: 0 auto 2px auto; }
-    .sign-title-text { font-size: 14.5px !important; font-weight: 700; line-height: 1.2; }
+    .sign-space-area { height: 16px; } /* सहि गर्ने खाली ठाउँ ठूलो */
+    .sign-dotted-line { border-top: 1.2px dotted #1e293b; width: 75%; margin: 0 auto 3px auto; }
+    .sign-title-text { font-size: 14.5px !important; font-weight: 700; line-height: 1.25; }
     .sign-title-text strong { font-size: 15.5px !important; font-weight: 800; }
 
     .bottom-owner-qr-flex {
@@ -364,9 +366,9 @@
       justify-content: space-between;
       align-items: flex-end;
       border-top: 1px solid #cbd5e1;
-      padding-top: 2px;
+      padding-top: 4px;
     }
-    .owner-space-area { height: 3px; }
+    .owner-space-area { height: 5px; }
     .owner-dots { font-size: 14px; letter-spacing: 0.5px; margin-bottom: 1px; font-weight: bold; }
     .owner-label { font-size: 15px !important; font-weight: 800; }
 
@@ -478,7 +480,7 @@
       #printAreaContainer { display: block !important; width: 210mm !important; margin: 0 !important; padding: 0 !important; }
       .a4-sheet {
         width: 210mm !important; height: 294mm !important; max-height: 294mm !important;
-        margin: 0 auto !important; padding: 5mm 6mm 2mm 12mm !important;
+        margin: 0 auto !important; padding: 4mm 6mm 2mm 12mm !important;
         border: 1.5px solid #000000 !important; box-shadow: none !important; overflow: hidden !important; display: flex !important;
       }
       #a4CertificatePaper { page-break-after: always !important; break-after: page !important; }
@@ -737,7 +739,7 @@
       <div class="preview-zoom-wrapper" id="previewZoomWrapper">
         <div id="printAreaContainer">
           
-          <!-- PAGE 1 (Fixed Clean Letterhead) -->
+          <!-- PAGE 1 -->
           <div class="a4-sheet" id="a4CertificatePaper">
             <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" 
                  onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
@@ -747,7 +749,7 @@
                 <span class="cert-motto">"मायादेवीको पहिचानः सन्तुलित विकास, गुणस्तरीय सेवा र सुशासन"</span>
               </div>
 
-              <!-- पूर्ण सच्याइएको आधिकारिक लेटरहेड ब्लक -->
+              <!-- आधिकारिक लेटरहेड -->
               <header class="cert-header">
                 <div class="logo-box-left">
                   <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
@@ -805,7 +807,7 @@
                 </tr>
                 <tr>
                   <td class="lbl">६) स्विकृत क्षेत्रफलः</td>
-                  <td colspan="3" class="val" id="out_approved_area_full" style="line-height: 1.25; padding: 2.5px 5px !important;">
+                  <td colspan="3" class="val" id="out_approved_area_full" style="line-height: 1.22; padding: 2.2px 5px !important;">
                     कि.नं. <span id="out_kitta2">....</span> क्षेत्रफलः <span id="out_approved_area">....</span> वर्गफिट
                   </td>
                 </tr>
@@ -876,6 +878,7 @@
                 </tr>
               </table>
 
+              <!-- हस्ताक्षर तथा QR ब्लक २ स्टेप तल झारिएको -->
               <div class="cert-signatures-block">
                 <div class="officers-signature-grid">
                   <div class="sign-item">
@@ -1240,6 +1243,7 @@
       document.getElementById("out_officer").textContent = getVal("in_officer", "....................");
       document.getElementById("out_officer_role").textContent = document.getElementById("in_officer_role").value;
 
+      // Namsari Table Updates
       document.getElementById("out_ns_date").textContent = getVal("in_ns_date", "....");
       document.getElementById("out_ns_from").textContent = getVal("in_ns_from", "....");
       document.getElementById("out_ns_to").textContent = getVal("in_ns_to", "....");
