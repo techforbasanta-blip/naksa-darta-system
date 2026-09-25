@@ -456,38 +456,48 @@
       console.warn("Supabase Init Error:", e);
     }
 
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    // Audio Context Fix: पेजमा सुरुमै नबनाई क्लिक/टाइप भएपछि मात्र सुचारु गर्ने
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
 
     function playTypeSound() {
       try {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(600 + Math.random() * 200, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+        osc.frequency.setValueAtTime(600 + Math.random() * 200, ctx.currentTime);
+        gain.gain.setValueAtTime(0.04, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.connect(ctx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.05);
+        osc.stop(ctx.currentTime + 0.05);
       } catch(e) {}
     }
 
     function playClickSound() {
       try {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(450, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.09);
+        osc.frequency.setValueAtTime(450, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.09);
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.connect(ctx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.09);
+        osc.stop(ctx.currentTime + 0.09);
       } catch(e) {}
     }
 
@@ -527,40 +537,51 @@
       }
     }
 
-    // बहु-तालिका खोज (Multi-Table Supabase Checker)
+    // सुपाबेसबाट प्रयोगकर्ता खोज्ने (Robust Lookup with Console Logs)
     async function querySupabaseUser(usernameInput) {
-      if (!supabaseClient) return null;
-
-      // १. admin_users टेबल खोज्ने
-      try {
-        const { data, error } = await supabaseClient
-          .from('admin_users')
-          .select('*')
-          .or(`username.ilike.${usernameInput},email.ilike.${usernameInput}`)
-          .limit(1);
-
-        if (!error && data && data.length > 0) {
-          return data[0];
-        }
-      } catch (e) {
-        console.warn("admin_users check error:", e);
+      if (!supabaseClient) {
+        console.error("Supabase client is not initialized.");
+        return null;
       }
 
-      // २. यदि भेटिएन भने users टेबल खोज्ने
-      try {
-        const { data, error } = await supabaseClient
-          .from('users')
-          .select('*')
-          .or(`username.ilike.${usernameInput},email.ilike.${usernameInput}`)
-          .limit(1);
+      const cleanU = usernameInput.trim();
+      const possibleTables = ['admin_users', 'users', 'admins'];
 
-        if (!error && data && data.length > 0) {
-          return data[0];
+      for (const tbl of possibleTables) {
+        try {
+          // पहिले username बाट खोज्ने
+          let { data, error } = await supabaseClient
+            .from(tbl)
+            .select('*')
+            .ilike('username', cleanU)
+            .limit(1);
+
+          if (!error && data && data.length > 0) {
+            console.log(`[Success] User found in table '${tbl}':`, data[0]);
+            return data[0];
+          }
+
+          // यदि इमेल हुन सक्छ भने
+          let resEmail = await supabaseClient
+            .from(tbl)
+            .select('*')
+            .ilike('email', cleanU)
+            .limit(1);
+
+          if (!resEmail.error && resEmail.data && resEmail.data.length > 0) {
+            console.log(`[Success] User found by email in '${tbl}':`, resEmail.data[0]);
+            return resEmail.data[0];
+          }
+
+          if (error) {
+            console.warn(`Query on '${tbl}' returned error:`, error.message);
+          }
+        } catch (err) {
+          console.warn(`Could not query table '${tbl}':`, err);
         }
-      } catch (e) {
-        console.warn("users check error:", e);
       }
 
+      console.warn("User not found in Supabase tables.");
       return null;
     }
 
@@ -585,7 +606,7 @@
       // १. सुपाबेस क्लाउडबाट जाँच्ने
       const dbUser = await querySupabaseUser(u);
       if (dbUser) {
-        const dbPass = (dbUser.password || dbUser.pass || '').toString().trim();
+        const dbPass = (dbUser.password || dbUser.pass || dbUser.user_pass || '').toString().trim();
         if (dbPass === p) {
           authenticatedUser = {
             username: dbUser.username || dbUser.email || u,
@@ -593,10 +614,12 @@
             role: dbUser.role || ((u.toLowerCase() === "superadmin") ? "Superadmin" : "Admin"),
             photo: dbUser.photo || dbUser.avatar_url || localStorage.getItem("superadmin_profile_photo") || ""
           };
+        } else {
+          console.warn("Password mismatch! DB Password does not match entered password.");
         }
       }
 
-      // २. स्थानीय तथा सुपरएडमिन डिफल्ट ब्याकअप (Fallback)
+      // २. स्थानीय डिफल्ट ब्याकअप (Hardcoded Fallback)
       if (!authenticatedUser) {
         if (u.toLowerCase() === "superadmin" && (p === "Sarkar@#07" || p === "superadmin")) {
           authenticatedUser = {
@@ -615,7 +638,7 @@
         }
       }
 
-      // ३. नतिजा
+      // ३. प्रमाणीकरणको नतिजा
       if (authenticatedUser) {
         sessionStorage.removeItem("login_failed_attempts");
         sessionStorage.setItem("user", JSON.stringify(authenticatedUser));
