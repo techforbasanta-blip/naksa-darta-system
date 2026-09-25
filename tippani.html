@@ -202,7 +202,7 @@
       align-items: center;
     }
 
-    /* A4 Paper Sheet */
+    /* A4 Paper Sheet - Punching margin left 26mm & Kokila font */
     .a4-tippani-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
@@ -213,7 +213,7 @@
       min-height: 294mm !important;
       max-height: 294mm !important;
       margin: 0 auto 16px auto !important;
-      padding: 4mm 14mm 4mm 26mm !important; /* Left 26mm punching margin */
+      padding: 4mm 14mm 4mm 26mm !important;
       border: 1.5px solid #111111 !important;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
       position: relative !important;
@@ -249,7 +249,6 @@
       background: transparent;
     }
 
-    /* Header Styling */
     .cert-header {
       display: flex !important;
       align-items: center !important;
@@ -300,10 +299,7 @@
       line-height: 1.2 !important;
     }
 
-    .tippani-subject-box {
-      text-align: center !important;
-      margin: 3px 0 6px 0 !important;
-    }
+    .tippani-subject-box { text-align: center !important; margin: 3px 0 6px 0 !important; }
     .tippani-subject {
       font-size: 21.5px !important;
       font-weight: 900 !important;
@@ -320,16 +316,15 @@
     }
     .tippani-body-para {
       margin-bottom: 10px !important;
-      text-indent: 45px !important; /* 1 Tab Indent */
+      text-indent: 45px !important;
     }
     .tippani-body-para strong { font-weight: 900 !important; }
 
-    /* Officer Signature Grid (2 steps down) */
     .two-col-sign-grid {
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
       gap: 16px !important;
-      margin-top: 18px !important; /* 2 steps down */
+      margin-top: 18px !important;
       margin-bottom: 12px !important;
     }
     .sign-item-col { text-align: center !important; }
@@ -338,15 +333,11 @@
     .sign-post-title { font-size: 16px !important; font-weight: 700 !important; margin-top: 1px !important; }
     .sign-officer-name { font-size: 18.5px !important; font-weight: 900 !important; margin-top: 2px !important; }
 
-    .engineer-ray-para {
-      margin-top: 12px !important;
-      margin-bottom: 4px !important;
-    }
+    .engineer-ray-para { margin-top: 12px !important; margin-bottom: 4px !important; }
 
-    /* Engineer block moved 2 steps further down (Right aligned) */
     .engineer-right-block {
       text-align: right !important;
-      margin-top: 20px !important; /* Additional 2 steps down */
+      margin-top: 20px !important;
       margin-bottom: 12px !important;
       padding-right: 14px !important;
     }
@@ -357,15 +348,11 @@
       min-width: 220px !important;
     }
 
-    .approval-opinion-para {
-      margin-top: 10px !important;
-      margin-bottom: 4px !important;
-    }
+    .approval-opinion-para { margin-top: 10px !important; margin-bottom: 4px !important; }
 
-    /* Approval block moved 2 steps further down (Right aligned) */
     .approval-right-block {
       text-align: right !important;
-      margin-top: 22px !important; /* Additional 2 steps down */
+      margin-top: 22px !important;
       margin-bottom: 8px !important;
       padding-right: 14px !important;
     }
@@ -376,13 +363,12 @@
       min-width: 240px !important;
     }
 
-    /* Center Iti Sambat line moved 2 steps further down */
     .final-iti-center-line {
       text-align: center !important;
       font-size: 18px !important;
       font-weight: 900 !important;
       color: #000 !important;
-      margin-top: 36px !important; /* Additional 2 steps down */
+      margin-top: 36px !important;
       margin-bottom: 10px !important;
     }
 
@@ -411,7 +397,7 @@
 </head>
 <body>
 
-  <!-- Top Master Navigation Bar -->
+  <!-- Top Header with 🏠 Home Link -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
@@ -423,14 +409,15 @@
       </div>
 
       <div class="header-controls">
+        <a href="index.html" class="nav-btn">🏠 Home</a>
+        <a href="darta.html" class="nav-btn">📝 प्रमाणपत्र (Darta)</a>
+        <a href="tippani.html" class="nav-btn active">📄 टिप्पणी (Tippani)</a>
+        <a href="record.html" class="nav-btn">📂 पुराना रेकर्डहरू</a>
+
         <div class="header-clock-box">
           <div class="h-date" id="liveNepaliDate">मिति: लोड हुँदैछ...</div>
           <div class="h-time" id="liveNepaliTime">समय: --:--:--</div>
         </div>
-
-        <a href="darta.html" class="nav-btn">📝 प्रमाणपत्र (Darta)</a>
-        <a href="tippani.html" class="nav-btn active">📄 टिप्पणी (Tippani)</a>
-        <a href="record.html" class="nav-btn">📂 पुराना रेकर्डहरू</a>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
@@ -439,8 +426,6 @@
   </header>
 
   <main class="workspace-grid">
-    
-    <!-- LEFT: FORM DATA ENTRY -->
     <section class="entry-card no-print">
       <h2 class="entry-title">📄 निर्णयार्थ पेश टिप्पणी प्रविष्टि फाराम</h2>
 
@@ -499,7 +484,6 @@
 
       <div class="form-section-title">प्राविधिक तथा प्रशासनिक अधिकारीहरू (Default: मायादेवी गाउँपालिका)</div>
       
-      <!-- 1. Sthalagat Nirikshan -->
       <div class="form-row">
         <label>१) स्थलगत निरीक्षण गर्ने (पद र नाम)</label>
         <div style="display:flex; gap:6px;">
@@ -512,7 +496,6 @@
         </div>
       </div>
 
-      <!-- 2. Sanrachana Checkjanch -->
       <div class="form-row">
         <label>२) संरचना चेकजाँच तथा रुजु गर्ने (पद र नाम)</label>
         <div style="display:flex; gap:6px;">
@@ -525,7 +508,6 @@
         </div>
       </div>
 
-      <!-- 3. Technical Opinion Submitter -->
       <div class="form-row">
         <label>३) राय पेश गर्ने ईन्जिनियर (पद र नाम)</label>
         <div style="display:flex; gap:6px;">
@@ -537,7 +519,6 @@
         </div>
       </div>
 
-      <!-- 4. Approving Officer -->
       <div class="form-row">
         <label>४) स्वीकृत गर्ने अधिकृत (पद र नाम)</label>
         <div style="display:flex; gap:6px;">
@@ -551,7 +532,7 @@
 
       <div class="form-actions">
         <button type="button" class="btn-act btn-save" onclick="saveTippaniToCloud()">💾 सुरक्षित गर्नुहोस्</button>
-        <button type="button" class="btn-print" style="flex:1; padding:10px 4px; border:none; border-radius:4px; font-weight:800; font-size:14px; cursor:pointer; text-align:center; color:#fff; background:#1e3a8a;" onclick="printTippaniPaper()">🖨 प्रिन्ट गर्नुहोस्</button>
+        <button type="button" class="btn-act btn-print" onclick="printTippaniPaper()">🖨 प्रिन्ट गर्नुहोस्</button>
         <button type="button" class="btn-act btn-reset" onclick="resetTippaniForm()">↺ Reset</button>
       </div>
     </section>
@@ -575,7 +556,6 @@
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
 
           <div class="cert-content-top">
-
             <!-- 1. LETTERHEAD HEADER -->
             <header class="cert-header">
               <div class="logo-box-left">
@@ -626,7 +606,7 @@
               उल्लेखित बिवरण अनुसारको निर्माण कार्यमा स्थलगत नापजाँच गर्ने प्रविधिकको राय बमोजिम निर्माण घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्न मनासिव देखिएकोले निर्णयार्थ पेश गर्दछु ।
             </p>
 
-            <!-- 7. ENGINEER BLOCK: RIGHT ALIGNED & 2 STEPS DOWN -->
+            <!-- 7. ENGINEER BLOCK -->
             <div class="engineer-right-block">
               <div class="inner-sign-wrap">
                 <div class="sign-dots-top">........................................</div>
@@ -635,12 +615,12 @@
               </div>
             </div>
 
-            <!-- 8. ORDER APPROVAL (सदर पछि १ स्पेस राखिएको) -->
+            <!-- 8. ORDER APPROVAL -->
             <p class="common-para-text approval-opinion-para">
               प्रस्तुत प्राविधिक राय तथा सिफारिसका आधारमा घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्नेगरी सदर ।
             </p>
 
-            <!-- 9. APPROVAL BLOCK: RIGHT ALIGNED & 2 STEPS DOWN -->
+            <!-- 9. APPROVAL BLOCK -->
             <div class="approval-right-block">
               <div class="inner-sign-wrap">
                 <div class="sign-dots-top">................................................</div>
@@ -650,18 +630,16 @@
               </div>
             </div>
 
-            <!-- 10. ITI SAMBHAT: CENTER ALIGNED & 2 STEPS DOWN -->
+            <!-- 10. ITI SAMBHAT -->
             <div class="final-iti-center-line" id="out_iti_footer">
               ईति सम्बत २०८३ साल ०६ महिना १२ गते ०२ रोज शुभम् ।
             </div>
-
           </div>
 
           <footer class="cert-footer">
             सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
             वेभ साइटः- mayadevimunrupandehi.gov.np
           </footer>
-
         </div>
       </div>
     </section>
@@ -706,7 +684,7 @@
         const d = parseInt(parts[2], 10);
 
         const bsDaysInMonth = [0, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30];
-        const refY = 2083, refM = 6, refD = 12, refRoj = 2; // सोमबार
+        const refY = 2083, refM = 6, refD = 12, refRoj = 2;
         let diffDays = (y - refY) * 365 + (d - refD);
         if (m > refM) {
           for (let i = refM; i < m; i++) diffDays += bsDaysInMonth[i] || 30;
