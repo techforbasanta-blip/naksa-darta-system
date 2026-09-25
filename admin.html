@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>कर्मचारी तथा एडमिन व्यवस्थापन | Smart Maydevi</title>
+  <title>कर्मचारी तथा एडमिन व्यवस्थापन | Smart Mayadevi</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Supabase Cloud SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -34,6 +36,7 @@
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
     body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
 
+    /* Exactly Same Top Header as darta.html */
     .gov-header {
       background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%);
       border-bottom: 3px solid var(--gov-crimson);
@@ -50,9 +53,9 @@
       gap: 10px;
     }
     .brand-left { display: flex; align-items: center; gap: 12px; }
-    .brand-left img { height: 50px !important; width: auto !important; }
-    .brand-text h1 { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
-    .brand-text p { font-size: 12px; color: #cbd5e1; }
+    .brand-left img { height: 52px !important; width: auto !important; }
+    .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
+    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .header-clock-box {
@@ -85,7 +88,7 @@
     .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
-    .container { max-width: 1300px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
+    .container { max-width: 1400px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -107,16 +110,16 @@
     }
     body.dark-mode .card-title { color: #60a5fa; }
 
-    .form-grid-3 {
+    .form-grid-admin {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr auto;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr auto;
       gap: 10px;
       align-items: flex-end;
     }
     .form-group { display: flex; flex-direction: column; }
-    .form-group label { font-size: 12.5px; font-weight: 700; margin-bottom: 4px; }
+    .form-group label { font-size: 12.5px; font-weight: 700; margin-bottom: 4px; color: var(--text-dark); }
     .form-group input, .form-group select {
-      padding: 8px 10px;
+      padding: 9px 10px;
       border: 1px solid var(--border-color);
       border-radius: 5px;
       background: var(--input-bg);
@@ -127,17 +130,17 @@
       background: #16a34a;
       color: #ffffff;
       border: none;
-      padding: 8px 16px;
+      padding: 9px 18px;
       border-radius: 5px;
       font-weight: 800;
       cursor: pointer;
-      font-size: 13px;
-      height: 38px;
+      font-size: 13.5px;
+      height: 40px;
     }
     .btn-add:hover { background: #15803d; }
 
     table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; }
-    th, td { border: 1px solid var(--border-color); padding: 9px 12px; text-align: left; }
+    th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; }
     th { background: rgba(30, 58, 138, 0.08); font-weight: 800; }
     body.dark-mode th { background: rgba(255, 255, 255, 0.08); }
 
@@ -145,16 +148,17 @@
       background: #dc2626;
       color: #fff;
       border: none;
-      padding: 4px 8px;
+      padding: 5px 10px;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 700;
     }
+    .btn-del:hover { background: #b91c1c; }
     .badge-role {
       padding: 3px 8px;
       border-radius: 4px;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 800;
       background: #e2e8f0;
       color: #0f172a;
@@ -176,7 +180,7 @@
       <div class="brand-left">
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
-          <h1>Smart Maydevi</h1>
+          <h1>Smart Mayadevi</h1>
           <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
         </div>
       </div>
@@ -188,7 +192,7 @@
 
         <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
-        <a href="admin.html" class="nav-btn active">⚙️ Admin</a>
+        <a href="admin.html" id="adminMenuBtn" class="nav-btn active">⚙️ Admin</a>
         <button type="button" class="nav-btn btn-idcard" onclick="alert('ID Card Module चाँडै आउँदैछ!');">🪪 ID Card Create</button>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
@@ -198,16 +202,16 @@
   </header>
 
   <div class="container">
-    <!-- Naya Account Create Karva mate Form -->
+    <!-- नयाँ एडमिन/कर्मचारी खाता बनाउने फाराम -->
     <div class="card">
       <div class="card-title">
-        <span>➕ नयाँ कर्मचारी / एडमिन खाता थप्नुहोस् (Cloud Database)</span>
+        <span>➕ नयाँ कर्मचारी / एडमिन खाता थप्नुहोस् (Auto-Sync to Cloud)</span>
       </div>
       <form onsubmit="handleCreateUser(event)">
-        <div class="form-grid-3">
+        <div class="form-grid-admin">
           <div class="form-group">
-            <label>पूरा नामथर</label>
-            <input type="text" id="new_fullname" placeholder="कर्मचारीको नाम" required>
+            <label>कर्मचारीको पूरा नामथर</label>
+            <input type="text" id="new_fullname" placeholder="पूरा नाम लेख्नुहोस्" required>
           </div>
           <div class="form-group">
             <label>प्रयोगकर्ता नाम (Username)</label>
@@ -215,10 +219,10 @@
           </div>
           <div class="form-group">
             <label>गोप्य पासवर्ड (Password)</label>
-            <input type="text" id="new_password" placeholder="पासवर्ड" required>
+            <input type="text" id="new_password" placeholder="पासवर्ड राख्नुहोस्" required>
           </div>
           <div class="form-group">
-            <label>पद / भूमिका (Role)</label>
+            <label>भूमिका / पद (Role)</label>
             <select id="new_role">
               <option value="admin">Admin</option>
               <option value="amin">Amin (अमिन)</option>
@@ -230,21 +234,21 @@
       </form>
     </div>
 
-    <!-- Active Cloud Users List -->
+    <!-- सक्रिय खाताहरूको सूची -->
     <div class="card">
       <div class="card-title">
-        <span>👥 सक्रिय कर्मचारी खाताहरू (Active Cloud Accounts)</span>
+        <span>👥 सक्रिय कर्मचारी खाताहरू (संसारभरबाट लगइन हुनसक्ने)</span>
         <span id="userCount" style="font-size:12.5px; background:rgba(30,58,138,0.1); padding:3px 10px; border-radius:15px; font-weight:bold;">लोड हुँदैछ...</span>
       </div>
       <table>
         <thead>
           <tr>
-            <th>क्र.सं.</th>
-            <th>कर्मचारीको नाम</th>
+            <th style="width: 50px;">क्र.सं.</th>
+            <th>कर्मचारीको नामथर</th>
             <th>Username</th>
             <th>Password</th>
             <th>Role</th>
-            <th style="text-align:center;">कार्य (Action)</th>
+            <th style="text-align:center; width: 140px;">कार्य (Action)</th>
           </tr>
         </thead>
         <tbody id="userTableBody">
@@ -256,14 +260,15 @@
 
   <footer class="site-footer no-print">
     <div class="footer-inner">
-      <div><strong>Smart Maydevi</strong> — एडमिन प्यानल | बरेवा, रुपन्देही</div>
+      <div><strong>Smart Mayadevi</strong> — एडमिन प्यानल | गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही</div>
       <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
     </div>
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // Tamara Supabase Project nu URL ahiya paste karo
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // Tamaro anon key ahiya paste karo
+    // तपाईंको Supabase जडान
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; // आफ्नो Supabase URL यहाँ राख्नुहोस्
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // आफ्नो Anon Key यहाँ राख्नुहोस्
 
     let supabaseClient = null;
     try {
@@ -272,9 +277,33 @@
       }
     } catch(e) {}
 
+    const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+    function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
+
+    // सुपरएडमिनको डिफलट ब्याकअप खाता
+    const defaultMaster = [
+      { id: 1, full_name: 'Super Administrator', username: 'superadmin', password: 'Admin@123', role: 'superadmin' },
+      { id: 2, full_name: 'System Admin', username: 'admin', password: 'Admin@123', role: 'admin' },
+      { id: 3, full_name: 'Land Surveyor (Amin)', username: 'amin', password: 'Amin@123', role: 'amin' }
+    ];
+
     let allUsers = [];
 
+    function updateClock() {
+      const now = new Date();
+      const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
+      let h = now.getHours();
+      const m = String(now.getMinutes()).padStart(2, "0");
+      const s = String(now.getSeconds()).padStart(2, "0");
+      let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
+      document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
+      document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+    }
+
     async function loadAccounts() {
+      let loaded = [];
+
+      // १. पहिले Supabase क्लाउड डाटाबेसबाट सबै खाताहरू तान्ने
       if (supabaseClient) {
         try {
           const { data, error } = await supabaseClient
@@ -282,43 +311,53 @@
             .select('*')
             .order('id', { ascending: true });
 
-          if (!error && data) {
-            allUsers = data;
+          if (!error && data && data.length > 0) {
+            loaded = data;
+            localStorage.setItem("local_admin_accounts", JSON.stringify(data));
           }
         } catch(e) {
-          console.error("Cloud fetch error:", e);
+          console.warn("Cloud load error:", e);
         }
       }
 
+      // २. यदि इन्टरनेट नभए लोकल मेमोरीबाट तान्ने
+      if (loaded.length === 0) {
+        try {
+          const raw = localStorage.getItem("local_admin_accounts");
+          loaded = raw ? JSON.parse(raw) : defaultMaster;
+        } catch(e) {
+          loaded = defaultMaster;
+        }
+      }
+
+      allUsers = loaded;
       renderUserTable();
     }
 
     function renderUserTable() {
       const tbody = document.getElementById("userTableBody");
       tbody.innerHTML = "";
-      document.getElementById("userCount").textContent = `कुल खाता: ${allUsers.length}`;
-
-      if (allUsers.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#64748b;">कुनै कर्मचारी खाता फेला परेन।</td></tr>`;
-        return;
-      }
+      document.getElementById("userCount").textContent = `कुल खाता: ${toNepNum(allUsers.length)}`;
 
       allUsers.forEach((u, i) => {
         const tr = document.createElement("tr");
+        const isPermanent = u.username.toLowerCase() === 'superadmin';
+
         tr.innerHTML = `
-          <td>${i + 1}</td>
+          <td>${toNepNum(i + 1)}</td>
           <td><strong>${u.full_name || '-'}</strong></td>
           <td><code>${u.username}</code></td>
-          <td>••••••••</td>
+          <td><span style="letter-spacing: 2px;">••••••••</span></td>
           <td><span class="badge-role">${u.role}</span></td>
           <td style="text-align:center;">
-            ${u.username.toLowerCase() === 'superadmin' ? '<small style="color:#64748b;">(स्थायी खाता)</small>' : `<button class="btn-del" onclick="deleteAccount(${u.id}, '${u.username}')">हटाउने</button>`}
+            ${isPermanent ? '<small style="color:#64748b; font-weight:bold;">(स्थायी मुख्य खाता)</small>' : `<button class="btn-del" onclick="deleteAccount(${u.id}, '${u.username}')">हटाउने</button>`}
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
+    // यहीँ admin.html बाट थप्दा सिधै Supabase मा Auto-Update हुने फङ्सन
     async function handleCreateUser(e) {
       e.preventDefault();
       const fn = document.getElementById("new_fullname").value.trim();
@@ -328,7 +367,7 @@
 
       const addBtn = document.getElementById("addBtn");
       addBtn.disabled = true;
-      addBtn.textContent = "⏳...";
+      addBtn.textContent = "⏳ थपिँदैछ...";
 
       const newAccount = {
         id: Date.now(),
@@ -338,6 +377,7 @@
         role: rl
       };
 
+      // १. Supabase Cloud Database मा Auto-Update गर्ने
       if (supabaseClient) {
         try {
           const { error } = await supabaseClient
@@ -345,17 +385,19 @@
             .insert([newAccount]);
 
           if (error) {
-            alert("यो Username पहिले नै प्रयोगमा छ वा त्रुटि भयो!");
+            alert(`त्रुटि: यो Username (${un}) पहिले नै प्रयोगमा हुन सक्छ!`);
             addBtn.disabled = false;
             addBtn.textContent = "थप्नुहोस्";
             return;
           }
         } catch(err) {
-          alert("क्लाउडमा सुरक्षित गर्दा त्रुटि भयो!");
+          console.error("Supabase error:", err);
         }
       }
 
+      // २. लोकल मेमोरी ब्याकअप
       allUsers.push(newAccount);
+      localStorage.setItem("local_admin_accounts", JSON.stringify(allUsers));
       renderUserTable();
 
       document.getElementById("new_fullname").value = "";
@@ -364,9 +406,10 @@
       addBtn.disabled = false;
       addBtn.textContent = "थप्नुहोस्";
 
-      alert(`खाता "${un}" सफलतापूर्वक Cloud मा सुरक्षित भयो! अब जुनसुकै ठाउँबाट यो खाताले लगइन गर्न सकिनेछ।`);
+      alert(`बधाई छ! खाता "${un}" सफलतापूर्वक सुरक्षित भयो।\nअब जुनसुकै कम्प्युटर वा मोबाइलबाट login.html खोल्दा यो खाताले लगइन गर्न सकिनेछ।`);
     }
 
+    // डिलिट गर्दा पनि Supabase बाटै डिलिट हुने
     async function deleteAccount(id, username) {
       if (!confirm(`के तपाईं खाता "${username}" हटाउन चाहनुहुन्छ?`)) return;
 
@@ -380,8 +423,9 @@
       }
 
       allUsers = allUsers.filter(u => u.id !== id);
+      localStorage.setItem("local_admin_accounts", JSON.stringify(allUsers));
       renderUserTable();
-      alert("खाता सफलतापूर्वक हटाइयो!");
+      alert(`खाता "${username}" सफलतापूर्वक हटाइयो!`);
     }
 
     function toggleTheme() {
@@ -396,12 +440,16 @@
       if (saved === "dark") {
         document.body.classList.add("dark-mode");
         document.getElementById("themeToggleBtn").textContent = "☀";
+      } else {
+        document.body.classList.remove("dark-mode");
+        document.getElementById("themeToggleBtn").textContent = "☾";
       }
     }
 
     function handleSafeLogout() {
       sessionStorage.clear();
       localStorage.removeItem("user");
+      alert("सफलतापूर्वक लगआउट भयो!");
       window.location.href = "login.html";
     }
 
@@ -411,7 +459,10 @@
         window.location.href = "login.html";
         return;
       }
+
       applySavedTheme();
+      setInterval(updateClock, 1000);
+      updateClock();
       loadAccounts();
     });
   </script>
