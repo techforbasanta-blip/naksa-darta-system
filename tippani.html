@@ -54,26 +54,35 @@
     .brand-left { display: flex; align-items: center; gap: 12px; }
     .brand-left img { height: 48px !important; width: auto !important; }
     .brand-text h1 { font-size: 21px; font-weight: 800; color: #fff; line-height: 1.1; }
-    .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; }
 
-    /* Smart Mayadevi को साइडमा आउने Home Badge */
+    .motto-home-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 2px;
+    }
+    .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; margin: 0; }
+
     .brand-home-badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.18);
       color: #ffffff !important;
       text-decoration: none;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 800;
-      padding: 2px 8px;
+      padding: 2px 10px;
       border-radius: 4px;
       border: 1px solid rgba(255, 255, 255, 0.4);
       display: inline-flex;
       align-items: center;
-      gap: 3px;
-      transition: all 0.2s;
+      gap: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
     }
     .brand-home-badge:hover {
       background: #2563eb;
       border-color: #60a5fa;
+      transform: translateY(-1px);
     }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -139,9 +148,25 @@
     }
     body.dark-mode .entry-title { color: #60a5fa; }
 
-    .saved-list-btn {
-      background: #0284c7; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11.5px; cursor: pointer; font-weight: bold;
+    /* सच्याउने (Edit Mode) ब्यानर */
+    .edit-mode-banner {
+      display: none;
+      background: #fef08a;
+      color: #854d0e;
+      border: 1px solid #facc15;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      align-items: center;
+      justify-content: space-between;
     }
+
+    .saved-list-btn {
+      background: #0284c7; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold;
+    }
+    .saved-list-btn:hover { background: #0369a1; }
 
     .auto-pull-box {
       background: rgba(30, 58, 138, 0.08);
@@ -210,13 +235,13 @@
       background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;
     }
     .tippani-modal-content {
-      background: var(--card-bg); width: 90%; max-width: 600px; max-height: 80vh; border-radius: 8px;
+      background: var(--card-bg); width: 92%; max-width: 650px; max-height: 82vh; border-radius: 8px;
       padding: 16px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
     .modal-header-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--border-color); padding-bottom: 8px; margin-bottom: 10px; }
     .tippani-list-container { overflow-y: auto; flex: 1; }
     .tippani-item-row {
-      display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-bottom: 1px solid var(--border-color);
+      display: flex; justify-content: space-between; align-items: center; padding: 9px 10px; border-bottom: 1px solid var(--border-color);
     }
     .tippani-item-row:hover { background: rgba(30, 58, 138, 0.05); }
 
@@ -336,7 +361,8 @@
 
     .two-col-sign-grid {
       display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px !important;
-      margin-top: 18px !important; margin-bottom: 12px !important;
+      margin-top: 26px !important;
+      margin-bottom: 12px !important;
     }
     .sign-item-col { text-align: center !important; }
     .sign-dots-top { font-size: 15px !important; letter-spacing: 1px !important; font-weight: bold !important; margin-bottom: 2px !important; }
@@ -347,7 +373,10 @@
     .engineer-ray-para { margin-top: 12px !important; margin-bottom: 4px !important; }
 
     .engineer-right-block {
-      text-align: right !important; margin-top: 20px !important; margin-bottom: 12px !important; padding-right: 14px !important;
+      text-align: right !important; 
+      margin-top: 28px !important; 
+      margin-bottom: 12px !important; 
+      padding-right: 14px !important;
     }
     .engineer-right-block .inner-sign-wrap {
       display: inline-flex !important; flex-direction: column !important; align-items: center !important; min-width: 220px !important;
@@ -356,7 +385,10 @@
     .approval-opinion-para { margin-top: 10px !important; margin-bottom: 4px !important; }
 
     .approval-right-block {
-      text-align: right !important; margin-top: 22px !important; margin-bottom: 8px !important; padding-right: 14px !important;
+      text-align: right !important; 
+      margin-top: 30px !important; 
+      margin-bottom: 8px !important; 
+      padding-right: 14px !important;
     }
     .approval-right-block .inner-sign-wrap {
       display: inline-flex !important; flex-direction: column !important; align-items: center !important; min-width: 240px !important;
@@ -394,11 +426,11 @@
       <div class="brand-left">
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <h1>Smart Mayadevi</h1>
+          <h1>Smart Mayadevi</h1>
+          <div class="motto-home-row">
+            <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
             <a href="index.html" class="brand-home-badge" title="मुख्य गृहपृष्ठमा जानुहोस्">🏠 Home</a>
           </div>
-          <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
         </div>
       </div>
 
@@ -421,8 +453,14 @@
   <main class="workspace-grid">
     <section class="entry-card no-print">
       <div class="entry-title">
-        <span>📄 निर्णयार्थ पेश टिप्पणी फाराम</span>
+        <span id="formCardHeaderTitle">📄 निर्णयार्थ पेश टिप्पणी फाराम</span>
         <button type="button" class="saved-list-btn" onclick="openSavedTippaniModal()">📂 नाम अनुसार टिप्पणी खोज्नुस्</button>
+      </div>
+
+      <!-- सच्याउने अवस्थामा देखिने अलर्ट ब्यानर -->
+      <div class="edit-mode-banner" id="tippaniEditBanner">
+        <span>✏️ तपाईं पुरानो टिप्पणी सच्याउँदै हुनुहुन्छ। विवरण मिलाएर "💾 अद्यावधिक गर्नुहोस्" थिच्नुहोस्।</span>
+        <button type="button" onclick="cancelEditMode()" style="background:#854d0e; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">रद्द</button>
       </div>
 
       <div class="auto-pull-box">
@@ -528,9 +566,9 @@
         </div>
       </div>
 
-      <!-- Action Buttons: Save, Print, Delete, Reset -->
+      <!-- Action Buttons: Save/Update, Print, Delete, Reset -->
       <div class="form-actions">
-        <button type="button" class="btn-act btn-save" onclick="saveTippaniToCloud()">💾 सुरक्षित</button>
+        <button type="button" class="btn-act btn-save" id="btnMainSave" onclick="saveTippaniToCloud()">💾 सुरक्षित</button>
         <button type="button" class="btn-act btn-print" onclick="printTippaniPaper()">🖨 प्रिन्ट</button>
         <button type="button" class="btn-act btn-del" onclick="deleteCurrentTippani()">🗑️ मेटाउने</button>
         <button type="button" class="btn-act btn-reset" onclick="resetTippaniForm()">↺ Reset</button>
@@ -777,6 +815,7 @@
       }
     }
 
+    // नयाँ सेभ गर्ने वा पुरानो सच्याएर अद्यावधिक गर्ने (Save/Update)
     async function saveTippaniToCloud() {
       const owner = document.getElementById("in_owner").value.trim();
       const kitta = document.getElementById("in_kitta").value.trim();
@@ -809,8 +848,7 @@
         officer_role: document.getElementById("in_off_role").value
       };
 
-      document.getElementById("current_tippani_id").value = nowTime;
-
+      // १. लोकल स्टोरेजमा सेभ / अपडेट
       try {
         let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
         const existIdx = list.findIndex(item => item.id === nowTime);
@@ -822,13 +860,19 @@
         localStorage.setItem("naksa_tippani_list", JSON.stringify(list));
       } catch(e) {}
 
+      // २. सुपाबेसमा सुरक्षित
       if (supabaseClient) {
         try {
-          await supabaseClient.from('tippani_records').upsert(tippaniItem);
+          await supabaseClient.from('naksa_records').upsert(tippaniItem);
         } catch(e) {}
       }
 
-      alert(`टिप्पणी (${owner}) सफलतापूर्वक सुरक्षित भयो!`);
+      if (currentId) {
+        alert(`टिप्पणी (${owner}) सफलतापूर्वक अद्यावधिक (Updated) भयो!`);
+        cancelEditMode();
+      } else {
+        alert(`टिप्पणी (${owner}) सफलतापूर्वक सुरक्षित (Saved) भयो!`);
+      }
     }
 
     async function deleteCurrentTippani() {
@@ -850,7 +894,7 @@
 
       if (supabaseClient) {
         try {
-          await supabaseClient.from('tippani_records').delete().eq('id', currentId);
+          await supabaseClient.from('naksa_records').delete().eq('id', currentId);
         } catch(e) {}
       }
 
@@ -870,7 +914,18 @@
       document.getElementById("in_insp_date").value = "२०८३/०६/०६";
       document.getElementById("in_dec_date").value = "२०८३/०६/१२";
       document.getElementById("pull_darta_no").value = "";
+      cancelEditMode();
       updateTippaniLive();
+    }
+
+    function cancelEditMode() {
+      document.getElementById("current_tippani_id").value = "";
+      const banner = document.getElementById("tippaniEditBanner");
+      if (banner) banner.style.display = "none";
+      const saveBtn = document.getElementById("btnMainSave");
+      if (saveBtn) saveBtn.textContent = "💾 सुरक्षित";
+      const title = document.getElementById("formCardHeaderTitle");
+      if (title) title.textContent = "📄 निर्णयार्थ पेश टिप्पणी फाराम";
     }
 
     function openSavedTippaniModal() {
@@ -892,7 +947,7 @@
       } catch(e) {}
 
       if (list.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:20px; color:#64748b;">कुनै पनि सुरक्षित टिप्पणी भेटिएन।</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:25px; color:#64748b; font-weight:bold;">कुनै पनि सुरक्षित टिप्पणी भेटिएन। पहिले फाराम भरेर "💾 सुरक्षित" थिच्नुहोस्।</div>`;
         return;
       }
 
@@ -902,11 +957,11 @@
         div.innerHTML = `
           <div>
             <strong>${item.owner_name}</strong> (वडा नं. ${item.ward || '-'})<br>
-            <span style="font-size:12px; color:#64748b;">कित्ता: ${item.kitta || '-'} | मिति: ${item.dec_date || '-'}</span>
+            <span style="font-size:12px; color:#64748b;">कित्ता: ${item.kitta || '-'} | निर्णय मिति: ${item.dec_date || '-'}</span>
           </div>
           <div>
-            <button style="background:#1e3a8a; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer;" onclick="loadTippaniIntoForm(${item.id})">हेर्नुस् / Edit</button>
-            <button style="background:#dc2626; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; margin-left:4px;" onclick="deleteTippaniFromModal(${item.id}, '${item.owner_name}')">मेटाउने</button>
+            <button style="background:#0284c7; color:white; border:none; padding:5px 9px; border-radius:3px; cursor:pointer; font-weight:bold;" onclick="loadTippaniIntoForm(${item.id})">✏️ सच्याउनुस् (Edit)</button>
+            <button style="background:#dc2626; color:white; border:none; padding:5px 9px; border-radius:3px; cursor:pointer; margin-left:4px; font-weight:bold;" onclick="deleteTippaniFromModal(${item.id}, '${item.owner_name}')">🗑️ मेटाउने</button>
           </div>
         `;
         container.appendChild(div);
@@ -926,17 +981,18 @@
         div.innerHTML = `
           <div>
             <strong>${item.owner_name}</strong> (वडा नं. ${item.ward || '-'})<br>
-            <span style="font-size:12px; color:#64748b;">कित्ता: ${item.kitta || '-'} | मिति: ${item.dec_date || '-'}</span>
+            <span style="font-size:12px; color:#64748b;">कित्ता: ${item.kitta || '-'} | निर्णय मिति: ${item.dec_date || '-'}</span>
           </div>
           <div>
-            <button style="background:#1e3a8a; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer;" onclick="loadTippaniIntoForm(${item.id})">हेर्नुस् / Edit</button>
-            <button style="background:#dc2626; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer; margin-left:4px;" onclick="deleteTippaniFromModal(${item.id}, '${item.owner_name}')">मेटाउने</button>
+            <button style="background:#0284c7; color:white; border:none; padding:5px 9px; border-radius:3px; cursor:pointer; font-weight:bold;" onclick="loadTippaniIntoForm(${item.id})">✏️ सच्याउनुस् (Edit)</button>
+            <button style="background:#dc2626; color:white; border:none; padding:5px 9px; border-radius:3px; cursor:pointer; margin-left:4px; font-weight:bold;" onclick="deleteTippaniFromModal(${item.id}, '${item.owner_name}')">🗑️ मेटाउने</button>
           </div>
         `;
         container.appendChild(div);
       });
     }
 
+    // सच्याउन फाराममा लोड गर्ने फङ्सन (Edit Mode Active)
     function loadTippaniIntoForm(id) {
       let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
       const item = list.find(t => t.id === id);
@@ -951,6 +1007,22 @@
         document.getElementById("in_darta_date").value = item.reg_date || "";
         document.getElementById("in_insp_date").value = item.insp_date || "";
         document.getElementById("in_dec_date").value = item.dec_date || "";
+
+        if (item.eng1) document.getElementById("in_eng1_name").value = item.eng1;
+        if (item.eng1_role) document.getElementById("in_eng1_role").value = item.eng1_role;
+        if (item.eng2) document.getElementById("in_eng2_name").value = item.eng2;
+        if (item.eng2_role) document.getElementById("in_eng2_role").value = item.eng2_role;
+        if (item.eng3) document.getElementById("in_eng3_name").value = item.eng3;
+        if (item.officer) document.getElementById("in_off_name").value = item.officer;
+        if (item.officer_role) document.getElementById("in_off_role").value = item.officer_role;
+
+        // Edit मोड ब्यानर सक्रिय बनाउने
+        const banner = document.getElementById("tippaniEditBanner");
+        if (banner) banner.style.display = "flex";
+        const saveBtn = document.getElementById("btnMainSave");
+        if (saveBtn) saveBtn.textContent = "💾 अद्यावधिक गर्नुहोस्";
+        const title = document.getElementById("formCardHeaderTitle");
+        if (title) title.textContent = `✏️ टिप्पणी सम्पादन (${item.owner_name})`;
 
         updateTippaniLive();
         closeSavedTippaniModal();
