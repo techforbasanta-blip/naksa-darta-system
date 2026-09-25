@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>नक्सा दर्ता अभिलेख सूची | Smart Mayadevi</title>
+  <title>Smart Mayadevi - पुरानो अभिलेख</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,7 +84,6 @@
       white-space: nowrap;
     }
     .nav-btn:hover, .nav-btn.active { background: #2563eb; border-color: #3b82f6; }
-    .btn-idcard { background: #0891b2 !important; border-color: #06b6d4 !important; }
     .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
@@ -165,7 +164,7 @@
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
           <h1>Smart Mayadevi</h1>
-          <p>पुराना नक्सा अभिलेखहरू तथा खोज प्रणाली | Records Registry</p>
+          <p>पुराना नक्सा अभिलेखहरू | 1-Week Auto-Purge सुरक्षित प्रणाली</p>
         </div>
       </div>
       <div class="header-controls">
@@ -176,11 +175,7 @@
 
         <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
         <a href="record.html" class="nav-btn active">📂 पुरानो हेर्नुस्</a>
-        
-        <!-- केवल superadmin ले लगइन गर्दा मात्र खुल्छ -->
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
-        
-        <button type="button" class="nav-btn btn-idcard" onclick="alert('ID Card Module चाँडै आउँदैछ!');">🪪 ID Card Create</button>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
@@ -191,7 +186,7 @@
   <div class="container">
     <div class="card">
       <div class="card-title">
-        <span>📂 सुरक्षित भएका घर नक्सा अभिलेख सूची</span>
+        <span>📂 सुरक्षित भएका घर नक्सा अभिलेख सूची (१ हप्तामा स्वतः मेटिने)</span>
         <span id="recordCountBadge" style="font-size: 13px; background: rgba(30, 58, 138, 0.15); padding: 4px 12px; border-radius: 20px; font-weight: bold;">कुल रेकर्ड: ०</span>
       </div>
 
@@ -214,7 +209,7 @@
               <th>नागरिकता नं.</th>
               <th>ठेगाना / वडा</th>
               <th>कित्ता नं.</th>
-              <th>कुल क्षेत्रफल</th>
+              <th>बाँकी म्याद</th>
               <th style="width: 140px; text-align: center;">कार्य (Action)</th>
             </tr>
           </thead>
@@ -232,12 +227,12 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = "https://xyzcompany.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
+    const SUPABASE_URL = "https://xyzcompany.supabase.co"; 
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; 
     
     let supabaseClient = null;
     try {
-      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
+      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany") && typeof supabase !== 'undefined') {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
     } catch(e) {}
@@ -246,16 +241,19 @@
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
     let allRecords = [];
+    const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000; // ७ दिन = १ हप्ता
 
     function updateClock() {
-      const now = new Date();
-      const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
-      let h = now.getHours();
-      const m = String(now.getMinutes()).padStart(2, "0");
-      const s = String(now.getSeconds()).padStart(2, "0");
-      let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
-      document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
-      document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+      try {
+        const now = new Date();
+        const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
+        let h = now.getHours();
+        const m = String(now.getMinutes()).padStart(2, "0");
+        const s = String(now.getSeconds()).padStart(2, "0");
+        let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
+        document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
+        document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+      } catch(e) {}
     }
 
     function toggleTheme() {
@@ -270,10 +268,35 @@
       if (saved === "dark") {
         document.body.classList.add("dark-mode");
         document.getElementById("themeToggleBtn").textContent = "☀";
-      } else {
-        document.body.classList.remove("dark-mode");
-        document.getElementById("themeToggleBtn").textContent = "☾";
       }
+    }
+
+    // १ हप्ता कटेका पुराना रेकर्ड स्वतः मेटाउने लजिक
+    async function purgeExpiredRecords(records) {
+      const now = Date.now();
+      const validRecords = [];
+      const expiredIds = [];
+
+      records.forEach(r => {
+        const createdAt = r.created_timestamp || r.id;
+        if (now - createdAt > ONE_WEEK_MS) {
+          expiredIds.push(r.id);
+        } else {
+          validRecords.push(r);
+        }
+      });
+
+      if (expiredIds.length > 0) {
+        localStorage.setItem("naksa_records", JSON.stringify(validRecords));
+      }
+
+      if (supabaseClient && expiredIds.length > 0) {
+        try {
+          await supabaseClient.from('naksa_records').delete().in('id', expiredIds);
+        } catch(e) {}
+      }
+
+      return validRecords;
     }
 
     async function loadRecords() {
@@ -288,11 +311,8 @@
 
           if (!error && data && data.length > 0) {
             loaded = data;
-            localStorage.setItem("naksa_records", JSON.stringify(data));
           }
-        } catch(e) {
-          console.warn("Cloud fetch error:", e);
-        }
+        } catch(e) {}
       }
 
       if (loaded.length === 0) {
@@ -302,8 +322,14 @@
         } catch (e) { loaded = []; }
       }
 
-      allRecords = loaded;
+      allRecords = await purgeExpiredRecords(loaded);
       renderRecords(allRecords);
+    }
+
+    function getRemainingDays(timestamp) {
+      const diff = ONE_WEEK_MS - (Date.now() - (timestamp || Date.now()));
+      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      return days > 0 ? `${toNepNum(days)} दिन बाँकी` : 'आज समाप्त';
     }
 
     function renderRecords(records) {
@@ -332,10 +358,10 @@
           <td>${r.house_cit || r.owner_cit || '-'}</td>
           <td>वडा नं. ${r.ward || '-'}</td>
           <td>${r.kitta || '-'}</td>
-          <td>${r.total_area || r.approved_area || '-'}</td>
+          <td><span style="color:#d97706; font-weight:bold;">${getRemainingDays(r.created_timestamp || r.id)}</span></td>
           <td style="text-align:center; white-space:nowrap;">
-            <button class="btn-action-view" onclick="viewAndPrintRecord(${r.id})">हेर्नुस् / Print</button>
-            <button class="btn-action-del" onclick="deleteRecord(${r.id}, '${r.darta_no}')">हटाउने</button>
+            <button class="btn-action-view" onclick="viewAndPrintRecord(${r.id})">हेर्नुस्</button>
+            <button class="btn-action-del" onclick="deleteRecordImmediate(${r.id}, '${r.darta_no}')">हटाउने</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -374,8 +400,9 @@
       window.location.href = "darta.html";
     }
 
-    async function deleteRecord(id, dartaNo) {
-      if (!confirm(`के तपाईं दर्ता नं. "${dartaNo}" को रेकर्ड हटाउन चाहनुहुन्छ?`)) return;
+    // एडमिनले चाहेको बेला त्यही दिन हटाउने व्यवस्था
+    async function deleteRecordImmediate(id, dartaNo) {
+      if (!confirm(`के तपाईं दर्ता नं. "${dartaNo}" को रेकर्ड तुरुन्त हटाउन चाहनुहुन्छ?`)) return;
 
       allRecords = allRecords.filter(r => r.id !== id);
       localStorage.setItem("naksa_records", JSON.stringify(allRecords));
@@ -387,7 +414,7 @@
         } catch(e) {}
       }
 
-      alert("रेकर्ड सफलतापूर्वक हटाइयो!");
+      alert(`दर्ता नं. "${dartaNo}" सफलतापूर्वक हटाइयो!`);
     }
 
     function handleSafeLogout() {
@@ -398,16 +425,14 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
-      if (!raw) {
-        window.location.href = "login.html";
-        return;
-      }
-
       try {
-        const u = JSON.parse(raw);
-        if (u.username && u.username.toLowerCase() === "superadmin") {
-          document.getElementById("adminMenuBtn").style.display = "inline-flex";
+        const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
+        if (raw) {
+          const u = JSON.parse(raw);
+          if (u.username && u.username.toLowerCase() === "superadmin") {
+            const btn = document.getElementById("adminMenuBtn");
+            if (btn) btn.style.display = "inline-flex";
+          }
         }
       } catch(e) {}
 
