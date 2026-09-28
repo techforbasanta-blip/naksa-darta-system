@@ -231,11 +231,55 @@
     .btn-pass-view {
       background: #0284c7; color: #fff; border: none; padding: 4px 6px; border-radius: 3px; font-size: 11px; cursor: pointer; font-weight: bold;
     }
-    .btn-pass-edit {
-      background: #f59e0b; color: #fff; border: none; padding: 4px 6px; border-radius: 3px; font-size: 11px; cursor: pointer; font-weight: bold;
+    .btn-edit-all {
+      background: #2563eb; color: #fff; border: none; padding: 4px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; font-weight: bold;
     }
+    .btn-edit-all:hover { background: #1d4ed8; }
     .btn-delete-user {
       background: #dc2626; color: #fff; border: none; padding: 4px 6px; border-radius: 3px; font-size: 11px; cursor: pointer; font-weight: bold;
+    }
+
+    /* पूर्ण सम्पादन मोडल (Full Edit Modal) */
+    .edit-modal-wrapper {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(7, 25, 47, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .edit-modal-content {
+      background: var(--card-bg);
+      border: 1.5px solid var(--gov-accent);
+      border-radius: 10px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 22px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      animation: modalScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalScale {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .edit-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+    .edit-modal-header h3 { font-size: 17px; font-weight: 800; color: #1e3a8a; }
+    body.dark-mode .edit-modal-header h3 { color: #60a5fa; }
+    .btn-close-modal {
+      background: #dc2626; color: white; border: none; border-radius: 4px; padding: 3px 8px; font-size: 12px; cursor: pointer; font-weight: bold;
     }
 
     footer.site-footer {
@@ -284,7 +328,7 @@
   </header>
 
   <main class="admin-container">
-    <!-- नयाँ कर्मचारी / एडमिन थप्ने विस्तृत फाराम -->
+    <!-- नयाँ कर्मचारी थप्ने फाराम -->
     <div class="card">
       <div class="card-title">
         <span>➕ नयाँ कर्मचारी / एडमिन थप्नुहोस्</span>
@@ -330,7 +374,7 @@
           <div class="photo-upload-box">
             <img id="previewPhotoImg" class="user-preview-photo" src="" alt="Photo" style="display:none;">
             <div id="noPhotoText" style="font-size:11.5px; color:#64748b;">फोटो छानिएको छैन</div>
-            <input type="file" id="new_photo_file" accept="image/*" style="font-size:11px;" onchange="handlePhotoUpload(event)">
+            <input type="file" id="new_photo_file" accept="image/*" style="font-size:11px;" onchange="handlePhotoUpload(event, 'add')">
           </div>
         </div>
 
@@ -340,10 +384,10 @@
       </form>
     </div>
 
-    <!-- दर्ता भएका सबै एडमिनहरूको विस्तृत सूची र पासवर्ड रिकभरी -->
+    <!-- दर्ता भएका कर्मचारीहरूको सूची -->
     <div class="card">
       <div class="card-title">
-        <span>👥 दर्ता भएका कर्मचारीहरूको विवरण तथा पासवर्ड व्यवस्थापन</span>
+        <span>👥 दर्ता भएका कर्मचारीहरूको विवरण तथा व्यवस्थापन</span>
         <button type="button" class="nav-btn" onclick="loadAllUsers()" style="font-size:11px; padding:4px 8px;">🔄 रिफ्रेस</button>
       </div>
 
@@ -358,7 +402,7 @@
               <th>सम्पर्क नं.</th>
               <th>पासवर्ड</th>
               <th style="text-align: center;">भूमिका</th>
-              <th style="width: 140px; text-align: center;">कार्य (Action)</th>
+              <th style="width: 150px; text-align: center;">कार्य (Action)</th>
             </tr>
           </thead>
           <tbody id="userTableBody">
@@ -368,6 +412,67 @@
       </div>
     </div>
   </main>
+
+  <!-- सबै विवरण (ID, Password, Name, Contact, Photo) सम्पादन गर्ने पप-अप Modal -->
+  <div class="edit-modal-wrapper" id="editUserModal">
+    <div class="edit-modal-content">
+      <div class="edit-modal-header">
+        <h3>✏️ कर्मचारी विवरण सम्पादन (Edit Staff Profile)</h3>
+        <button type="button" class="btn-close-modal" onclick="closeEditModal()">✕</button>
+      </div>
+
+      <form id="editUserForm" onsubmit="handleSaveEditedUser(event)">
+        <!-- पुरानो username पहिचान गर्न hidden input -->
+        <input type="hidden" id="edit_original_username">
+
+        <div class="form-group">
+          <label>प्रयोगकर्ता नाम (User ID / Username) *</label>
+          <input type="text" id="edit_username" required>
+        </div>
+
+        <div class="form-group">
+          <label>नयाँ पासवर्ड (Password) *</label>
+          <input type="text" id="edit_password" required>
+        </div>
+
+        <div class="form-group">
+          <label>कर्मचारीको पूरा नाम (Full Name) *</label>
+          <input type="text" id="edit_fullname" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="form-group">
+            <label>कर्मचारीको पद (Post) *</label>
+            <input type="text" id="edit_post" required>
+          </div>
+          <div class="form-group">
+            <label>सम्पर्क नं. (Mobile No.) *</label>
+            <input type="text" id="edit_contact" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>भूमिका (Role) *</label>
+          <select id="edit_role">
+            <option value="Admin">कर्मचारी एडमिन (Admin)</option>
+            <option value="Superadmin">सुपर एडमिन (Superadmin)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>फोटो परिवर्तन गर्नुहोस् (Photo Update)</label>
+          <div class="photo-upload-box">
+            <img id="editPreviewPhotoImg" class="user-preview-photo" src="" alt="Photo">
+            <input type="file" id="edit_photo_file" accept="image/*" style="font-size:11px;" onchange="handlePhotoUpload(event, 'edit')">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-create" id="btnUpdateUser" style="background:#16a34a;">
+          <span>💾 सम्पादन सुरक्षित गर्नुहोस् (Update Profile)</span>
+        </button>
+      </form>
+    </div>
+  </div>
 
   <footer class="site-footer">
     Smart Mayadevi — एकीकृत स्थानीय सरकारी व्यवस्थापन प्रणाली | बरेवा, रुपन्देही | Powered by <strong>Tech for Basanta</strong>
@@ -387,10 +492,12 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
-    let base64Photo = "";
+    let base64AddPhoto = "";
+    let base64EditPhoto = "";
+    let globalUsersList = [];
 
     // फोटो अपलोड र कम्प्रेस गरी Base64 मा बदल्ने
-    function handlePhotoUpload(e) {
+    function handlePhotoUpload(e, mode) {
       const file = e.target.files[0];
       if (!file) return;
 
@@ -405,11 +512,18 @@
           canvas.height = img.height * scale;
           const ctx = canvas.getContext("2d");
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          base64Photo = canvas.toDataURL("image/jpeg", 0.75);
+          const compressed = canvas.toDataURL("image/jpeg", 0.75);
 
-          document.getElementById("previewPhotoImg").src = base64Photo;
-          document.getElementById("previewPhotoImg").style.display = "block";
-          document.getElementById("noPhotoText").style.display = "none";
+          if (mode === 'add') {
+            base64AddPhoto = compressed;
+            document.getElementById("previewPhotoImg").src = compressed;
+            document.getElementById("previewPhotoImg").style.display = "block";
+            document.getElementById("noPhotoText").style.display = "none";
+          } else {
+            base64EditPhoto = compressed;
+            document.getElementById("editPreviewPhotoImg").src = compressed;
+            document.getElementById("editPreviewPhotoImg").style.display = "block";
+          }
         };
         img.src = event.target.result;
       };
@@ -430,7 +544,7 @@
       }
     }
 
-    // २. नयाँ कर्मचारी थप्ने (पद, फोन, फोटो र तपाईँले हानेको वास्तविक पासवर्ड सहित)
+    // २. नयाँ कर्मचारी थप्ने
     async function handleAddNewUser(e) {
       e.preventDefault();
 
@@ -457,20 +571,14 @@
         post: post,
         contact: contact,
         role: role,
-        photo: base64Photo || ""
+        photo: base64AddPhoto || ""
       };
 
-      // सुपाबेसमा पठाउने
       if (supabaseClient) {
-        try {
-          await supabaseClient.from('users').insert([newUserObj]);
-        } catch(err) {}
-        try {
-          await supabaseClient.from('admin_users').insert([newUserObj]);
-        } catch(err) {}
+        try { await supabaseClient.from('users').insert([newUserObj]); } catch(err) {}
+        try { await supabaseClient.from('admin_users').insert([newUserObj]); } catch(err) {}
       }
 
-      // लोकल स्टोरेजमा पनि १००% ब्याकअप राख्ने
       try {
         let localList = JSON.parse(localStorage.getItem("system_users") || "[]");
         localList = localList.filter(item => (item.username || '').toLowerCase() !== u.toLowerCase());
@@ -482,7 +590,7 @@
       document.getElementById("addUserForm").reset();
       document.getElementById("previewPhotoImg").style.display = "none";
       document.getElementById("noPhotoText").style.display = "block";
-      base64Photo = "";
+      base64AddPhoto = "";
       btn.disabled = false;
       btn.innerHTML = "<span>सुरक्षित गर्नुहोस् (Save Staff)</span> ➜";
       loadAllUsers();
@@ -495,7 +603,6 @@
 
       let allUsers = [];
 
-      // सुपाबेसबाट तान्ने
       if (supabaseClient) {
         try {
           const { data, error } = await supabaseClient.from('users').select('*').limit(200);
@@ -503,7 +610,6 @@
         } catch(e) {}
       }
 
-      // लोकल स्टोरेजसँग मिलाउने
       try {
         const localList = JSON.parse(localStorage.getItem("system_users") || "[]");
         localList.forEach(loc => {
@@ -513,7 +619,6 @@
         });
       } catch(e) {}
 
-      // सुपरएडमिन सधैं पहिलो पंक्तिमा
       if (!allUsers.some(u => (u.username || u.user_id || '').toLowerCase() === "superadmin")) {
         allUsers.unshift({
           username: "superadmin",
@@ -526,7 +631,9 @@
         });
       }
 
+      globalUsersList = allUsers;
       tbody.innerHTML = "";
+
       allUsers.forEach((usr, idx) => {
         const uname = usr.username || usr.user_id || usr.name || "-";
         const pass = usr.password || usr.pass || "••••••••";
@@ -558,7 +665,7 @@
           <td style="text-align:center;">
             ${isSuper ? '<span style="font-size:11px; color:#64748b;">सुरक्षित</span>' : `
               <div class="action-btn-group">
-                <button type="button" class="btn-pass-edit" onclick="changeUserPassword('${uname}')" title="नयाँ पासवर्ड राख्नुहोस्">✏️ फेर्नुस्</button>
+                <button type="button" class="btn-edit-all" onclick="openEditModal('${uname}')" title="सबै विवरण सम्पादन गर्नुहोस्">✏️ Edit</button>
                 <button type="button" class="btn-delete-user" onclick="deleteUser('${uname}')" title="मेटाउनुहोस्">🗑️ हटाउने</button>
               </div>
             `}
@@ -568,7 +675,7 @@
       });
     }
 
-    // ४. पासवर्ड हेर्न मिल्ने (Show / Hide Password in Table)
+    // ४. पासवर्ड देखाउने/लुकाउने
     function toggleShowPassword(idx, realPass) {
       const el = document.getElementById(`passSpan_${idx}`);
       if (el.textContent === "••••••••") {
@@ -578,36 +685,95 @@
       }
     }
 
-    // ५. बिर्सिएको पासवर्ड सुपरएडमिनले परिवर्तन गरिदिने (Reset Password)
-    async function changeUserPassword(uname) {
-      const newP = prompt(`कर्मचारी "${uname}" को लागि नयाँ गोप्य पासवर्ड प्रविष्ट गर्नुहोस्:`);
-      if (!newP || !newP.trim()) return;
+    // ५. Edit Modal खोल्ने र पुरानो डाटा फाराममा भर्ने
+    function openEditModal(uname) {
+      const user = globalUsersList.find(u => (u.username || u.user_id || u.name || '').toLowerCase() === uname.toLowerCase());
+      if (!user) return;
 
-      const cleanPass = newP.trim();
+      document.getElementById("edit_original_username").value = uname;
+      document.getElementById("edit_username").value = user.username || user.user_id || uname;
+      document.getElementById("edit_password").value = user.password || user.pass || "";
+      document.getElementById("edit_fullname").value = user.full_name || user.name || "";
+      document.getElementById("edit_post").value = user.post || "";
+      document.getElementById("edit_contact").value = user.contact || user.phone || "";
+      document.getElementById("edit_role").value = user.role || "Admin";
+
+      base64EditPhoto = user.photo || user.avatar_url || "";
+      const prevImg = document.getElementById("editPreviewPhotoImg");
+      if (base64EditPhoto) {
+        prevImg.src = base64EditPhoto;
+        prevImg.style.display = "block";
+      } else {
+        prevImg.style.display = "none";
+      }
+
+      document.getElementById("editUserModal").style.display = "flex";
+    }
+
+    function closeEditModal() {
+      document.getElementById("editUserModal").style.display = "none";
+      base64EditPhoto = "";
+    }
+
+    // ६. सम्पादन गरिएका सबै विवरण (ID, Pass, Name, Contact, Photo) सुरक्षित गर्ने
+    async function handleSaveEditedUser(e) {
+      e.preventDefault();
+
+      const origUname = document.getElementById("edit_original_username").value.trim();
+      const newUname = document.getElementById("edit_username").value.trim();
+      const newPass = document.getElementById("edit_password").value.trim();
+      const newFname = document.getElementById("edit_fullname").value.trim();
+      const newPost = document.getElementById("edit_post").value.trim();
+      const newContact = document.getElementById("edit_contact").value.trim();
+      const newRole = document.getElementById("edit_role").value;
+      const btn = document.getElementById("btnUpdateUser");
+
+      if (!newUname || !newPass || !newFname) {
+        alert("कृपया युजरनेम, पासवर्ड र नाम खाली नछोड्नुहोस्!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = "⏳ अद्यावधिक हुँदैछ...";
+
+      const updatedObj = {
+        username: newUname,
+        password: newPass,
+        full_name: newFname,
+        post: newPost,
+        contact: newContact,
+        role: newRole,
+        photo: base64EditPhoto || ""
+      };
 
       // सुपाबेसमा अद्यावधिक गर्ने
       if (supabaseClient) {
         try {
-          await supabaseClient.from('users').update({ password: cleanPass }).eq('username', uname);
-          await supabaseClient.from('admin_users').update({ password: cleanPass }).eq('username', uname);
-        } catch(e) {}
+          await supabaseClient.from('users').update(updatedObj).eq('username', origUname);
+          await supabaseClient.from('admin_users').update(updatedObj).eq('username', origUname);
+        } catch(err) {}
       }
 
       // लोकल स्टोरेजमा अद्यावधिक गर्ने
       try {
         let localList = JSON.parse(localStorage.getItem("system_users") || "[]");
-        const idx = localList.findIndex(item => (item.username || '').toLowerCase() === uname.toLowerCase());
+        const idx = localList.findIndex(item => (item.username || '').toLowerCase() === origUname.toLowerCase());
         if (idx !== -1) {
-          localList[idx].password = cleanPass;
-          localStorage.setItem("system_users", JSON.stringify(localList));
+          localList[idx] = updatedObj;
+        } else {
+          localList.push(updatedObj);
         }
+        localStorage.setItem("system_users", JSON.stringify(localList));
       } catch(e) {}
 
-      alert(`✓ कर्मचारी "${uname}" को नयाँ पासवर्ड "${cleanPass}" सफलतापूर्वक सेट गरियो! अब यो पासवर्डले लगइन गर्न सकिन्छ।`);
+      alert(`✓ कर्मचारी "${newFname}" (${newUname}) को सम्पूर्ण विवरण सफलतापूर्वक परिमार्जन भयो!`);
+      closeEditModal();
+      btn.disabled = false;
+      btn.innerHTML = "<span>💾 सम्पादन सुरक्षित गर्नुहोस् (Update Profile)</span>";
       loadAllUsers();
     }
 
-    // ६. प्रयोगकर्ता मेटाउने
+    // ७. प्रयोगकर्ता मेटाउने
     async function deleteUser(uname) {
       if (!confirm(`के तपाईं कर्मचारी "${uname}" लाई पूर्ण रूपमा हटाउन निश्चित हुनुहुन्छ?`)) return;
 
@@ -628,7 +794,6 @@
       loadAllUsers();
     }
 
-    // फोटो ठूलो पारेर हेर्ने
     function viewFullPhoto(src) {
       const win = window.open("");
       win.document.write(`<img src="${src}" style="max-width:100%; height:auto; display:block; margin:auto; border-radius:8px;">`);
