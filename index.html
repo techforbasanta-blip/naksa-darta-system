@@ -68,7 +68,7 @@
     }
     .user-profile-info { text-align: left; line-height: 1.18; }
     .user-profile-name { font-size: 13px; font-weight: 800; color: #ffffff; }
-    .user-profile-role { font-size: 11px; color: #7dd3fc; font-weight: 700; }
+    .user-profile-role { font-size: 11px; color: #7dd3fc; font-weight: 700; text-transform: capitalize; }
 
     .header-clock-box { text-align: right; background: rgba(255, 255, 255, 0.1); padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.2); line-height: 1.2; }
     .header-clock-box .h-date { font-size: 11px; color: #cbd5e1; font-weight: 600; }
@@ -114,7 +114,6 @@
 </head>
 <body>
 
-  <!-- हेडर -->
   <header class="gov-header">
     <div class="header-inner">
       <div class="brand-left">
@@ -148,7 +147,6 @@
     </div>
   </header>
 
-  <!-- मुख्य पोर्टल ड्यासबोर्ड -->
   <main class="dashboard-container">
     <div class="welcome-hero">
       <div>
@@ -163,8 +161,8 @@
     </div>
 
     <div class="portal-cards-grid">
-      <!-- अङ्ग्रेजी सिफारिस पोर्टल (सबैको लागि खुला) -->
-      <div class="portal-card" onclick="openPortal('eng')">
+      <!-- अङ्ग्रेजी सिफारिस (वडा र पालिकालाई मात्र) -->
+      <div class="portal-card" onclick="openPortal('eng', 'english_cert.html')">
         <div>
           <div class="card-icon">🌍</div>
           <div class="card-title">English Certificate Portal</div>
@@ -173,8 +171,8 @@
         <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
       </div>
 
-      <!-- नक्सा व्यवस्थापन पोर्टल (केवल पालिका/Admin को लागि) -->
-      <div class="portal-card" onclick="openPortal('map')">
+      <!-- नक्सा व्यवस्थापन पोर्टल (नक्सा शाखा र पालिकालाई मात्र) -->
+      <div class="portal-card" onclick="openPortal('naksa', 'map_portal.html')">
         <div>
           <div class="card-icon">🗺️</div>
           <div class="card-title">नक्सा (Map) व्यवस्थापन पोर्टल</div>
@@ -183,7 +181,7 @@
         <div class="card-link-text" style="color:var(--gov-crimson);">प्रवेश गर्नुहोस् ➜</div>
       </div>
 
-      <div class="portal-card" onclick="window.location.href='tippani.html'">
+      <div class="portal-card" onclick="openPortal('naksa', 'tippani.html')">
         <div>
           <div class="card-icon">📄</div>
           <div class="card-title">निर्णयार्थ पेश टिप्पणी (Tippani)</div>
@@ -192,7 +190,7 @@
         <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
       </div>
 
-      <div class="portal-card" onclick="window.location.href='record.html'">
+      <div class="portal-card" onclick="openPortal('naksa', 'record.html')">
         <div>
           <div class="card-icon">📂</div>
           <div class="card-title">पुराना नक्सा अभिलेखहरू</div>
@@ -237,7 +235,7 @@
         const u = JSON.parse(raw);
 
         const displayName = u.full_name || u.name || u.username || "कर्मचारी";
-        const displayPost = u.post || (u.role === "Superadmin" ? "प्रमुख प्रशासकीय अधिकृत" : "वडा कर्मचारी");
+        const displayPost = u.post || u.role || "Ward";
 
         const nameEl = document.getElementById("headerUserName");
         const roleEl = document.getElementById("headerUserRole");
@@ -256,7 +254,8 @@
           fallbackEl.textContent = displayName.charAt(0).toUpperCase();
         }
 
-        const isSuper = (u.username && u.username.toLowerCase() === "superadmin") || (u.role && u.role.toLowerCase() === "superadmin");
+        const isSuper = (u.username && (u.username.toLowerCase() === "superadmin" || u.username.toLowerCase() === "admin")) || 
+                        (u.role && (u.role.toLowerCase() === "superadmin" || u.role === "कार्यालय प्रमुख" || u.role.toLowerCase() === "pramukh"));
         if (isSuper) {
           const adminCard = document.getElementById("adminPortalCard");
           if (adminCard) adminCard.style.display = "flex";
@@ -293,28 +292,37 @@
       } catch(e) {}
     }
 
-    async function handleSafeLogout() {
-      // Optional: Add logic here if you want to notify Supabase or log an event
+    function handleSafeLogout() {
       sessionStorage.clear();
       localStorage.removeItem("user");
       alert("सफलतापूर्वक लगआउट भयो!");
       window.location.href = "login.html";
     }
 
-    // Access Control Logic
-    function openPortal(portalType) {
+    // Role-based Access Control
+    function openPortal(portalType, url) {
       var userRaw = localStorage.getItem("user") || sessionStorage.getItem("user") || "{}";
       var user = JSON.parse(userRaw);
-      var role = user.role || "Ward"; 
+      var role = (user.role || "ward").toLowerCase();
+      var username = (user.username || "").toLowerCase();
+
+      // Superadmin / Pramukh have access to everything
+      var isSuper = role === "superadmin" || role === "कार्यालय प्रमुख" || role === "pramukh" || username === "superadmin" || username === "admin";
 
       if (portalType === 'eng') {
-        window.location.href = "english_cert.html";
-      } 
-      else if (portalType === 'map') {
-        if (role === "Superadmin" || role === "कार्यालय प्रमुख") {
-          window.location.href = "map_portal.html"; 
+        // Only Superadmin or Ward can access English Portal
+        if (isSuper || role === "ward" || role === "वडा") {
+          window.location.href = url;
         } else {
-          alert("❌ Access Denied: तपाईंलाई नक्सा (Map) पोर्टल प्रयोग गर्ने अधिकार छैन। यो केवल पालिका (Superadmin) को लागि मात्र हो।");
+          alert("❌ Access Denied: तपाईंलाई सिफारिस (Ward) पोर्टल प्रयोग गर्ने अधिकार छैन। तपाईंको पहुँच नक्सा (Map) शाखामा मात्र छ।");
+        }
+      } 
+      else if (portalType === 'naksa') {
+        // Only Superadmin or Naksa can access Map/Tippani/Record Portals
+        if (isSuper || role === "naksa" || role === "map" || role === "नक्सा") {
+          window.location.href = url;
+        } else {
+          alert("❌ Access Denied: तपाईंलाई नक्सा (Map) पोर्टल प्रयोग गर्ने अधिकार छैन। यो केवल नक्सा शाखा वा पालिकाको लागि मात्र हो।");
         }
       }
     }
