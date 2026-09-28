@@ -41,175 +41,65 @@
       color: #ffffff;
     }
     .header-inner {
-      max-width: 1720px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
+      max-width: 1720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
     }
     .brand-left { display: flex; align-items: center; gap: 12px; }
     .brand-left img { height: 52px !important; width: auto !important; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
 
-    .motto-home-row {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 32px;
-      margin-top: 2px;
-    }
+    .motto-home-row { display: flex; align-items: center; flex-wrap: wrap; gap: 32px; margin-top: 2px; }
     .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; margin: 0; }
 
     .brand-home-badge {
-      background: rgba(255, 255, 255, 0.18);
-      color: #ffffff !important;
-      text-decoration: none;
-      font-size: 12.5px;
-      font-weight: 800;
-      padding: 2px 10px;
-      border-radius: 4px;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.2s ease;
-      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.18); color: #ffffff !important; text-decoration: none; font-size: 12.5px; font-weight: 800;
+      padding: 2px 10px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.4); display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease; white-space: nowrap;
     }
-    .brand-home-badge:hover {
-      background: #2563eb;
-      border-color: #60a5fa;
-      transform: translateY(-1px);
-    }
+    .brand-home-badge:hover { background: #2563eb; border-color: #60a5fa; transform: translateY(-1px); }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-    /* प्रोफाइल ब्याच: नाम र तल पद */
     .user-profile-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 3px 12px 3px 5px;
-      border-radius: 25px;
+      display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 3px 12px 3px 5px; border-radius: 25px;
     }
-    .user-profile-badge img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1.5px solid #38bdf8;
-    }
+    .user-profile-badge img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1.5px solid #38bdf8; }
     .user-profile-avatar-fallback {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #0284c7;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 15px;
-      border: 1.5px solid #38bdf8;
+      width: 36px; height: 36px; border-radius: 50%; background: #0284c7; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; border: 1.5px solid #38bdf8;
     }
     .user-profile-info { text-align: left; line-height: 1.18; }
     .user-profile-name { font-size: 13px; font-weight: 800; color: #ffffff; }
     .user-profile-role { font-size: 11px; color: #7dd3fc; font-weight: 700; }
 
-    .header-clock-box {
-      text-align: right;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 4px 8px;
-      border-radius: 4px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      line-height: 1.2;
-    }
+    .header-clock-box { text-align: right; background: rgba(255, 255, 255, 0.1); padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.2); line-height: 1.2; }
     .header-clock-box .h-date { font-size: 11px; color: #cbd5e1; font-weight: 600; }
     .header-clock-box .h-time { font-size: 12.5px; color: #ffffff; font-weight: 800; }
 
     .nav-btn {
-      background: #0d233e;
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 6px 11px;
-      border-radius: 4px;
-      border: 1px solid #1e3a8a;
-      display: inline-flex;
-      align-items: center;
-      cursor: pointer;
-      white-space: nowrap;
+      background: #0d233e; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 700; padding: 6px 11px; border-radius: 4px; border: 1px solid #1e3a8a; display: inline-flex; align-items: center; cursor: pointer; white-space: nowrap;
     }
     .nav-btn:hover, .nav-btn.active { background: #2563eb; border-color: #3b82f6; }
     .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
-    .dashboard-container {
-      max-width: 1400px;
-      width: 100%;
-      margin: 30px auto;
-      padding: 0 16px;
-      flex: 1;
-    }
+    .dashboard-container { max-width: 1400px; width: 100%; margin: 30px auto; padding: 0 16px; flex: 1; }
 
     .welcome-hero {
       background: linear-gradient(135deg, rgba(30, 58, 138, 0.12) 0%, rgba(37, 99, 235, 0.05) 100%);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 15px;
+      border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;
     }
     .welcome-hero h2 { font-size: 22px; font-weight: 900; color: #1e3a8a; margin-bottom: 4px; }
     body.dark-mode .welcome-hero h2 { color: #60a5fa; }
     .welcome-hero p { font-size: 13.5px; color: #64748b; font-weight: 600; }
     body.dark-mode .welcome-hero p { color: #94a3b8; }
 
-    .portal-cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
+    .portal-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 
     .portal-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 24px;
-      text-decoration: none;
-      color: inherit;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 24px; text-decoration: none; color: inherit; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: pointer;
     }
-    .portal-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      background: #1e3a8a;
-      transition: background 0.25s ease;
-    }
-    .portal-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.18);
-      border-color: #3b82f6;
-    }
-    .portal-card:hover::before {
-      background: #2563eb;
-    }
+    .portal-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #1e3a8a; transition: background 0.25s ease; }
+    .portal-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.18); border-color: #3b82f6; }
+    .portal-card:hover::before { background: #2563eb; }
 
     .card-icon { font-size: 36px; margin-bottom: 12px; }
     .card-title { font-size: 18px; font-weight: 800; color: #1e3a8a; margin-bottom: 6px; }
@@ -218,15 +108,7 @@
     body.dark-mode .card-desc { color: #94a3b8; }
     .card-link-text { font-size: 12.5px; font-weight: 800; color: #2563eb; display: inline-flex; align-items: center; gap: 4px; }
 
-    footer.site-footer {
-      background: #07192f;
-      color: #cbd5e1;
-      padding: 10px 18px;
-      font-size: 12px;
-      border-top: 3px solid #2563eb;
-      margin-top: auto;
-      text-align: center;
-    }
+    footer.site-footer { background: #07192f; color: #cbd5e1; padding: 10px 18px; font-size: 12px; border-top: 3px solid #2563eb; margin-top: auto; text-align: center; }
     footer.site-footer strong { color: #38bdf8; }
   </style>
 </head>
@@ -241,13 +123,11 @@
           <h1>Smart Mayadevi</h1>
           <div class="motto-home-row">
             <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
-            <a href="index.html" class="brand-home-badge" title="मुख्य गृहपृष्ठ">🏠 Home</a>
           </div>
         </div>
       </div>
 
       <div class="header-controls">
-        <!-- कर्मचारी प्रोफाइल ब्याच (नमस्ते, लक्ष्मण घिमिरे र तल अमिन) -->
         <div class="user-profile-badge" id="headerUserProfile">
           <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
           <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
@@ -261,11 +141,6 @@
           <div class="h-date" id="liveNepaliHeaderDate">मिति: लोड हुँदैछ...</div>
           <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
         </div>
-
-        <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
-        <a href="tippani.html" class="nav-btn">📄 टिप्पणी</a>
-        <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
-        <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="मोड परिवर्तन">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
@@ -288,41 +163,43 @@
     </div>
 
     <div class="portal-cards-grid">
-      <a href="darta.html" class="portal-card">
+      <!-- अङ्ग्रेजी सिफारिस पोर्टल (सबैको लागि खुला) -->
+      <div class="portal-card" onclick="openPortal('eng')">
         <div>
-          <div class="card-icon">📝</div>
-          <div class="card-title">नयाँ नक्सा दर्ता तथा प्रमाणपत्र</div>
-          <div class="card-desc">नयाँ घरधनीको विवरण, जग्गा नापजाँच, फोटो, राजश्व तथा निर्माण सम्पन्न प्रमाण-पत्र जारी गर्ने फाराम।</div>
+          <div class="card-icon">🌍</div>
+          <div class="card-title">English Certificate Portal</div>
+          <div class="card-desc">English सिफारिस तथा प्रमाणपत्रहरू (Relation, Birth, Income आदि) तयार गर्ने र प्रिन्ट गर्ने पोर्टल।</div>
         </div>
         <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
-      </a>
+      </div>
 
-      <a href="tippani.html" class="portal-card">
+      <!-- नक्सा व्यवस्थापन पोर्टल (केवल पालिका/Admin को लागि) -->
+      <div class="portal-card" onclick="openPortal('map')">
+        <div>
+          <div class="card-icon">🗺️</div>
+          <div class="card-title">नक्सा (Map) व्यवस्थापन पोर्टल</div>
+          <div class="card-desc">नयाँ भवन निर्माण नक्सा दर्ता, प्राविधिक जाँच तथा अभिलेखीकरण गर्ने मुख्य प्रणाली।</div>
+        </div>
+        <div class="card-link-text" style="color:var(--gov-crimson);">प्रवेश गर्नुहोस् ➜</div>
+      </div>
+
+      <div class="portal-card" onclick="window.location.href='tippani.html'">
         <div>
           <div class="card-icon">📄</div>
           <div class="card-title">निर्णयार्थ पेश टिप्पणी (Tippani)</div>
           <div class="card-desc">अमिन, सब-ईन्जिनियर, ईन्जिनियर र प्रमुख प्रशासकीय अधिकृतको हस्ताक्षर सहितको निर्णयार्थ टिप्पणी तयार र प्रिन्ट।</div>
         </div>
         <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
-      </a>
+      </div>
 
-      <a href="record.html" class="portal-card">
+      <div class="portal-card" onclick="window.location.href='record.html'">
         <div>
           <div class="card-icon">📂</div>
           <div class="card-title">पुराना नक्सा अभिलेखहरू</div>
           <div class="card-desc">पहिले जारी गरिएका सम्पूर्ण नक्सा रेकर्डहरू खोज्ने, हेर्ने, गल्ती सच्याउने (Edit) तथा प्रिन्ट गर्ने।</div>
         </div>
         <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
-      </a>
-
-      <a href="verify.html" class="portal-card">
-        <div>
-          <div class="card-icon">🔍</div>
-          <div class="card-title">सार्वजनिक प्रमाणिकरण पोर्टल</div>
-          <div class="card-desc">QR कोड स्क्यान गरी वा दर्ता नम्बर हानेर आधिकारिक प्रमाण-पत्रको आधिकारिकता जाँच गर्ने पोर्टल।</div>
-        </div>
-        <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
-      </a>
+      </div>
 
       <a href="admin.html" id="adminPortalCard" class="portal-card" style="display:none;">
         <div>
@@ -340,54 +217,51 @@
   </footer>
 
   <script>
+    // Supabase Configuration
+    const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
+    let supabaseClient = null;
+    try {
+        if (window.supabase) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
+    } catch(e) { console.warn("Supabase Init Warning", e); }
+
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
     function renderLoggedInUserBadge() {
       try {
         const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
-        if (!raw) {
-          window.location.href = "login.html";
-          return;
-        }
+        if (!raw) { window.location.href = "login.html"; return; }
         const u = JSON.parse(raw);
 
         const displayName = u.full_name || u.name || u.username || "कर्मचारी";
-        // पद (Post) निर्धारण: यदि post छ भने post देखाउने, नभए Superadmin भए 'प्रमुख प्रशासकीय अधिकृत' देखाउने
-        const displayPost = u.post || (u.role === "Superadmin" ? "प्रमुख प्रशासकीय अधिकृत" : "कर्मचारी");
+        const displayPost = u.post || (u.role === "Superadmin" ? "प्रमुख प्रशासकीय अधिकृत" : "वडा कर्मचारी");
 
-        // १. हेडर प्रोफाइल ब्याच (पहिलो लाइन: नमस्ते + नाम, दोस्रो लाइन: पद)
         const nameEl = document.getElementById("headerUserName");
         const roleEl = document.getElementById("headerUserRole");
         if (nameEl) nameEl.textContent = `नमस्ते, ${displayName}`;
-        if (roleEl) roleEl.textContent = displayPost; // यहाँ Admin को सट्टा पद देखिन्छ
+        if (roleEl) roleEl.textContent = displayPost; 
 
-        // २. स्वागत ब्यानर (Hero Banner)
         const heroEl = document.getElementById("heroGreetingText");
         if (heroEl) heroEl.textContent = `🙏 नमस्ते ${displayName} (${displayPost}), Smart Mayadevi मा स्वागत छ!`;
 
-        // ३. फोटो देखाउने
         const imgEl = document.getElementById("headerUserAvatarImg");
         const fallbackEl = document.getElementById("headerUserAvatarFallback");
         if (u.photo && imgEl) {
-          imgEl.src = u.photo;
-          imgEl.style.display = "block";
+          imgEl.src = u.photo; imgEl.style.display = "block";
           if (fallbackEl) fallbackEl.style.display = "none";
         } else if (fallbackEl) {
           fallbackEl.textContent = displayName.charAt(0).toUpperCase();
         }
 
-        // ४. Superadmin लाई मात्र Admin मेनु र कार्ड देखाउने
         const isSuper = (u.username && u.username.toLowerCase() === "superadmin") || (u.role && u.role.toLowerCase() === "superadmin");
         if (isSuper) {
-          const adminBtn = document.getElementById("adminMenuBtn");
           const adminCard = document.getElementById("adminPortalCard");
-          if (adminBtn) adminBtn.style.display = "inline-flex";
           if (adminCard) adminCard.style.display = "flex";
         }
-      } catch(e) {
-        window.location.href = "login.html";
-      }
+      } catch(e) { window.location.href = "login.html"; }
     }
 
     function toggleTheme() {
@@ -419,11 +293,30 @@
       } catch(e) {}
     }
 
-    function handleSafeLogout() {
+    async function handleSafeLogout() {
+      // Optional: Add logic here if you want to notify Supabase or log an event
       sessionStorage.clear();
       localStorage.removeItem("user");
       alert("सफलतापूर्वक लगआउट भयो!");
       window.location.href = "login.html";
+    }
+
+    // Access Control Logic
+    function openPortal(portalType) {
+      var userRaw = localStorage.getItem("user") || sessionStorage.getItem("user") || "{}";
+      var user = JSON.parse(userRaw);
+      var role = user.role || "Ward"; 
+
+      if (portalType === 'eng') {
+        window.location.href = "english_cert.html";
+      } 
+      else if (portalType === 'map') {
+        if (role === "Superadmin" || role === "कार्यालय प्रमुख") {
+          window.location.href = "map_portal.html"; 
+        } else {
+          alert("❌ Access Denied: तपाईंलाई नक्सा (Map) पोर्टल प्रयोग गर्ने अधिकार छैन। यो केवल पालिका (Superadmin) को लागि मात्र हो।");
+        }
+      }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
