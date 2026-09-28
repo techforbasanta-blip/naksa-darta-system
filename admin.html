@@ -225,6 +225,7 @@
       font-weight: 800;
     }
     .role-super { background: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
+    .role-pramukh { background: #fef3c7; color: #b45309; border: 1px solid #f59e0b; }
     .role-admin { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
 
     .action-btn-group { display: flex; gap: 4px; align-items: center; }
@@ -239,7 +240,6 @@
       background: #dc2626; color: #fff; border: none; padding: 4px 6px; border-radius: 3px; font-size: 11px; cursor: pointer; font-weight: bold;
     }
 
-    /* पूर्ण सम्पादन मोडल (Full Edit Modal) */
     .edit-modal-wrapper {
       display: none;
       position: fixed;
@@ -296,7 +296,6 @@
 </head>
 <body>
 
-  <!-- हेडर -->
   <header class="gov-header">
     <div class="header-inner">
       <div class="brand-left">
@@ -347,13 +346,13 @@
 
         <div class="form-group">
           <label>कर्मचारीको पूरा नाम (Full Name) *</label>
-          <input type="text" id="new_fullname" placeholder="उदा: लक्ष्मण थारु" required>
+          <input type="text" id="new_fullname" placeholder="उदा: लक्ष्मण घिमिरे" required>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="form-group">
             <label>कर्मचारीको पद (Post) *</label>
-            <input type="text" id="new_post" placeholder="उदा: सब-ईन्जिनियर / अमिन" required>
+            <input type="text" id="new_post" placeholder="उदा: कम्प्युटर अपरेटर / अमिन" required>
           </div>
           <div class="form-group">
             <label>सम्पर्क नं. (Mobile No.) *</label>
@@ -365,7 +364,8 @@
           <label>भूमिका (Role) *</label>
           <select id="new_role">
             <option value="Admin" selected>कर्मचारी एडमिन (Admin)</option>
-            <option value="Superadmin">सुपर एडमिन (Superadmin)</option>
+            <option value="Superadmin">सुपर एडमिन (Superadmin - कम्प्युटर अपरेटर)</option>
+            <option value="कार्यालय प्रमुख">कार्यालय प्रमुख (प्रमुख प्रशासकीय अधिकृत)</option>
           </select>
         </div>
 
@@ -384,10 +384,10 @@
       </form>
     </div>
 
-    <!-- दर्ता भएका कर्मचारीहरूको सूची -->
+    <!-- दर्ता भएका कर्मचारीहरूको सूची (सुपरएडमिन कम्प्युटर अपरेटर + कार्यालय प्रमुख दुवै सहित) -->
     <div class="card">
       <div class="card-title">
-        <span>👥 दर्ता भएका कर्मचारीहरूको विवरण तथा व्यवस्थापन</span>
+        <span>👥 सुपरएडमिन, कार्यालय प्रमुख तथा कर्मचारीहरूको व्यवस्थापन</span>
         <button type="button" class="nav-btn" onclick="loadAllUsers()" style="font-size:11px; padding:4px 8px;">🔄 रिफ्रेस</button>
       </div>
 
@@ -402,7 +402,7 @@
               <th>सम्पर्क नं.</th>
               <th>पासवर्ड</th>
               <th style="text-align: center;">भूमिका</th>
-              <th style="width: 150px; text-align: center;">कार्य (Action)</th>
+              <th style="width: 140px; text-align: center;">कार्य (Action)</th>
             </tr>
           </thead>
           <tbody id="userTableBody">
@@ -413,16 +413,15 @@
     </div>
   </main>
 
-  <!-- सबै विवरण (ID, Password, Name, Contact, Photo) सम्पादन गर्ने पप-अप Modal -->
+  <!-- सबै विवरण (सुपरएडमिन, कार्यालय प्रमुख लगायत सबैको) सम्पादन गर्ने पप-अप Modal -->
   <div class="edit-modal-wrapper" id="editUserModal">
     <div class="edit-modal-content">
       <div class="edit-modal-header">
-        <h3>✏️ कर्मचारी विवरण सम्पादन (Edit Staff Profile)</h3>
+        <h3>✏️ विवरण सम्पादन (Edit Profile)</h3>
         <button type="button" class="btn-close-modal" onclick="closeEditModal()">✕</button>
       </div>
 
       <form id="editUserForm" onsubmit="handleSaveEditedUser(event)">
-        <!-- पुरानो username पहिचान गर्न hidden input -->
         <input type="hidden" id="edit_original_username">
 
         <div class="form-group">
@@ -436,14 +435,14 @@
         </div>
 
         <div class="form-group">
-          <label>कर्मचारीको पूरा नाम (Full Name) *</label>
+          <label>पूरा नाम (Full Name) *</label>
           <input type="text" id="edit_fullname" required>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="form-group">
-            <label>कर्मचारीको पद (Post) *</label>
-            <input type="text" id="edit_post" required>
+            <label>पद (Post) *</label>
+            <input type="text" id="edit_post" placeholder="उदा: कम्प्युटर अपरेटर / प्रमुख प्रशासकीय अधिकृत" required>
           </div>
           <div class="form-group">
             <label>सम्पर्क नं. (Mobile No.) *</label>
@@ -455,7 +454,8 @@
           <label>भूमिका (Role) *</label>
           <select id="edit_role">
             <option value="Admin">कर्मचारी एडमिन (Admin)</option>
-            <option value="Superadmin">सुपर एडमिन (Superadmin)</option>
+            <option value="Superadmin">सुपर एडमिन (Superadmin - कम्प्युटर अपरेटर)</option>
+            <option value="कार्यालय प्रमुख">कार्यालय प्रमुख (प्रमुख प्रशासकीय अधिकृत)</option>
           </select>
         </div>
 
@@ -496,7 +496,6 @@
     let base64EditPhoto = "";
     let globalUsersList = [];
 
-    // फोटो अपलोड र कम्प्रेस गरी Base64 मा बदल्ने
     function handlePhotoUpload(e, mode) {
       const file = e.target.files[0];
       if (!file) return;
@@ -530,12 +529,11 @@
       reader.readAsDataURL(file);
     }
 
-    // १. सुरक्षा जाँच: केवल Superadmin ले मात्र यो पेज खोल्न पाउने
     function verifySuperAdminAccess() {
       try {
         const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
         let u = raw ? JSON.parse(raw) : null;
-        if (!u || !u.username || u.username.toLowerCase() !== "superadmin") {
+        if (!u || !u.role || (u.role.toLowerCase() !== "superadmin" && u.role !== "कार्यालय प्रमुख")) {
           alert("⛔ पहुँच अस्वीकृत! यो प्यानल खोल्ने अधिकार केवल Superadmin लाई मात्र छ।");
           window.location.href = "index.html";
         }
@@ -544,7 +542,6 @@
       }
     }
 
-    // २. नयाँ कर्मचारी थप्ने
     async function handleAddNewUser(e) {
       e.preventDefault();
 
@@ -586,7 +583,7 @@
         localStorage.setItem("system_users", JSON.stringify(localList));
       } catch(e) {}
 
-      alert(`✓ कर्मचारी "${fname}" (${u}) पासवर्ड सहित सफलतापूर्वक सुरक्षित भयो!`);
+      alert(`✓ "${fname}" (${post}) पासवर्ड सहित सफलतापूर्वक सुरक्षित भयो!`);
       document.getElementById("addUserForm").reset();
       document.getElementById("previewPhotoImg").style.display = "none";
       document.getElementById("noPhotoText").style.display = "block";
@@ -596,7 +593,6 @@
       loadAllUsers();
     }
 
-    // ३. सबै कर्मचारी लोड गर्ने
     async function loadAllUsers() {
       const tbody = document.getElementById("userTableBody");
       tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>`;
@@ -619,16 +615,42 @@
         });
       } catch(e) {}
 
-      if (!allUsers.some(u => (u.username || u.user_id || '').toLowerCase() === "superadmin")) {
-        allUsers.unshift({
-          username: "superadmin",
-          password: "Sarkar@#07",
-          full_name: "Super Admin",
-          post: "प्रणाली प्रशासक",
-          contact: "-",
-          role: "Superadmin",
-          photo: localStorage.getItem("superadmin_profile_photo") || ""
-        });
+      // १. सुपरएडमिन (तपाईं - कम्प्युटर अपरेटर)
+      const savedSuper = JSON.parse(localStorage.getItem("superadmin_custom_profile") || "null");
+      const superUser = savedSuper || {
+        username: "superadmin",
+        password: "Sarkar@#07",
+        full_name: "सुपर एडमिन",
+        post: "कम्प्युटर अपरेटर",
+        contact: "-",
+        role: "Superadmin",
+        photo: localStorage.getItem("superadmin_profile_photo") || ""
+      };
+
+      // २. कार्यालय प्रमुख (प्रमुख प्रशासकीय अधिकृत)
+      const savedPramukh = JSON.parse(localStorage.getItem("pramukh_custom_profile") || "null");
+      const pramukhUser = savedPramukh || {
+        username: "pramukh",
+        password: "Mayadevi@#07",
+        full_name: "कार्यालय प्रमुख",
+        post: "प्रमुख प्रशासकीय अधिकृत",
+        contact: "-",
+        role: "कार्यालय प्रमुख",
+        photo: ""
+      };
+
+      const superIndex = allUsers.findIndex(u => (u.username || u.user_id || '').toLowerCase() === (superUser.username || '').toLowerCase());
+      if (superIndex !== -1) {
+        allUsers[superIndex] = { ...allUsers[superIndex], ...superUser };
+      } else {
+        allUsers.unshift(superUser);
+      }
+
+      const pramukhIndex = allUsers.findIndex(u => (u.username || u.user_id || '').toLowerCase() === (pramukhUser.username || '').toLowerCase());
+      if (pramukhIndex !== -1) {
+        allUsers[pramukhIndex] = { ...allUsers[pramukhIndex], ...pramukhUser };
+      } else {
+        allUsers.splice(1, 0, pramukhUser);
       }
 
       globalUsersList = allUsers;
@@ -638,44 +660,46 @@
         const uname = usr.username || usr.user_id || usr.name || "-";
         const pass = usr.password || usr.pass || "••••••••";
         const name = usr.full_name || usr.name || uname;
-        const post = usr.post || "-";
+        const post = usr.post || (usr.role === "Superadmin" ? "कम्प्युटर अपरेटर" : (usr.role === "कार्यालय प्रमुख" ? "प्रमुख प्रशासकीय अधिकृत" : "कर्मचारी"));
         const contact = usr.contact || usr.phone || "-";
         const role = usr.role || (uname.toLowerCase() === "superadmin" ? "Superadmin" : "Admin");
-        const isSuper = (uname.toLowerCase() === "superadmin");
+        const isSuper = (role.toLowerCase() === "superadmin");
+        const isPramukh = (role === "कार्यालय प्रमुख");
         const photoSrc = usr.photo || usr.avatar_url || "";
 
         const photoHtml = photoSrc 
           ? `<img src="${photoSrc}" style="width:34px; height:38px; object-fit:cover; border-radius:3px; border:1px solid #94a3b8; cursor:pointer;" onclick="viewFullPhoto('${photoSrc}')" title="ठूलो फोटो हेर्नुहोस्">` 
           : `<span style="font-size:10.5px; color:#94a3b8;">फोटो छैन</span>`;
 
+        let roleBadgeClass = 'role-admin';
+        if (isSuper) roleBadgeClass = 'role-super';
+        else if (isPramukh) roleBadgeClass = 'role-pramukh';
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td style="text-align:center; font-weight:bold;">${toNepNum(idx + 1)}</td>
           <td style="text-align:center;">${photoHtml}</td>
           <td><strong>${uname}</strong></td>
-          <td>${name}<br><small style="color:#64748b;">(${post})</small></td>
+          <td>${name}<br><small style="color:#64748b; font-weight:bold;">(${post})</small></td>
           <td>${contact}</td>
           <td>
             <span id="passSpan_${idx}" style="font-family:monospace; font-weight:bold; color:#1e3a8a;">••••••••</span>
             <button type="button" class="btn-pass-view" onclick="toggleShowPassword('${idx}', '${pass}')" title="पासवर्ड हेर्नुहोस्">👁️</button>
           </td>
           <td style="text-align:center;">
-            <span class="role-badge ${isSuper ? 'role-super' : 'role-admin'}">${role}</span>
+            <span class="role-badge ${roleBadgeClass}">${role}</span>
           </td>
           <td style="text-align:center;">
-            ${isSuper ? '<span style="font-size:11px; color:#64748b;">सुरक्षित</span>' : `
-              <div class="action-btn-group">
-                <button type="button" class="btn-edit-all" onclick="openEditModal('${uname}')" title="सबै विवरण सम्पादन गर्नुहोस्">✏️ Edit</button>
-                <button type="button" class="btn-delete-user" onclick="deleteUser('${uname}')" title="मेटाउनुहोस्">🗑️ हटाउने</button>
-              </div>
-            `}
+            <div class="action-btn-group">
+              <button type="button" class="btn-edit-all" onclick="openEditModal('${uname}')" title="सबै विवरण सम्पादन गर्नुहोस्">✏️ Edit</button>
+              ${(!isSuper && !isPramukh) ? `<button type="button" class="btn-delete-user" onclick="deleteUser('${uname}')" title="मेटाउनुहोस्">🗑️</button>` : ''}
+            </div>
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    // ४. पासवर्ड देखाउने/लुकाउने
     function toggleShowPassword(idx, realPass) {
       const el = document.getElementById(`passSpan_${idx}`);
       if (el.textContent === "••••••••") {
@@ -685,7 +709,6 @@
       }
     }
 
-    // ५. Edit Modal खोल्ने र पुरानो डाटा फाराममा भर्ने
     function openEditModal(uname) {
       const user = globalUsersList.find(u => (u.username || u.user_id || u.name || '').toLowerCase() === uname.toLowerCase());
       if (!user) return;
@@ -694,7 +717,7 @@
       document.getElementById("edit_username").value = user.username || user.user_id || uname;
       document.getElementById("edit_password").value = user.password || user.pass || "";
       document.getElementById("edit_fullname").value = user.full_name || user.name || "";
-      document.getElementById("edit_post").value = user.post || "";
+      document.getElementById("edit_post").value = user.post || (user.role === "Superadmin" ? "कम्प्युटर अपरेटर" : (user.role === "कार्यालय प्रमुख" ? "प्रमुख प्रशासकीय अधिकृत" : ""));
       document.getElementById("edit_contact").value = user.contact || user.phone || "";
       document.getElementById("edit_role").value = user.role || "Admin";
 
@@ -715,7 +738,6 @@
       base64EditPhoto = "";
     }
 
-    // ६. सम्पादन गरिएका सबै विवरण (ID, Pass, Name, Contact, Photo) सुरक्षित गर्ने
     async function handleSaveEditedUser(e) {
       e.preventDefault();
 
@@ -746,6 +768,23 @@
         photo: base64EditPhoto || ""
       };
 
+      // १. सुपरएडमिन प्रोफाइल अद्यावधिक
+      if (origUname.toLowerCase() === "superadmin" || newRole === "Superadmin") {
+        localStorage.setItem("superadmin_custom_profile", JSON.stringify(updatedObj));
+        if (updatedObj.photo) localStorage.setItem("superadmin_profile_photo", updatedObj.photo);
+
+        const currentActive = JSON.parse(sessionStorage.getItem("user") || "{}");
+        if (currentActive.username === origUname || currentActive.role === "Superadmin") {
+          sessionStorage.setItem("user", JSON.stringify(updatedObj));
+          localStorage.setItem("user", JSON.stringify(updatedObj));
+        }
+      }
+
+      // २. कार्यालय प्रमुख प्रोफाइल अद्यावधिक
+      if (origUname.toLowerCase() === "pramukh" || newRole === "कार्यालय प्रमुख") {
+        localStorage.setItem("pramukh_custom_profile", JSON.stringify(updatedObj));
+      }
+
       // सुपाबेसमा अद्यावधिक गर्ने
       if (supabaseClient) {
         try {
@@ -766,14 +805,13 @@
         localStorage.setItem("system_users", JSON.stringify(localList));
       } catch(e) {}
 
-      alert(`✓ कर्मचारी "${newFname}" (${newUname}) को सम्पूर्ण विवरण सफलतापूर्वक परिमार्जन भयो!`);
+      alert(`✓ "${newFname}" (${newPost}) को सम्पूर्ण विवरण र पासवर्ड सफलतापूर्वक परिमार्जन भयो!`);
       closeEditModal();
       btn.disabled = false;
       btn.innerHTML = "<span>💾 सम्पादन सुरक्षित गर्नुहोस् (Update Profile)</span>";
       loadAllUsers();
     }
 
-    // ७. प्रयोगकर्ता मेटाउने
     async function deleteUser(uname) {
       if (!confirm(`के तपाईं कर्मचारी "${uname}" लाई पूर्ण रूपमा हटाउन निश्चित हुनुहुन्छ?`)) return;
 
