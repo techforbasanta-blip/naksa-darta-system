@@ -408,7 +408,7 @@
           <label for="username">प्रयोगकर्ताको नाम (Username / ID)</label>
           <div class="input-wrap">
             <span class="input-icon">👤</span>
-            <input type="text" id="username" placeholder="उदा: admin वा superadmin" required autocomplete="username">
+            <input type="text" id="username" placeholder="उदा: Laxman508 वा superadmin" required autocomplete="username">
           </div>
         </div>
 
@@ -456,7 +456,7 @@
       console.warn("Supabase Init Error:", e);
     }
 
-    // Audio Context Fix (प्रयोगकर्ताले क्लिक गरेपछि मात्र सुरु हुने)
+    // Audio Context Fix: पहिलो युजर जेस्चरपछि मात्र चलाउने
     let audioCtx = null;
     function playTypeSound() {
       try {
@@ -529,34 +529,58 @@
       }
     }
 
-    // स्मार्ट सुपाबेस प्रयोगकर्ता खोज (Smart Table & Column Scanner)
-    async function fetchUserFromSupabase(inputUser) {
-      if (!supabaseClient) return null;
+    // १. युनिभर्सल युजर फाइन्डर (Supabase का सबै टेबल + लोकल स्टोरेज)
+    async function findUserAcrossSources(inputUser) {
       const clean = inputUser.trim().toLowerCase();
 
-      try {
-        // users टेबलबाट सबै रेकर्ड तानेर क्लाइन्टमै चेक गर्ने (कोलम जे भए पनि काम गर्छ)
-        const { data, error } = await supabaseClient.from('users').select('*').limit(100);
-        
-        if (!error && data && data.length > 0) {
-          console.log("[Supabase Users List]:", data);
-          
-          for (const u of data) {
-            // प्रयोगकर्ता नामका सबै सम्भावित कोलमहरू चेक गर्ने
-            const possibleUsernames = [
-              u.username, u.user_id, u.name, u.full_name, u.email, u.userid, u.user_name
-            ].filter(Boolean).map(v => v.toString().trim().toLowerCase());
+      // सुपाबेसमा खोज्ने
+      if (supabaseClient) {
+        const tablesToTry = ['admin_users', 'users', 'admins'];
+        for (const tbl of tablesToTry) {
+          try {
+            const { data, error } = await supabaseClient.from(tbl).select('*').limit(200);
+            if (!error && data && data.length > 0) {
+              console.log(`[Supabase Table '${tbl}' Data]:`, data);
+              for (const record of data) {
+                // रेकर्डका सबै सम्भावित युजरनेम कोलमहरू
+                const candidateNames = [
+                  record.username, record.user_id, record.name, record.full_name,
+                  record.email, record.userid, record.user_name, record.admin_id
+                ].filter(Boolean).map(v => v.toString().trim().toLowerCase());
 
-            if (possibleUsernames.includes(clean)) {
-              return u;
+                if (candidateNames.includes(clean)) {
+                  console.log(`[Matched User in '${tbl}']`, record);
+                  return record;
+                }
+              }
+            }
+          } catch(err) {
+            console.warn(`Query on '${tbl}' failed:`, err);
+          }
+        }
+      }
+
+      // लोकल स्टोरेजमा खोज्ने (सुपरएडमिनले बनाएको हुन सक्ने सूची)
+      const localKeys = ['system_users', 'admin_users', 'users', 'local_admin_users'];
+      for (const key of localKeys) {
+        try {
+          const list = JSON.parse(localStorage.getItem(key) || "[]");
+          if (Array.isArray(list) && list.length > 0) {
+            for (const record of list) {
+              const candidateNames = [
+                record.username, record.user_id, record.name, record.full_name,
+                record.email, record.userid, record.user_name, record.admin_id
+              ].filter(Boolean).map(v => v.toString().trim().toLowerCase());
+
+              if (candidateNames.includes(clean)) {
+                console.log(`[Matched User in localStorage '${key}']`, record);
+                return record;
+              }
             }
           }
-        } else if (error) {
-          console.warn("Supabase 'users' query error:", error.message);
-        }
-      } catch (err) {
-        console.warn("Supabase fetch exception:", err);
+        } catch(e) {}
       }
+
       return null;
     }
 
@@ -578,25 +602,25 @@
 
       let authenticatedUser = null;
 
-      // १. पहिले सुपाबेसबाट जाँच्ने
-      const dbUser = await fetchUserFromSupabase(u);
-      if (dbUser) {
+      // १. पहिले सुपाबेस वा लोकल स्टोरेजबाट युजर खोज्ने
+      const matchedRecord = await findUserAcrossSources(u);
+      if (matchedRecord) {
         // पासवर्डका सबै सम्भावित कोलमहरू चेक गर्ने
-        const dbPassword = (dbUser.password || dbUser.pass || dbUser.pin || dbUser.pwd || '').toString().trim();
+        const recordPass = (matchedRecord.password || matchedRecord.pass || matchedRecord.pin || matchedRecord.pwd || '').toString().trim();
         
-        if (dbPassword === p) {
+        if (recordPass === p) {
           authenticatedUser = {
-            username: dbUser.username || dbUser.user_id || dbUser.name || u,
-            full_name: dbUser.full_name || dbUser.name || dbUser.username || u,
-            role: dbUser.role || (u.toLowerCase() === "superadmin" ? "Superadmin" : "Admin"),
-            photo: dbUser.photo || dbUser.avatar_url || localStorage.getItem("superadmin_profile_photo") || ""
+            username: matchedRecord.username || matchedRecord.user_id || matchedRecord.name || u,
+            full_name: matchedRecord.full_name || matchedRecord.name || matchedRecord.username || u,
+            role: matchedRecord.role || (u.toLowerCase() === "superadmin" ? "Superadmin" : "Admin"),
+            photo: matchedRecord.photo || matchedRecord.avatar_url || localStorage.getItem("superadmin_profile_photo") || ""
           };
         } else {
-          console.warn("User भेटियो तर पासवर्ड मिलेन! Database password:", dbPassword);
+          console.warn("User भेटियो तर पासवर्ड मिलेन! डेटाबेसमा भएको पासवर्ड:", recordPass);
         }
       }
 
-      // २. हार्डकोड / स्थानीय ब्याकअप (Hardcoded Fallback)
+      // २. हार्डकोड सुपरएडमिन र कर्मचारी डिफल्ट (Fallback)
       if (!authenticatedUser) {
         if (u.toLowerCase() === "superadmin" && (p === "Sarkar@#07" || p === "superadmin")) {
           authenticatedUser = {
