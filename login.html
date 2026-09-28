@@ -196,6 +196,25 @@
     .card-top p { font-size: 13.5px; color: #64748b; font-weight: 700; }
     body.dark-mode .card-top p { color: #94a3b8; }
 
+    /* स्वागत सन्देश कार्ड (Welcome Greeting Alert) */
+    .greeting-success-box {
+      display: none;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1.5px solid #10b981;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      text-align: center;
+      animation: popup 0.3s ease-in-out;
+    }
+    @keyframes popup {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
     .lockout-alert {
       display: none;
       background: #fee2e2;
@@ -398,6 +417,9 @@
         <p>मायादेवी गाउँकार्यपालिकाको कार्यालय, बरेवा</p>
       </div>
 
+      <!-- नमस्ते तथा स्वागत सन्देश बक्स -->
+      <div class="greeting-success-box" id="greetingBox"></div>
+
       <div class="lockout-alert" id="lockoutNotice">
         ⛔ ३ पटक भन्दा बढी गलत पासवर्ड प्रविष्ट भयो!<br>
         कृपया आफ्नो Superadmin लाई सम्पर्क गर्नुहोस् (Contact your Superadmin)।
@@ -452,11 +474,8 @@
       if (typeof supabase !== 'undefined') {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
-    } catch(e) {
-      console.warn("Supabase Init Error:", e);
-    }
+    } catch(e) {}
 
-    // Audio Context Fix: पहिलो युजर जेस्चरपछि मात्र चलाउने
     let audioCtx = null;
     function playTypeSound() {
       try {
@@ -504,11 +523,9 @@
       if (pwdInput.type === "password") {
         pwdInput.type = "text";
         eyeBtn.textContent = "🙈";
-        eyeBtn.title = "पासवर्ड लुकाउनुहोस्";
       } else {
         pwdInput.type = "password";
         eyeBtn.textContent = "👁️";
-        eyeBtn.title = "पासवर्ड हेर्नुहोस्";
       }
     }
 
@@ -529,57 +546,47 @@
       }
     }
 
-    // १. युनिभर्सल युजर फाइन्डर (Supabase का सबै टेबल + लोकल स्टोरेज)
     async function findUserAcrossSources(inputUser) {
       const clean = inputUser.trim().toLowerCase();
 
       // सुपाबेसमा खोज्ने
       if (supabaseClient) {
-        const tablesToTry = ['admin_users', 'users', 'admins'];
+        const tablesToTry = ['users', 'admin_users'];
         for (const tbl of tablesToTry) {
           try {
             const { data, error } = await supabaseClient.from(tbl).select('*').limit(200);
             if (!error && data && data.length > 0) {
-              console.log(`[Supabase Table '${tbl}' Data]:`, data);
               for (const record of data) {
-                // रेकर्डका सबै सम्भावित युजरनेम कोलमहरू
                 const candidateNames = [
                   record.username, record.user_id, record.name, record.full_name,
-                  record.email, record.userid, record.user_name, record.admin_id
+                  record.email, record.userid, record.user_name
                 ].filter(Boolean).map(v => v.toString().trim().toLowerCase());
 
                 if (candidateNames.includes(clean)) {
-                  console.log(`[Matched User in '${tbl}']`, record);
                   return record;
                 }
               }
             }
-          } catch(err) {
-            console.warn(`Query on '${tbl}' failed:`, err);
-          }
+          } catch(err) {}
         }
       }
 
-      // लोकल स्टोरेजमा खोज्ने (सुपरएडमिनले बनाएको हुन सक्ने सूची)
-      const localKeys = ['system_users', 'admin_users', 'users', 'local_admin_users'];
-      for (const key of localKeys) {
-        try {
-          const list = JSON.parse(localStorage.getItem(key) || "[]");
-          if (Array.isArray(list) && list.length > 0) {
-            for (const record of list) {
-              const candidateNames = [
-                record.username, record.user_id, record.name, record.full_name,
-                record.email, record.userid, record.user_name, record.admin_id
-              ].filter(Boolean).map(v => v.toString().trim().toLowerCase());
+      // लोकल स्टोरेजमा खोज्ने
+      try {
+        const list = JSON.parse(localStorage.getItem("system_users") || "[]");
+        if (Array.isArray(list) && list.length > 0) {
+          for (const record of list) {
+            const candidateNames = [
+              record.username, record.user_id, record.name, record.full_name,
+              record.email, record.userid, record.user_name
+            ].filter(Boolean).map(v => v.toString().trim().toLowerCase());
 
-              if (candidateNames.includes(clean)) {
-                console.log(`[Matched User in localStorage '${key}']`, record);
-                return record;
-              }
+            if (candidateNames.includes(clean)) {
+              return record;
             }
           }
-        } catch(e) {}
-      }
+        }
+      } catch(e) {}
 
       return null;
     }
@@ -589,7 +596,7 @@
       playClickSound();
 
       if (failedAttempts >= 3) {
-        alert("⛔ तपाईंको ३ वटा प्रयास समाप्त भएको छ। कृपया आफ्नो Superadmin लाई सम्पर्क गर्नुहोस् (Contact your Superadmin)!");
+        alert("⛔ तपाईंको ३ वटा प्रयास समाप्त भएको छ। कृपया आफ्नो Superadmin लाई सम्पर्क गर्नुहोस्!");
         return;
       }
 
@@ -602,51 +609,52 @@
 
       let authenticatedUser = null;
 
-      // १. पहिले सुपाबेस वा लोकल स्टोरेजबाट युजर खोज्ने
       const matchedRecord = await findUserAcrossSources(u);
       if (matchedRecord) {
-        // पासवर्डका सबै सम्भावित कोलमहरू चेक गर्ने
-        const recordPass = (matchedRecord.password || matchedRecord.pass || matchedRecord.pin || matchedRecord.pwd || '').toString().trim();
+        const recordPass = (matchedRecord.password || matchedRecord.pass || '').toString().trim();
         
         if (recordPass === p) {
           authenticatedUser = {
-            username: matchedRecord.username || matchedRecord.user_id || matchedRecord.name || u,
-            full_name: matchedRecord.full_name || matchedRecord.name || matchedRecord.username || u,
+            username: matchedRecord.username || matchedRecord.user_id || u,
+            full_name: matchedRecord.full_name || matchedRecord.name || u,
+            post: matchedRecord.post || matchedRecord.designation || "",
             role: matchedRecord.role || (u.toLowerCase() === "superadmin" ? "Superadmin" : "Admin"),
-            photo: matchedRecord.photo || matchedRecord.avatar_url || localStorage.getItem("superadmin_profile_photo") || ""
+            photo: matchedRecord.photo || matchedRecord.avatar_url || ""
           };
-        } else {
-          console.warn("User भेटियो तर पासवर्ड मिलेन! डेटाबेसमा भएको पासवर्ड:", recordPass);
         }
       }
 
-      // २. हार्डकोड सुपरएडमिन र कर्मचारी डिफल्ट (Fallback)
+      // हार्डकोड सुपरएडमिन
       if (!authenticatedUser) {
         if (u.toLowerCase() === "superadmin" && (p === "Sarkar@#07" || p === "superadmin")) {
           authenticatedUser = {
             username: "superadmin",
             full_name: "Super Admin",
+            post: "प्रणाली प्रशासक",
             role: "Superadmin",
             photo: localStorage.getItem("superadmin_profile_photo") || ""
-          };
-        } else if (u.toLowerCase() === "admin" && p === "admin123") {
-          authenticatedUser = {
-            username: "admin",
-            full_name: "कर्मचारी एडमिन",
-            role: "Admin",
-            photo: ""
           };
         }
       }
 
-      // ३. नतिजा मूल्याङ्कन
       if (authenticatedUser) {
         sessionStorage.removeItem("login_failed_attempts");
         sessionStorage.setItem("user", JSON.stringify(authenticatedUser));
         localStorage.setItem("user", JSON.stringify(authenticatedUser));
         
-        btn.innerHTML = "✓ सफल!";
-        setTimeout(() => { window.location.href = "index.html"; }, 300);
+        // पदसहितको नमस्ते सन्देश तयार गर्ने
+        const staffName = authenticatedUser.full_name || authenticatedUser.username;
+        const staffPost = authenticatedUser.post ? ` (${authenticatedUser.post})` : '';
+        const greetingMsg = `🙏 नमस्ते ${staffName}${staffPost}!`;
+
+        const greetingBox = document.getElementById("greetingBox");
+        greetingBox.textContent = greetingMsg;
+        greetingBox.style.display = "block";
+        btn.innerHTML = `✓ ${greetingMsg}`;
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 800);
       } else {
         failedAttempts++;
         sessionStorage.setItem("login_failed_attempts", failedAttempts.toString());
@@ -663,21 +671,17 @@
       }
     }
 
-    // आपतकालीन मास्टर पिन रिकभरी (PIN: 0707 वा Sarkar@#07)
     function handleDirectRecoveryLogin() {
       playClickSound();
-      const MASTER_PIN = "0707";
-      const MASTER_PASS = "Sarkar@#07";
-
       const pin = prompt("कृपया आपतकालीन मास्टर पिन (Master PIN) प्रविष्ट गर्नुहोस्:");
       if (pin === null) return;
 
-      if (pin.trim() === MASTER_PIN || pin.trim() === MASTER_PASS) {
+      if (pin.trim() === "0707" || pin.trim() === "Sarkar@#07") {
         sessionStorage.removeItem("login_failed_attempts");
-        
         const superAdminUser = {
           username: "superadmin",
           full_name: "Super Admin",
+          post: "प्रणाली प्रशासक",
           role: "Superadmin",
           photo: localStorage.getItem("superadmin_profile_photo") || ""
         };
@@ -696,7 +700,6 @@
       document.body.classList.toggle("dark-mode");
       const isDark = document.body.classList.contains("dark-mode");
       localStorage.setItem("mayadevi_naksa_theme", isDark ? "dark" : "light");
-      
       const btn = document.getElementById("themeToggleBtn");
       if (btn) btn.textContent = isDark ? "☀" : "☾";
     }
