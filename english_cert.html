@@ -28,9 +28,13 @@
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.15; }
     
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    
     .user-profile-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.15); padding: 4px 12px 4px 6px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.3); }
-    .user-profile-badge img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: #fff; padding: 1px; }
-    .welcome-badge { font-size: 14.5px; font-weight: bold; color: #ffedd5; margin: 0; }
+    .user-profile-badge img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background: #fff; padding: 1px; }
+    .user-profile-avatar-fallback { width: 32px; height: 32px; border-radius: 50%; background: #0284c7; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; border: 1.5px solid #38bdf8; }
+    .user-profile-info { text-align: left; line-height: 1.18; }
+    .user-profile-name { font-size: 13.5px; font-weight: 800; color: #ffedd5; }
+    .user-profile-role { font-size: 11px; color: #7dd3fc; font-weight: 700; text-transform: capitalize; }
 
     .header-clock-box { text-align: left; background: rgba(255, 255, 255, 0.1); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.2); line-height: 1.3; min-width: 130px; }
     .header-clock-box .h-date { font-size: 11.5px; color: #cbd5e1; font-weight: 600; }
@@ -70,6 +74,7 @@
     .btn-draft { width: 100%; background: #0284c7; color: #ffffff; border: none; padding: 12px; border-radius: 6px; font-size: 14.5px; font-weight: 800; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
     .btn-print { width: 100%; background: #eab308; color: #000; border: none; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 900; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35); }
 
+    /* Portal Folder View */
     .draft-list-box { margin-top: 20px; border: 2px solid #22c55e; border-radius: 6px; padding: 12px; background: rgba(34, 197, 94, 0.05); }
     .draft-list-box h4 { font-size: 14px; color: #166534; margin-bottom: 8px; border-bottom: 1px solid #86efac; padding-bottom: 5px; }
     body.dark-mode .draft-list-box h4 { color: #4ade80; border-color: #22c55e; }
@@ -82,12 +87,14 @@
     .draft-item { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; padding: 6px 0; border-bottom: 1px dashed #cbd5e1; font-weight:bold; color: var(--text-dark); }
     .btn-export-direct-folder { width: 100%; background: linear-gradient(135deg, #15803d 0%, #16a34a 100%); color: #ffffff; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 900; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35); }
 
+    /* Live Preview Pane */
     .preview-card { background: #cfd8dc; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; max-height: 88vh; }
+    
     .sheet-doc-preview, .sheet-doc-preview * { font-family: 'Cambria', serif !important; }
     .sheet-doc-preview { background: #ffffff; color: #000000; width: 210mm; min-height: 297mm; padding: 10mm 15mm 8mm 15mm; box-shadow: 0 5px 20px rgba(0,0,0,0.5); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
 
     .sheet-watermark-overlay { position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; opacity: 0.08; z-index: 1; pointer-events: none; }
-    .sheet-watermark-overlay img { width: 480px; height: 480px; object-fit: contain; }
+    .sheet-watermark-overlay img { width: 450px; height: 450px; object-fit: contain; }
 
     .sheet-doc-content { position: relative; z-index: 2; flex-grow: 1; }
 
@@ -110,9 +117,9 @@
 
     .doc-subject-bar { text-align: center; margin: 10px 0 4px 0; font-size: 20px; font-weight: bold; text-decoration: underline; text-transform: uppercase; }
     .doc-concern-bar { text-align: center; font-size: 16px; font-weight: bold; text-decoration: underline; margin-bottom: 14px; }
-    .doc-body-p { font-size: 14.5px; line-height: 1.6; text-align: justify; margin-bottom: 12px; }
+    .doc-body-p { font-size: 14px; line-height: 1.6; text-align: justify; margin-bottom: 12px; }
 
-    .doc-table-custom { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+    .doc-table-custom { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
     .doc-table-custom th, .doc-table-custom td { border: 1px solid #333; padding: 6px 8px; text-align: left; }
 
     .doc-sign-block { float: right; text-align: center; margin-top: 25px; font-size: 14.5px; }
@@ -124,8 +131,8 @@
 
     @media print {
       @page { size: A4; margin: 0; }
-      html, body { width: 100%; height: 100%; margin: 0; padding: 0; background: #fff; }
-      body * { visibility: hidden; }
+      html, body { width: 100%; height: 100%; margin: 0; padding: 0; background: #fff; font-family: 'Cambria', serif !important; }
+      body * { visibility: hidden; font-family: 'Cambria', serif !important; }
       #docA4Sheet, #docA4Sheet * { visibility: visible; font-family: 'Cambria', serif !important; }
       #docA4Sheet { position: absolute; left: 0; top: 0; width: 210mm; height: 297mm; box-shadow: none !important; border: none !important; margin: 0 !important; padding: 10mm 15mm 8mm 15mm !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; background: white; }
       .gov-header, .portal-grid .card, footer.site-footer, .purge-warning-banner { display: none !important; }
@@ -140,9 +147,11 @@
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
           <h1>Smart Mayadevi</h1>
+          <p style="font-size: 11.5px; color: #cbd5e1; margin: 0; font-weight: 500;">"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
         </div>
       </div>
       <div class="header-controls">
+        <!-- USER PROFILE BADGE -->
         <div class="user-profile-badge" id="headerUserProfile">
           <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
           <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
@@ -152,16 +161,18 @@
           </div>
         </div>
 
+        <span id="activeWardBadge" style="background:#0284c7; color:#fff; font-size:12px; font-weight:bold; padding:4px 10px; border-radius:15px; margin-right:8px;">वडा: लोड हुँदैछ...</span>
+        
         <div class="header-clock-box">
           <div class="h-date" id="liveNepHeaderDate">Date: ...</div>
           <div class="h-time" id="liveNepHeaderTime">Time: --:--:--</div>
         </div>
-        
-        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="मोड परिवर्तन">☾</button>
+
         <button type="button" class="nav-btn" onclick="window.location.href='index.html'">🏠 Home</button>
         <button type="button" class="nav-btn" onclick="openOldRecords()">📂 पुरानो हेर्नुहोस्</button>
         <button type="button" class="nav-btn active" onclick="resetFormToNew()">📝 नयाँ फाराम</button>
-        <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
+        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="मोड परिवर्तन">☾</button>
+        <button type="button" class="nav-btn" style="background:#dc2626; border-color:#ef4444;" onclick="handleSafeLogout()">🚪 लगआउट</button>
       </div>
     </div>
   </header>
@@ -400,7 +411,7 @@
           </div>
         </div>
 
-        <!-- Footer Single Line With Dynamic QR Code Fixed Here -->
+        <!-- Footer Single Line With Dynamic QR Code -->
         <div class="doc-footer-area">
           <div style="flex: 1; white-space: nowrap;">
             Contact Number: <span id="prevFooterContact"></span> &nbsp;|&nbsp; 
@@ -701,11 +712,25 @@
           var user = JSON.parse(raw);
           userIdForDB = user.id || user.username || "admin";
           var wardSelect = document.getElementById("doc_ward_select");
-          var userName = user.name || user.username || "Admin";
-          document.getElementById("welcomeUserBadge").textContent = "Hello, " + userName + " जी 👋";
           
-          var userImgEl = document.getElementById("headerUserImg");
-          if(userImgEl && user.photoURL) userImgEl.src = user.photoURL;
+          // Fix for correctly updating the DOM elements
+          const displayName = user.full_name || user.name || user.username || "कर्मचारी";
+          const displayPost = user.post || (user.role === "Superadmin" ? "प्रमुख प्रशासकीय अधिकृत" : "वडा कर्मचारी");
+
+          var nameEl = document.getElementById("headerUserName");
+          var roleEl = document.getElementById("headerUserRole");
+          if (nameEl) nameEl.textContent = "नमस्ते, " + displayName;
+          if (roleEl) roleEl.textContent = displayPost;
+          
+          var userImgEl = document.getElementById("headerUserAvatarImg");
+          var fallbackEl = document.getElementById("headerUserAvatarFallback");
+          if(userImgEl && user.photo) {
+             userImgEl.src = user.photo;
+             userImgEl.style.display = "block";
+             if(fallbackEl) fallbackEl.style.display = "none";
+          } else if(fallbackEl) {
+             fallbackEl.textContent = displayName.charAt(0).toUpperCase();
+          }
 
           if (user.role !== "Superadmin" && user.role !== "कार्यालय प्रमुख") {
             wardSelect.value = user.ward || "4";
@@ -715,8 +740,16 @@
             var wSelect = wardSelect.value;
             document.getElementById("activeWardBadge").textContent = (wSelect === "palika" || wSelect === "all") ? "अधिकार: गाउँकार्यपालिका" : ("अधिकार: वडा नं. " + wSelect);
           }
+        } else {
+           // Fallback if not logged in
+           var nameEl = document.getElementById("headerUserName");
+           if (nameEl) nameEl.textContent = "Guest";
+           var roleEl = document.getElementById("headerUserRole");
+           if (roleEl) roleEl.textContent = "--";
         }
-      } catch(e) {}
+      } catch(e) {
+          console.error("Error setting user scope: ", e);
+      }
       window.currentUserId = userIdForDB;
       
       loadDraftsFromStorage();
