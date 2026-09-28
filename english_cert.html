@@ -5,16 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart Mayadevi - English Certificate Portal</title>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-  <!-- Nepali Date Converter CDN -->
   <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.umd.min.js"></script>
-  <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -26,14 +23,11 @@
 
     .gov-header { background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%); border-bottom: 3px solid var(--gov-crimson); padding: 8px 18px; color: #ffffff; }
     .header-inner { max-width: 1720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-    
     .brand-left { display: flex; align-items: center; gap: 12px; }
     .brand-left img { height: 48px; width: auto; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.15; }
     
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    
-    /* User Profile Badge */
     .user-profile-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.15); padding: 4px 12px 4px 6px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.3); }
     .user-profile-badge img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: #fff; padding: 1px; }
     .welcome-badge { font-size: 14.5px; font-weight: bold; color: #ffedd5; margin: 0; }
@@ -74,10 +68,8 @@
     .member-row, .income-row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
 
     .btn-draft { width: 100%; background: #0284c7; color: #ffffff; border: none; padding: 12px; border-radius: 6px; font-size: 14.5px; font-weight: 800; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
-    .btn-draft:hover { background: #0369a1; }
     .btn-print { width: 100%; background: #eab308; color: #000; border: none; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 900; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35); }
 
-    /* Portal Folder View */
     .draft-list-box { margin-top: 20px; border: 2px solid #22c55e; border-radius: 6px; padding: 12px; background: rgba(34, 197, 94, 0.05); }
     .draft-list-box h4 { font-size: 14px; color: #166534; margin-bottom: 8px; border-bottom: 1px solid #86efac; padding-bottom: 5px; }
     body.dark-mode .draft-list-box h4 { color: #4ade80; border-color: #22c55e; }
@@ -90,20 +82,16 @@
     .draft-item { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; padding: 6px 0; border-bottom: 1px dashed #cbd5e1; font-weight:bold; color: var(--text-dark); }
     .btn-export-direct-folder { width: 100%; background: linear-gradient(135deg, #15803d 0%, #16a34a 100%); color: #ffffff; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 900; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35); }
 
-    /* Live Preview Pane - Cambria Forced */
     .preview-card { background: #cfd8dc; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; max-height: 88vh; }
-    
     .sheet-doc-preview, .sheet-doc-preview * { font-family: 'Cambria', serif !important; }
     .sheet-doc-preview { background: #ffffff; color: #000000; width: 210mm; min-height: 297mm; padding: 10mm 15mm 8mm 15mm; box-shadow: 0 5px 20px rgba(0,0,0,0.5); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
 
     .sheet-watermark-overlay { position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; opacity: 0.08; z-index: 1; pointer-events: none; }
-    .sheet-watermark-overlay img { width: 450px; height: 450px; object-fit: contain; }
+    .sheet-watermark-overlay img { width: 480px; height: 480px; object-fit: contain; }
 
     .sheet-doc-content { position: relative; z-index: 2; flex-grow: 1; }
 
-    /* Single Line Motto */
     .doc-motto { text-align: center; font-size: 12px; font-weight: bold; color: #c00000; margin-bottom: 2px; white-space: nowrap; }
-    
     .doc-header-table { width: 100%; border-collapse: collapse; margin-bottom: 2px; }
     .doc-header-table td { border: none; vertical-align: top; padding: 0; }
     .doc-titles { text-align: center; line-height: 1.25; padding: 0 10px; }
@@ -117,33 +105,29 @@
     .logo-block-right { display: flex; flex-direction: column; align-items: flex-end; font-size: 12px; font-weight: bold; color: #c00000; line-height: 1.4; text-align: right; }
     .logo-block-right img { width: 70px; height: auto; margin-bottom: 6px; }
 
-    /* Bold Black Header Line */
     .header-double-line { border-top: 4px solid #000; border-bottom: 1.5px solid #000; height: 4px; margin: 6px 0 4px 0; }
-    
     .doc-date-row { text-align: right; font-size: 14px; font-weight: bold; color: #c00000; margin-bottom: 12px; }
+
     .doc-subject-bar { text-align: center; margin: 10px 0 4px 0; font-size: 20px; font-weight: bold; text-decoration: underline; text-transform: uppercase; }
     .doc-concern-bar { text-align: center; font-size: 16px; font-weight: bold; text-decoration: underline; margin-bottom: 14px; }
-    .doc-body-p { font-size: 14px; line-height: 1.6; text-align: justify; margin-bottom: 12px; }
+    .doc-body-p { font-size: 14.5px; line-height: 1.6; text-align: justify; margin-bottom: 12px; }
 
-    .doc-table-custom { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+    .doc-table-custom { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
     .doc-table-custom th, .doc-table-custom td { border: 1px solid #333; padding: 6px 8px; text-align: left; }
 
-    /* Signature Block 0 gap & Bold */
     .doc-sign-block { float: right; text-align: center; margin-top: 25px; font-size: 14.5px; }
     .doc-sign-block div { margin: 0; padding: 0; line-height: 1.2; font-weight: bold; }
     
-    /* Footer Single Line with reduced space & QR Code fixed */
     .doc-footer-area { border-top: 1.5px solid #000; padding-top: 4px; margin-top: 10px; font-size: 11.5px; color: #111; display: flex; justify-content: space-between; align-items: center; font-weight:bold; }
 
     footer.site-footer { background: #07192f; color: #cbd5e1; padding: 10px 18px; font-size: 12px; border-top: 3px solid #2563eb; text-align: center; }
 
-    /* Print Styles */
     @media print {
       @page { size: A4; margin: 0; }
-      html, body { width: 100%; height: 100%; margin: 0; padding: 0; background: #fff; font-family: 'Cambria', serif !important; }
-      body * { visibility: hidden; font-family: 'Cambria', serif !important; }
+      html, body { width: 100%; height: 100%; margin: 0; padding: 0; background: #fff; }
+      body * { visibility: hidden; }
       #docA4Sheet, #docA4Sheet * { visibility: visible; font-family: 'Cambria', serif !important; }
-      #docA4Sheet { position: absolute; left: 0; top: 0; width: 210mm; height: 297mm; box-shadow: none !important; border: none !important; margin: 0 !important; padding: 10mm 15mm !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; background: white; }
+      #docA4Sheet { position: absolute; left: 0; top: 0; width: 210mm; height: 297mm; box-shadow: none !important; border: none !important; margin: 0 !important; padding: 10mm 15mm 8mm 15mm !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; background: white; }
       .gov-header, .portal-grid .card, footer.site-footer, .purge-warning-banner { display: none !important; }
     }
   </style>
@@ -156,27 +140,28 @@
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
           <h1>Smart Mayadevi</h1>
-          <!-- Added the motto back to the portal header -->
-          <p style="font-size: 11.5px; color: #cbd5e1; margin: 0;">"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
         </div>
       </div>
       <div class="header-controls">
-        <div class="user-profile-badge">
-          <img id="headerUserImg" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User">
-          <span id="welcomeUserBadge" class="welcome-badge">Hello, Admin जी 👋</span>
+        <div class="user-profile-badge" id="headerUserProfile">
+          <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
+          <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
+          <div class="user-profile-info">
+            <div class="user-profile-name" id="headerUserName">लोड हुँदैछ...</div>
+            <div class="user-profile-role" id="headerUserRole">--</div>
+          </div>
         </div>
-        
-        <span id="activeWardBadge" style="background:#0284c7; color:#fff; font-size:12px; font-weight:bold; padding:4px 10px; border-radius:15px; margin-right:8px;">वडा: लोड हुँदैछ...</span>
-        
+
         <div class="header-clock-box">
           <div class="h-date" id="liveNepHeaderDate">Date: ...</div>
           <div class="h-time" id="liveNepHeaderTime">Time: --:--:--</div>
         </div>
-
+        
+        <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()" title="मोड परिवर्तन">☾</button>
         <button type="button" class="nav-btn" onclick="window.location.href='index.html'">🏠 Home</button>
         <button type="button" class="nav-btn" onclick="openOldRecords()">📂 पुरानो हेर्नुहोस्</button>
         <button type="button" class="nav-btn active" onclick="resetFormToNew()">📝 नयाँ फाराम</button>
-        <button type="button" class="nav-btn btn-theme" onclick="toggleTheme()">☾</button>
+        <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
       </div>
     </div>
   </header>
@@ -269,7 +254,6 @@
 
         <div id="sec_relation" class="dynamic-section">
           <h4>👥 पारिवारिक सदस्यहरू (Family Members)</h4>
-          <p style="font-size:11px; color:#666;">* यहाँ थपेका सदस्यहरू मात्र टेबलमा आउनेछन्। फोटो सेक्सनमा भने Applicant सहित सबैको फोटो अटोमेटिक बन्नेछ।</p>
           <div id="relation_rows_container"></div>
           <button type="button" class="btn-action" onclick="addRelationRow()">+ सदस्य थप्नुहोस् (Add Member)</button>
         </div>
@@ -423,7 +407,7 @@
             Email: <span id="prevFooterEmail"></span> &nbsp;|&nbsp; 
             Website: mayadevimunrupandehi.gov.np
           </div>
-          <div><img id="prevDynamicQR" src="" style="width:55px; height:55px; border:1px solid #ccc; padding:2px; margin-left: 10px;"></div>
+          <div><img id="prevDynamicQR" src="" style="width:60px; height:60px; border:1px solid #ccc; padding:2px; margin-left: 10px;"></div>
         </div>
       </div>
     </div>
@@ -433,7 +417,7 @@
     Smart Mayadevi — एकीकृत स्थानीय सरकारी व्यवस्थापन प्रणाली | बरेवा, रुपन्देही
   </footer>
 
-  <!-- HTML Templates for Word Export -->
+  <!-- HTML Templates for Word Export & Body Setup -->
   <template id="tmpl_word_shell">
     <!DOCTYPE html>
     <html>
