@@ -53,7 +53,6 @@
     .brand-left img { height: 52px !important; width: auto !important; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
 
-    /* नारा र Home ब्याच बीच ३२px स्पेस */
     .motto-home-row {
       display: flex;
       align-items: center;
@@ -86,7 +85,7 @@
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-    /* लगइन भएको कर्मचारीको प्रोफाइल ब्याच */
+    /* प्रोफाइल ब्याच: नाम र तल पद */
     .user-profile-badge {
       display: flex;
       align-items: center;
@@ -97,15 +96,15 @@
       border-radius: 25px;
     }
     .user-profile-badge img {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       object-fit: cover;
       border: 1.5px solid #38bdf8;
     }
     .user-profile-avatar-fallback {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: #0284c7;
       color: #ffffff;
@@ -113,12 +112,12 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 14px;
+      font-size: 15px;
       border: 1.5px solid #38bdf8;
     }
-    .user-profile-info { text-align: left; line-height: 1.15; }
-    .user-profile-name { font-size: 12.5px; font-weight: 800; color: #ffffff; }
-    .user-profile-role { font-size: 11px; color: #7dd3fc; font-weight: 600; }
+    .user-profile-info { text-align: left; line-height: 1.18; }
+    .user-profile-name { font-size: 13px; font-weight: 800; color: #ffffff; }
+    .user-profile-role { font-size: 11px; color: #7dd3fc; font-weight: 700; }
 
     .header-clock-box {
       text-align: right;
@@ -149,7 +148,6 @@
     .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
-    /* मुख्य ड्यासबोर्ड ग्रिड */
     .dashboard-container {
       max-width: 1400px;
       width: 100%;
@@ -249,13 +247,13 @@
       </div>
 
       <div class="header-controls">
-        <!-- कर्मचारी प्रोफाइल ब्याच (नमस्ते, लक्ष्मण घिमिरे (अमिन)) -->
+        <!-- कर्मचारी प्रोफाइल ब्याच (नमस्ते, लक्ष्मण घिमिरे र तल अमिन) -->
         <div class="user-profile-badge" id="headerUserProfile">
           <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
           <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
           <div class="user-profile-info">
             <div class="user-profile-name" id="headerUserName">लोड हुँदैछ...</div>
-            <div class="user-profile-role" id="headerUserRole">कर्मचारी</div>
+            <div class="user-profile-role" id="headerUserRole">--</div>
           </div>
         </div>
 
@@ -290,7 +288,6 @@
     </div>
 
     <div class="portal-cards-grid">
-      <!-- कार्ड १: नयाँ नक्सा दर्ता -->
       <a href="darta.html" class="portal-card">
         <div>
           <div class="card-icon">📝</div>
@@ -300,7 +297,6 @@
         <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
       </a>
 
-      <!-- कार्ड २: निर्णयार्थ पेश टिप्पणी -->
       <a href="tippani.html" class="portal-card">
         <div>
           <div class="card-icon">📄</div>
@@ -310,7 +306,6 @@
         <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
       </a>
 
-      <!-- कार्ड ३: पुराना नक्सा अभिलेखहरू -->
       <a href="record.html" class="portal-card">
         <div>
           <div class="card-icon">📂</div>
@@ -320,7 +315,6 @@
         <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
       </a>
 
-      <!-- कार्ड ४: प्रमाणिकरण पोर्टल -->
       <a href="verify.html" class="portal-card">
         <div>
           <div class="card-icon">🔍</div>
@@ -330,7 +324,6 @@
         <div class="card-link-text">प्रवेश गर्नुहोस् ➜</div>
       </a>
 
-      <!-- कार्ड ५: Admin प्यानल (Superadmin लाई मात्र) -->
       <a href="admin.html" id="adminPortalCard" class="portal-card" style="display:none;">
         <div>
           <div class="card-icon">⚙️</div>
@@ -350,7 +343,6 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
-    // लगइन भएको प्रयोगकर्ताको नाम र पदसहितको प्रोफाइल लोड गर्ने
     function renderLoggedInUserBadge() {
       try {
         const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
@@ -360,18 +352,19 @@
         }
         const u = JSON.parse(raw);
 
-        const displayName = u.full_name || u.username || "कर्मचारी";
-        const displayPost = u.post ? ` (${u.post})` : '';
+        const displayName = u.full_name || u.name || u.username || "कर्मचारी";
+        // पद (Post) निर्धारण: यदि post छ भने post देखाउने, नभए Superadmin भए 'प्रमुख प्रशासकीय अधिकृत' देखाउने
+        const displayPost = u.post || (u.role === "Superadmin" ? "प्रमुख प्रशासकीय अधिकृत" : "कर्मचारी");
 
-        // १. हेडर प्रोफाइल ब्याच
+        // १. हेडर प्रोफाइल ब्याच (पहिलो लाइन: नमस्ते + नाम, दोस्रो लाइन: पद)
         const nameEl = document.getElementById("headerUserName");
         const roleEl = document.getElementById("headerUserRole");
-        if (nameEl) nameEl.textContent = `नमस्ते, ${displayName}${displayPost}`;
-        if (roleEl) roleEl.textContent = u.role || "कर्मचारी";
+        if (nameEl) nameEl.textContent = `नमस्ते, ${displayName}`;
+        if (roleEl) roleEl.textContent = displayPost; // यहाँ Admin को सट्टा पद देखिन्छ
 
         // २. स्वागत ब्यानर (Hero Banner)
         const heroEl = document.getElementById("heroGreetingText");
-        if (heroEl) heroEl.textContent = `🙏 नमस्ते ${displayName}${displayPost}, Smart Mayadevi मा स्वागत छ!`;
+        if (heroEl) heroEl.textContent = `🙏 नमस्ते ${displayName} (${displayPost}), Smart Mayadevi मा स्वागत छ!`;
 
         // ३. फोटो देखाउने
         const imgEl = document.getElementById("headerUserAvatarImg");
