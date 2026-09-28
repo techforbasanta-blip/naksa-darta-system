@@ -118,16 +118,16 @@
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
     .admin-container {
-      max-width: 1400px;
+      max-width: 1720px;
       width: 100%;
-      margin: 20px auto;
+      margin: 16px auto;
       padding: 0 16px;
       flex: 1;
       display: grid;
-      grid-template-columns: 380px 1fr;
-      gap: 20px;
+      grid-template-columns: 420px 1fr;
+      gap: 16px;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 1024px) {
       .admin-container { grid-template-columns: 1fr; }
     }
 
@@ -135,36 +135,36 @@
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 20px;
+      padding: 18px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     }
     .card-title {
-      font-size: 18px;
+      font-size: 17.5px;
       font-weight: 800;
       color: #1e3a8a;
       border-bottom: 2px solid var(--border-color);
       padding-bottom: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     body.dark-mode .card-title { color: #60a5fa; }
 
-    .form-group { margin-bottom: 14px; }
+    .form-group { margin-bottom: 11px; }
     .form-group label {
       display: block;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 800;
       margin-bottom: 4px;
       color: var(--text-dark);
     }
     .form-group input, .form-group select {
       width: 100%;
-      padding: 9px 12px;
+      padding: 8px 10px;
       border: 1.5px solid var(--border-color);
       border-radius: 6px;
-      font-size: 13.5px;
+      font-size: 13px;
       background: var(--input-bg);
       color: var(--text-dark);
       font-weight: 600;
@@ -175,50 +175,68 @@
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
+    .photo-upload-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(30, 58, 138, 0.05);
+      border: 1.5px dashed var(--border-color);
+      padding: 8px 10px;
+      border-radius: 6px;
+    }
+    .user-preview-photo {
+      width: 50px;
+      height: 55px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid #94a3b8;
+      background: #e2e8f0;
+    }
+
     .btn-create {
       width: 100%;
       background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
       color: #ffffff;
       border: none;
-      padding: 11px;
+      padding: 10px;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+      margin-top: 12px;
       transition: all 0.2s;
     }
     .btn-create:hover { background: #1d4ed8; }
 
     .table-responsive { overflow-x: auto; margin-top: 10px; }
-    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-    th, td { border: 1px solid var(--border-color); padding: 9px 10px; text-align: left; vertical-align: middle; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { border: 1px solid var(--border-color); padding: 8px 8px; text-align: left; vertical-align: middle; }
     th { background: var(--table-th); font-weight: 800; color: var(--text-dark); white-space: nowrap; }
 
     .role-badge {
       display: inline-block;
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: 12px;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 800;
     }
     .role-super { background: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
     .role-admin { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
 
-    .btn-delete-user {
-      background: #dc2626;
-      color: #fff;
-      border: none;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
+    .action-btn-group { display: flex; gap: 4px; align-items: center; }
+    .btn-pass-view {
+      background: #0284c7; color: #fff; border: none; padding: 4px 6px; border-radius: 3px; font-size: 11px; cursor: pointer; font-weight: bold;
     }
-    .btn-delete-user:hover { background: #b91c1c; }
+    .btn-pass-edit {
+      background: #f59e0b; color: #fff; border: none; padding: 4px 6px; border-radius: 3px; font-size: 11px; cursor: pointer; font-weight: bold;
+    }
+    .btn-delete-user {
+      background: #dc2626; color: #fff; border: none; padding: 4px 6px; border-radius: 3px; font-size: 11px; cursor: pointer; font-weight: bold;
+    }
 
     footer.site-footer {
       background: #07192f;
@@ -266,10 +284,10 @@
   </header>
 
   <main class="admin-container">
-    <!-- नयाँ एडमिन/कर्मचारी थप्ने फाराम -->
+    <!-- नयाँ कर्मचारी / एडमिन थप्ने विस्तृत फाराम -->
     <div class="card">
       <div class="card-title">
-        <span>➕ नयाँ एडमिन / कर्मचारी थप्नुहोस्</span>
+        <span>➕ नयाँ कर्मचारी / एडमिन थप्नुहोस्</span>
       </div>
 
       <form id="addUserForm" onsubmit="handleAddNewUser(event)">
@@ -284,28 +302,48 @@
         </div>
 
         <div class="form-group">
-          <label>कर्मचारीको पूरा नाम (Full Name)</label>
-          <input type="text" id="new_fullname" placeholder="उदा: लक्ष्मण थारु">
+          <label>कर्मचारीको पूरा नाम (Full Name) *</label>
+          <input type="text" id="new_fullname" placeholder="उदा: लक्ष्मण थारु" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="form-group">
+            <label>कर्मचारीको पद (Post) *</label>
+            <input type="text" id="new_post" placeholder="उदा: सब-ईन्जिनियर / अमिन" required>
+          </div>
+          <div class="form-group">
+            <label>सम्पर्क नं. (Mobile No.) *</label>
+            <input type="text" id="new_contact" placeholder="उदा: ९८XXXXXXXX" required>
+          </div>
         </div>
 
         <div class="form-group">
-          <label>भूमिका (User Role) *</label>
+          <label>भूमिका (Role) *</label>
           <select id="new_role">
-            <option value="Admin" selected>कर्मचारी एडमिन (Admin - Half Access)</option>
-            <option value="Superadmin">सुपर एडमिन (Superadmin - Full Access)</option>
+            <option value="Admin" selected>कर्मचारी एडमिन (Admin)</option>
+            <option value="Superadmin">सुपर एडमिन (Superadmin)</option>
           </select>
         </div>
 
+        <div class="form-group">
+          <label>कर्मचारीको फोटो (PP Size Photo)</label>
+          <div class="photo-upload-box">
+            <img id="previewPhotoImg" class="user-preview-photo" src="" alt="Photo" style="display:none;">
+            <div id="noPhotoText" style="font-size:11.5px; color:#64748b;">फोटो छानिएको छैन</div>
+            <input type="file" id="new_photo_file" accept="image/*" style="font-size:11px;" onchange="handlePhotoUpload(event)">
+          </div>
+        </div>
+
         <button type="submit" class="btn-create" id="btnSubmitUser">
-          <span>सुरक्षित गर्नुहोस् (Save User)</span> ➜
+          <span>सुरक्षित गर्नुहोस् (Save Staff)</span> ➜
         </button>
       </form>
     </div>
 
-    <!-- दर्ता भएका सबै एडमिनहरूको सूची -->
+    <!-- दर्ता भएका सबै एडमिनहरूको विस्तृत सूची र पासवर्ड रिकभरी -->
     <div class="card">
       <div class="card-title">
-        <span>👥 दर्ता भएका कर्मचारी तथा एडमिन सूची</span>
+        <span>👥 दर्ता भएका कर्मचारीहरूको विवरण तथा पासवर्ड व्यवस्थापन</span>
         <button type="button" class="nav-btn" onclick="loadAllUsers()" style="font-size:11px; padding:4px 8px;">🔄 रिफ्रेस</button>
       </div>
 
@@ -313,16 +351,18 @@
         <table>
           <thead>
             <tr>
-              <th style="width: 40px; text-align: center;">क्र.सं.</th>
+              <th style="width: 35px; text-align: center;">क्र.सं.</th>
+              <th style="width: 50px; text-align: center;">फोटो</th>
               <th>Username</th>
+              <th>पूरा नाम / पद</th>
+              <th>सम्पर्क नं.</th>
               <th>पासवर्ड</th>
-              <th>पूरा नाम</th>
-              <th style="text-align: center;">भूमिका (Role)</th>
-              <th style="width: 80px; text-align: center;">कार्य</th>
+              <th style="text-align: center;">भूमिका</th>
+              <th style="width: 140px; text-align: center;">कार्य (Action)</th>
             </tr>
           </thead>
           <tbody id="userTableBody">
-            <tr><td colspan="6" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>
+            <tr><td colspan="8" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>
           </tbody>
         </table>
       </div>
@@ -347,6 +387,35 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
+    let base64Photo = "";
+
+    // फोटो अपलोड र कम्प्रेस गरी Base64 मा बदल्ने
+    function handlePhotoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 250;
+          const scale = MAX_WIDTH / img.width;
+          canvas.width = MAX_WIDTH;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          base64Photo = canvas.toDataURL("image/jpeg", 0.75);
+
+          document.getElementById("previewPhotoImg").src = base64Photo;
+          document.getElementById("previewPhotoImg").style.display = "block";
+          document.getElementById("noPhotoText").style.display = "none";
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
     // १. सुरक्षा जाँच: केवल Superadmin ले मात्र यो पेज खोल्न पाउने
     function verifySuperAdminAccess() {
       try {
@@ -361,18 +430,20 @@
       }
     }
 
-    // २. नयाँ प्रयोगकर्ता थप्ने (तपाईंले हानेको ठ्याक्कै पासवर्ड सुपाबेसमा सुरक्षित हुने)
+    // २. नयाँ कर्मचारी थप्ने (पद, फोन, फोटो र तपाईँले हानेको वास्तविक पासवर्ड सहित)
     async function handleAddNewUser(e) {
       e.preventDefault();
 
       const u = document.getElementById("new_username").value.trim();
-      const p = document.getElementById("new_password").value.trim(); // तपाईंले हानेको पासवर्ड (उदा: Laxman@508)
-      const fname = document.getElementById("new_fullname").value.trim() || u;
+      const p = document.getElementById("new_password").value.trim();
+      const fname = document.getElementById("new_fullname").value.trim();
+      const post = document.getElementById("new_post").value.trim();
+      const contact = document.getElementById("new_contact").value.trim();
       const role = document.getElementById("new_role").value;
       const btn = document.getElementById("btnSubmitUser");
 
-      if (!u || !p) {
-        alert("कृपया युजरनेम र पासवर्ड अनिवार्य भर्नुहोस्!");
+      if (!u || !p || !fname) {
+        alert("कृपया आवश्यक सबै विवरण अनिवार्य भर्नुहोस्!");
         return;
       }
 
@@ -381,34 +452,25 @@
 
       const newUserObj = {
         username: u,
-        password: p, // तपाईंले फाराममा हानेको वास्तविक पासवर्ड
+        password: p,
         full_name: fname,
-        role: role
+        post: post,
+        contact: contact,
+        role: role,
+        photo: base64Photo || ""
       };
 
-      let savedInCloud = false;
-
-      // सुपाबेसमा सुरक्षित गर्ने
+      // सुपाबेसमा पठाउने
       if (supabaseClient) {
-        // पहिले 'users' टेबलमा हाल्ने
         try {
-          const res1 = await supabaseClient.from('users').insert([newUserObj]);
-          if (!res1.error) savedInCloud = true;
-          else {
-            // यदि users मा username कोलम नभएर user_id छ भने
-            const altPayload = { user_id: u, password: p, name: fname, role: role };
-            const resAlt = await supabaseClient.from('users').insert([altPayload]);
-            if (!resAlt.error) savedInCloud = true;
-          }
+          await supabaseClient.from('users').insert([newUserObj]);
         } catch(err) {}
-
-        // साथै admin_users टेबल पनि छ भने त्यसमा पनि सुरक्षित गर्ने
         try {
           await supabaseClient.from('admin_users').insert([newUserObj]);
         } catch(err) {}
       }
 
-      // लोकल स्टोरेजमा पनि ब्याकअप राख्ने
+      // लोकल स्टोरेजमा पनि १००% ब्याकअप राख्ने
       try {
         let localList = JSON.parse(localStorage.getItem("system_users") || "[]");
         localList = localList.filter(item => (item.username || '').toLowerCase() !== u.toLowerCase());
@@ -416,27 +478,28 @@
         localStorage.setItem("system_users", JSON.stringify(localList));
       } catch(e) {}
 
-      alert(`✓ नयाँ प्रयोगकर्ता "${u}" पासवर्ड (${p}) सहित सफलतापूर्वक सुरक्षित भयो!`);
+      alert(`✓ कर्मचारी "${fname}" (${u}) पासवर्ड सहित सफलतापूर्वक सुरक्षित भयो!`);
       document.getElementById("addUserForm").reset();
+      document.getElementById("previewPhotoImg").style.display = "none";
+      document.getElementById("noPhotoText").style.display = "block";
+      base64Photo = "";
       btn.disabled = false;
-      btn.innerHTML = "<span>सुरक्षित गर्नुहोस् (Save User)</span> ➜";
+      btn.innerHTML = "<span>सुरक्षित गर्नुहोस् (Save Staff)</span> ➜";
       loadAllUsers();
     }
 
-    // ३. सबै प्रयोगकर्ताहरूको सूची लोड गर्ने
+    // ३. सबै कर्मचारी लोड गर्ने
     async function loadAllUsers() {
       const tbody = document.getElementById("userTableBody");
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>`;
 
       let allUsers = [];
 
       // सुपाबेसबाट तान्ने
       if (supabaseClient) {
         try {
-          const { data, error } = await supabaseClient.from('users').select('*').limit(100);
-          if (!error && data && data.length > 0) {
-            allUsers = data;
-          }
+          const { data, error } = await supabaseClient.from('users').select('*').limit(200);
+          if (!error && data && data.length > 0) allUsers = data;
         } catch(e) {}
       }
 
@@ -450,13 +513,16 @@
         });
       } catch(e) {}
 
-      // सुपरएडमिन सधैं सूचीको शीर्षमा
+      // सुपरएडमिन सधैं पहिलो पंक्तिमा
       if (!allUsers.some(u => (u.username || u.user_id || '').toLowerCase() === "superadmin")) {
         allUsers.unshift({
           username: "superadmin",
-          password: "•••••••• (Sarkar@#07)",
+          password: "Sarkar@#07",
           full_name: "Super Admin",
-          role: "Superadmin"
+          post: "प्रणाली प्रशासक",
+          contact: "-",
+          role: "Superadmin",
+          photo: localStorage.getItem("superadmin_profile_photo") || ""
         });
       }
 
@@ -465,34 +531,89 @@
         const uname = usr.username || usr.user_id || usr.name || "-";
         const pass = usr.password || usr.pass || "••••••••";
         const name = usr.full_name || usr.name || uname;
+        const post = usr.post || "-";
+        const contact = usr.contact || usr.phone || "-";
         const role = usr.role || (uname.toLowerCase() === "superadmin" ? "Superadmin" : "Admin");
-        const isSuper = (role.toLowerCase() === "superadmin");
+        const isSuper = (uname.toLowerCase() === "superadmin");
+        const photoSrc = usr.photo || usr.avatar_url || "";
+
+        const photoHtml = photoSrc 
+          ? `<img src="${photoSrc}" style="width:34px; height:38px; object-fit:cover; border-radius:3px; border:1px solid #94a3b8; cursor:pointer;" onclick="viewFullPhoto('${photoSrc}')" title="ठूलो फोटो हेर्नुहोस्">` 
+          : `<span style="font-size:10.5px; color:#94a3b8;">फोटो छैन</span>`;
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td style="text-align:center; font-weight:bold;">${toNepNum(idx + 1)}</td>
+          <td style="text-align:center;">${photoHtml}</td>
           <td><strong>${uname}</strong></td>
-          <td style="font-family:monospace; color:#1e3a8a; font-weight:bold;">${pass}</td>
-          <td>${name}</td>
+          <td>${name}<br><small style="color:#64748b;">(${post})</small></td>
+          <td>${contact}</td>
+          <td>
+            <span id="passSpan_${idx}" style="font-family:monospace; font-weight:bold; color:#1e3a8a;">••••••••</span>
+            <button type="button" class="btn-pass-view" onclick="toggleShowPassword('${idx}', '${pass}')" title="पासवर्ड हेर्नुहोस्">👁️</button>
+          </td>
           <td style="text-align:center;">
             <span class="role-badge ${isSuper ? 'role-super' : 'role-admin'}">${role}</span>
           </td>
           <td style="text-align:center;">
-            ${isSuper ? '<span style="font-size:11px; color:#64748b;">सुरक्षित</span>' : `<button class="btn-delete-user" onclick="deleteUser('${uname}')">मेटाउने</button>`}
+            ${isSuper ? '<span style="font-size:11px; color:#64748b;">सुरक्षित</span>' : `
+              <div class="action-btn-group">
+                <button type="button" class="btn-pass-edit" onclick="changeUserPassword('${uname}')" title="नयाँ पासवर्ड राख्नुहोस्">✏️ फेर्नुस्</button>
+                <button type="button" class="btn-delete-user" onclick="deleteUser('${uname}')" title="मेटाउनुहोस्">🗑️ हटाउने</button>
+              </div>
+            `}
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    // ४. प्रयोगकर्ता मेटाउने
+    // ४. पासवर्ड हेर्न मिल्ने (Show / Hide Password in Table)
+    function toggleShowPassword(idx, realPass) {
+      const el = document.getElementById(`passSpan_${idx}`);
+      if (el.textContent === "••••••••") {
+        el.textContent = realPass;
+      } else {
+        el.textContent = "••••••••";
+      }
+    }
+
+    // ५. बिर्सिएको पासवर्ड सुपरएडमिनले परिवर्तन गरिदिने (Reset Password)
+    async function changeUserPassword(uname) {
+      const newP = prompt(`कर्मचारी "${uname}" को लागि नयाँ गोप्य पासवर्ड प्रविष्ट गर्नुहोस्:`);
+      if (!newP || !newP.trim()) return;
+
+      const cleanPass = newP.trim();
+
+      // सुपाबेसमा अद्यावधिक गर्ने
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('users').update({ password: cleanPass }).eq('username', uname);
+          await supabaseClient.from('admin_users').update({ password: cleanPass }).eq('username', uname);
+        } catch(e) {}
+      }
+
+      // लोकल स्टोरेजमा अद्यावधिक गर्ने
+      try {
+        let localList = JSON.parse(localStorage.getItem("system_users") || "[]");
+        const idx = localList.findIndex(item => (item.username || '').toLowerCase() === uname.toLowerCase());
+        if (idx !== -1) {
+          localList[idx].password = cleanPass;
+          localStorage.setItem("system_users", JSON.stringify(localList));
+        }
+      } catch(e) {}
+
+      alert(`✓ कर्मचारी "${uname}" को नयाँ पासवर्ड "${cleanPass}" सफलतापूर्वक सेट गरियो! अब यो पासवर्डले लगइन गर्न सकिन्छ।`);
+      loadAllUsers();
+    }
+
+    // ६. प्रयोगकर्ता मेटाउने
     async function deleteUser(uname) {
-      if (!confirm(`के तपाईं प्रयोगकर्ता "${uname}" लाई मेटाउन निश्चित हुनुहुन्छ?`)) return;
+      if (!confirm(`के तपाईं कर्मचारी "${uname}" लाई पूर्ण रूपमा हटाउन निश्चित हुनुहुन्छ?`)) return;
 
       if (supabaseClient) {
         try {
           await supabaseClient.from('users').delete().eq('username', uname);
-          await supabaseClient.from('users').delete().eq('user_id', uname);
           await supabaseClient.from('admin_users').delete().eq('username', uname);
         } catch(e) {}
       }
@@ -503,8 +624,14 @@
         localStorage.setItem("system_users", JSON.stringify(localList));
       } catch(e) {}
 
-      alert(`प्रयोगकर्ता "${uname}" सफलतापूर्वक हटाइयो!`);
+      alert(`कर्मचारी "${uname}" सफलतापूर्वक हटाइयो!`);
       loadAllUsers();
+    }
+
+    // फोटो ठूलो पारेर हेर्ने
+    function viewFullPhoto(src) {
+      const win = window.open("");
+      win.document.write(`<img src="${src}" style="max-width:100%; height:auto; display:block; margin:auto; border-radius:8px;">`);
     }
 
     function toggleTheme() {
