@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Mayadevi - English Certificate Portal</title>
+
+  <!-- Google Fonts: Mukta for Data Entry -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --gov-crimson: #c00000;
+      --gov-navy: #07192f;
+      --gov-blue: #1e3a8a;
+      --gov-accent: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #cbd5e1;
+      --text-dark: #0f172a;
+    }
+
+    body.dark-mode {
+      --bg: #07192f;
+      --card-bg: #0d233e;
+      --border-color: #1e3a8a;
+      --text-dark: #ffffff;
+    }
+
+    * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: 'Mukta', sans-serif; }
+    body { background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.25s, color 0.25s; }
+
+    .gov-header { background: linear-gradient(135deg, #07192f 0%, #1e3a8a 100%); border-bottom: 3px solid var(--gov-crimson); padding: 8px 18px; color: #ffffff; }
+    .header-inner { max-width: 1720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    
+    .brand-left { display: flex; align-items: center; gap: 12px; }
+    .brand-left img { height: 48px; width: auto; }
+    .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.15; }
+    
+    .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    
+    /* User Profile Badge */
+    .user-profile-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.15); padding: 4px 12px 4px 6px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.3); }
+    .user-profile-badge img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: #fff; padding: 1px; }
+    .welcome-badge { font-size: 14.5px; font-weight: bold; color: #ffedd5; margin: 0; }
+
+    .header-clock-box { text-align: right; background: rgba(255, 255, 255, 0.1); padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.2); line-height: 1.2; }
+    .header-clock-box .h-date { font-size: 11px; color: #cbd5e1; font-weight: 600; }
+    .header-clock-box .h-time { font-size: 12px; color: #ffffff; font-weight: 800; }
+
+    .nav-btn { background: #0d233e; color: #ffffff; text-decoration: none; font-size: 12px; font-weight: 700; padding: 6px 11px; border-radius: 4px; border: 1px solid #1e3a8a; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+    .nav-btn:hover { background: #2563eb; border-color: #3b82f6; }
+
+    .purge-warning-banner { background: #fef2f2; border-bottom: 2px solid #ef4444; color: #991b1b; padding: 10px 16px; font-size: 13.5px; font-weight: 800; text-align: center; }
+
+    .portal-grid { max-width: 1780px; width: 100%; margin: 16px auto; padding: 0 16px; display: grid; grid-template-columns: 550px 1fr; gap: 16px; flex: 1; }
+    @media (max-width: 1024px) { .portal-grid { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); max-height: 88vh; overflow-y: auto; }
+    .card-title { font-size: 17px; font-weight: 800; color: var(--gov-blue); border-bottom: 2px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px; }
+    body.dark-mode .card-title { color: #60a5fa; }
+
+    .doc-selector-box { background: #eff6ff; border: 2px solid #3b82f6; border-radius: 6px; padding: 12px; margin-bottom: 15px; }
+    body.dark-mode .doc-selector-box { background: #1e3a8a; border-color: #60a5fa; }
+    .doc-selector-box select { width: 100%; padding: 10px; font-size: 15px; font-weight: bold; color: #1e3a8a; border: 1px solid #93c5fd; border-radius: 4px; cursor: pointer; }
+
+    .form-row { margin-bottom: 10px; }
+    .form-row label { display: block; font-size: 12.5px; font-weight: 800; margin-bottom: 3px; color: var(--text-dark); }
+    .form-row input, .form-row select { width: 100%; padding: 7px 10px; border: 1.5px solid var(--border-color); border-radius: 5px; font-size: 13px; font-weight: 600; background: var(--card-bg); color: var(--text-dark); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+    .dynamic-section { display: none; background: rgba(37, 99, 235, 0.04); border: 1px dashed #93c5fd; padding: 12px; border-radius: 6px; margin-bottom: 10px; }
+    .dynamic-section.active { display: block; }
+    .dynamic-section h4 { margin-bottom: 10px; font-size: 13.5px; color: #1e3a8a; border-bottom: 1px solid #bfdbfe; padding-bottom: 4px; }
+    body.dark-mode .dynamic-section h4 { color: #60a5fa; border-color: #3b82f6; }
+
+    .btn-action { background: #1e3a8a; color: #fff; border: none; padding: 6px 12px; font-size: 11.5px; cursor: pointer; border-radius: 4px; font-weight: bold; margin-top: 5px; }
+    .btn-remove { background: #dc2626; color: #fff; border: none; padding: 6px 10px; font-size: 11px; cursor: pointer; border-radius: 4px; }
+    .member-row, .income-row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
+
+    .btn-draft { width: 100%; background: #0284c7; color: #ffffff; border: none; padding: 12px; border-radius: 6px; font-size: 14.5px; font-weight: 800; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+    .btn-draft:hover { background: #0369a1; }
+    .btn-print { width: 100%; background: #eab308; color: #000; border: none; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 900; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35); }
+
+    /* Portal Folder View */
+    .draft-list-box { margin-top: 20px; border: 2px solid #22c55e; border-radius: 6px; padding: 12px; background: rgba(34, 197, 94, 0.05); }
+    .draft-list-box h4 { font-size: 14px; color: #166534; margin-bottom: 8px; border-bottom: 1px solid #86efac; padding-bottom: 5px; }
+    body.dark-mode .draft-list-box h4 { color: #4ade80; border-color: #22c55e; }
+    .portal-folder { margin-bottom: 10px; border: 1px solid #93c5fd; border-radius: 6px; overflow: hidden; }
+    body.dark-mode .portal-folder { border-color: #3b82f6; }
+    .portal-folder-header { background: #dbeafe; padding: 8px 12px; font-weight: bold; color: #1e3a8a; display: flex; justify-content: space-between; }
+    body.dark-mode .portal-folder-header { background: #1e3a8a; color: #bfdbfe; }
+    .portal-folder-body { padding: 8px 12px; background: #fff; }
+    body.dark-mode .portal-folder-body { background: #0f172a; }
+    .draft-item { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; padding: 6px 0; border-bottom: 1px dashed #cbd5e1; font-weight:bold; color: var(--text-dark); }
+    .btn-export-direct-folder { width: 100%; background: linear-gradient(135deg, #15803d 0%, #16a34a 100%); color: #ffffff; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 900; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35); }
+
+    /* Live Preview Pane */
+    .preview-card { background: #cfd8dc; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; max-height: 88vh; }
+    
+    .sheet-doc-preview, .sheet-doc-preview * { font-family: 'Cambria', serif !important; }
+    .sheet-doc-preview { background: #ffffff; color: #000000; width: 210mm; min-height: 297mm; padding: 10mm 15mm 8mm 15mm; box-shadow: 0 5px 20px rgba(0,0,0,0.5); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
+
+    .sheet-watermark-overlay { position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; opacity: 0.08; z-index: 1; pointer-events: none; }
+    .sheet-watermark-overlay img { width: 450px; height: 450px; object-fit: contain; }
+
+    .sheet-doc-content { position: relative; z-index: 2; flex-grow: 1; }
+
+    .doc-motto { text-align: center; font-size: 12px; font-weight: bold; color: #c00000; margin-bottom: 2px; white-space: nowrap; }
+    .doc-header-table { width: 100%; border-collapse: collapse; margin-bottom: 2px; }
+    .doc-header-table td { border: none; vertical-align: top; padding: 0; }
+    .doc-titles { text-align: center; line-height: 1.25; padding: 0 10px; }
+    .doc-titles .h-local { font-size: 14.5px; font-weight: bold; color: #c00000; margin: 0; }
+    .doc-titles .h-palika { font-size: 21px; font-weight: bold; color: #c00000; margin: 1px 0; }
+    .doc-titles .h-ward { font-size: 16.5px; font-weight: bold; color: #c00000; margin: 1px 0; }
+    .doc-titles .h-address { font-size: 14px; font-weight: bold; color: #c00000; margin: 0; }
+
+    .logo-block-left { display: flex; flex-direction: column; align-items: flex-start; font-size: 12px; font-weight: bold; color: #c00000; line-height: 1.4; }
+    .logo-block-left img { width: 70px; height: auto; margin-bottom: 6px; }
+    .logo-block-right { display: flex; flex-direction: column; align-items: flex-end; font-size: 12px; font-weight: bold; color: #c00000; line-height: 1.4; text-align: right; }
+    .logo-block-right img { width: 70px; height: auto; margin-bottom: 6px; }
+
+    .header-double-line { border-top: 4px solid #000; border-bottom: 1.5px solid #000; height: 4px; margin: 6px 0 4px 0; }
+    .doc-date-row { text-align: right; font-size: 14px; font-weight: bold; color: #c00000; margin-bottom: 12px; }
+
+    .doc-subject-bar { text-align: center; margin: 10px 0 4px 0; font-size: 20px; font-weight: bold; text-decoration: underline; text-transform: uppercase; }
+    .doc-concern-bar { text-align: center; font-size: 16px; font-weight: bold; text-decoration: underline; margin-bottom: 14px; }
+    .doc-body-p { font-size: 14px; line-height: 1.6; text-align: justify; margin-bottom: 12px; }
+
+    .doc-table-custom { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+    .doc-table-custom th, .doc-table-custom td { border: 1px solid #333; padding: 6px 8px; text-align: left; }
+
+    .doc-sign-block { float: right; text-align: center; margin-top: 25px; font-size: 14.5px; }
+    .doc-sign-block div { margin: 0; padding: 0; line-height: 1.2; font-weight: bold; }
+    
+    .doc-footer-area { border-top: 1.5px solid #000; padding-top: 2px; margin-top: 5px; font-size: 11.5px; color: #111; display: flex; justify-content: space-between; align-items: center; font-weight:bold; }
+
+    footer.site-footer { background: #07192f; color: #cbd5e1; padding: 10px 18px; font-size: 12px; border-top: 3px solid #2563eb; text-align: center; }
+
+    /* Print Styles */
+    @media print {
+      @page { size: A4; margin: 0; }
+      html, body { width: 100%; height: 100%; margin: 0; padding: 0; background: #fff; font-family: 'Cambria', serif !important; }
+      body * { visibility: hidden; font-family: 'Cambria', serif !important; }
+      #docA4Sheet, #docA4Sheet * { visibility: visible; font-family: 'Cambria', serif !important; }
+      #docA4Sheet { position: absolute; left: 0; top: 0; width: 210mm; height: 297mm; box-shadow: none !important; border: none !important; margin: 0 !important; padding: 10mm 15mm !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; background: white; }
+      .gov-header, .portal-grid .card, footer.site-footer, .purge-warning-banner { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="gov-header">
+    <div class="header-inner">
+      <div class="brand-left">
+        <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" onerror="this.src='assets/nishan%20chap.jpg';">
+        <div class="brand-text">
+          <h1>Smart Mayadevi</h1>
+        </div>
+      </div>
+      <div class="header-controls">
+        <div class="user-profile-badge">
+          <img id="headerUserImg" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User">
+          <span id="welcomeUserBadge" class="welcome-badge">Hello, Admin जी 👋</span>
+        </div>
+        
+        <span id="activeWardBadge" style="background:#0284c7; color:#fff; font-size:12px; font-weight:bold; padding:4px 10px; border-radius:15px; margin-right:8px;">वडा: लोड हुँदैछ...</span>
+        
+        <button type="button" class="nav-btn" onclick="window.location.href='index.html'">🏠 Home</button>
+        <button type="button" class="nav-btn" onclick="openOldRecords()">📂 पुरानो हेर्नुहोस्</button>
+        <button type="button" class="nav-btn active" onclick="resetFormToNew()">📝 नयाँ फाराम</button>
+        <button type="button" class="nav-btn btn-theme" onclick="toggleTheme()">☾</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="purge-warning-banner">
+    <div style="max-width: 1720px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+       <span>⚠️ जरुरी सूचना: पोर्टलमा सेभ गरिएका फाइलहरू ७ दिनपछि डाटाबेसबाट अटोमेटिक हट्नेछन्।</span>
+       <div class="header-clock-box" style="background:transparent; border:none; padding:0; text-align:right;">
+         <div class="h-date" id="liveNepHeaderDate" style="color:#7f1d1d; font-size:12px;">Date: ...</div>
+         <div class="h-time" id="liveNepHeaderTime" style="color:#991b1b; font-size:13.5px;">Time: ...</div>
+       </div>
+    </div>
+  </div>
+
+  <main class="portal-grid">
+    <div class="card">
+      <div class="card-title"><span>👤 सेवाग्राही तथा प्रमाणपत्र छनोट (Data Entry)</span></div>
+      <form id="certForm" onsubmit="event.preventDefault();">
+        <div class="doc-selector-box">
+          <label style="font-size:13.5px; font-weight:bold; color:#1e3a8a; margin-bottom:5px; display:block;">कुन प्रमाणपत्र बनाउने? (Select Document) *</label>
+          <select id="active_doc_type" onchange="handleDocChange()">
+            <option value="relation" selected>१) Relationship Verification Certificate (नाता प्रमाणित)</option>
+            <option value="address">२) Permanent Address Verification Certificate (ठेगाना)</option>
+            <option value="tax">३) Tax Clearance Verification Certificate (कर चुक्ता)</option>
+            <option value="birth">४) Date of Birth Verification Certificate (जन्ममिति)</option>
+            <option value="income">५) Annual Income Source Verification Certificate (आम्दानी)</option>
+            <option value="contact">६) Verification of Contact Certificate (सम्पर्क)</option>
+            <option value="unmarried">७) Verification of Unmarried Status (अविवाहित)</option>
+            <option value="name">८) Verification of Name (नाम एउटै भएको)</option>
+            <option value="surname">९) Surname Verification (थर फरक परेको)</option>
+            <option value="religion">१०) Verification of Religion Status (धर्म)</option>
+            <option value="marriage">११) Marriage Verification (विवाह)</option>
+            <option value="divorce">१२) Divorce Verification (सम्बन्धविच्छेद)</option>
+          </select>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-row">
+            <label>वडा / कार्यालय (Office Level) *</label>
+            <select id="doc_ward_select" onchange="renderLiveLetterhead()">
+              <option value="1">वडा नं. ०१ कार्यालय</option><option value="2">वडा नं. ०२ कार्यालय</option>
+              <option value="3">वडा नं. ०३ कार्यालय</option><option value="4" selected>वडा नं. ०४ कार्यालय</option>
+              <option value="5">वडा नं. ०५ कार्यालय</option><option value="6">वडा नं. ०६ कार्यालय</option>
+              <option value="7">वडा नं. ०७ कार्यालय</option><option value="8">वडा नं. ०८ कार्यालय</option>
+              <option value="palika">गाउँकार्यपालिकाको कार्यालय</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>आर्थिक वर्ष (Ref.No)</label>
+            <input type="text" id="cust_fiscal_year" placeholder="e.g. 083-84" oninput="updateLivePreview()">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-row"><label>जारी मिति (Issue Date)</label><input type="text" id="cust_date" oninput="updateLivePreview()"></div>
+          <div class="form-row"><label>Applicant Name *</label><input type="text" id="cust_name" oninput="updateLivePreview()"></div>
+        </div>
+
+        <div class="grid-3">
+          <div class="form-row"><label>Citizenship No.</label><input type="text" id="cust_cit" oninput="updateLivePreview()"></div>
+          <div class="form-row"><label>National ID (NID)</label><input type="text" id="cust_nid" oninput="updateLivePreview()"></div>
+          <div class="form-row"><label>Passport No.</label><input type="text" id="cust_passport" oninput="updateLivePreview()"></div>
+        </div>
+        
+        <div class="form-row">
+          <label>Permanent Address *</label>
+          <input type="text" id="cust_address" oninput="updateLivePreview()">
+        </div>
+
+        <!-- DYNAMIC SECTIONS -->
+        <div id="sec_address_birth" class="dynamic-section">
+          <h4>📍 ठेगाना / जन्ममिति विवरण</h4>
+          <div class="grid-2">
+            <div class="form-row"><label>Old VDC & Ward (साविक ठेगाना)</label><input type="text" id="cust_old_vdc" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>Date of Birth</label><input type="text" id="cust_dob" oninput="updateLivePreview()"></div>
+          </div>
+        </div>
+
+        <div id="sec_grandparents" class="dynamic-section">
+          <h4>👴👵 हजुरबुवा / हजुरआमाको नाम</h4>
+          <div class="grid-2">
+            <div class="form-row"><label>Grandfather's Name</label><input type="text" id="cust_grandfather" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>Grandmother's Name</label><input type="text" id="cust_grandmother" oninput="updateLivePreview()"></div>
+          </div>
+        </div>
+
+        <div id="sec_parents" class="dynamic-section">
+          <h4>👨‍👩‍👦 बाबु / आमाको नाम</h4>
+          <div class="grid-2">
+            <div class="form-row"><label>Father's Name</label><input type="text" id="cust_father" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>Mother's Name</label><input type="text" id="cust_mother" oninput="updateLivePreview()"></div>
+          </div>
+        </div>
+
+        <div id="sec_relation" class="dynamic-section">
+          <h4>👥 पारिवारिक सदस्यहरू (Family Members)</h4>
+          <p style="font-size:11px; color:#666;">* यहाँ थपेका सदस्यहरू मात्र टेबलमा आउनेछन्। फोटो सेक्सनमा भने Applicant सहित सबैको फोटो अटोमेटिक बन्नेछ।</p>
+          <div id="relation_rows_container"></div>
+          <button type="button" class="btn-action" onclick="addRelationRow()">+ सदस्य थप्नुहोस् (Add Member)</button>
+        </div>
+
+        <div id="sec_name" class="dynamic-section">
+          <h4>📝 फरक परेको नाम (Name Verification)</h4>
+          <div class="form-row"><label>अर्को नाम (Different Name)</label><input type="text" id="cust_other_name" placeholder="e.g. Mohammad Sujit Khan" oninput="updateLivePreview()"></div>
+        </div>
+
+        <div id="sec_surname" class="dynamic-section">
+          <h4>📝 फरक परेको थर (Surname Verification)</h4>
+          <div class="grid-2">
+            <div class="form-row"><label>हजुरबुवाको थर (Grandfather's Surname)</label><input type="text" id="cust_gf_surname" placeholder="e.g. Ali" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>आफ्नो थर (Applicant's Surname)</label><input type="text" id="cust_self_surname" placeholder="e.g. Musalman" oninput="updateLivePreview()"></div>
+          </div>
+        </div>
+
+        <div id="sec_religion" class="dynamic-section">
+          <h4>🕉️ धर्म र मृत्यु विवरण (Religion & Death Details)</h4>
+          <div class="grid-3">
+            <div class="form-row"><label>धर्म (Religion)</label><input type="text" id="cust_religion" placeholder="e.g. Hinduism" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>मृत्यु भएको देश (Country)</label><input type="text" id="cust_death_country" placeholder="e.g. Saudi Arabia" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>मृत्यु मिति (Death Date)</label><input type="text" id="cust_death_date" placeholder="e.g. 11/10/2018" oninput="updateLivePreview()"></div>
+          </div>
+        </div>
+
+        <div id="sec_marriage" class="dynamic-section">
+          <h4>💍 विवाह विवरण (Marriage Details)</h4>
+          <div class="grid-2">
+            <div class="form-row"><label>बेहुली/बेहुलाको नाम (Spouse Name)</label><input type="text" id="cust_spouse_name" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>Citizenship / NID</label><input type="text" id="cust_spouse_cit" oninput="updateLivePreview()"></div>
+          </div>
+          <div class="grid-2">
+            <div class="form-row"><label>Spouse's Father Name</label><input type="text" id="cust_spouse_father" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>Spouse's Mother Name</label><input type="text" id="cust_spouse_mother" oninput="updateLivePreview()"></div>
+          </div>
+          <div class="form-row"><label>विवाह भएको मिति (Marriage Date)</label><input type="text" id="cust_marriage_date" oninput="updateLivePreview()"></div>
+        </div>
+
+        <div id="sec_divorce" class="dynamic-section">
+          <h4>💔 सम्बन्धविच्छेद विवरण (Divorce Details)</h4>
+          <div class="grid-2">
+            <div class="form-row"><label>सम्बन्धविच्छेद मिति (Divorce Date)</label><input type="text" id="cust_divorce_date" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>निर्णय गर्ने अदालत (Court Name)</label><input type="text" id="cust_divorce_court" placeholder="e.g. Rupandehi District Court" oninput="updateLivePreview()"></div>
+          </div>
+        </div>
+
+        <div id="sec_income" class="dynamic-section">
+          <h4>💰 आम्दानी विवरण (Income Sources)</h4>
+          <div class="grid-2">
+            <div class="form-row">
+              <label>मुद्रा (Currency)</label>
+              <select id="inc_currency" onchange="calculateIncome()">
+                <option value="GBP £ (UK Pound Sterling)">GBP £ (UK)</option>
+                <option value="USD $ (US Dollar)">USD $ (USA)</option>
+                <option value="AUD $ (Australian Dollar)">AUD $ (Australia)</option>
+                <option value="EUR € (Euro)">EUR € (Europe)</option>
+                <option value="JPY ¥ (Japanese Yen)">JPY ¥ (Japan)</option>
+                <option value="CAD $ (Canadian Dollar)">CAD $ (Canada)</option>
+              </select>
+            </div>
+            <div class="form-row"><label>आजको विनिमय दर (Rate)</label><input type="number" id="inc_rate" step="0.01" oninput="calculateIncome()"></div>
+          </div>
+          <div id="income_rows_container"></div>
+          <button type="button" class="btn-action" onclick="addIncomeRow()">+ आम्दानी थप्नुहोस्</button>
+          <div style="margin-top:12px; font-size:13px; font-weight:bold; color:#1e3a8a;">
+            Total NRS: Rs. <span id="lbl_total_nrs">0.00</span><br>
+            Total Equivalent: <span id="lbl_total_foreign">0.00</span>
+          </div>
+        </div>
+
+        <div id="sec_witness" class="dynamic-section">
+          <h4>👀 साक्षीहरू (Witnesses)</h4>
+          <div class="grid-2">
+            <div class="form-row"><label>Witness 1</label><input type="text" id="cust_witness1" oninput="updateLivePreview()"></div>
+            <div class="form-row"><label>Witness 2</label><input type="text" id="cust_witness2" oninput="updateLivePreview()"></div>
+          </div>
+        </div>
+
+        <!-- Common Signatory -->
+        <div class="grid-3" style="margin-top:10px;">
+          <div class="form-row"><label>Signatory Name</label><input type="text" id="cust_officer_name" oninput="updateLivePreview()"></div>
+          <div class="form-row"><label>Signatory Post</label><input type="text" id="cust_officer_post" value="Ward Chairperson" oninput="updateLivePreview()"></div>
+          <div class="form-row"><label>Official Phone</label><input type="text" id="cust_officer_phone" oninput="updateLivePreview()"></div>
+        </div>
+
+        <button type="button" class="btn-draft" onclick="addCurrentToDraft()">📥 पोर्टल (Supabase) मा सेभ गर्नुहोस् (Save Online)</button>
+        <button type="button" class="btn-print" onclick="window.print()">🖨️ सिधै प्रिन्ट गर्नुहोस् (Print Document)</button>
+        
+        <!-- Portal Folder Panel -->
+        <div class="draft-list-box" id="draft_box" style="display:none;">
+          <h4>📂 पोर्टलमा सेभ गरिएका डकुमेन्टहरू (<span id="draft_count">0</span>) - <small>७ दिनपछि अटो-डिलिट हुने</small></h4>
+          <div id="draft_items_container"></div>
+          <button type="button" class="btn-export-direct-folder" style="font-size:14px; padding:12px; background:#16a34a;" onclick="exportDraftsToFolder()">📁 सेभ भएका सबै फाइल कम्प्युटरमा डाउनलोड गर्नुहोस्</button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Right Live Preview -->
+    <div class="preview-card">
+      <div class="sheet-doc-preview" id="docA4Sheet">
+        <div class="sheet-watermark-overlay">
+          <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" onerror="this.src='assets/palika%20logo.jpg';">
+        </div>
+
+        <div class="sheet-doc-content">
+          <table class="doc-header-table">
+            <tr>
+              <td style="width: 160px;">
+                <div class="logo-block-left">
+                  <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" onerror="this.src='assets/nishan%20chap.jpg';">
+                  <div>Ref.No.: <span id="prevRefNo"></span></div>
+                  <div>Dispatch.No.: <span id="prevDispatchNo"></span></div>
+                </div>
+              </td>
+              <td class="doc-titles">
+                <div class="doc-motto">"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</div>
+                <div class="h-local">Local Government</div>
+                <div class="h-palika">Mayadevi Rural Municipality</div>
+                <div class="h-ward" id="prevWardOfficeTitle"></div>
+                <div class="h-address" id="prevWardLocation"></div>
+              </td>
+              <td style="width: 160px;">
+                <div class="logo-block-right">
+                  <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" onerror="this.src='assets/palika%20logo.jpg';">
+                  <div style="white-space: nowrap;">Lumbini Province, Nepal.</div>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="header-double-line"></div>
+          <div class="doc-date-row">Date: <span id="prevDate"></span></div>
+          <div class="doc-subject-bar" id="prevSubject">SUBJECT</div>
+          <div class="doc-concern-bar">TO WHOM IT MAY CONCERN</div>
+
+          <div id="dynamic_preview_body" style="font-family: 'Cambria', serif;"></div>
+
+          <div class="doc-sign-block">
+            <div style="margin-bottom: 25px;">……………………………...</div>
+            <div style="font-weight: bold; font-size: 15px;" id="prevOfficerName"></div>
+            <div style="font-weight: bold; font-size: 14.5px;" id="prevOfficerPost"></div>
+          </div>
+        </div>
+
+        <!-- Footer Single Line With Dynamic QR -->
+        <div class="doc-footer-area">
+          <div style="flex: 1; white-space: nowrap;">
+            Contact Number: <span id="prevFooterContact"></span> &nbsp;|&nbsp; 
+            Email: <span id="prevFooterEmail"></span> &nbsp;|&nbsp; 
+            Website: mayadevimunrupandehi.gov.np
+          </div>
+          <div><img id="prevDynamicQR" src="" style="width:60px; height:60px; border:1px solid #ccc; padding:2px; margin-left: 10px;"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    Smart Mayadevi — एकीकृत स्थानीय सरकारी व्यवस्थापन प्रणाली | बरेवा, रुपन्देही
+  </footer>
+
+  <!-- HTML Templates for Word Export -->
+  <template id="tmpl_word_shell">
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>{{DOC_TITLE}}</title>
+      <style>
+        body, div, p, span, table, td, th { font-family: "Cambria", serif !important; }
+        body { margin: 15mm 20mm 15mm 20mm; font-size: 14pt; color: #000; line-height: 1.6; position: relative; }
+        .word-watermark { position: fixed; top: 35%; left: 20%; width: 60%; text-align: center; z-index: -100; opacity: 0.08; }
+        .word-watermark img { width: 500px; height: auto; display: block; margin: 0 auto; }
+        .header-tbl { width: 100%; border: none; margin-bottom: 2pt; }
+        .header-tbl td { border: none; vertical-align: top; }
+        .logo-left-box, .logo-right-box { font-size: 11pt; font-weight: bold; color: #c00000; line-height: 1.4; }
+        .logo-left-box img, .logo-right-box img { width: 68px; height: auto; margin-bottom: 5pt; }
+        .logo-right-box { text-align: right; }
+        .motto { text-align: center; font-size: 10pt; font-weight: bold; color: #c00000; margin-bottom: 2pt; white-space: nowrap; }
+        .center-titles { text-align: center; padding: 0 10pt; }
+        .t-local { font-size: 12.5pt; font-weight: bold; color: #c00000; margin: 0; }
+        .t-palika { font-size: 19.5pt; font-weight: bold; color: #c00000; margin: 0; }
+        .t-ward { font-size: 15.5pt; font-weight: bold; color: #c00000; margin: 0; }
+        .t-addr { font-size: 12pt; font-weight: bold; color: #c00000; margin: 0; }
+        .double-line { border-top: 4pt solid #000; border-bottom: 1.5pt solid #000; height: 4pt; margin: 6pt 0 4pt 0; }
+        .date-row { text-align: right; font-size: 12pt; font-weight: bold; color: #c00000; margin-bottom: 12pt; }
+        .subject { text-align: center; font-size: 20pt; font-weight: bold; text-decoration: underline; margin: 15pt 0 4pt 0; text-transform: uppercase; }
+        .concern { text-align: center; font-size: 16pt; font-weight: bold; text-decoration: underline; margin-bottom: 14pt; }
+        .body-p { text-align: justify; margin-bottom: 12pt; font-size: 14pt; line-height: 1.6; }
+        table.tbl-data { width: 100%; border-collapse: collapse; margin: 12pt 0; font-size: 13pt; }
+        table.tbl-data th, table.tbl-data td { border: 1pt solid #000; padding: 5pt 7pt; text-align: left; }
+        
+        .sign-box { float: right; text-align: center; margin-top: 25pt; font-size: 14pt; }
+        .sign-box div { margin:0; padding:0; line-height:1.2; font-weight: bold; }
+        
+        .footer-line { border-top: 1.5pt solid #000; padding-top: 3pt; margin-top: 20pt; font-size: 10.5pt; color: #111; width: 100%; }
+      </style>
+    </head>
+    <body>
+      <div class="word-watermark"><img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" /></div>
+      <table class="header-tbl">
+        <tr>
+          <td style="width: 160px;"><div class="logo-left-box"><img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png"><br>Ref.No.: {{FISCAL_YEAR}}<br>Dispatch.No.:</div></td>
+          <td class="center-titles"><div class="motto">"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</div><div class="t-local">Local Government</div><div class="t-palika">Mayadevi Rural Municipality</div><div class="t-ward">{{OFFICE_WARD_TITLE}}</div><div class="t-addr">{{OFFICE_LOCATION}}</div></td>
+          <td style="width: 160px;"><div class="logo-right-box"><img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg"><br><div style="white-space: nowrap;">Lumbini Province, Nepal.</div></div></td>
+        </tr>
+      </table>
+      <div class="double-line"></div>
+      <div class="date-row">Date: {{ISSUE_DATE}}</div>
+      <div class="subject">{{DOC_SUBJECT}}</div>
+      <div class="concern">TO WHOM IT MAY CONCERN</div>
+      
+      {{BODY_CONTENT}}
+      
+      <div class="sign-box">
+        <div style="margin-bottom: 25pt;">……………………………...</div>
+        {{SIGNATURE_BLOCK}}
+      </div>
+      <table class="footer-line" style="width:100%; border-collapse:collapse; margin-top:15pt; border-top:1.5pt solid #000; padding-top:4pt;">
+        <tr>
+          <td style="vertical-align: middle; line-height: 1.5; font-weight:bold; white-space: nowrap;">Contact Number: {{FOOTER_PHONE}} &nbsp;|&nbsp; Email: {{FOOTER_EMAIL}} &nbsp;|&nbsp; Website: mayadevimunrupandehi.gov.np</td>
+          <td style="text-align: right; vertical-align: middle; width: 60px;"><img src="{{QR_URL}}" width="55" height="55" alt="QR Code"></td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  </template>
+
+  <!-- 1. Address -->
+  <template id="tmpl_address">
+    <div class="body-p doc-body-p">This is to verify that applicant <strong>{{NAME}}</strong>, holder of {{ID_STRING}} permanent resident of <strong>{{ADDR}}</strong>, has the following relationship with the under mentioned persons.</div>
+    <div class="body-p doc-body-p">It is further certified that the <strong>{{OLD_VDC}}</strong> has been converted to <strong>{{ADDR}}</strong> as per the decision of the Government of Nepal.</div>
+    {{SINGLE_PHOTO}}
+    <div class="body-p doc-body-p" style="margin-top: 10pt;">This letter is hereby issued in accordance with the Section 12 of the Local Government Operation Act, 2074 BS (2017 AD).</div>
+  </template>
+
+  <!-- 2. Relation -->
+  <template id="tmpl_relation">
+    <div class="body-p doc-body-p">This is to verify that applicant <strong>{{NAME}}</strong>, holder of {{ID_STRING}} permanent resident of <strong>{{ADDR}}</strong>, has the following relationship with the under mentioned persons.</div>
+    {{REL_TABLE_WRAPPER}}
+    <div style="margin: 12pt 0; font-size: 14.5px; font-weight: bold;">Photo Verification</div>
+    {{PHOTO_GRID}}
+    <div class="body-p doc-body-p" style="margin-top: 10pt;">This letter is issued on the basis of the applicant's written self-declaration, official inquiry and investigation carried out at the local level, confirmation by competent witnesses, and in accordance with the Section 12 of the Local Government Operation Act, 2074 BS (2017 AD).</div>
+  </template>
+
+  <!-- 3. Tax -->
+  <template id="tmpl_tax">
+    <div class="body-p doc-body-p">This is to verify that applicant <strong>{{NAME}}</strong>, holder of {{ID_STRING}} permanent resident of <strong>{{ADDR}}</strong>, has cleared all their taxes of their properties and income up to current fiscal year and as per the official record they have no any remaining dues to be paid.</div>
+    {{SINGLE_PHOTO}}
+    <div class="body-p doc-body-p" style="margin-top: 15pt;">This letter is hereby issued in accordance with the Section 12 of the Local Government Operation Act, 2074 BS (2017 AD).</div>
+  </template>
+
+  <!-- 4. Birth -->
+  <template id="tmpl_birth">
+    <div class="body-p doc-body-p">This is to verify that applicant <strong>{{NAME}}</strong>, holder of {{ID_STRING}} permanent resident of <strong>{{ADDR}}</strong>, was born on <strong>{{DOB}}</strong> as per the official record of this municipality.</div>
+    {{SINGLE_PHOTO}}
+    <div class="body-p doc-body-p" style="margin-top: 15pt;">This letter is hereby issued in accordance with the Section 12 of the Local Government Operation Act, 2074 BS (2017 AD).</div>
+  </template>
+
+  <!-- 5. Income -->
+  <template id="tmpl_income">
+    <div class="body-p doc-body-p">This is to verify that applicant <strong>{{NAME}}</strong>, holder of {{ID_STRING}} permanent resident of <strong>{{ADDR}}</strong>, has the following Annual Income from different sources that are as listed below:</div>
+    <div style="font-weight:bold; margin-bottom:4pt; font-size:14.5px;">Detail of Income Sources:</div>
+    <table class="tbl-data doc-table-custom">
+      <thead><tr><th style="width: 30px; text-align:center;">S.N.</th><th>Source of Income</th><th>Earned by</th><th>Yearly Income (NRS)</th><th>Remarks</th></tr></thead>
+      <tbody>
+        {{INC_ROWS}}
+        <tr><td colspan="3" style="font-weight:bold; text-align:right;">Total in NRS</td><td style="font-weight:bold;">{{TOTAL_NRS}}</td><td></td></tr>
+        <tr><td colspan="3" style="font-weight:bold; text-align:right;">Total Equivalent in {{CURRENCY}}</td><td style="font-weight:bold;">{{TOTAL_FOREIGN}}</td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="body-p doc-body-p" style="line-height:1.8;">
+      Total Annual Income in NRS: <strong>{{TOTAL_NRS}}</strong><br>
+      In Words: <strong>{{TOTAL_NRS_WORDS}}</strong><br>
+      Equivalent to {{CURRENCY}}: <strong>{{TOTAL_FOREIGN}}</strong><br>
+      In Words: <strong>{{TOTAL_FOREIGN_WORDS}}</strong><br>
+      Today's exchange rate: 1 {{CURRENCY}} Equals to Nrs. {{RATE}} as on {{ISSUE_DATE}}.<br>
+      <small>The above sources are verified only after study of proof and evidences.</small>
+    </div>
+    {{SINGLE_PHOTO}}
+  </template>
+
+  <!-- 6. Contact -->
+  <template id="tmpl_contact">
+    <div class="body-p doc-body-p">We, Mayadevi Rural Municipality, Ward no.4, Rupandehi District, Lumbini Province, Nepal has issued various documents of <strong>{{NAME}}</strong> (Applicant) and her/his family for abroad purpose on the basis of their true and legal documents. We don't have our official landline number so, if you have any enquiry about above mentioned documents.</div>
+    <div class="body-p doc-body-p" style="line-height: 1.8; margin-top: 10pt;">Please feel free to contact us mentioned documents below:-<br><strong>Name:-</strong> {{SIGN_OFFICER_NAME}}<br><strong>Designation:-</strong> {{SIGN_OFFICER_POST}}<br><strong>Contact:-</strong> {{OFFICER_PHONE}}<br><strong>Email:-</strong> {{FOOTER_EMAIL}}</div>
+    {{SINGLE_PHOTO}}
+  </template>
+
+  <!-- 7. Unmarried -->
+  <template id="tmpl_unmarried">
+    <div class="body-p doc-body-p">This is to verify that applicant <strong>{{NAME}}</strong>, holder of {{ID_STRING}} son/daughter of <strong>{{FATHER}}</strong> and <strong>{{MOTHER}}</strong> permanent resident of <strong>{{ADDR}}</strong> is unmarried as of the date of issuance of this letter.</div>
+    <div class="body-p doc-body-p">This letter is issued on the basis of the applicant's written self-declaration, official inquiry and investigation carried out at the local level, and confirmation by competent witnesses.</div>
+    <div class="body-p doc-body-p" style="margin-top:15pt; font-weight:bold;">Witnesses<br>1. {{WITNESS1}}<br>2. {{WITNESS2}}</div>
+    {{SINGLE_PHOTO}}
+    <div class="body-p doc-body-p" style="margin-top: 10pt;">This letter is hereby issued in accordance with the Section 12 of the Local Government Operation Act, 2074 BS (2017 AD).</div>
+  </template>
+
+  <!-- 8. Name Verification -->
+  <template id="tmpl_name">
+    <div class="body-p doc-body-p">This is to Certify that <strong>{{NAME}}</strong> and <strong>{{OTHER_NAME}}</strong>, holder of {{ID_STRING}} are same name of person, a permanent resident of <strong>{{ADDR}}</strong>.</div>
+    {{SINGLE_PHOTO}}
+  </template>
+
+  <!-- 9. Surname Verification -->
+  <template id="tmpl_surname">
+    <div class="body-p doc-body-p">This is to certify that <strong>{{NAME}}</strong> (Applicant), holder of {{ID_STRING}}, grandson of <strong>{{GRANDFATHER}}</strong> and son of <strong>{{FATHER}}</strong> and <strong>{{MOTHER}}</strong>, a permanent resident of <strong>{{ADDR}}</strong>.</div>
+    <div class="body-p doc-body-p">According to the citizenship certificate of applicant's grandfather, his surname is mentioned as "{{GF_SURNAME}}" and mother, her surname is not mentioned. But the applicant's surname in the citizenship and other documents is mentioned as "{{SELF_SURNAME}}".</div>
+    <div class="body-p doc-body-p">I hereby want to confirm to the concerned department that even though the surname seems different but they have true blood relations of parent's and son.</div>
+    <div class="body-p doc-body-p">Please kindly contact us, if you need any further verification.</div>
+    {{SINGLE_PHOTO}}
+  </template>
+
+  <!-- 10. Religion -->
+  <template id="tmpl_religion">
+    <div class="body-p doc-body-p">This is to certify that the religion of the late <strong>{{NAME}}</strong>, holder of {{ID_STRING}}, resident of <strong>{{ADDR}}</strong> who died in a Traffic Accident in <strong>{{DEATH_COUNTRY}}</strong> on <strong>{{DEATH_DATE}}</strong> was <strong>{{RELIGION}}</strong>.</div>
+    {{SINGLE_PHOTO}}
+  </template>
+
+  <!-- 11. Marriage Verification -->
+  <template id="tmpl_marriage">
+    <div class="body-p doc-body-p" style="text-align:justify;">This is to verify that <strong>{{NAME}}</strong> (Groom/Bride), holder of {{ID_STRING}}, grandson of <strong>{{GRANDFATHER}}</strong> and <strong>{{GRANDMOTHER}}</strong>, son of <strong>{{FATHER}}</strong> and <strong>{{MOTHER}}</strong>, permanent resident of <strong>{{ADDR}}</strong> got married to <strong>{{SPOUSE_NAME}}</strong> (Bride/Groom), holder of Citizenship/NID/Passport No. <strong>{{SPOUSE_CIT}}</strong>, daughter of <strong>{{SPOUSE_FATHER}}</strong> and <strong>{{SPOUSE_MOTHER}}</strong>, permanent resident of <strong>{{ADDR}}</strong> on <strong>{{MARRIAGE_DATE}}</strong> in accordance with social customs and traditions.</div>
+    <div style="text-align:center; margin-top:15pt;">
+      <table style="margin: 0 auto; border:none; border-collapse: collapse;">
+        <tr>
+          <td style="border:none; text-align:center; padding: 0 15pt; vertical-align: top;">
+            <div style="width:75pt; height:90pt; border:1.5px solid #444; text-align:center; padding-top:35pt; margin: 0 auto; box-sizing:border-box; color:#555; font-size:10pt;">Photo</div>
+            <div style="margin-top:5pt; font-weight:bold; font-size:14.5px;">{{NAME}}</div>
+            <div style="font-size:13px;">(Groom)</div>
+          </td>
+          <td style="border:none; text-align:center; padding: 0 15pt; vertical-align: top;">
+            <div style="width:75pt; height:90pt; border:1.5px solid #444; text-align:center; padding-top:35pt; margin: 0 auto; box-sizing:border-box; color:#555; font-size:10pt;">Photo</div>
+            <div style="margin-top:5pt; font-weight:bold; font-size:14.5px;">{{SPOUSE_NAME}}</div>
+            <div style="font-size:13px;">(Bride)</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="body-p doc-body-p" style="margin-top: 15pt;">This letter is issued on the basis of the applicant's written self-declaration, official inquiry and investigation carried out at the local level, marriage registration records of the couple, and confirmation by competent witnesses, in accordance with the Section 12 of the Local Government Operation Act, 2074 BS (2017 AD).</div>
+  </template>
+
+  <!-- 12. Divorce -->
+  <template id="tmpl_divorce">
+    <div class="body-p doc-body-p">This is to verify that <strong>{{NAME}}</strong>, holder of {{ID_STRING}}, grandson/granddaughter of <strong>{{GRANDFATHER}}</strong> and <strong>{{GRANDMOTHER}}</strong>, son/daughter of <strong>{{FATHER}}</strong> and <strong>{{MOTHER}}</strong>, permanent resident of <strong>{{ADDR}}</strong> got divorced on <strong>{{DIVORCE_DATE}}</strong> as per the decision of <strong>{{DIVORCE_COURT}}</strong> and the record maintained in this office.</div>
+    {{SINGLE_PHOTO}}
+    <div class="body-p doc-body-p" style="margin-top: 10pt;">This letter is hereby issued in accordance with the Section 12 of the Local Government Operation Act, 2074 BS (2017 AD).</div>
+  </template>
+
+  <script>
+    // --- Configuration & Initialization ---
+    var nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+    var draftDocuments = [];
+
+    // SUPABASE SETUP: 
+    // यो पोर्टलमा अटोमेटिक सेभ गर्नको लागि Supabase मा एउटा 'english_cert_drafts' नामको टेबल बनाउनुहोस्।
+    // Columns: user_id (text), data (jsonb), updated_at (timestamp)
+    const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
+    let supabaseClient = null;
+    try {
+        if(window.supabase && SUPABASE_URL.startsWith("http")) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
+    } catch(e) { console.warn("Supabase Init Warning", e); }
+
+    var docMeta = {
+      "relation": "RELATIONSHIP VERIFICATION CERTIFICATE", "address": "PERMANENT ADDRESS VERIFICATION CERTIFICATE", "tax": "TAX CLEARANCE VERIFICATION CERTIFICATE",
+      "birth": "DATE OF BIRTH VERIFICATION CERTIFICATE", "income": "ANNUAL INCOME SOURCE VERIFICATION CERTIFICATE", "contact": "VERIFICATION OF CONTACT CERTIFICATE",
+      "unmarried": "VERIFICATION OF UNMARRIED STATUS", "name": "VERIFICATION OF NAME", "surname": "SURNAME VERIFICATION",
+      "religion": "VERIFICATION OF RELIGION STATUS", "marriage": "MARRIAGE VERIFICATION", "divorce": "DIVORCE VERIFICATION"
+    };
+
+    var wardConfigs = {
+      "1": { officeTitle: "Ward No. 1 Office", location: "Dhamauli, Rupandehi", email: "mayadevirupandehiward1@gmail.com", phone: "9800000000" },
+      "2": { officeTitle: "Ward No. 2 Office", location: "Tilauri, Rupandehi", email: "mayadevirupandehiward2@gmail.com", phone: "9800000000" },
+      "3": { officeTitle: "Ward No. 3 Office", location: "Kamhariya, Rupandehi", email: "mayadevirupandehiward3@gmail.com", phone: "9800000000" },
+      "4": { officeTitle: "Office Of 4 No. Ward", location: "Gundi, Rupandehi", email: "mayadevirupandehiward4@gmail.com", phone: "9800000000" },
+      "5": { officeTitle: "Ward No. 5 Office", location: "Gonaha, Rupandehi", email: "mayadevirupandehiward5@gmail.com", phone: "9800000000" },
+      "6": { officeTitle: "Ward No. 6 Office", location: "Shivpur, Rupandehi", email: "mayadevirupandehiward6@gmail.com", phone: "9800000000" },
+      "7": { officeTitle: "Ward No. 7 Office", location: "Hatibangai, Rupandehi", email: "mayadevirupandehiward7@gmail.com", phone: "9800000000" },
+      "8": { officeTitle: "Ward No. 8 Office", location: "Basdilwa, Rupandehi", email: "mayadevirupandehiward08@gmail.com", phone: "9800000000" },
+      "palika": { officeTitle: "Office of the Rural Municipal Executive", location: "Barewa, Rupandehi", email: "info@mayadevimunrupandehi.gov.np", phone: "071-692222" }
+    };
+
+    function toNepNum(n) { return n ? n.toString().replace(/\d/g, d => nepDigits[d]) : ''; }
+
+    function numberToWords(num) {
+      if (!num || isNaN(num)) return "Zero Only";
+      var n = Math.floor(num);
+      if (n === 0) return "Zero Only";
+      var a = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+      var b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+      function convert(n) {
+          if (n < 20) return a[n];
+          if (n < 100) return b[Math.floor(n / 10)] + (n % 10 ? " " + a[n % 10] : "");
+          if (n < 1000) return a[Math.floor(n / 100)] + " Hundred" + (n % 100 ? " " + convert(n % 100) : "");
+          if (n < 100000) return convert(Math.floor(n / 1000)) + " Thousand" + (n % 1000 ? " " + convert(n % 1000) : "");
+          if (n < 10000000) return convert(Math.floor(n / 100000)) + " Lakh" + (n % 100000 ? " " + convert(n % 100000) : "");
+          return convert(Math.floor(n / 10000000)) + " Crore" + (n % 10000000 ? " " + convert(n % 10000000) : "");
+      }
+      return convert(n) + " Only";
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      localStorage.setItem("mayadevi_naksa_theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+    }
+
+    function applySavedTheme() {
+      if (localStorage.getItem("mayadevi_naksa_theme") === "dark") document.body.classList.add("dark-mode");
+    }
+
+    function updateLiveClock() {
+      var now = new Date();
+      var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var d = String(now.getDate()).padStart(2, '0');
+      var m = months[now.getMonth()];
+      var y = now.getFullYear();
+      var day = days[now.getDay()];
+      
+      var h = now.getHours();
+      var min = String(now.getMinutes()).padStart(2, '0');
+      var s = String(now.getSeconds()).padStart(2, '0');
+      var ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12; h = h ? h : 12; 
+      var hourStr = String(h).padStart(2, '0');
+
+      var dateEl = document.getElementById("liveNepHeaderDate");
+      if (dateEl) dateEl.textContent = `Date: ${d}${m}, ${y} (${day})`;
+      var timeEl = document.getElementById("liveNepHeaderTime");
+      if (timeEl) timeEl.textContent = `Time: ${hourStr}:${min}:${s}${ampm}`;
+    }
+
+    function initUserScope() {
+      var userIdForDB = "admin";
+      try {
+        var raw = sessionStorage.getItem("user") || localStorage.getItem("user");
+        if (raw) {
+          var user = JSON.parse(raw);
+          userIdForDB = user.id || user.username || "admin";
+          var wardSelect = document.getElementById("doc_ward_select");
+          var userName = user.name || user.username || "Admin";
+          document.getElementById("welcomeUserBadge").textContent = "Hello, " + userName + " जी 👋";
+          
+          var userImgEl = document.getElementById("headerUserImg");
+          if(userImgEl && user.photoURL) userImgEl.src = user.photoURL;
+
+          if (user.role !== "Superadmin" && user.role !== "कार्यालय प्रमुख") {
+            wardSelect.value = user.ward || "4";
+            wardSelect.disabled = true;
+            document.getElementById("activeWardBadge").textContent = (user.ward === "palika" || user.ward === "all") ? "अधिकार: गाउँकार्यपालिका" : ("अधिकार: वडा नं. " + user.ward);
+          } else {
+            var wSelect = wardSelect.value;
+            document.getElementById("activeWardBadge").textContent = (wSelect === "palika" || wSelect === "all") ? "अधिकार: गाउँकार्यपालिका" : ("अधिकार: वडा नं. " + wSelect);
+          }
+        }
+      } catch(e) {}
+      window.currentUserId = userIdForDB;
+      
+      loadDraftsFromStorage();
+      renderLiveLetterhead();
+      handleDocChange();
+    }
+
+    function openOldRecords() {
+      var box = document.getElementById("draft_box");
+      if (box.style.display === "none" || box.style.display === "") {
+        box.style.display = "block";
+        box.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        box.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function handleDocChange() {
+      var docType = document.getElementById("active_doc_type").value;
+      document.querySelectorAll(".dynamic-section").forEach(sec => sec.classList.remove("active"));
+
+      if (["address", "birth"].includes(docType)) document.getElementById("sec_address_birth").classList.add("active");
+      if (docType === "relation") document.getElementById("sec_relation").classList.add("active");
+      if (docType === "income") document.getElementById("sec_income").classList.add("active");
+      if (docType === "name") document.getElementById("sec_name").classList.add("active");
+      if (docType === "surname") document.getElementById("sec_surname").classList.add("active");
+      if (docType === "religion") document.getElementById("sec_religion").classList.add("active");
+      if (["unmarried", "marriage", "divorce"].includes(docType)) document.getElementById("sec_grandparents").classList.add("active");
+      if (["unmarried", "marriage", "divorce", "address", "birth", "relation", "tax", "income", "surname"].includes(docType)) document.getElementById("sec_parents").classList.add("active");
+      if (docType === "marriage") document.getElementById("sec_marriage").classList.add("active");
+      if (docType === "divorce") document.getElementById("sec_divorce").classList.add("active");
+      if (docType === "unmarried") document.getElementById("sec_witness").classList.add("active");
+
+      updateLivePreview();
+    }
+
+    function addRelationRow() {
+      var div = document.createElement("div"); div.className = "member-row";
+      div.innerHTML = `<input type="text" placeholder="Name" class="rel-name" oninput="updateLivePreview()">
+        <input type="text" placeholder="Relation (e.g. Brother)" class="rel-post" oninput="updateLivePreview()">
+        <input type="text" placeholder="Cit No." class="rel-cit" oninput="updateLivePreview()">
+        <button type="button" class="btn-remove" onclick="this.parentElement.remove(); updateLivePreview();">X</button>`;
+      document.getElementById("relation_rows_container").appendChild(div);
+      updateLivePreview();
+    }
+
+    function addIncomeRow() {
+      var div = document.createElement("div"); div.className = "income-row";
+      div.innerHTML = `<input type="text" placeholder="Source" class="inc-source" oninput="calculateIncome()">
+        <input type="text" placeholder="Earned By" class="inc-earner" oninput="calculateIncome()">
+        <input type="number" placeholder="Amount" class="inc-amount" oninput="calculateIncome()">
+        <button type="button" class="btn-remove" onclick="this.parentElement.remove(); calculateIncome();">X</button>`;
+      document.getElementById("income_rows_container").appendChild(div);
+    }
+
+    function calculateIncome() {
+      var totalNRS = Array.from(document.querySelectorAll(".inc-amount")).reduce((acc, inp) => acc + (parseFloat(inp.value)||0), 0);
+      var rate = parseFloat(document.getElementById("inc_rate").value) || 1;
+      document.getElementById("lbl_total_nrs").textContent = totalNRS.toLocaleString('en-IN', {minimumFractionDigits: 2});
+      document.getElementById("lbl_total_foreign").textContent = (totalNRS / rate).toLocaleString('en-IN', {minimumFractionDigits: 2});
+      updateLivePreview();
+    }
+
+    function renderLiveLetterhead() {
+      var w = document.getElementById("doc_ward_select").value;
+      var activeBadge = document.getElementById("activeWardBadge");
+      if(activeBadge) {
+         if (w === "palika" || w === "all") { activeBadge.textContent = "अधिकार: गाउँकार्यपालिका"; }
+         else { activeBadge.textContent = "अधिकार: वडा नं. " + w; }
+      }
+
+      var config = wardConfigs[w] || wardConfigs["4"];
+      document.getElementById("prevWardOfficeTitle").textContent = config.officeTitle;
+      document.getElementById("prevWardLocation").textContent = config.location;
+      updateLivePreview();
+    }
+
+    function generateIdString(cit, nid, pass) {
+      var parts = [];
+      if(cit && cit !== "[-]") parts.push("Nepali Citizenship Certificate No. <strong>" + cit + "</strong>");
+      if(nid && nid !== "[-]") parts.push("National Identity Card No. <strong>" + nid + "</strong>");
+      if(pass && pass !== "[-]") parts.push("Passport No. <strong>" + pass + "</strong>");
+      
+      if(parts.length === 0) return "Nepali Citizenship Certificate No. <strong>[-]</strong>";
+      if(parts.length === 1) return parts[0];
+      if(parts.length === 2) return parts.join(" and ");
+      return parts.slice(0, -1).join(", ") + ", and " + parts[parts.length - 1];
+    }
+
+    function getFormData() {
+      var totalNrsNum = Array.from(document.querySelectorAll(".inc-amount")).reduce((acc, inp) => acc + (parseFloat(inp.value)||0), 0);
+      var rate = parseFloat(document.getElementById("inc_rate").value) || 1;
+      var totalForeignNum = totalNrsNum / rate;
+
+      var relations = [];
+      document.querySelectorAll(".rel-name").forEach((inp, i) => {
+        if(inp.value.trim()) relations.push({ name: inp.value.trim(), rel: document.querySelectorAll(".rel-post")[i].value.trim() || "-", cit: document.querySelectorAll(".rel-cit")[i].value.trim() || "-" });
+      });
+      var incomes = [];
+      document.querySelectorAll(".inc-source").forEach((inp, i) => {
+        var amt = parseFloat(document.querySelectorAll(".inc-amount")[i].value);
+        if(!isNaN(amt) && amt > 0) incomes.push({ source: inp.value.trim(), earner: document.querySelectorAll(".inc-earner")[i].value.trim(), amountStr: amt.toLocaleString('en-IN', {minimumFractionDigits: 2}) });
+      });
+
+      return {
+        docType: document.getElementById("active_doc_type").value,
+        name: document.getElementById("cust_name").value.trim() || "[Applicant Name]",
+        cit: document.getElementById("cust_cit").value.trim(),
+        nid: document.getElementById("cust_nid").value.trim(),
+        pass: document.getElementById("cust_passport").value.trim(),
+        dob: document.getElementById("cust_dob") ? document.getElementById("cust_dob").value.trim() || "[-]" : "[-]",
+        father: document.getElementById("cust_father") ? document.getElementById("cust_father").value.trim() || "[-]" : "[-]",
+        mother: document.getElementById("cust_mother") ? document.getElementById("cust_mother").value.trim() || "[-]" : "[-]",
+        addr: document.getElementById("cust_address").value.trim() || "[Permanent Address]",
+        oldVdc: document.getElementById("cust_old_vdc") ? document.getElementById("cust_old_vdc").value.trim() || "[-]" : "[-]",
+        fiscalYear: document.getElementById("cust_fiscal_year").value.trim() || "083-84",
+        date: document.getElementById("cust_date").value.trim() || new Date().toISOString().split('T')[0],
+        officerName: document.getElementById("cust_officer_name").value.trim(),
+        officerPost: document.getElementById("cust_officer_post").value.trim() || "Ward Chairperson",
+        officerPhone: document.getElementById("cust_officer_phone").value.trim(),
+        
+        grandfather: document.getElementById("cust_grandfather") ? document.getElementById("cust_grandfather").value.trim() || "[-]" : "[-]",
+        grandmother: document.getElementById("cust_grandmother") ? document.getElementById("cust_grandmother").value.trim() || "[-]" : "[-]",
+        otherName: document.getElementById("cust_other_name") ? document.getElementById("cust_other_name").value.trim() || "[-]" : "[-]",
+        gfSurname: document.getElementById("cust_gf_surname") ? document.getElementById("cust_gf_surname").value.trim() || "[-]" : "[-]",
+        selfSurname: document.getElementById("cust_self_surname") ? document.getElementById("cust_self_surname").value.trim() || "[-]" : "[-]",
+        religion: document.getElementById("cust_religion") ? document.getElementById("cust_religion").value.trim() || "[-]" : "[-]",
+        deathCountry: document.getElementById("cust_death_country") ? document.getElementById("cust_death_country").value.trim() || "[-]" : "[-]",
+        deathDate: document.getElementById("cust_death_date") ? document.getElementById("cust_death_date").value.trim() || "[-]" : "[-]",
+        spouseName: document.getElementById("cust_spouse_name") ? document.getElementById("cust_spouse_name").value.trim() || "[-]" : "[-]",
+        spouseCit: document.getElementById("cust_spouse_cit") ? document.getElementById("cust_spouse_cit").value.trim() || "[-]" : "[-]",
+        spouseFather: document.getElementById("cust_spouse_father") ? document.getElementById("cust_spouse_father").value.trim() || "[-]" : "[-]",
+        spouseMother: document.getElementById("cust_spouse_mother") ? document.getElementById("cust_spouse_mother").value.trim() || "[-]" : "[-]",
+        marriageDate: document.getElementById("cust_marriage_date") ? document.getElementById("cust_marriage_date").value.trim() || "[-]" : "[-]",
+        divorceDate: document.getElementById("cust_divorce_date") ? document.getElementById("cust_divorce_date").value.trim() || "[-]" : "[-]",
+        divorceCourt: document.getElementById("cust_divorce_court") ? document.getElementById("cust_divorce_court").value.trim() || "[-]" : "[-]",
+        witness1: document.getElementById("cust_witness1") ? document.getElementById("cust_witness1").value.trim() || "[-]" : "[-]",
+        witness2: document.getElementById("cust_witness2") ? document.getElementById("cust_witness2").value.trim() || "[-]" : "[-]",
+        
+        relations: relations, incomes: incomes, currency: document.getElementById("inc_currency") ? document.getElementById("inc_currency").value : "", rate: rate,
+        totalNrsStr: totalNrsNum.toLocaleString('en-IN', {minimumFractionDigits: 2}), 
+        totalForeignStr: totalForeignNum.toLocaleString('en-IN', {minimumFractionDigits: 2}),
+        totalNrsWords: numberToWords(totalNrsNum),
+        totalForeignWords: numberToWords(totalForeignNum)
+      };
+    }
+
+    function populateBodyHTML(templateId, data) {
+      var tmpl = document.getElementById(templateId).innerHTML;
+      var idString = generateIdString(data.cit, data.nid, data.pass);
+      
+      var singlePhotoHtml = `
+      <div style="text-align:center; margin-top:15px;">
+        <table style="border:none; border-collapse: collapse; margin: 0 auto;">
+          <tr><td style="border:none; text-align:center; padding: 0;">
+            <div style="width:75pt; height:90pt; border:1.5px solid #444; text-align:center; padding-top:35pt; margin: 0 auto; box-sizing:border-box; color:#555; font-size:10pt; font-family:'Cambria', serif;">Photo</div>
+            <div style="margin-top:6px; font-weight:bold; font-size:14.5px; font-family:'Cambria', serif;">${data.name}</div>
+            <div style="font-size:13.5px; font-family:'Cambria', serif;">(Applicant)</div>
+          </td></tr>
+        </table>
+      </div>`;
+
+      var html = tmpl
+        .replace(/{{ID_STRING}}/g, idString)
+        .replace(/{{NAME}}/g, data.name).replace(/{{CIT}}/g, data.cit).replace(/{{NID}}/g, data.nid).replace(/{{PASS}}/g, data.pass)
+        .replace(/{{DOB}}/g, data.dob).replace(/{{ADDR}}/g, data.addr).replace(/{{OLD_VDC}}/g, data.oldVdc)
+        .replace(/{{FATHER}}/g, data.father).replace(/{{MOTHER}}/g, data.mother).replace(/{{GRANDFATHER}}/g, data.grandfather).replace(/{{GRANDMOTHER}}/g, data.grandmother)
+        .replace(/{{OTHER_NAME}}/g, data.otherName).replace(/{{GF_SURNAME}}/g, data.gfSurname).replace(/{{SELF_SURNAME}}/g, data.selfSurname)
+        .replace(/{{RELIGION}}/g, data.religion).replace(/{{DEATH_COUNTRY}}/g, data.deathCountry).replace(/{{DEATH_DATE}}/g, data.deathDate)
+        .replace(/{{SPOUSE_NAME}}/g, data.spouseName).replace(/{{SPOUSE_CIT}}/g, data.spouseCit).replace(/{{SPOUSE_FATHER}}/g, data.spouseFather).replace(/{{SPOUSE_MOTHER}}/g, data.spouseMother).replace(/{{MARRIAGE_DATE}}/g, data.marriageDate)
+        .replace(/{{DIVORCE_DATE}}/g, data.divorceDate).replace(/{{DIVORCE_COURT}}/g, data.divorceCourt)
+        .replace(/{{WITNESS1}}/g, data.witness1).replace(/{{WITNESS2}}/g, data.witness2)
+        .replace(/{{SINGLE_PHOTO}}/g, singlePhotoHtml);
+
+      if (templateId === "tmpl_relation") {
+        var relRowsHtml = ``;
+        var allMembers = [];
+        if (data.relations.length > 0) {
+            var relTableStr = `<table class="tbl-data doc-table-custom"><thead><tr><th style="width: 35px; text-align: center;">S.N.</th><th>Name</th><th>Citizenship Certificate Number</th><th>Relationship with the Applicant</th></tr></thead><tbody>`;
+            data.relations.forEach((m, idx) => {
+                relTableStr += `<tr><td style="text-align: center;">${idx+1}.</td><td>${m.name}</td><td>${m.cit}</td><td>${m.rel}</td></tr>`;
+                allMembers.push({name: m.name, rel: m.rel});
+            });
+            relTableStr += `</tbody></table>`;
+            relRowsHtml = relTableStr;
+        }
+        
+        var photoGridHtml = '<table style="width:100%; border:none; margin-top:5px; table-layout:fixed;">';
+        for(var i=0; i<allMembers.length; i+=5) {
+           var chunk = allMembers.slice(i, i+5);
+           photoGridHtml += '<tr>';
+           chunk.forEach(m => {
+              photoGridHtml += `<td style="border:none; text-align:center; vertical-align:top; width:20%; padding: 5px;">
+                 <div style="border:1.5px solid #444; width:75pt; height:90pt; margin:0 auto; display:flex; align-items:center; justify-content:center; font-size:10pt; color:#555; box-sizing:border-box; font-family:'Cambria',serif;">Photo</div>
+                 <div style="margin-top:6px; font-size:13.5px; font-weight:bold; color:#000; line-height:1.2; font-family:'Cambria',serif;">${m.name}</div>
+                 <div style="font-size:12.5px; color:#000; font-family:'Cambria',serif;">(${m.rel})</div>
+              </td>`;
+           });
+           for(var j=chunk.length; j<5; j++) photoGridHtml += '<td style="border:none; width:20%;"></td>';
+           photoGridHtml += '</tr>';
+        }
+        photoGridHtml += '</table>';
+        html = html.replace("{{REL_TABLE_WRAPPER}}", relRowsHtml).replace("{{PHOTO_GRID}}", photoGridHtml);
+      }
+
+      if (templateId === "tmpl_income") {
+        var incRowsHtml = "";
+        data.incomes.forEach((inc, idx) => { incRowsHtml += `<tr><td style="text-align:center;">${idx+1}.</td><td>${inc.source}</td><td>${inc.earner}</td><td>Nrs.${inc.amountStr}</td><td></td></tr>`; });
+        if(incRowsHtml === "") incRowsHtml = `<tr><td colspan="5" style="text-align:center;">No income added</td></tr>`;
+        html = html.replace("{{INC_ROWS}}", incRowsHtml)
+                 .replace(/{{TOTAL_NRS}}/g, data.totalNrsStr)
+                 .replace(/{{TOTAL_NRS_WORDS}}/g, data.totalNrsWords)
+                 .replace(/{{TOTAL_FOREIGN}}/g, data.totalForeignStr)
+                 .replace(/{{TOTAL_FOREIGN_WORDS}}/g, data.totalForeignWords)
+                 .replace(/{{CURRENCY}}/g, data.currency)
+                 .replace(/{{RATE}}/g, data.rate)
+                 .replace(/{{ISSUE_DATE}}/g, data.date);
+      }
+
+      var w = document.getElementById("doc_ward_select").value;
+      var config = wardConfigs[w] || wardConfigs["4"];
+      
+      var signName = data.officerName;
+      var signPost = data.officerPost;
+      var signHtml = ``;
+      if(signName) {
+         signHtml = `<div><strong>${signName}</strong></div><div style="font-weight:bold;">${signPost}</div>`;
+      } else {
+         signHtml = `<div><strong>${signPost}</strong></div>`;
+      }
+      
+      html = html.replace(/{{SIGNATURE_BLOCK}}/g, signHtml).replace(/{{OFFICER_PHONE}}/g, data.officerPhone).replace(/{{FOOTER_EMAIL}}/g, config.email);
+
+      return html;
+    }
+
+    function updateLivePreview() {
+      var data = getFormData();
+      var docType = data.docType;
+      var templateId = "tmpl_" + docType;
+      
+      document.getElementById("prevSubject").textContent = docMeta[docType];
+      document.getElementById("prevRefNo").textContent = data.fiscalYear;
+      document.getElementById("prevDate").textContent = data.date;
+      
+      document.getElementById("dynamic_preview_body").innerHTML = populateBodyHTML(templateId, data);
+
+      var offNameDisplay = data.officerName;
+      var offPostDisplay = data.officerPost;
+      
+      if(!offNameDisplay) {
+         document.getElementById("prevOfficerName").textContent = "";
+         document.getElementById("prevOfficerPost").innerHTML = `<strong>${offPostDisplay}</strong>`;
+      } else {
+         document.getElementById("prevOfficerName").textContent = offNameDisplay;
+         document.getElementById("prevOfficerPost").innerHTML = `<strong>${offPostDisplay}</strong>`;
+      }
+
+      var w = document.getElementById("doc_ward_select").value;
+      var config = wardConfigs[w] || wardConfigs["4"];
+      
+      var footerPhone = data.officerPhone && data.officerPhone !== "[-]" ? data.officerPhone : config.phone;
+      document.getElementById("prevFooterContact").textContent = footerPhone;
+      document.getElementById("prevFooterEmail").textContent = config.email;
+
+      var qrInfo = "Name: " + data.name + "\nIssue Date: " + data.date + "\nPhone: " + footerPhone + "\nEmail: " + config.email;
+      document.getElementById("prevDynamicQR").src = "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(qrInfo);
+    }
+
+    // --- DB / STORAGE SYNC LOGIC ---
+    async function saveDraftsToStorage() {
+      localStorage.setItem("smart_mayadevi_drafts", JSON.stringify(draftDocuments));
+      
+      if(supabaseClient) {
+         try {
+             var userId = window.currentUserId || "admin";
+             var sevenDaysAgo = new Date();
+             sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+             
+             // 1. Auto cleanup old DB records
+             await supabaseClient.from('english_cert_drafts').delete().lt('updated_at', sevenDaysAgo.toISOString());
+             
+             // 2. Sync active user records
+             await supabaseClient.from('english_cert_drafts').upsert({ 
+                 user_id: userId, 
+                 data: JSON.stringify(draftDocuments), 
+                 updated_at: new Date().toISOString() 
+             }, { onConflict: 'user_id' });
+         } catch(e) { console.warn("Supabase Sync Failed", e); }
+      }
+    }
+
+    async function loadDraftsFromStorage() {
+      var loaded = false;
+      if(supabaseClient) {
+          try {
+             var userId = window.currentUserId || "admin";
+             const { data, error } = await supabaseClient.from('english_cert_drafts').select('data').eq('user_id', userId).single();
+             if(data && data.data) {
+                 var drafts = JSON.parse(data.data);
+                 var now = new Date().getTime();
+                 draftDocuments = drafts.filter(d => (now - d.timestamp) < 7 * 24 * 60 * 60 * 1000);
+                 loaded = true;
+             }
+          } catch(e) { console.warn("Supabase Load Failed", e); }
+      }
+      
+      if(!loaded) {
+          var stored = localStorage.getItem("smart_mayadevi_drafts");
+          if(stored) {
+            var drafts = JSON.parse(stored);
+            var now = new Date().getTime();
+            draftDocuments = drafts.filter(d => (now - d.timestamp) < 7 * 24 * 60 * 60 * 1000);
+          }
+      }
+      
+      saveDraftsToStorage();
+      renderDraftList();
+    }
+
+    function addCurrentToDraft() {
+      var data = getFormData();
+      if (data.name === "[Applicant Name]" || !data.name) { alert("कृपया सेवाग्राहीको अंग्रेजी नाम लेख्नुहोस्!"); return; }
+
+      var docType = data.docType;
+      var subjectTitle = docMeta[docType];
+      var w = document.getElementById("doc_ward_select").value;
+      var config = wardConfigs[w] || wardConfigs["4"];
+
+      var bodyHtml = populateBodyHTML("tmpl_" + docType, data);
+      var shell = document.getElementById("tmpl_word_shell").innerHTML;
+
+      var qrInfo = "Name: " + data.name + "\nIssue Date: " + data.date + "\nPhone: " + (data.officerPhone && data.officerPhone !== "[-]" ? data.officerPhone : config.phone) + "\nEmail: " + config.email;
+      var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(qrInfo);
+
+      var signHtml = ``;
+      if(data.officerName) {
+         signHtml = `<div><strong>${data.officerName}</strong></div><div style="font-weight:bold;">${data.officerPost}</div>`;
+      } else {
+         signHtml = `<div><strong>${data.officerPost}</strong></div>`;
+      }
+
+      var finalHtml = shell
+        .replace(/{{DOC_TITLE}}/g, subjectTitle).replace(/{{DOC_SUBJECT}}/g, subjectTitle)
+        .replace(/{{OFFICE_WARD_TITLE}}/g, config.officeTitle).replace(/{{OFFICE_LOCATION}}/g, config.location)
+        .replace(/{{FISCAL_YEAR}}/g, data.fiscalYear).replace(/{{ISSUE_DATE}}/g, data.date)
+        .replace(/{{SIGNATURE_BLOCK}}/g, signHtml)
+        .replace(/{{FOOTER_PHONE}}/g, data.officerPhone && data.officerPhone !== "[-]" ? data.officerPhone : config.phone)
+        .replace(/{{FOOTER_EMAIL}}/g, config.email)
+        .replace(/{{QR_URL}}/g, qrUrl).replace(/{{BODY_CONTENT}}/g, bodyHtml);
+
+      var sanitizedName = data.name.replace(/[^a-zA-Z0-9]/g, '_');
+      var prefix = docType.charAt(0).toUpperCase() + docType.slice(1);
+      
+      draftDocuments.push({ 
+        timestamp: new Date().getTime(),
+        fileName: prefix + '_' + sanitizedName + '.docx', 
+        content: finalHtml,
+        formData: data
+      });
+      saveDraftsToStorage();
+      renderDraftList();
+      alert("✅ डकुमेन्ट पोर्टलमा सेभ भयो! यो डाटा ७ दिनसम्म सुरक्षित रहनेछ।");
+    }
+
+    function renderDraftList() {
+      var box = document.getElementById("draft_box");
+      var container = document.getElementById("draft_items_container");
+      document.getElementById("draft_count").textContent = draftDocuments.length;
+
+      var grouped = {};
+      draftDocuments.forEach((doc, idx) => {
+        var n = doc.formData.name || "Unknown";
+        if(!grouped[n]) grouped[n] = [];
+        grouped[n].push({doc: doc, idx: idx});
+      });
+
+      if (draftDocuments.length > 0) {
+        box.style.display = "block";
+        var html = "";
+        for(var name in grouped) {
+           html += `<div class="portal-folder">
+             <div class="portal-folder-header">
+               <span>📁 ${name}</span>
+               <span style="font-size:12px; font-weight:normal;">${grouped[name].length} Docs</span>
+             </div>
+             <div class="portal-folder-body">`;
+           grouped[name].forEach(item => {
+              html += `<div class="draft-item">
+                <span>📄 ${item.doc.fileName.replace('_' + name.replace(/[^a-zA-Z0-9]/g, '_') + '.docx', '')}</span>
+                <div>
+                  <button type="button" style="background:#eab308; color:#000; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px; margin-right:5px; font-weight:bold;" onclick="printDraft(${item.idx})">🖨️ Print</button>
+                  <button type="button" style="background:#1e3a8a; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px; margin-right:5px;" onclick="editDraft(${item.idx})">✏️ Edit</button>
+                  <button type="button" style="background:red; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px;" onclick="removeDraft(${item.idx})">X</button>
+                </div>
+              </div>`;
+           });
+           html += `</div></div>`;
+        }
+        container.innerHTML = html;
+      } else {
+        box.style.display = "none";
+      }
+    }
+
+    function printDraft(idx) {
+       editDraft(idx);
+       setTimeout(function() {
+          window.print();
+       }, 500);
+    }
+
+    function editDraft(idx) {
+      var data = draftDocuments[idx].formData;
+      document.getElementById("active_doc_type").value = data.docType;
+      handleDocChange();
+      
+      var setValue = (id, val) => { if(document.getElementById(id)) document.getElementById(id).value = (val !== "[-]" ? val : ""); };
+      setValue("cust_name", data.name);
+      setValue("cust_cit", data.cit);
+      setValue("cust_nid", data.nid);
+      setValue("cust_passport", data.pass);
+      setValue("cust_dob", data.dob);
+      setValue("cust_father", data.father);
+      setValue("cust_mother", data.mother);
+      setValue("cust_address", data.addr);
+      setValue("cust_old_vdc", data.oldVdc);
+      setValue("cust_fiscal_year", data.fiscalYear);
+      setValue("cust_date", data.date);
+      setValue("cust_officer_name", data.officerName);
+      setValue("cust_officer_post", data.officerPost);
+      setValue("cust_officer_phone", data.officerPhone);
+      setValue("cust_grandfather", data.grandfather);
+      setValue("cust_grandmother", data.grandmother);
+      setValue("cust_other_name", data.otherName);
+      setValue("cust_gf_surname", data.gfSurname);
+      setValue("cust_self_surname", data.selfSurname);
+      setValue("cust_religion", data.religion);
+      setValue("cust_death_country", data.deathCountry);
+      setValue("cust_death_date", data.deathDate);
+      setValue("cust_spouse_name", data.spouseName);
+      setValue("cust_spouse_cit", data.spouseCit);
+      setValue("cust_spouse_father", data.spouseFather);
+      setValue("cust_spouse_mother", data.spouseMother);
+      setValue("cust_marriage_date", data.marriageDate);
+      setValue("cust_divorce_date", data.divorceDate);
+      setValue("cust_divorce_court", data.divorceCourt);
+      setValue("cust_witness1", data.witness1);
+      setValue("cust_witness2", data.witness2);
+
+      document.getElementById("relation_rows_container").innerHTML = "";
+      if (data.relations) {
+        data.relations.forEach(m => {
+          var div = document.createElement("div"); div.className = "member-row";
+          div.innerHTML = `<input type="text" value="${m.name}" class="rel-name" oninput="updateLivePreview()">
+            <input type="text" value="${m.rel}" class="rel-post" oninput="updateLivePreview()">
+            <input type="text" value="${m.cit}" class="rel-cit" oninput="updateLivePreview()">
+            <button type="button" class="btn-remove" onclick="this.parentElement.remove(); updateLivePreview();">X</button>`;
+          document.getElementById("relation_rows_container").appendChild(div);
+        });
+      }
+
+      document.getElementById("income_rows_container").innerHTML = "";
+      if (data.incomes) {
+        data.incomes.forEach(inc => {
+          var div = document.createElement("div"); div.className = "income-row";
+          div.innerHTML = `<input type="text" value="${inc.source}" class="inc-source" oninput="calculateIncome()">
+            <input type="text" value="${inc.earner}" class="inc-earner" oninput="calculateIncome()">
+            <input type="number" value="${inc.amountStr.replace(/,/g, '')}" class="inc-amount" oninput="calculateIncome()">
+            <button type="button" class="btn-remove" onclick="this.parentElement.remove(); calculateIncome();">X</button>`;
+          document.getElementById("income_rows_container").appendChild(div);
+        });
+      }
+      if(data.currency) document.getElementById("inc_currency").value = data.currency;
+      if(data.rate) document.getElementById("inc_rate").value = data.rate;
+
+      calculateIncome();
+      updateLivePreview();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function removeDraft(idx) {
+      draftDocuments.splice(idx, 1);
+      saveDraftsToStorage();
+      renderDraftList();
+    }
+
+    async function exportDraftsToFolder() {
+      if (draftDocuments.length === 0) return;
+      if ('showDirectoryPicker' in window) {
+        try {
+          var dirHandle = await window.showDirectoryPicker();
+          var grouped = {};
+          draftDocuments.forEach(doc => {
+            var n = doc.formData.name || "Unknown";
+            if(!grouped[n]) grouped[n] = [];
+            grouped[n].push(doc);
+          });
+
+          for (var applicant in grouped) {
+             var safeName = applicant.replace(/[^a-zA-Z0-9]/g, '_');
+             var folderHandle = await dirHandle.getDirectoryHandle(safeName + "_Documents", { create: true });
+             for(var doc of grouped[applicant]) {
+                var fileHandle = await folderHandle.getFileHandle(doc.fileName, { create: true });
+                var writable = await fileHandle.createWritable();
+                await writable.write(doc.content);
+                await writable.close();
+             }
+          }
+          alert(`✓ सफलता! कम्प्युटरमा सेवाग्राहीको नामको फोल्डर बनेर डकुमेन्टहरू सेभ भए! (MS Word मा खोलेर इडिट गर्न मिल्नेछ)`);
+          draftDocuments = []; saveDraftsToStorage(); renderDraftList();
+        } catch (err) {}
+      } else {
+        var zip = new JSZip();
+        draftDocuments.forEach(doc => { 
+           var n = doc.formData.name ? doc.formData.name.replace(/[^a-zA-Z0-9]/g, '_') : "Unknown";
+           zip.folder(n + "_Documents").file(doc.fileName, doc.content); 
+        });
+        var zipContent = await zip.generateAsync({ type: "blob" });
+        saveAs(zipContent, "Smart_Mayadevi_Documents.zip");
+        draftDocuments = []; saveDraftsToStorage(); renderDraftList();
+      }
+    }
+
+    function resetFormToNew() {
+      document.getElementById("certForm").reset();
+      document.getElementById("relation_rows_container").innerHTML = "";
+      document.getElementById("income_rows_container").innerHTML = `
+        <div class="income-row">
+          <input type="text" placeholder="Source (e.g. Agriculture)" class="inc-source" oninput="calculateIncome()">
+          <input type="text" placeholder="Earned By" class="inc-earner" oninput="calculateIncome()">
+          <input type="number" placeholder="Amount (NRS)" class="inc-amount" oninput="calculateIncome()">
+          <button type="button" class="btn-remove" onclick="this.parentElement.remove(); calculateIncome();">X</button>
+        </div>`;
+      calculateIncome();
+      renderLiveLetterhead();
+      handleDocChange();
+    }
+
+    function handleSafeLogout() {
+      sessionStorage.clear();
+      localStorage.removeItem("user");
+      alert("सफलतापूर्वक लगआउट भयो!");
+      window.location.href = "login.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => { applySavedTheme(); initUserScope(); setInterval(updateLiveClock, 1000); updateLiveClock(); });
+  </script>
+</body>
+</html>
