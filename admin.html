@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>कर्मचारी तथा एडमिन व्यवस्थापन | Smart Mayadevi</title>
+  <title>Smart Mayadevi - Admin Management Panel</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -16,11 +16,13 @@
       --gov-crimson: #b71c1c;
       --gov-blue: #07192f;
       --gov-navy: #1e3a8a;
+      --gov-accent: #2563eb;
       --bg: #f1f5f9;
       --card-bg: #ffffff;
       --input-bg: #ffffff;
       --text-dark: #0f172a;
       --border-color: #cbd5e1;
+      --table-th: #f8fafc;
       --screen-font: 'Mukta', sans-serif;
     }
 
@@ -30,6 +32,7 @@
       --input-bg: #07192f;
       --text-dark: #ffffff;
       --border-color: #1e3a8a;
+      --table-th: #132743;
     }
 
     * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: var(--screen-font); }
@@ -51,57 +54,40 @@
       gap: 10px;
     }
     .brand-left { display: flex; align-items: center; gap: 12px; }
-    .brand-left img { height: 52px !important; width: auto !important; }
+    .brand-left img { height: 50px !important; width: auto !important; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
-    .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; }
+
+    .motto-home-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 2px;
+    }
+    .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; margin: 0; }
+
+    .brand-home-badge {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff !important;
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .brand-home-badge:hover {
+      background: #2563eb;
+      border-color: #60a5fa;
+      transform: translateY(-1px);
+    }
 
     .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    
-    /* Header Active User Profile Box */
-    .user-profile-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 3px 9px 3px 4px;
-      border-radius: 25px;
-    }
-    .user-profile-badge img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1.5px solid #38bdf8;
-    }
-    .user-profile-avatar-fallback {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #0284c7;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 14px;
-      border: 1.5px solid #38bdf8;
-    }
-    .user-profile-info {
-      text-align: left;
-      line-height: 1.15;
-    }
-    .user-profile-name {
-      font-size: 12px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-    .user-profile-role {
-      font-size: 10.5px;
-      color: #7dd3fc;
-      font-weight: 600;
-    }
-
     .header-clock-box {
       text-align: right;
       background: rgba(255, 255, 255, 0.1);
@@ -128,25 +114,36 @@
       white-space: nowrap;
     }
     .nav-btn:hover, .nav-btn.active { background: #2563eb; border-color: #3b82f6; }
-    .btn-idcard { background: #0891b2 !important; border-color: #06b6d4 !important; }
     .btn-theme { background: #1e3a8a !important; border-color: #3b82f6 !important; font-size: 13.5px !important; padding: 5px 9px !important; }
     .btn-logout { background: #dc2626 !important; border-color: #ef4444 !important; }
 
-    .container { max-width: 1440px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
+    .admin-container {
+      max-width: 1400px;
+      width: 100%;
+      margin: 20px auto;
+      padding: 0 16px;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 900px) {
+      .admin-container { grid-template-columns: 1fr; }
+    }
+
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     }
     .card-title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 800;
       color: #1e3a8a;
       border-bottom: 2px solid var(--border-color);
-      padding-bottom: 6px;
+      padding-bottom: 8px;
       margin-bottom: 16px;
       display: flex;
       justify-content: space-between;
@@ -154,219 +151,113 @@
     }
     body.dark-mode .card-title { color: #60a5fa; }
 
-    .form-grid-admin {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr 1fr 1.2fr auto;
-      gap: 10px;
-      align-items: flex-end;
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: var(--text-dark);
     }
-    .form-group { display: flex; flex-direction: column; }
-    .form-group label { font-size: 12.5px; font-weight: 700; margin-bottom: 4px; color: var(--text-dark); }
-    .form-group input {
-      padding: 9px 10px;
-      border: 1px solid var(--border-color);
-      border-radius: 5px;
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 13.5px;
       background: var(--input-bg);
       color: var(--text-dark);
-      font-size: 13px;
+      font-weight: 600;
     }
-    .btn-add {
-      background: #16a34a;
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--gov-accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-create {
+      width: 100%;
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
       color: #ffffff;
       border: none;
-      padding: 9px 18px;
-      border-radius: 5px;
+      padding: 11px;
+      border-radius: 6px;
+      font-size: 14px;
       font-weight: 800;
       cursor: pointer;
-      font-size: 13.5px;
-      height: 40px;
-      white-space: nowrap;
-    }
-    .btn-add:hover { background: #15803d; }
-
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; }
-    th, td { border: 1px solid var(--border-color); padding: 9px 12px; text-align: left; vertical-align: middle; }
-    th { background: rgba(30, 58, 138, 0.08); font-weight: 800; }
-    body.dark-mode th { background: rgba(255, 255, 255, 0.08); }
-
-    .btn-edit {
-      background: #0284c7;
-      color: #fff;
-      border: none;
-      padding: 5px 9px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 700;
-      margin-right: 4px;
-    }
-    .btn-edit:hover { background: #0369a1; }
-
-    .btn-del {
-      background: #dc2626;
-      color: #fff;
-      border: none;
-      padding: 5px 9px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .btn-del:hover { background: #b91c1c; }
-
-    .btn-view-pp {
-      background: #1e3a8a;
-      color: #fff;
-      border: none;
-      padding: 3px 6px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 10.5px;
-      font-weight: 700;
-      margin-top: 3px;
-      display: inline-block;
-    }
-    .btn-view-pp:hover { background: #2563eb; }
-
-    .badge-role {
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 800;
-      background: #e2e8f0;
-      color: #0f172a;
-      display: inline-block;
-    }
-
-    .admin-pp-thumb {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #1e3a8a;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      cursor: pointer;
-      display: block;
-      margin: 0 auto;
-      transition: transform 0.2s;
-    }
-    .admin-pp-thumb:hover { transform: scale(1.1); }
-
-    .admin-pp-placeholder {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #cbd5e1;
-      color: #475569;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
-      font-weight: bold;
-      border: 1.5px dashed #94a3b8;
-      margin: 0 auto;
+      gap: 6px;
+      transition: all 0.2s;
     }
+    .btn-create:hover { background: #1d4ed8; }
 
-    /* Modal Popups */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.75);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      backdrop-filter: blur(3px);
-    }
-    .modal-box {
-      background: var(--card-bg);
-      color: var(--text-dark);
-      border-radius: 10px;
-      padding: 22px;
-      max-width: 420px;
-      width: 90%;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      position: relative;
-    }
-    .pp-modal-img {
-      width: 190px;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 3px solid #1e3a8a;
-      margin: 0 auto 12px auto;
-      display: block;
-    }
-    .modal-close {
-      position: absolute;
-      top: 10px; right: 12px;
-      background: #dc2626; color: #fff;
-      border: none; border-radius: 50%;
-      width: 28px; height: 28px; font-weight: bold;
-      cursor: pointer; font-size: 14px;
-    }
+    .table-responsive { overflow-x: auto; margin-top: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { border: 1px solid var(--border-color); padding: 9px 10px; text-align: left; vertical-align: middle; }
+    th { background: var(--table-th); font-weight: 800; color: var(--text-dark); white-space: nowrap; }
 
-    .edit-form-group {
-      margin-bottom: 12px;
-      text-align: left;
+    .role-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 800;
     }
-    .edit-form-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 3px;
-    }
-    .edit-form-group input {
-      width: 100%;
-      padding: 8px 10px;
-      border: 1px solid var(--border-color);
+    .role-super { background: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
+    .role-admin { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+
+    .btn-delete-user {
+      background: #dc2626;
+      color: #fff;
+      border: none;
+      padding: 4px 8px;
       border-radius: 4px;
-      font-size: 13px;
-      background: var(--input-bg);
-      color: var(--text-dark);
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
     }
+    .btn-delete-user:hover { background: #b91c1c; }
 
     footer.site-footer {
-      background: #07192f; color: #cbd5e1; padding: 8px 18px; font-size: 11.5px;
-      border-top: 3px solid #2563eb; margin-top: auto;
+      background: #07192f;
+      color: #cbd5e1;
+      padding: 10px 18px;
+      font-size: 12px;
+      border-top: 3px solid #2563eb;
+      margin-top: auto;
+      text-align: center;
     }
-    .footer-inner {
-      max-width: 1720px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
-    }
+    footer.site-footer strong { color: #38bdf8; }
   </style>
 </head>
 <body>
 
-  <header class="gov-header no-print">
+  <!-- हेडर -->
+  <header class="gov-header">
     <div class="header-inner">
       <div class="brand-left">
         <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
         <div class="brand-text">
           <h1>Smart Mayadevi</h1>
-          <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
-        </div>
-      </div>
-      <div class="header-controls">
-        
-        <!-- Logged In User Profile Block -->
-        <div class="user-profile-badge" id="headerUserProfile">
-          <div id="headerUserAvatarFallback" class="user-profile-avatar-fallback">A</div>
-          <img id="headerUserAvatarImg" src="" alt="Profile Photo" style="display:none;">
-          <div class="user-profile-info">
-            <div class="user-profile-name" id="headerUserName">Superadmin</div>
-            <div class="user-profile-role" id="headerUserRole">व्यवस्थापक</div>
+          <div class="motto-home-row">
+            <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
+            <a href="index.html" class="brand-home-badge" title="मुख्य गृहपृष्ठमा जानुहोस्">🏠 Home</a>
           </div>
         </div>
+      </div>
 
+      <div class="header-controls">
         <div class="header-clock-box">
           <div class="h-date" id="liveNepaliHeaderDate">मिति: लोड हुँदैछ...</div>
           <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
         </div>
 
         <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
+        <a href="tippani.html" class="nav-btn">📄 टिप्पणी</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
         <a href="admin.html" class="nav-btn active">⚙️ Admin</a>
-        <button type="button" class="nav-btn btn-idcard" onclick="alert('ID Card Module चाँडै आउँदैछ!');">🪪 ID Card Create</button>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
         <button type="button" class="nav-btn btn-logout" onclick="handleSafeLogout()">🚪 लगआउट</button>
@@ -374,126 +265,81 @@
     </div>
   </header>
 
-  <div class="container">
-    <!-- नयाँ एडमिन/कर्मचारी फाराम -->
+  <main class="admin-container">
+    <!-- नयाँ एडमिन/कर्मचारी थप्ने फाराम -->
     <div class="card">
       <div class="card-title">
-        <span>➕ नयाँ कर्मचारी / एडमिन खाता थप्नुहोस् (Auto-Sync to Cloud)</span>
+        <span>➕ नयाँ एडमिन / कर्मचारी थप्नुहोस्</span>
       </div>
-      <form onsubmit="handleCreateUser(event)">
-        <div class="form-grid-admin">
-          <div class="form-group">
-            <label>कर्मचारीको पूरा नामथर</label>
-            <input type="text" id="new_fullname" placeholder="उदा: राम बहादुर चौधरी" required>
-          </div>
-          <div class="form-group">
-            <label>प्रयोगकर्ता नाम (Username)</label>
-            <input type="text" id="new_username" placeholder="उदा: ram_engineer" required>
-          </div>
-          <div class="form-group">
-            <label>गोप्य पासवर्ड (Password)</label>
-            <input type="text" id="new_password" placeholder="पासवर्ड" required>
-          </div>
-          <div class="form-group">
-            <label>पद (Custom Role/Post टाइप गर्नुहोस्)</label>
-            <input type="text" id="new_role" placeholder="उदा: इन्जिनियर, अमिन, अपरेटर..." required>
-          </div>
-          <div class="form-group">
-            <label>फोटो (PP Upload)</label>
-            <input type="file" id="new_photo_file" accept="image/*" onchange="previewAdminPhoto(event, 'new')">
-          </div>
-          <button type="submit" id="addBtn" class="btn-add">थप्नुहोस्</button>
+
+      <form id="addUserForm" onsubmit="handleAddNewUser(event)">
+        <div class="form-group">
+          <label>प्रयोगकर्ताको नाम (Username / ID) *</label>
+          <input type="text" id="new_username" placeholder="उदा: Laxman508" required autocomplete="off">
         </div>
+
+        <div class="form-group">
+          <label>गोप्य पासवर्ड (Password) *</label>
+          <input type="text" id="new_password" placeholder="उदा: Laxman@508" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label>कर्मचारीको पूरा नाम (Full Name)</label>
+          <input type="text" id="new_fullname" placeholder="उदा: लक्ष्मण थारु">
+        </div>
+
+        <div class="form-group">
+          <label>भूमिका (User Role) *</label>
+          <select id="new_role">
+            <option value="Admin" selected>कर्मचारी एडमिन (Admin - Half Access)</option>
+            <option value="Superadmin">सुपर एडमिन (Superadmin - Full Access)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-create" id="btnSubmitUser">
+          <span>सुरक्षित गर्नुहोस् (Save User)</span> ➜
+        </button>
       </form>
     </div>
 
-    <!-- सक्रिय खाताहरूको सूची -->
+    <!-- दर्ता भएका सबै एडमिनहरूको सूची -->
     <div class="card">
       <div class="card-title">
-        <span>👥 सक्रिय कर्मचारी तथा एडमिन खाताहरू <span style="color:#16a34a; font-size:13px;">(Superadmin: सम्पादन तथा PP हेर्ने पूर्ण पहुँच)</span></span>
-        <span id="userCount" style="font-size:12.5px; background:rgba(30,58,138,0.1); padding:3px 10px; border-radius:15px; font-weight:bold;">लोड हुँदैछ...</span>
+        <span>👥 दर्ता भएका कर्मचारी तथा एडमिन सूची</span>
+        <button type="button" class="nav-btn" onclick="loadAllUsers()" style="font-size:11px; padding:4px 8px;">🔄 रिफ्रेस</button>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 50px;">क्र.सं.</th>
-            <th style="width: 80px; text-align: center;">फोटो (PP)</th>
-            <th>कर्मचारीको नामथर</th>
-            <th>Username</th>
-            <th>Password</th>
-            <th>पद (Role / Post)</th>
-            <th style="text-align:center; width: 170px;">कार्य (Action)</th>
-          </tr>
-        </thead>
-        <tbody id="userTableBody">
-          <tr><td colspan="7" style="text-align:center;">विवरण लोड हुँदैछ...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
-  <!-- PP View Modal -->
-  <div class="modal-overlay" id="ppModal" onclick="closePPModal()">
-    <div class="modal-box" onclick="event.stopPropagation()" style="text-align:center;">
-      <button type="button" class="modal-close" onclick="closePPModal()">✕</button>
-      <h3 id="modalName" style="color:#1e3a8a; margin-bottom:4px; font-size:18px;"></h3>
-      <p id="modalRole" style="color:#64748b; font-size:13px; font-weight:bold; margin-bottom:12px;"></p>
-      <img id="modalImg" src="" class="pp-modal-img" alt="Profile Photo">
-      <button type="button" class="nav-btn" style="background:#1e3a8a; padding:6px 14px;" onclick="downloadModalImg()">💾 डाउनलोड गर्नुहोस्</button>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40px; text-align: center;">क्र.सं.</th>
+              <th>Username</th>
+              <th>पासवर्ड</th>
+              <th>पूरा नाम</th>
+              <th style="text-align: center;">भूमिका (Role)</th>
+              <th style="width: 80px; text-align: center;">कार्य</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <tr><td colspan="6" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
+  </main>
 
-  <!-- Superadmin Edit Admin Modal -->
-  <div class="modal-overlay" id="editModal" onclick="closeEditModal()">
-    <div class="modal-box" onclick="event.stopPropagation()">
-      <button type="button" class="modal-close" onclick="closeEditModal()">✕</button>
-      <h3 style="color:#1e3a8a; margin-bottom:12px; font-size:17px; border-bottom:1.5px solid #cbd5e1; padding-bottom:6px;">
-        ✏️ कर्मचारी / एडमिन खाता सम्पादन
-      </h3>
-      <form onsubmit="handleSaveEdit(event)">
-        <input type="hidden" id="edit_id">
-        <div class="edit-form-group">
-          <label>कर्मचारीको पूरा नामथर</label>
-          <input type="text" id="edit_fullname" required>
-        </div>
-        <div class="edit-form-group">
-          <label>प्रयोगकर्ता नाम (Username)</label>
-          <input type="text" id="edit_username" required>
-        </div>
-        <div class="edit-form-group">
-          <label>नयाँ पासवर्ड (Password)</label>
-          <input type="text" id="edit_password" required>
-        </div>
-        <div class="edit-form-group">
-          <label>पद (Role / Post)</label>
-          <input type="text" id="edit_role" required>
-        </div>
-        <div class="edit-form-group">
-          <label>नयाँ प्रोफाइल फोटो (PP परिवर्तन गर्न चाहेमा मात्र)</label>
-          <input type="file" id="edit_photo_file" accept="image/*" onchange="previewAdminPhoto(event, 'edit')">
-        </div>
-        <div style="display:flex; gap:8px; margin-top:14px;">
-          <button type="submit" id="saveEditBtn" class="btn-add" style="flex:1;">💾 अद्यावधिक (Update) गर्नुहोस्</button>
-          <button type="button" class="btn-del" onclick="closeEditModal()" style="padding:9px 14px;">रद्द</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <footer class="site-footer no-print">
-    <div class="footer-inner">
-      <div><strong>Smart Mayadevi</strong> — एडमिन प्यानल | गाउँ कार्यपालिकाको कार्यालय, बरेवा, रुपन्देही</div>
-      <div>Developed by <strong style="color: #38bdf8;">Tech for Basanta</strong></div>
-    </div>
+  <footer class="site-footer">
+    Smart Mayadevi — एकीकृत स्थानीय सरकारी व्यवस्थापन प्रणाली | बरेवा, रुपन्देही | Powered by <strong>Tech for Basanta</strong>
   </footer>
 
   <script>
-     const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co"; 
-    const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4"; 
-
+    const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
+    
     let supabaseClient = null;
     try {
-      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany")) {
+      if (typeof supabase !== 'undefined') {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
     } catch(e) {}
@@ -501,332 +347,164 @@
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
 
-    let tempNewPhotoBase64 = "";
-    let tempEditPhotoBase64 = "";
-
-    function previewAdminPhoto(e, mode) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          const img = new Image();
-          img.onload = function() {
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            const maxW = 320, maxH = 320;
-            let w = img.width, h = img.height;
-            if (w > h) {
-              if (w > maxW) { h *= maxW / w; w = maxW; }
-            } else {
-              if (h > maxH) { w *= maxH / h; h = maxH; }
-            }
-            canvas.width = w; canvas.height = h;
-            ctx.drawImage(img, 0, 0, w, h);
-            const compressed = canvas.toDataURL("image/jpeg", 0.75);
-            if (mode === 'edit') {
-              tempEditPhotoBase64 = compressed;
-            } else {
-              tempNewPhotoBase64 = compressed;
-            }
-          };
-          img.src = evt.target.result;
-        };
-        reader.readAsDataURL(file);
+    // १. सुरक्षा जाँच: केवल Superadmin ले मात्र यो पेज खोल्न पाउने
+    function verifySuperAdminAccess() {
+      try {
+        const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
+        let u = raw ? JSON.parse(raw) : null;
+        if (!u || !u.username || u.username.toLowerCase() !== "superadmin") {
+          alert("⛔ पहुँच अस्वीकृत! यो प्यानल खोल्ने अधिकार केवल Superadmin लाई मात्र छ।");
+          window.location.href = "index.html";
+        }
+      } catch(e) {
+        window.location.href = "login.html";
       }
     }
 
-    const defaultMaster = [
-      { id: 1, full_name: 'Super Administrator', username: 'superadmin', password: 'Admin@123', role: 'Superadmin', photo: '' }
-    ];
+    // २. नयाँ प्रयोगकर्ता थप्ने (तपाईंले हानेको ठ्याक्कै पासवर्ड सुपाबेसमा सुरक्षित हुने)
+    async function handleAddNewUser(e) {
+      e.preventDefault();
 
-    let allUsers = [];
+      const u = document.getElementById("new_username").value.trim();
+      const p = document.getElementById("new_password").value.trim(); // तपाईंले हानेको पासवर्ड (उदा: Laxman@508)
+      const fname = document.getElementById("new_fullname").value.trim() || u;
+      const role = document.getElementById("new_role").value;
+      const btn = document.getElementById("btnSubmitUser");
 
-    // Header User Profile Rendering
-    function renderHeaderUser() {
-      const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
-      if (!raw) return;
+      if (!u || !p) {
+        alert("कृपया युजरनेम र पासवर्ड अनिवार्य भर्नुहोस्!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = "⏳ सेभ हुँदैछ...";
+
+      const newUserObj = {
+        username: u,
+        password: p, // तपाईंले फाराममा हानेको वास्तविक पासवर्ड
+        full_name: fname,
+        role: role
+      };
+
+      let savedInCloud = false;
+
+      // सुपाबेसमा सुरक्षित गर्ने
+      if (supabaseClient) {
+        // पहिले 'users' टेबलमा हाल्ने
+        try {
+          const res1 = await supabaseClient.from('users').insert([newUserObj]);
+          if (!res1.error) savedInCloud = true;
+          else {
+            // यदि users मा username कोलम नभएर user_id छ भने
+            const altPayload = { user_id: u, password: p, name: fname, role: role };
+            const resAlt = await supabaseClient.from('users').insert([altPayload]);
+            if (!resAlt.error) savedInCloud = true;
+          }
+        } catch(err) {}
+
+        // साथै admin_users टेबल पनि छ भने त्यसमा पनि सुरक्षित गर्ने
+        try {
+          await supabaseClient.from('admin_users').insert([newUserObj]);
+        } catch(err) {}
+      }
+
+      // लोकल स्टोरेजमा पनि ब्याकअप राख्ने
       try {
-        const u = JSON.parse(raw);
-        const nameEl = document.getElementById("headerUserName");
-        const roleEl = document.getElementById("headerUserRole");
-        const avatarImg = document.getElementById("headerUserAvatarImg");
-        const fallback = document.getElementById("headerUserAvatarFallback");
-
-        if (nameEl) nameEl.textContent = u.full_name || u.username;
-        if (roleEl) roleEl.textContent = u.role || "कर्मचारी";
-
-        if (u.photo) {
-          avatarImg.src = u.photo;
-          avatarImg.style.display = "block";
-          fallback.style.display = "none";
-        } else {
-          avatarImg.style.display = "none";
-          fallback.style.display = "flex";
-          const firstLetter = (u.full_name || u.username || 'A').charAt(0).toUpperCase();
-          fallback.textContent = firstLetter;
-        }
+        let localList = JSON.parse(localStorage.getItem("system_users") || "[]");
+        localList = localList.filter(item => (item.username || '').toLowerCase() !== u.toLowerCase());
+        localList.push(newUserObj);
+        localStorage.setItem("system_users", JSON.stringify(localList));
       } catch(e) {}
+
+      alert(`✓ नयाँ प्रयोगकर्ता "${u}" पासवर्ड (${p}) सहित सफलतापूर्वक सुरक्षित भयो!`);
+      document.getElementById("addUserForm").reset();
+      btn.disabled = false;
+      btn.innerHTML = "<span>सुरक्षित गर्नुहोस् (Save User)</span> ➜";
+      loadAllUsers();
     }
 
-    function updateClock() {
-      const now = new Date();
-      const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
-      let h = now.getHours();
-      const m = String(now.getMinutes()).padStart(2, "0");
-      const s = String(now.getSeconds()).padStart(2, "0");
-      let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
-      document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
-      document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
-    }
+    // ३. सबै प्रयोगकर्ताहरूको सूची लोड गर्ने
+    async function loadAllUsers() {
+      const tbody = document.getElementById("userTableBody");
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>`;
 
-    async function loadAccounts() {
-      let loaded = [];
+      let allUsers = [];
 
+      // सुपाबेसबाट तान्ने
       if (supabaseClient) {
         try {
-          const { data, error } = await supabaseClient
-            .from('admin_accounts')
-            .select('*')
-            .order('id', { ascending: true });
-
+          const { data, error } = await supabaseClient.from('users').select('*').limit(100);
           if (!error && data && data.length > 0) {
-            loaded = data;
-            localStorage.setItem("local_admin_accounts", JSON.stringify(data));
+            allUsers = data;
           }
-        } catch(e) {
-          console.warn("Cloud load error:", e);
-        }
+        } catch(e) {}
       }
 
-      if (loaded.length === 0) {
-        try {
-          const raw = localStorage.getItem("local_admin_accounts");
-          loaded = raw ? JSON.parse(raw) : defaultMaster;
-        } catch(e) {
-          loaded = defaultMaster;
-        }
+      // लोकल स्टोरेजसँग मिलाउने
+      try {
+        const localList = JSON.parse(localStorage.getItem("system_users") || "[]");
+        localList.forEach(loc => {
+          if (!allUsers.some(au => (au.username || au.user_id || '').toLowerCase() === (loc.username || '').toLowerCase())) {
+            allUsers.push(loc);
+          }
+        });
+      } catch(e) {}
+
+      // सुपरएडमिन सधैं सूचीको शीर्षमा
+      if (!allUsers.some(u => (u.username || u.user_id || '').toLowerCase() === "superadmin")) {
+        allUsers.unshift({
+          username: "superadmin",
+          password: "•••••••• (Sarkar@#07)",
+          full_name: "Super Admin",
+          role: "Superadmin"
+        });
       }
 
-      allUsers = loaded;
-      renderUserTable();
-    }
-
-    function renderUserTable() {
-      const tbody = document.getElementById("userTableBody");
       tbody.innerHTML = "";
-      document.getElementById("userCount").textContent = `कुल खाता: ${toNepNum(allUsers.length)}`;
+      allUsers.forEach((usr, idx) => {
+        const uname = usr.username || usr.user_id || usr.name || "-";
+        const pass = usr.password || usr.pass || "••••••••";
+        const name = usr.full_name || usr.name || uname;
+        const role = usr.role || (uname.toLowerCase() === "superadmin" ? "Superadmin" : "Admin");
+        const isSuper = (role.toLowerCase() === "superadmin");
 
-      allUsers.forEach((u, i) => {
         const tr = document.createElement("tr");
-        const isPermanent = u.username.toLowerCase() === 'superadmin';
-
-        let photoHtml = "";
-        if (u.photo) {
-          photoHtml = `
-            <div style="text-align:center;">
-              <img src="${u.photo}" class="admin-pp-thumb" onclick="openPPModal('${u.full_name}', '${u.role}', '${u.photo}')" title="ठूलो हेर्न क्लिक गर्नुहोस्">
-              <button type="button" class="btn-view-pp" onclick="openPPModal('${u.full_name}', '${u.role}', '${u.photo}')">👁️ हेर्नुस्</button>
-            </div>`;
-        } else {
-          photoHtml = `<div class="admin-pp-placeholder">फोटो छैन</div>`;
-        }
-
         tr.innerHTML = `
-          <td>${toNepNum(i + 1)}</td>
-          <td style="text-align:center;">${photoHtml}</td>
-          <td><strong>${u.full_name || '-'}</strong></td>
-          <td><code>${u.username}</code></td>
-          <td><span style="letter-spacing: 2px;">••••••••</span></td>
-          <td><span class="badge-role">${u.role || 'कर्मचारी'}</span></td>
-          <td style="text-align:center; white-space:nowrap;">
-            <button class="btn-edit" onclick="openEditModal(${u.id})">✏️ Edit</button>
-            ${isPermanent ? '<small style="color:#64748b; font-weight:bold;">(स्थायी)</small>' : `<button class="btn-del" onclick="deleteAccount(${u.id}, '${u.username}')">हटाउने</button>`}
+          <td style="text-align:center; font-weight:bold;">${toNepNum(idx + 1)}</td>
+          <td><strong>${uname}</strong></td>
+          <td style="font-family:monospace; color:#1e3a8a; font-weight:bold;">${pass}</td>
+          <td>${name}</td>
+          <td style="text-align:center;">
+            <span class="role-badge ${isSuper ? 'role-super' : 'role-admin'}">${role}</span>
+          </td>
+          <td style="text-align:center;">
+            ${isSuper ? '<span style="font-size:11px; color:#64748b;">सुरक्षित</span>' : `<button class="btn-delete-user" onclick="deleteUser('${uname}')">मेटाउने</button>`}
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    function openPPModal(name, role, imgSrc) {
-      document.getElementById("modalName").textContent = name;
-      document.getElementById("modalRole").textContent = `पद: ${role || 'कर्मचारी'}`;
-      document.getElementById("modalImg").src = imgSrc;
-      document.getElementById("ppModal").style.display = "flex";
-    }
-
-    function closePPModal() {
-      document.getElementById("ppModal").style.display = "none";
-    }
-
-    function downloadModalImg() {
-      const src = document.getElementById("modalImg").src;
-      const name = document.getElementById("modalName").textContent || 'admin_pp';
-      const a = document.createElement("a");
-      a.href = src;
-      a.download = `${name}_PP.jpg`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-
-    function openEditModal(id) {
-      const u = allUsers.find(acc => acc.id === id);
-      if (!u) return;
-
-      document.getElementById("edit_id").value = u.id;
-      document.getElementById("edit_fullname").value = u.full_name || "";
-      document.getElementById("edit_username").value = u.username || "";
-      document.getElementById("edit_password").value = u.password || "";
-      document.getElementById("edit_role").value = u.role || "";
-      document.getElementById("edit_photo_file").value = "";
-      tempEditPhotoBase64 = "";
-
-      document.getElementById("editModal").style.display = "flex";
-    }
-
-    function closeEditModal() {
-      document.getElementById("editModal").style.display = "none";
-    }
-
-    async function handleSaveEdit(e) {
-      e.preventDefault();
-      const id = parseInt(document.getElementById("edit_id").value, 10);
-      const fn = document.getElementById("edit_fullname").value.trim();
-      const un = document.getElementById("edit_username").value.trim().toLowerCase();
-      const pw = document.getElementById("edit_password").value.trim();
-      const rl = document.getElementById("edit_role").value.trim();
-
-      const btn = document.getElementById("saveEditBtn");
-      btn.disabled = true;
-      btn.textContent = "⏳ अद्यावधिक हुँदैछ...";
-
-      const target = allUsers.find(acc => acc.id === id);
-      if (!target) return;
-
-      const updatedAccount = {
-        full_name: fn,
-        username: un,
-        password: pw,
-        role: rl,
-        photo: tempEditPhotoBase64 ? tempEditPhotoBase64 : target.photo
-      };
+    // ४. प्रयोगकर्ता मेटाउने
+    async function deleteUser(uname) {
+      if (!confirm(`के तपाईं प्रयोगकर्ता "${uname}" लाई मेटाउन निश्चित हुनुहुन्छ?`)) return;
 
       if (supabaseClient) {
         try {
-          const { error } = await supabaseClient
-            .from('admin_accounts')
-            .update(updatedAccount)
-            .eq('id', id);
-
-          if (error) {
-            alert(`सुपाबेस त्रुटि: ${error.message}`);
-            btn.disabled = false;
-            btn.textContent = "💾 अद्यावधिक (Update) गर्नुहोस्";
-            return;
-          }
-        } catch(err) {
-          console.error("Supabase edit error:", err);
-        }
-      }
-
-      target.full_name = fn;
-      target.username = un;
-      target.password = pw;
-      target.role = rl;
-      if (tempEditPhotoBase64) target.photo = tempEditPhotoBase64;
-
-      localStorage.setItem("local_admin_accounts", JSON.stringify(allUsers));
-      
-      // यदि स्वयं superadmin ले आफ्नै विवरण सम्पादन गरेको भए सेशन पनि अपडेट गर्ने
-      const loggedUser = JSON.parse(sessionStorage.getItem("user") || "{}");
-      if (loggedUser.id === id) {
-        sessionStorage.setItem("user", JSON.stringify(target));
-        localStorage.setItem("user", JSON.stringify(target));
-        renderHeaderUser();
-      }
-
-      renderUserTable();
-
-      btn.disabled = false;
-      btn.textContent = "💾 अद्यावधिक (Update) गर्नुहोस्";
-      closeEditModal();
-      alert(`खाता "${un}" सफलतापूर्वक अद्यावधिक (Update) भयो!`);
-    }
-
-    async function handleCreateUser(e) {
-      e.preventDefault();
-      const fn = document.getElementById("new_fullname").value.trim();
-      const un = document.getElementById("new_username").value.trim().toLowerCase();
-      const pw = document.getElementById("new_password").value.trim();
-      const rl = document.getElementById("new_role").value.trim();
-
-      const addBtn = document.getElementById("addBtn");
-      addBtn.disabled = true;
-      addBtn.textContent = "⏳ थपिँदैछ...";
-
-      const newAccount = {
-        id: Date.now(),
-        full_name: fn,
-        username: un,
-        password: pw,
-        role: rl,
-        photo: tempNewPhotoBase64
-      };
-
-      let savedInCloud = false;
-
-      if (supabaseClient) {
-        try {
-          const { error } = await supabaseClient
-            .from('admin_accounts')
-            .insert([newAccount]);
-
-          if (error) {
-            alert(`त्रुटि: यो Username (${un}) पहिले नै प्रयोगमा हुन सक्छ!`);
-            addBtn.disabled = false;
-            addBtn.textContent = "थप्नुहोस्";
-            return;
-          } else {
-            savedInCloud = true;
-          }
-        } catch(err) {
-          console.error("Supabase catch error:", err);
-        }
-      }
-
-      allUsers.push(newAccount);
-      localStorage.setItem("local_admin_accounts", JSON.stringify(allUsers));
-      renderUserTable();
-
-      document.getElementById("new_fullname").value = "";
-      document.getElementById("new_username").value = "";
-      document.getElementById("new_password").value = "";
-      document.getElementById("new_role").value = "";
-      document.getElementById("new_photo_file").value = "";
-      tempNewPhotoBase64 = "";
-
-      addBtn.disabled = false;
-      addBtn.textContent = "थप्नुहोस्";
-
-      alert(`बधाई छ! खाता "${un}" (पद: ${rl}) ${savedInCloud ? 'क्लाउडमा' : 'लोकलमा'} सफलतापूर्वक सुरक्षित भयो।`);
-    }
-
-    async function deleteAccount(id, username) {
-      if (!confirm(`के तपाईं खाता "${username}" हटाउन चाहनुहुन्छ?`)) return;
-
-      if (supabaseClient) {
-        try {
-          await supabaseClient
-            .from('admin_accounts')
-            .delete()
-            .eq('id', id);
+          await supabaseClient.from('users').delete().eq('username', uname);
+          await supabaseClient.from('users').delete().eq('user_id', uname);
+          await supabaseClient.from('admin_users').delete().eq('username', uname);
         } catch(e) {}
       }
 
-      allUsers = allUsers.filter(u => u.id !== id);
-      localStorage.setItem("local_admin_accounts", JSON.stringify(allUsers));
-      renderUserTable();
-      alert(`खाता "${username}" सफलतापूर्वक हटाइयो!`);
+      try {
+        let localList = JSON.parse(localStorage.getItem("system_users") || "[]");
+        localList = localList.filter(item => (item.username || '').toLowerCase() !== uname.toLowerCase());
+        localStorage.setItem("system_users", JSON.stringify(localList));
+      } catch(e) {}
+
+      alert(`प्रयोगकर्ता "${uname}" सफलतापूर्वक हटाइयो!`);
+      loadAllUsers();
     }
 
     function toggleTheme() {
@@ -844,6 +522,19 @@
       }
     }
 
+    function updateClock() {
+      try {
+        const now = new Date();
+        const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
+        let h = now.getHours();
+        const m = String(now.getMinutes()).padStart(2, "0");
+        const s = String(now.getSeconds()).padStart(2, "0");
+        let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
+        document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज १२ (${nepDays[now.getDay()]})`;
+        document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+      } catch(e) {}
+    }
+
     function handleSafeLogout() {
       sessionStorage.clear();
       localStorage.removeItem("user");
@@ -852,29 +543,11 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
-      if (!raw) {
-        window.location.href = "login.html";
-        return;
-      }
-
-      try {
-        const u = JSON.parse(raw);
-        if (!u.username || u.username.toLowerCase() !== "superadmin") {
-          alert("⚠️ पहुँच अस्वीकृत (Access Denied):\nयो Admin प्यानल खोल्ने अधिकार केवल Super Administrator लाई मात्र छ!");
-          window.location.href = "darta.html";
-          return;
-        }
-      } catch(e) {
-        window.location.href = "login.html";
-        return;
-      }
-
-      renderHeaderUser();
+      verifySuperAdminAccess();
       applySavedTheme();
       setInterval(updateClock, 1000);
       updateClock();
-      loadAccounts();
+      loadAllUsers();
     });
   </script>
 </body>
