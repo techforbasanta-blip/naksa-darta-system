@@ -148,7 +148,6 @@
     }
     body.dark-mode .entry-title { color: #60a5fa; }
 
-    /* सच्याउने (Edit Mode) ब्यानर */
     .edit-mode-banner {
       display: none;
       background: #fef08a;
@@ -200,26 +199,13 @@
     .form-row { margin-bottom: 5px; }
     .form-row label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
     .form-row input, .form-row select {
-      width: 100%;
-      padding: 5px 7px;
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      font-size: 12px;
-      background: var(--input-bg);
-      color: var(--text-dark);
+      width: 100%; padding: 5px 7px; border: 1px solid var(--border-color); border-radius: 4px;
+      font-size: 12px; background: var(--input-bg); color: var(--text-dark);
     }
 
     .form-actions {
-      display: flex;
-      gap: 6px;
-      margin-top: 10px;
-      position: sticky;
-      bottom: 0;
-      background: var(--card-bg);
-      padding-top: 8px;
-      padding-bottom: 6px;
-      z-index: 999;
-      border-top: 2px solid var(--border-color);
+      display: flex; gap: 6px; margin-top: 10px; position: sticky; bottom: 0;
+      background: var(--card-bg); padding-top: 8px; padding-bottom: 6px; z-index: 999; border-top: 2px solid var(--border-color);
     }
     .btn-act {
       flex: 1; padding: 9px 4px; border: none; border-radius: 4px; font-weight: 800; font-size: 13px; cursor: pointer; text-align: center; color: #fff;
@@ -229,7 +215,6 @@
     .btn-del { background: #dc2626 !important; }
     .btn-reset { background: #64748b !important; }
 
-    /* Saved Tippani Drawer / Popup Modal */
     .tippani-list-modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;
@@ -271,24 +256,22 @@
       align-items: center;
     }
 
+    /* FULL FLEXBOX A4 SHEET FOR PRINTING */
     .a4-tippani-sheet {
       background-color: #ffffff !important;
       color: #000000 !important;
       width: 210mm !important;
-      min-width: 210mm !important;
-      max-width: 210mm !important;
-      height: 294mm !important;
-      min-height: 294mm !important;
-      max-height: 294mm !important;
+      height: 297mm !important; 
       margin: 0 auto 16px auto !important;
-      padding: 4mm 14mm 4mm 26mm !important;
-      border: 1.5px solid #111111 !important;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+      padding: 10mm 15mm 8mm 20mm !important; 
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
       position: relative !important;
       overflow: hidden !important;
       display: flex !important;
       flex-direction: column !important;
-      justify-content: flex-start !important;
+      justify-content: space-between !important;
+      box-sizing: border-box !important;
     }
     .a4-tippani-sheet, .a4-tippani-sheet * { color: #000000 !important; font-family: var(--print-font) !important; }
 
@@ -309,11 +292,11 @@
     }
 
     .cert-content-top {
+      flex: 1; /* Pushes the footer exactly to the bottom */
       position: relative !important;
       z-index: 2 !important;
-      display: flex;
-      flex-direction: column;
-      flex: 1 1 auto;
+      display: flex !important;
+      flex-direction: column !important;
       background: transparent;
     }
 
@@ -323,8 +306,7 @@
       justify-content: space-between !important;
       border-bottom: 2.5px solid var(--gov-crimson) !important;
       padding-bottom: 4px !important;
-      margin-top: 6mm !important;
-      margin-bottom: 6px !important;
+      margin-bottom: 4px !important;
       width: 100% !important;
     }
     .logo-box-left, .logo-box-right {
@@ -336,91 +318,95 @@
       text-align: center !important; flex: 1 !important; padding: 0 6px !important;
       display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
     }
-    .header-titles .gov-sub { font-size: 17px !important; font-weight: 800 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
-    .header-titles .palika-title { font-size: 26.5px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
-    .header-titles .office-title { font-size: 32.5px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
-    .header-titles .address-text { font-size: 17px !important; font-weight: 800 !important; color: #1e3a8a !important; margin-top: 1px !important; line-height: 1.15 !important; }
+    .header-titles .gov-sub { font-size: 16px !important; font-weight: 800 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
+    .header-titles .palika-title { font-size: 26px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
+    .header-titles .office-title { font-size: 32px !important; font-weight: 900 !important; color: var(--gov-crimson) !important; line-height: 1.15 !important; }
+    .header-titles .address-text { font-size: 16px !important; font-weight: 800 !important; color: #1e3a8a !important; margin-top: 1px !important; line-height: 1.15 !important; }
 
     .tippani-top-shriman {
-      font-size: 21px !important; font-weight: 900 !important; text-align: left !important;
-      margin-top: 4px !important; margin-bottom: 2px !important; text-decoration: none !important; line-height: 1.2 !important;
+      font-size: 20px !important; font-weight: 900 !important; text-align: left !important;
+      margin-top: 2px !important; margin-bottom: 2px !important; text-decoration: none !important; line-height: 1.2 !important;
     }
 
-    .tippani-subject-box { text-align: center !important; margin: 3px 0 6px 0 !important; }
+    .tippani-subject-box { text-align: center !important; margin: 2px 0 6px 0 !important; }
     .tippani-subject {
-      font-size: 21.5px !important; font-weight: 900 !important; text-decoration: underline !important; display: inline-block !important;
+      font-size: 20px !important; font-weight: 900 !important; text-decoration: underline !important; display: inline-block !important;
     }
 
     .common-para-text {
-      font-size: 20px !important; line-height: 1.5 !important; text-align: justify !important; text-justify: inter-word !important; font-weight: 600 !important;
+      font-size: 19.5px !important; line-height: 1.45 !important; text-align: justify !important; text-justify: inter-word !important; font-weight: 600 !important;
     }
-    .tippani-body-para {
-      margin-bottom: 10px !important; text-indent: 45px !important;
-    }
+    .tippani-body-para { margin-bottom: 6px !important; text-indent: 45px !important; }
     .tippani-body-para strong { font-weight: 900 !important; }
 
     .two-col-sign-grid {
       display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px !important;
-      margin-top: 26px !important;
-      margin-bottom: 12px !important;
+      margin-top: 12px !important; margin-bottom: 6px !important;
     }
     .sign-item-col { text-align: center !important; }
-    .sign-dots-top { font-size: 15px !important; letter-spacing: 1px !important; font-weight: bold !important; margin-bottom: 2px !important; }
-    .sign-heading { font-size: 17.5px !important; font-weight: 800 !important; line-height: 1.25 !important; }
-    .sign-post-title { font-size: 16px !important; font-weight: 700 !important; margin-top: 1px !important; }
-    .sign-officer-name { font-size: 18.5px !important; font-weight: 900 !important; margin-top: 2px !important; }
+    .sign-dots-top { font-size: 15px !important; letter-spacing: 1px !important; font-weight: bold !important; margin-bottom: 1px !important; }
+    .sign-heading { font-size: 17px !important; font-weight: 800 !important; line-height: 1.25 !important; }
+    .sign-post-title { font-size: 15.5px !important; font-weight: 700 !important; margin-top: 1px !important; }
+    .sign-officer-name { font-size: 18px !important; font-weight: 900 !important; margin-top: 2px !important; }
 
-    .engineer-ray-para { margin-top: 12px !important; margin-bottom: 4px !important; }
+    .engineer-ray-para { margin-top: 6px !important; margin-bottom: 4px !important; }
 
     .engineer-right-block {
-      text-align: right !important; 
-      margin-top: 28px !important; 
-      margin-bottom: 12px !important; 
-      padding-right: 14px !important;
+      text-align: right !important; margin-top: 12px !important; margin-bottom: 4px !important; padding-right: 14px !important;
     }
-    .engineer-right-block .inner-sign-wrap {
-      display: inline-flex !important; flex-direction: column !important; align-items: center !important; min-width: 220px !important;
-    }
+    .engineer-right-block .inner-sign-wrap { display: inline-flex !important; flex-direction: column !important; align-items: center !important; min-width: 220px !important; }
 
-    .approval-opinion-para { margin-top: 10px !important; margin-bottom: 4px !important; }
+    .approval-opinion-para { margin-top: 6px !important; margin-bottom: 4px !important; }
 
     .approval-right-block {
-      text-align: right !important; 
-      margin-top: 30px !important; 
-      margin-bottom: 8px !important; 
-      padding-right: 14px !important;
+      text-align: right !important; margin-top: 12px !important; margin-bottom: 4px !important; padding-right: 14px !important;
     }
-    .approval-right-block .inner-sign-wrap {
-      display: inline-flex !important; flex-direction: column !important; align-items: center !important; min-width: 240px !important;
-    }
+    .approval-right-block .inner-sign-wrap { display: inline-flex !important; flex-direction: column !important; align-items: center !important; min-width: 240px !important; }
 
     .final-iti-center-line {
       text-align: center !important; font-size: 18px !important; font-weight: 900 !important; color: #000 !important;
-      margin-top: 36px !important; margin-bottom: 10px !important;
+      margin-top: 15px !important; margin-bottom: 0 !important;
     }
 
+    /* Footer securely anchored at bottom */
     .cert-footer {
-      border-top: 1.5px solid var(--gov-crimson) !important; padding-top: 2px !important;
-      text-align: center !important; font-size: 11.5px !important; font-weight: 700 !important;
-      background: transparent !important; line-height: 1.2 !important;
+      border-top: 1.5px solid var(--gov-crimson) !important; 
+      padding-top: 4px !important;
+      text-align: center !important; 
+      font-size: 11.5px !important; 
+      font-weight: 700 !important;
+      background: transparent !important; 
+      line-height: 1.3 !important; 
+      width: 100% !important;
+      margin-top: 5px !important;
     }
 
     @media print {
-      @page { size: A4 portrait; margin: 0mm !important; }
-      html, body { background: #ffffff !important; width: 210mm !important; height: 100% !important; margin: 0 !important; padding: 0 !important; }
+      @page { size: A4 portrait; margin: 0 !important; }
+      html, body { background: #ffffff !important; width: 210mm !important; height: 100% !important; margin: 0 !important; padding: 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
       .gov-header, .entry-card, .preview-header-bar, .no-print, .tippani-list-modal { display: none !important; }
-      .workspace-grid, .preview-card { display: block !important; margin: 0 !important; padding: 0 !important; border: none !important; width: 210mm !important; }
+      .workspace-grid, .preview-card { display: block !important; margin: 0 !important; padding: 0 !important; border: none !important; width: 210mm !important; height: auto !important; overflow: visible !important;}
       .preview-zoom-wrapper { transform: none !important; width: 210mm !important; }
+      
       .a4-tippani-sheet {
-        width: 210mm !important; height: 294mm !important; max-height: 294mm !important;
-        margin: 0 !important; padding: 4mm 14mm 4mm 26mm !important; border: 1.5px solid #000 !important; box-shadow: none !important;
+        width: 210mm !important; 
+        height: 297mm !important; 
+        max-height: 297mm !important;
+        margin: 0 !important; 
+        padding: 12mm 15mm 10mm 20mm !important; /* Exact fit padding for A4 Printer */
+        border: none !important; /* Removes outer border line in print */
+        box-shadow: none !important;
+        page-break-after: avoid !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
       }
+      .cert-content-top { flex: 1; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Header with Side-by-Side Home Button -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
@@ -454,10 +440,9 @@
     <section class="entry-card no-print">
       <div class="entry-title">
         <span id="formCardHeaderTitle">📄 निर्णयार्थ पेश टिप्पणी फाराम</span>
-        <button type="button" class="saved-list-btn" onclick="openSavedTippaniModal()">📂 नाम अनुसार टिप्पणी खोज्नुस्</button>
+        <button type="button" class="saved-list-btn" onclick="openSavedTippaniModal()">📂 नाम अनुसार खोज्नुस्</button>
       </div>
 
-      <!-- सच्याउने अवस्थामा देखिने अलर्ट ब्यानर -->
       <div class="edit-mode-banner" id="tippaniEditBanner">
         <span>✏️ तपाईं पुरानो टिप्पणी सच्याउँदै हुनुहुन्छ। विवरण मिलाएर "💾 अद्यावधिक गर्नुहोस्" थिच्नुहोस्।</span>
         <button type="button" onclick="cancelEditMode()" style="background:#854d0e; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">रद्द</button>
@@ -566,7 +551,6 @@
         </div>
       </div>
 
-      <!-- Action Buttons: Save/Update, Print, Delete, Reset -->
       <div class="form-actions">
         <button type="button" class="btn-act btn-save" id="btnMainSave" onclick="saveTippaniToCloud()">💾 सुरक्षित</button>
         <button type="button" class="btn-act btn-print" onclick="printTippaniPaper()">🖨 प्रिन्ट</button>
@@ -594,20 +578,24 @@
                onerror="this.src='assets/palika%20logo.jpg';" class="watermark-img" alt="Watermark">
 
           <div class="cert-content-top">
-            <header class="cert-header">
-              <div class="logo-box-left">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" alt="Gov Logo" onerror="this.src='assets/nishan%20chap.jpg';">
-              </div>
-              <div class="header-titles">
-                <div class="gov-sub">स्थानीय सरकार</div>
-                <div class="palika-title">मायादेवी गाउँपालिका</div>
-                <div class="office-title">गाउँ कार्यपालिकाको कार्यालय</div>
-                <div class="address-text">बरेवा, रुपन्देही, लुम्बिनी प्रदेश, नेपाल ।</div>
-              </div>
-              <div class="logo-box-right">
-                <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" alt="Logo" onerror="this.src='assets/palika%20logo.jpg';">
-              </div>
-            </header>
+            
+            <!-- Table Header Layout -->
+            <table style="width: 100%; border-bottom: 2.5px solid #b71c1c; margin-bottom: 8px; padding-bottom: 4px; border-collapse: collapse;">
+              <tr>
+                <td style="width: 100px; vertical-align: middle; text-align: left; border: none;">
+                  <img src="https://mayadevimunrupandehi.gov.np/sites/all/themes/newmun/new_logo.png" style="width: 75px; height: auto;" onerror="this.src='assets/nishan%20chap.jpg';">
+                </td>
+                <td style="text-align: center; vertical-align: middle; border: none;">
+                  <div style="font-size: 17px; font-weight: 800; color: #b71c1c; line-height: 1.15;">स्थानीय सरकार</div>
+                  <div style="font-size: 26.5px; font-weight: 900; color: #b71c1c; line-height: 1.15;">मायादेवी गाउँपालिका</div>
+                  <div style="font-size: 32.5px; font-weight: 900; color: #b71c1c; line-height: 1.15;">गाउँ कार्यपालिकाको कार्यालय</div>
+                  <div style="font-size: 17px; font-weight: 800; color: #1e3a8a; line-height: 1.15; margin-top: 2px;">बरेवा, रुपन्देही, लुम्बिनी प्रदेश, नेपाल ।</div>
+                </td>
+                <td style="width: 100px; vertical-align: middle; text-align: right; border: none;">
+                  <img src="https://mayadevimunrupandehi.gov.np/sites/mayadevimunrupandehi.gov.np/files/img/mayadevi%20logo.jpg" style="width: 75px; height: auto;" onerror="this.src='assets/palika%20logo.jpg';">
+                </td>
+              </tr>
+            </table>
 
             <div class="tippani-top-shriman">श्रीमान्</div>
 
@@ -615,65 +603,75 @@
               <span class="tippani-subject">विषयः घर सँरचना अभिलेखिकरण प्रमाण-पत्र दिने सम्बन्धमा ।</span>
             </div>
 
-            <p class="common-para-text tippani-body-para">
-              मायादेवी गाउँपालिका वडा नं.<strong id="out_ward">०८</strong> बस्ने श्री <strong id="out_owner">ज्योती कर्ण</strong>ले निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="out_sabik">हाटिबनगाई गा.वि.स. वडा नं.५ क</strong> कि.न. <strong id="out_kitta">२५२४</strong> को क्षे.फ. <strong id="out_area">विगह क्रमशः ०-०-१०</strong> जग्गामा मिति <strong id="out_comp_date">२०८३/०१/०५</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति <strong id="out_darta_date">२०८३/०५/१८</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति <strong id="out_insp_date">२०८३/०६/०६</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण भएको पाईएको साथै मिति <strong id="out_dec_date">२०८३/०६/१२</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरीएको ।
+            <!-- Paragraph formatted exactly as requested -->
+            <p class="common-para-text tippani-body-para" id="tippaniMainPara">
+              मायादेवी गाउँपालिका वडा नं.<strong id="out_ward">०८</strong> बस्ने श्री <strong id="out_owner">ज्योती कर्ण</strong>ले निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="out_sabik">हाटिबनगाई गा.वि.स. वडा नं.५ क</strong> कि.न. <strong id="out_kitta">२५२४</strong> को क्षे.फ. <strong id="out_area">विगह क्रमशः ०-०-१०</strong> जग्गामा मिति <strong id="out_comp_date">२०८३/०१/०५</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति <strong id="out_darta_date">२०८३/०५/१८</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति <strong id="out_insp_date">२०८३/०६/०६</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण भएको पाईएको साथै मिति <strong id="out_dec_date">२०८३/०६/१२</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरिएको ।
             </p>
 
-            <div class="two-col-sign-grid">
-              <div class="sign-item-col">
-                <div class="sign-dots-top">........................................</div>
-                <div class="sign-heading">स्थलगत निरिक्षण</div>
-                <div class="sign-post-title" id="out_eng1_role">अमिन</div>
-                <div class="sign-officer-name" id="out_eng1_name">मायादेवी गाउँपालिका</div>
-              </div>
-              <div class="sign-item-col">
-                <div class="sign-dots-top">........................................</div>
-                <div class="sign-heading">संरचना चेकजाँच गर्ने तथा रुजु गर्ने</div>
-                <div class="sign-post-title" id="out_eng2_role">सब-ईन्जिनियर</div>
-                <div class="sign-officer-name" id="out_eng2_name">मायादेवी गाउँपालिका</div>
-              </div>
-            </div>
+            <table style="width: 100%; margin-top: 15px; margin-bottom: 8px; border: none; border-collapse: collapse;">
+              <tr>
+                <td style="text-align: center; width: 50%; vertical-align: bottom; border: none; padding-right: 10px;">
+                  <div style="font-size: 15px; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px;">........................................</div>
+                  <div style="font-size: 17.5px; font-weight: 800; line-height: 1.25;">स्थलगत निरिक्षण</div>
+                  <div style="font-size: 16px; font-weight: 700; margin-top: 1px;" id="out_eng1_role">अमिन</div>
+                  <div style="font-size: 18.5px; font-weight: 900; margin-top: 2px;" id="out_eng1_name">मायादेवी गाउँपालिका</div>
+                </td>
+                <td style="text-align: center; width: 50%; vertical-align: bottom; border: none; padding-left: 10px;">
+                  <div style="font-size: 15px; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px;">........................................</div>
+                  <div style="font-size: 17.5px; font-weight: 800; line-height: 1.25;">संरचना चेकजाँच गर्ने तथा रुजु गर्ने</div>
+                  <div style="font-size: 16px; font-weight: 700; margin-top: 1px;" id="out_eng2_role">सब-ईन्जिनियर</div>
+                  <div style="font-size: 18.5px; font-weight: 900; margin-top: 2px;" id="out_eng2_name">मायादेवी गाउँपालिका</div>
+                </td>
+              </tr>
+            </table>
 
             <p class="common-para-text engineer-ray-para">
               उल्लेखित बिवरण अनुसारको निर्माण कार्यमा स्थलगत नापजाँच गर्ने प्रविधिकको राय बमोजिम निर्माण घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्न मनासिव देखिएकोले निर्णयार्थ पेश गर्दछु ।
             </p>
 
-            <div class="engineer-right-block">
-              <div class="inner-sign-wrap">
-                <div class="sign-dots-top">........................................</div>
-                <div class="sign-post-title" id="out_eng3_role" style="font-size: 16.5px !important;">ईन्जिनियर</div>
-                <div class="sign-officer-name" id="out_eng3_name">मायादेवी गाउँपालिका</div>
-              </div>
-            </div>
+            <table style="width: 100%; margin-top: 10px; margin-bottom: 6px; border: none; border-collapse: collapse;">
+              <tr>
+                <td style="width: 60%; border: none;"></td>
+                <td style="width: 40%; text-align: center; border: none; vertical-align: bottom; padding-right: 14px;">
+                   <div style="font-size: 15px; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px;">........................................</div>
+                   <div style="font-size: 16.5px; font-weight: 800; line-height: 1.25;" id="out_eng3_role">ईन्जिनियर</div>
+                   <div style="font-size: 18.5px; font-weight: 900; margin-top: 2px;" id="out_eng3_name">मायादेवी गाउँपालिका</div>
+                </td>
+              </tr>
+            </table>
 
             <p class="common-para-text approval-opinion-para">
               प्रस्तुत प्राविधिक राय तथा सिफारिसका आधारमा घर सँरचनाको अभिलेखिकरण प्रमाण-पत्र प्रदान गर्नेगरी सदर ।
             </p>
 
-            <div class="approval-right-block">
-              <div class="inner-sign-wrap">
-                <div class="sign-dots-top">................................................</div>
-                <div class="sign-heading" style="font-size: 17px !important;">स्वीकृत गर्ने</div>
-                <div class="sign-officer-name" id="out_off_name">मायादेवी गाउँपालिका</div>
-                <div class="sign-post-title" id="out_off_role" style="font-size: 16.5px !important;">प्रमुख प्रशासकीय अधिकृत</div>
-              </div>
-            </div>
+            <table style="width: 100%; margin-top: 15px; margin-bottom: 6px; border: none; border-collapse: collapse;">
+              <tr>
+                <td style="width: 55%; border: none;"></td>
+                <td style="width: 45%; text-align: center; border: none; vertical-align: bottom; padding-right: 14px;">
+                   <div style="font-size: 15px; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px;">................................................</div>
+                   <div style="font-size: 17px; font-weight: 800; line-height: 1.25;">स्वीकृत गर्ने</div>
+                   <div style="font-size: 18.5px; font-weight: 900; margin-top: 2px;" id="out_off_name">मायादेवी गाउँपालिका</div>
+                   <div style="font-size: 16.5px; font-weight: 800; margin-top: 1px;" id="out_off_role">प्रमुख प्रशासकीय अधिकृत</div>
+                </td>
+              </tr>
+            </table>
 
             <div class="final-iti-center-line" id="out_iti_footer">
               ईति सम्बत २०८३ साल ०६ महिना १२ गते ०२ रोज शुभम् ।
             </div>
           </div>
 
+          <!-- Footer Always at the Bottom -->
           <footer class="cert-footer">
             सम्पर्क नं. ☎️ ०७१-५९२२२२ &nbsp; 📞 ९८५७०१६९३९ &nbsp; | &nbsp; ईमेलः- info@mayadevimunrupandehi.gov.np<br>
             वेभ साइटः- mayadevimunrupandehi.gov.np
           </footer>
+
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Saved Tippani Modal -->
   <div class="tippani-list-modal" id="tippaniModal">
     <div class="tippani-modal-content">
       <div class="modal-header-bar">
@@ -750,18 +748,12 @@
         return el ? (el.value.trim() || def) : def;
       };
 
-      document.getElementById("out_ward").textContent = getVal("in_ward", "०८");
-      document.getElementById("out_owner").textContent = getVal("in_owner", "ज्योती कर्ण");
-      document.getElementById("out_sabik").textContent = getVal("in_sabik", "हाटिबनगाई गा.वि.स. वडा नं.५ क");
-      document.getElementById("out_kitta").textContent = getVal("in_kitta", "२५२४");
-      document.getElementById("out_area").textContent = getVal("in_area", "विगह क्रमशः ०-०-१०");
-      document.getElementById("out_comp_date").textContent = getVal("in_comp_date", "२०८३/०१/०५");
-      document.getElementById("out_darta_date").textContent = getVal("in_darta_date", "२०८३/०५/१८");
-      document.getElementById("out_insp_date").textContent = getVal("in_insp_date", "२०८३/०६/०६");
-      
       const decDate = getVal("in_dec_date", "२०८३/०६/१२");
-      document.getElementById("out_dec_date").textContent = decDate;
       calculateItiSambhat(decDate);
+
+      document.getElementById("tippaniMainPara").innerHTML = `
+        मायादेवी गाउँपालिका वडा नं.<strong id="out_ward">${getVal("in_ward", "०८")}</strong> बस्ने श्री <strong id="out_owner">${getVal("in_owner", "ज्योती कर्ण")}</strong>ले निजको एकलौटी नाममा दर्ता कायम रहेको साविक <strong id="out_sabik">${getVal("in_sabik", "हाटिबनगाई गा.वि.स. वडा नं.५ क")}</strong> कि.न. <strong id="out_kitta">${getVal("in_kitta", "२५२४")}</strong> को क्षे.फ. <strong id="out_area">${getVal("in_area", "विगह क्रमशः ०-०-१०")}</strong> जग्गामा मिति <strong id="out_comp_date">${getVal("in_comp_date", "२०८३/०१/०५")}</strong> घर निर्माण गरेको घर सँरचनाको अभिलेखीकरणका लागि यस गा.पा.को कार्यालयमा मिति <strong id="out_darta_date">${getVal("in_darta_date", "२०८३/०५/१८")}</strong> गते आवेदन दर्ता गर्नुभएको र यस गा.पा.को कार्यालयको प्राविधिक टिम मिति <strong id="out_insp_date">${getVal("in_insp_date", "२०८३/०६/०६")}</strong> स्थलगत निरिक्षण गर्दा निजले पेश गरेको नक्सा बमोजिम निज को जग्गामा घर निर्माण भएको पाईएको साथै मिति <strong id="out_dec_date">${decDate}</strong> मा आवश्यक सम्पुर्ण कागजात सहित उपस्थित हुनु भएकोले निजलाई घर संरचनाको अभिलेखीकण प्रमाण पत्र दिन निर्णयार्थ पेश गरिएको ।
+      `;
 
       document.getElementById("out_eng1_name").textContent = getVal("in_eng1_name", "मायादेवी गाउँपालिका");
       document.getElementById("out_eng1_role").textContent = getVal("in_eng1_role", "अमिन");
@@ -815,7 +807,6 @@
       }
     }
 
-    // नयाँ सेभ गर्ने वा पुरानो सच्याएर अद्यावधिक गर्ने (Save/Update)
     async function saveTippaniToCloud() {
       const owner = document.getElementById("in_owner").value.trim();
       const kitta = document.getElementById("in_kitta").value.trim();
@@ -848,7 +839,6 @@
         officer_role: document.getElementById("in_off_role").value
       };
 
-      // १. लोकल स्टोरेजमा सेभ / अपडेट
       try {
         let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
         const existIdx = list.findIndex(item => item.id === nowTime);
@@ -860,7 +850,6 @@
         localStorage.setItem("naksa_tippani_list", JSON.stringify(list));
       } catch(e) {}
 
-      // २. सुपाबेसमा सुरक्षित
       if (supabaseClient) {
         try {
           await supabaseClient.from('naksa_records').upsert(tippaniItem);
@@ -903,19 +892,9 @@
     }
 
     function resetTippaniForm() {
-      document.getElementById("current_tippani_id").value = "";
-      document.getElementById("in_owner").value = "ज्योती कर्ण";
-      document.getElementById("in_ward").value = "०८";
-      document.getElementById("in_sabik").value = "हाटिबनगाई गा.वि.स. वडा नं.५ क";
-      document.getElementById("in_kitta").value = "२५२४";
-      document.getElementById("in_area").value = "विगह क्रमशः ०-०-१०";
-      document.getElementById("in_comp_date").value = "२०८३/०१/०५";
-      document.getElementById("in_darta_date").value = "२०८३/०५/१८";
-      document.getElementById("in_insp_date").value = "२०८३/०६/०६";
-      document.getElementById("in_dec_date").value = "२०८३/०६/१२";
-      document.getElementById("pull_darta_no").value = "";
-      cancelEditMode();
-      updateTippaniLive();
+      sessionStorage.removeItem("view_record_id");
+      sessionStorage.removeItem("is_edit_mode");
+      window.location.replace("tippani.html");
     }
 
     function cancelEditMode() {
@@ -992,7 +971,6 @@
       });
     }
 
-    // सच्याउन फाराममा लोड गर्ने फङ्सन (Edit Mode Active)
     function loadTippaniIntoForm(id) {
       let list = JSON.parse(localStorage.getItem("naksa_tippani_list") || "[]");
       const item = list.find(t => t.id === id);
@@ -1016,7 +994,6 @@
         if (item.officer) document.getElementById("in_off_name").value = item.officer;
         if (item.officer_role) document.getElementById("in_off_role").value = item.officer_role;
 
-        // Edit मोड ब्यानर सक्रिय बनाउने
         const banner = document.getElementById("tippaniEditBanner");
         if (banner) banner.style.display = "flex";
         const saveBtn = document.getElementById("btnMainSave");
@@ -1084,11 +1061,22 @@
       window.location.href = "login.html";
     }
 
+    function checkEditMode() {
+      try {
+        const editId = sessionStorage.getItem("view_record_id");
+        const isEditMode = sessionStorage.getItem("is_edit_mode");
+        if (editId && isEditMode === 'true') {
+           loadTippaniIntoForm(parseInt(editId));
+        }
+      } catch(e) {}
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
       applySavedTheme();
       setInterval(updateClock, 1000);
       updateClock();
       updateTippaniLive();
+      checkEditMode();
     });
   </script>
 </body>
