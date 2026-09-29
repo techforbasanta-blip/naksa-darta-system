@@ -61,8 +61,7 @@
     .brand-text p { font-size: 11.5px; color: #cbd5e1; font-weight: 500; margin: 0; }
 
     .brand-home-badge {
-      background: rgba(255, 255, 255, 0.18);
-      color: #ffffff !important; text-decoration: none; font-size: 12.5px; font-weight: 800;
+      background: rgba(255, 255, 255, 0.18); color: #ffffff !important; text-decoration: none; font-size: 12.5px; font-weight: 800;
       padding: 2px 10px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.4); display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease; white-space: nowrap;
     }
     .brand-home-badge:hover { background: #2563eb; border-color: #60a5fa; transform: translateY(-1px); }
@@ -171,12 +170,12 @@
     <!-- User Creation Card (Hidden for Pramukh) -->
     <div class="card" id="addUserCard">
       <div class="card-title">
-        <span>➕ नयाँ कर्मचारी / एडमिन थप्नुहोस्</span>
+        <span>➕ नयाँ कर्मचारी थप्नुहोस्</span>
       </div>
 
       <form id="addUserForm" onsubmit="handleAddNewUser(event)">
         <div class="form-group">
-          <label>प्रयोगकर्ता नाम (User ID / Username) *</label>
+          <label>प्रयोगकर्ता नाम (Username) *</label>
           <input type="text" id="new_username" placeholder="उदा: Laxman508" required autocomplete="off">
         </div>
 
@@ -193,17 +192,17 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="form-group">
             <label>पद (Post) *</label>
-            <input type="text" id="new_post" placeholder="उदा: अमिन / कम्प्युटर अपरेटर" required>
+            <input type="text" id="new_post" placeholder="उदा: अमिन / अपरेटर" required>
           </div>
           <div class="form-group">
-            <label>सम्पर्क नं. (Mobile) *</label>
-            <input type="text" id="new_contact" placeholder="उदा: ९८XXXXXXXX" required>
+            <label>सम्पर्क नं. (Mobile)</label>
+            <input type="text" id="new_contact" placeholder="उदा: ९८XXXXXXXX">
           </div>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="form-group">
-            <label>सम्बन्धित वडा / पालिका क्षेत्र *</label>
+            <label>वडा / पालिका क्षेत्र *</label>
             <select id="new_ward">
               <option value="palika" selected>गाउँकार्यपालिका / पालिका केन्द्र</option>
               <option value="1">वडा नं. ०१</option>
@@ -221,6 +220,7 @@
             <select id="new_role">
               <option value="Ward" selected>वडा कर्मचारी (Ward)</option>
               <option value="Naksa">नक्सा शाखा (Map)</option>
+              <!-- Superadmin र Pramukh आफैं बन्ने हुनाले यहाँ नदेखाउँदा नि हुन्छ, तर अप्सन राखेको छु -->
               <option value="Superadmin">सुपर एडमिन (Superadmin)</option>
               <option value="कार्यालय प्रमुख">कार्यालय प्रमुख</option>
             </select>
@@ -275,7 +275,7 @@
   <div class="edit-modal-wrapper" id="editUserModal">
     <div class="edit-modal-content">
       <div class="edit-modal-header">
-        <h3>✏️ कर्मचारी विवरण सम्पादन (Edit Profile)</h3>
+        <h3>✏️ विवरण सम्पादन (Edit Profile)</h3>
         <button type="button" class="btn-close-modal" onclick="closeEditModal()">✕</button>
       </div>
 
@@ -303,8 +303,8 @@
             <input type="text" id="edit_post" required>
           </div>
           <div class="form-group">
-            <label>सम्पर्क नं. (Mobile) *</label>
-            <input type="text" id="edit_contact" required>
+            <label>सम्पर्क नं. (Mobile)</label>
+            <input type="text" id="edit_contact">
           </div>
         </div>
 
@@ -380,7 +380,7 @@
         if (u.role === "कार्यालय प्रमुख") {
           isPramukhViewOnly = true;
           document.getElementById("addUserCard").style.display = "none";
-          document.getElementById("usersTableCard").style.gridColumn = "span 2"; // Make table full width
+          document.getElementById("usersTableCard").style.gridColumn = "span 2"; 
         }
       } catch(e) { window.location.href = "login.html"; }
     }
@@ -470,20 +470,12 @@
         role: document.getElementById("new_role").value,
         ward: document.getElementById("new_ward").value,
         phone: document.getElementById("new_contact").value.trim(),
+        post: document.getElementById("new_post").value.trim(),
+        photo: base64AddPhoto || ""
       };
 
-      // Since 'post' and 'photo' might not be standard columns in your basic table setup, 
-      // we attach them if your database schema accepts them.
-      // Assuming you added them or are updating the rows properly:
       try {
-        const { data, error } = await supabaseClient.from('app_users').insert([{
-           ...newUserPayload, 
-           // In Supabase, if columns don't exist, it might throw an error.
-           // You can store extra info in 'name' or just assume the columns exist.
-           // Assuming 'app_users' has 'post' and 'photo' or you don't mind dropping them if they don't.
-           post: document.getElementById("new_post").value.trim(),
-           photo: base64AddPhoto || ""
-        }]);
+        const { error } = await supabaseClient.from('app_users').insert([newUserPayload]);
 
         if(error) {
            if(error.code === '23505') alert("यो Username पहिले नै प्रयोग भइसकेको छ! अर्को राख्नुहोस्।");
@@ -497,13 +489,14 @@
            loadAllUsers();
         }
       } catch(err) {
-        alert("❌ युजर थप्न सकिएन। कृपया Supabase Table मा 'post' र 'photo' Column थप्नुभएको छ भनी सुनिश्चित गर्नुहोस्: " + err.message);
+        alert("❌ युजर थप्न सकिएन: " + err.message);
       }
       
       btn.disabled = false;
       btn.innerHTML = "<span>सुरक्षित गर्नुहोस् (Save User)</span> ➜";
     }
 
+    // MAIN AUTO-SEED LOGIC FOR SUPERADMIN & PRAMUKH
     async function loadAllUsers() {
       const tbody = document.getElementById("userTableBody");
       tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>`;
@@ -512,7 +505,36 @@
         const { data, error } = await supabaseClient.from('app_users').select('*').order('id', { ascending: false });
         if(error) throw error;
 
-        globalUsersList = data || [];
+        let allUsers = data || [];
+        
+        // चेक गर्ने: के डाटाबेसमा superadmin र pramukh छ?
+        let needsReload = false;
+        const hasSuperadmin = allUsers.some(u => u.username.toLowerCase() === 'superadmin');
+        const hasPramukh = allUsers.some(u => u.username.toLowerCase() === 'pramukh');
+
+        // छैन भने अटोमेटिक थप्ने (Auto-Seed)
+        if(!hasSuperadmin) {
+           await supabaseClient.from('app_users').insert([{
+             name: 'Super Admin', username: 'superadmin', password: 'Sarkar@#07', 
+             role: 'Superadmin', ward: 'palika', post: 'प्रणाली प्रशासक / अपरेटर', phone: '-'
+           }]);
+           needsReload = true;
+        }
+        if(!hasPramukh) {
+           await supabaseClient.from('app_users').insert([{
+             name: 'कार्यालय प्रमुख', username: 'pramukh', password: 'Pramukh@123', 
+             role: 'कार्यालय प्रमुख', ward: 'palika', post: 'प्रमुख प्रशासकीय अधिकृत', phone: '-'
+           }]);
+           needsReload = true;
+        }
+
+        if(needsReload) {
+           // नयाँ थपेपछि फेरि डाटा तान्ने
+           const res = await supabaseClient.from('app_users').select('*').order('id', { ascending: false });
+           allUsers = res.data || [];
+        }
+
+        globalUsersList = allUsers;
         tbody.innerHTML = "";
 
         if(globalUsersList.length === 0) {
@@ -541,15 +563,20 @@
             ? `<img src="${photoSrc}" style="width:34px; height:38px; object-fit:cover; border-radius:3px; border:1px solid #94a3b8; cursor:pointer;" onclick="viewFullPhoto('${photoSrc}')" title="फोटो हेर्नुहोस्">` 
             : `<span style="font-size:10px; color:#94a3b8;">फोटो छैन</span>`;
 
-          // Action Buttons: View Only for Pramukh
+          // Action Buttons: View Only for Pramukh, No Delete for main accounts
           let actionButtons = "";
           if(isPramukhViewOnly) {
              actionButtons = `<span style="color:#64748b; font-size:11.5px; font-weight:bold;">🔒 View Only</span>`;
           } else {
+             const isCoreAccount = (uname.toLowerCase() === 'superadmin' || uname.toLowerCase() === 'pramukh');
+             const deleteBtn = isCoreAccount 
+               ? `<button type="button" class="btn-delete-user" style="background:#94a3b8; cursor:not-allowed;" title="मुख्य खाता हटाउन मिल्दैन" disabled>🚫</button>`
+               : `<button type="button" class="btn-delete-user" onclick="deleteUser(${usr.id}, '${uname}')" title="मेटाउनुहोस्">🗑️</button>`;
+
              actionButtons = `
                <div class="action-btn-group" style="justify-content:center;">
                  <button type="button" class="btn-edit-all" onclick="openEditModal(${usr.id})" title="सम्पादन गर्नुहोस्">✏️ Edit</button>
-                 <button type="button" class="btn-delete-user" onclick="deleteUser(${usr.id}, '${uname}')" title="मेटाउनुहोस्">🗑️</button>
+                 ${deleteBtn}
                </div>
              `;
           }
