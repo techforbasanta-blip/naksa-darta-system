@@ -146,7 +146,6 @@
           <h1>Smart Mayadevi</h1>
           <div class="motto-home-row">
             <p>"Identity of Mayadevi: Balanced Development, Quality Service and Governance"</p>
-            <a href="index.html" class="brand-home-badge" title="मुख्य गृहपृष्ठमा जानुहोस्">🏠 Home</a>
           </div>
         </div>
       </div>
@@ -157,7 +156,8 @@
           <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
         </div>
 
-        <a href="english_cert.html" class="nav-btn">📜 English Cert</a>
+        <!-- English Cert को बटन हटाएर ड्यासबोर्डमा जाने बटन राखियो -->
+        <a href="index.html" class="nav-btn">🏠 ड्यासबोर्ड (Home)</a>
         <a href="admin.html" class="nav-btn active">⚙️ Admin</a>
         
         <button type="button" class="nav-btn btn-theme" id="themeToggleBtn" onclick="toggleTheme()">☾</button>
@@ -220,7 +220,6 @@
             <select id="new_role">
               <option value="Ward" selected>वडा कर्मचारी (Ward)</option>
               <option value="Naksa">नक्सा शाखा (Map)</option>
-              <!-- Superadmin र Pramukh आफैं बन्ने हुनाले यहाँ नदेखाउँदा नि हुन्छ, तर अप्सन राखेको छु -->
               <option value="Superadmin">सुपर एडमिन (Superadmin)</option>
               <option value="कार्यालय प्रमुख">कार्यालय प्रमुख</option>
             </select>
@@ -507,12 +506,10 @@
 
         let allUsers = data || [];
         
-        // चेक गर्ने: के डाटाबेसमा superadmin र pramukh छ?
         let needsReload = false;
         const hasSuperadmin = allUsers.some(u => u.username.toLowerCase() === 'superadmin');
         const hasPramukh = allUsers.some(u => u.username.toLowerCase() === 'pramukh');
 
-        // छैन भने अटोमेटिक थप्ने (Auto-Seed)
         if(!hasSuperadmin) {
            await supabaseClient.from('app_users').insert([{
              name: 'Super Admin', username: 'superadmin', password: 'Sarkar@#07', 
@@ -529,7 +526,6 @@
         }
 
         if(needsReload) {
-           // नयाँ थपेपछि फेरि डाटा तान्ने
            const res = await supabaseClient.from('app_users').select('*').order('id', { ascending: false });
            allUsers = res.data || [];
         }
@@ -563,7 +559,6 @@
             ? `<img src="${photoSrc}" style="width:34px; height:38px; object-fit:cover; border-radius:3px; border:1px solid #94a3b8; cursor:pointer;" onclick="viewFullPhoto('${photoSrc}')" title="फोटो हेर्नुहोस्">` 
             : `<span style="font-size:10px; color:#94a3b8;">फोटो छैन</span>`;
 
-          // Action Buttons: View Only for Pramukh, No Delete for main accounts
           let actionButtons = "";
           if(isPramukhViewOnly) {
              actionButtons = `<span style="color:#64748b; font-size:11.5px; font-weight:bold;">🔒 View Only</span>`;
@@ -669,7 +664,6 @@
         const { error } = await supabaseClient.from('app_users').update(updatedObj).eq('id', id);
         if(error) throw error;
         
-        // Update Session logic if they edited their own profile
         const raw = sessionStorage.getItem("user");
         if(raw) {
            const u = JSON.parse(raw);
