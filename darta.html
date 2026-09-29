@@ -56,12 +56,11 @@
     .brand-left img { height: 52px !important; width: auto !important; }
     .brand-text h1 { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: 0.5px; }
 
-    /* नाराको ठीक २/४ ट्याब पछाडि Home बटन मिलाउने कन्टेनर */
     .motto-home-row {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 32px; /* २/४ ट्याब बराबरको खुला ठाउँ */
+      gap: 32px; 
       margin-top: 2px;
     }
     .brand-text p { font-size: 12px; color: #cbd5e1; font-weight: 500; margin: 0; }
@@ -560,7 +559,6 @@
 </head>
 <body>
 
-  <!-- Top Header with Motto followed by 2/4 Tab Spaced Home Button -->
   <header class="gov-header no-print">
     <div class="header-inner">
       <div class="brand-left">
@@ -589,7 +587,9 @@
           <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
         </div>
 
-        <a href="darta.html" class="nav-btn active">📝 नयाँ दर्ता</a>
+        <!-- NEW DARTA BUTTON FIXED -->
+        <button type="button" class="nav-btn active" onclick="resetFormToNew()">📝 नयाँ दर्ता</button>
+        
         <a href="tippani.html" class="nav-btn">📄 टिप्पणी</a>
         <a href="record.html" class="nav-btn">📂 पुरानो हेर्नुस्</a>
         <a href="admin.html" id="adminMenuBtn" class="nav-btn" style="display:none;">⚙️ Admin</a>
@@ -800,7 +800,8 @@
       <div class="form-actions">
         <button type="button" id="saveBtnMain" class="btn-act btn-save" onclick="window.executeSave()">💾 सुरक्षित गर्नुहोस्</button>
         <button type="button" id="printBtnMain" class="btn-act btn-print" onclick="window.executePrint()">🖨 प्रिन्ट गर्नुहोस्</button>
-        <button type="button" id="resetBtnMain" class="btn-act btn-reset" onclick="window.executeReset()">↺ Reset</button>
+        <!-- Reset button also triggers the new fresh reload function -->
+        <button type="button" id="resetBtnMain" class="btn-act btn-reset" onclick="resetFormToNew()">↺ Reset</button>
       </div>
     </section>
 
@@ -1122,8 +1123,8 @@
     
     let supabaseClient = null;
     try {
-      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany") && typeof supabase !== 'undefined') {
-        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      if (SUPABASE_URL && !SUPABASE_URL.includes("xyzcompany") && typeof window.supabase !== 'undefined') {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
     } catch(e) {}
 
@@ -1136,6 +1137,21 @@
     let currentNamsariPhotoBase64 = "";
     let currentZoomLevel = 0.82;
     let editingOriginalRecord = null;
+
+    // --- NEW FRESH RELOAD FUNCTION ---
+    function resetFormToNew() {
+      // 1. Clear Edit Mode data from Storage
+      localStorage.removeItem("edit_naksa_id");
+      localStorage.removeItem("edit_naksa_data");
+      sessionStorage.removeItem("view_record_id");
+      sessionStorage.removeItem("is_edit_mode");
+      sessionStorage.removeItem("edit_naksa_id");
+      sessionStorage.removeItem("edit_naksa_data");
+
+      // 2. Refresh the page cleanly to empty form
+      window.location.replace("darta.html");
+    }
+    // ---------------------------------
 
     function setZoom(lvl) {
       currentZoomLevel = lvl;
@@ -1170,7 +1186,7 @@
         const avatarImg = document.getElementById("headerUserAvatarImg");
         const fallback = document.getElementById("headerUserAvatarFallback");
 
-        if (nameEl) nameEl.textContent = u.full_name || u.username;
+        if (nameEl) nameEl.textContent = u.full_name || u.name || u.username;
         if (roleEl) roleEl.textContent = u.role || "कर्मचारी";
 
         if (u.photo && avatarImg) {
@@ -1180,11 +1196,13 @@
         } else if (fallback) {
           if (avatarImg) avatarImg.style.display = "none";
           fallback.style.display = "flex";
-          fallback.textContent = (u.full_name || u.username || 'A').charAt(0).toUpperCase();
+          fallback.textContent = (u.full_name || u.name || u.username || 'A').charAt(0).toUpperCase();
         }
 
+        const isSuper = (u.username && u.username.toLowerCase() === "superadmin") || 
+                        (u.role && u.role.toLowerCase() === "superadmin");
         const btn = document.getElementById("adminMenuBtn");
-        if (btn && u.username && u.username.toLowerCase() === "superadmin") {
+        if (btn && isSuper) {
           btn.style.display = "inline-flex";
         }
       } catch(e) {}
@@ -1202,14 +1220,6 @@
         }, 100);
       } catch(e) {
         window.print();
-      }
-    };
-
-    window.executeReset = function() {
-      if (confirm("के तपाईं फारामका विवरणहरू खाली गरी नयाँ प्रविष्टि गर्न चाहनुहुन्छ?")) {
-        sessionStorage.removeItem("view_record_id");
-        sessionStorage.removeItem("is_edit_mode");
-        window.location.href = "darta.html";
       }
     };
 
@@ -1353,7 +1363,7 @@
         
         const dateEl = document.getElementById("liveNepaliHeaderDate");
         const timeEl = document.getElementById("liveNepaliHeaderTime");
-        if (dateEl) dateEl.textContent = `मिति: २०८३ असोज ०८ (${nepDays[now.getDay()]})`;
+        if (dateEl) dateEl.textContent = `मिति: २०८३ असोज १२ (${nepDays[now.getDay()]})`;
         if (timeEl) timeEl.textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
       } catch(e) {}
     }
@@ -1750,4 +1760,4 @@
     });
   </script>
 </body>
-</html>
+</html>vvvvvvvvvvvvvvvv
