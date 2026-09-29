@@ -265,8 +265,6 @@
           <div class="h-time" id="liveNepaliHeaderTime">समय: --:--:--</div>
         </div>
 
-        <a href="darta.html" class="nav-btn">📝 नयाँ दर्ता</a>
-        <a href="tippani.html" class="nav-btn">📄 टिप्पणी</a>
         <a href="english_cert.html" class="nav-btn">📜 English Cert</a>
         <a href="admin.html" class="nav-btn active">⚙️ Admin</a>
         
@@ -277,32 +275,32 @@
   </header>
 
   <main class="admin-container">
-    <!-- नयाँ कर्मचारी थप्ने फाराम (वडा र पहुँच सहित) -->
+    <!-- User Creation Card -->
     <div class="card">
       <div class="card-title">
-        <span>➕ नयाँ कर्मचारी / वडा सचिव थप्नुहोस्</span>
+        <span>➕ नयाँ कर्मचारी / एडमिन थप्नुहोस्</span>
       </div>
 
       <form id="addUserForm" onsubmit="handleAddNewUser(event)">
         <div class="form-group">
           <label>प्रयोगकर्ता नाम (User ID / Username) *</label>
-          <input type="text" id="new_username" placeholder="उदा: ward1_sec वा Laxman508" required autocomplete="off">
+          <input type="text" id="new_username" placeholder="उदा: Laxman508" required autocomplete="off">
         </div>
 
         <div class="form-group">
           <label>गोप्य पासवर्ड (Password) *</label>
-          <input type="text" id="new_password" placeholder="उदा: Ward1@Mayadevi" required autocomplete="off">
+          <input type="text" id="new_password" placeholder="उदा: Laxman@508" required autocomplete="off">
         </div>
 
         <div class="form-group">
           <label>कर्मचारीको पूरा नाम (Full Name) *</label>
-          <input type="text" id="new_fullname" placeholder="उदा: राम प्रसाद थारु" required>
+          <input type="text" id="new_fullname" placeholder="उदा: लक्ष्मण घिमिरे" required>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="form-group">
             <label>पद (Post) *</label>
-            <input type="text" id="new_post" placeholder="उदा: वडा सचिव / कम्प्युटर अपरेटर" required>
+            <input type="text" id="new_post" placeholder="उदा: अमिन / कम्प्युटर अपरेटर" required>
           </div>
           <div class="form-group">
             <label>सम्पर्क नं. (Mobile) *</label>
@@ -312,9 +310,9 @@
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="form-group">
-            <label>सम्बन्धित वडा (Assigned Ward) *</label>
+            <label>सम्बन्धित वडा / पालिका क्षेत्र *</label>
             <select id="new_ward">
-              <option value="all">पालिका केन्द्र (All Wards)</option>
+              <option value="palika" selected>गाउँकार्यपालिका / पालिका केन्द्र</option>
               <option value="1">वडा नं. ०१</option>
               <option value="2">वडा नं. ०२</option>
               <option value="3">वडा नं. ०३</option>
@@ -326,23 +324,14 @@
             </select>
           </div>
           <div class="form-group">
-            <label>प्रणाली पहुँच (Module Access) *</label>
-            <select id="new_access">
-              <option value="all">सबै (भवन नक्सा + English Cert)</option>
-              <option value="english_cert" selected>अंग्रेजी प्रमाणपत्र मात्र (Ward)</option>
-              <option value="naksa">भवन नक्सा मात्र (Naksa)</option>
+            <label>भूमिका (Role) *</label>
+            <select id="new_role">
+              <option value="Ward" selected>वडा कर्मचारी (Ward)</option>
+              <option value="Naksa">नक्सा शाखा (Map)</option>
+              <option value="Superadmin">सुपर एडमिन (Superadmin)</option>
+              <option value="कार्यालय प्रमुख">कार्यालय प्रमुख</option>
             </select>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label>भूमिका (Role) *</label>
-          <select id="new_role">
-            <option value="Ward Secretary" selected>वडा सचिव (Ward Secretary)</option>
-            <option value="Admin">कर्मचारी एडमिन (Admin)</option>
-            <option value="Superadmin">सुपर एडमिन (Superadmin - कम्प्युटर अपरेटर)</option>
-            <option value="कार्यालय प्रमुख">कार्यालय प्रमुख (प्रमुख प्रशासकीय अधिकृत)</option>
-          </select>
         </div>
 
         <div class="form-group">
@@ -360,10 +349,10 @@
       </form>
     </div>
 
-    <!-- कर्मचारी सूची -->
+    <!-- Users Table Card -->
     <div class="card">
       <div class="card-title">
-        <span>👥 कर्मचारी तथा वडा सचिव विवरण तालिका</span>
+        <span>👥 कर्मचारी तथा एडमिन विवरण तालिका</span>
         <button type="button" class="nav-btn" onclick="loadAllUsers()" style="font-size:11px; padding:4px 8px;">🔄 रिफ्रेस</button>
       </div>
 
@@ -376,21 +365,20 @@
               <th>Username</th>
               <th>पूरा नाम / पद</th>
               <th>वडा</th>
-              <th>पहुँच</th>
               <th>पासवर्ड</th>
               <th style="text-align: center;">भूमिका</th>
               <th style="width: 130px; text-align: center;">कार्य</th>
             </tr>
           </thead>
           <tbody id="userTableBody">
-            <tr><td colspan="9" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>
+            <tr><td colspan="8" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </main>
 
-  <!-- Edit Modal -->
+  <!-- Edit User Modal -->
   <div class="edit-modal-wrapper" id="editUserModal">
     <div class="edit-modal-content">
       <div class="edit-modal-header">
@@ -399,6 +387,7 @@
       </div>
 
       <form id="editUserForm" onsubmit="handleSaveEditedUser(event)">
+        <input type="hidden" id="edit_original_id">
         <input type="hidden" id="edit_original_username">
 
         <div class="form-group">
@@ -429,9 +418,9 @@
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="form-group">
-            <label>वडा (Assigned Ward) *</label>
+            <label>वडा / पालिका क्षेत्र</label>
             <select id="edit_ward">
-              <option value="all">पालिका केन्द्र (All Wards)</option>
+              <option value="palika">गाउँकार्यपालिका / पालिका केन्द्र</option>
               <option value="1">वडा नं. ०१</option>
               <option value="2">वडा नं. ०२</option>
               <option value="3">वडा नं. ०३</option>
@@ -443,35 +432,26 @@
             </select>
           </div>
           <div class="form-group">
-            <label>प्रणाली पहुँच *</label>
-            <select id="edit_access">
-              <option value="all">सबै (All)</option>
-              <option value="english_cert">अंग्रेजी प्रमाणपत्र मात्र</option>
-              <option value="naksa">भवन नक्सा मात्र</option>
+            <label>भूमिका (Role) *</label>
+            <select id="edit_role">
+              <option value="Ward">वडा कर्मचारी (Ward)</option>
+              <option value="Naksa">नक्सा शाखा (Map)</option>
+              <option value="Superadmin">सुपर एडमिन (Superadmin)</option>
+              <option value="कार्यालय प्रमुख">कार्यालय प्रमुख</option>
             </select>
           </div>
         </div>
 
         <div class="form-group">
-          <label>भूमिका (Role) *</label>
-          <select id="edit_role">
-            <option value="Ward Secretary">वडा सचिव (Ward Secretary)</option>
-            <option value="Admin">कर्मचारी एडमिन (Admin)</option>
-            <option value="Superadmin">सुपर एडमिन (Superadmin - कम्प्युटर अपरेटर)</option>
-            <option value="कार्यालय प्रमुख">कार्यालय प्रमुख (प्रमुख प्रशासकीय अधिकृत)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
           <label>फोटो फेर्नुहोस् (Photo Update)</label>
           <div class="photo-upload-box">
-            <img id="editPreviewPhotoImg" class="user-preview-photo" src="" alt="Photo">
+            <img id="editPreviewPhotoImg" class="user-preview-photo" src="" alt="Photo" style="display:none;">
             <input type="file" id="edit_photo_file" accept="image/*" style="font-size:11px;" onchange="handlePhotoUpload(event, 'edit')">
           </div>
         </div>
 
         <button type="submit" class="btn-create" id="btnUpdateUser" style="background:#16a34a;">
-          <span>💾 सम्पादन सुरक्षित गर्नुहोस् (Update Profile)</span>
+          <span>💾 सम्पादन सुरक्षित गर्नुहोस्</span>
         </button>
       </form>
     </div>
@@ -482,15 +462,10 @@
   </footer>
 
   <script>
+    // Supabase Configuration
     const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
     const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
-    
-    let supabaseClient = null;
-    try {
-      if (typeof supabase !== 'undefined') {
-        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      }
-    } catch(e) {}
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const nepDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
     function toNepNum(n) { return (n ?? '').toString().replace(/\d/g, d => nepDigits[d]); }
@@ -498,6 +473,53 @@
     let base64AddPhoto = "";
     let base64EditPhoto = "";
     let globalUsersList = [];
+
+    function verifySuperAdminAccess() {
+      try {
+        const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
+        let u = raw ? JSON.parse(raw) : null;
+        if (!u || !u.role || (u.role.toLowerCase() !== "superadmin" && u.role !== "कार्यालय प्रमुख")) {
+          alert("⛔ पहुँच अस्वीकृत! यो प्यानल खोल्ने अधिकार केवल Superadmin लाई मात्र छ।");
+          window.location.href = "index.html";
+        }
+      } catch(e) { window.location.href = "login.html"; }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      localStorage.setItem("mayadevi_naksa_theme", isDark ? "dark" : "light");
+      document.getElementById("themeToggleBtn").textContent = isDark ? "☀" : "☾";
+    }
+
+    function applySavedTheme() {
+      const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
+      if (saved === "dark") {
+        document.body.classList.add("dark-mode");
+        document.getElementById("themeToggleBtn").textContent = "☀";
+      }
+    }
+
+    function updateClock() {
+      try {
+        const now = new Date();
+        const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
+        let h = now.getHours();
+        const m = String(now.getMinutes()).padStart(2, "0");
+        const s = String(now.getSeconds()).padStart(2, "0");
+        let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
+        
+        document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज १२ (${nepDays[now.getDay()]})`;
+        document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
+      } catch(e) {}
+    }
+
+    function handleSafeLogout() {
+      sessionStorage.clear();
+      localStorage.removeItem("user");
+      alert("सफलतापूर्वक लगआउट भयो!");
+      window.location.href = "login.html";
+    }
 
     function handlePhotoUpload(e, mode) {
       const file = e.target.files[0];
@@ -532,181 +554,104 @@
       reader.readAsDataURL(file);
     }
 
-    function verifySuperAdminAccess() {
-      try {
-        const raw = sessionStorage.getItem("user") || localStorage.getItem("user");
-        let u = raw ? JSON.parse(raw) : null;
-        if (!u || !u.role || (u.role.toLowerCase() !== "superadmin" && u.role !== "कार्यालय प्रमुख")) {
-          alert("⛔ पहुँच अस्वीकृत! यो प्यानल खोल्ने अधिकार केवल Superadmin लाई मात्र छ।");
-          window.location.href = "index.html";
-        }
-      } catch(e) {
-        window.location.href = "login.html";
-      }
-    }
-
     async function handleAddNewUser(e) {
       e.preventDefault();
 
-      const u = document.getElementById("new_username").value.trim();
-      const p = document.getElementById("new_password").value.trim();
-      const fname = document.getElementById("new_fullname").value.trim();
-      const post = document.getElementById("new_post").value.trim();
-      const contact = document.getElementById("new_contact").value.trim();
-      const ward = document.getElementById("new_ward").value;
-      const access = document.getElementById("new_access").value;
-      const role = document.getElementById("new_role").value;
       const btn = document.getElementById("btnSubmitUser");
-
-      if (!u || !p || !fname) {
-        alert("कृपया आवश्यक सबै विवरण भर्नुहोस्!");
-        return;
-      }
-
       btn.disabled = true;
-      btn.innerHTML = "⏳ सेभ हुँदैछ...";
+      btn.innerHTML = "⏳ सुपाबेसमा सुरक्षित हुँदैछ...";
 
-      const newUserObj = {
-        username: u,
-        password: p,
-        full_name: fname,
-        post: post,
-        contact: contact,
-        ward: ward,
-        access: access,
-        role: role,
-        photo: base64AddPhoto || ""
+      const newUserPayload = {
+        name: document.getElementById("new_fullname").value.trim(),
+        username: document.getElementById("new_username").value.trim(),
+        password: document.getElementById("new_password").value.trim(),
+        role: document.getElementById("new_role").value,
+        ward: document.getElementById("new_ward").value,
+        phone: document.getElementById("new_contact").value.trim(),
+        // Supabase 'app_users' table doesn't have 'post' or 'photo' natively configured in standard script, 
+        // so we map 'post' and 'photo' if you alter table, or store in a JSONb column if needed. 
+        // Assuming table matches standard: id, name, username, password, role, ward, phone.
+        // If your table has these extra fields, they will be saved.
       };
 
-      if (supabaseClient) {
-        try { await supabaseClient.from('users').insert([newUserObj]); } catch(err) {}
-        try { await supabaseClient.from('admin_users').insert([newUserObj]); } catch(err) {}
-      }
-
       try {
-        let localList = JSON.parse(localStorage.getItem("system_users") || "[]");
-        localList = localList.filter(item => (item.username || '').toLowerCase() !== u.toLowerCase());
-        localList.push(newUserObj);
-        localStorage.setItem("system_users", JSON.stringify(localList));
-      } catch(e) {}
-
-      alert(`✓ "${fname}" (${post} - वडा: ${ward === 'all' ? 'पालिका' : ward}) सफलतापूर्वक सुरक्षित भयो!`);
-      document.getElementById("addUserForm").reset();
-      document.getElementById("previewPhotoImg").style.display = "none";
-      document.getElementById("noPhotoText").style.display = "block";
-      base64AddPhoto = "";
+        const { data, error } = await supabaseClient.from('app_users').insert([newUserPayload]);
+        if(error) {
+           if(error.code === '23505') alert("यो Username पहिले नै प्रयोग भइसकेको छ! अर्को राख्नुहोस्।");
+           else throw error;
+        } else {
+           alert(`✓ कर्मचारी "${newUserPayload.name}" सफलतापूर्वक सुरक्षित भयो!`);
+           document.getElementById("addUserForm").reset();
+           document.getElementById("previewPhotoImg").style.display = "none";
+           document.getElementById("noPhotoText").style.display = "block";
+           base64AddPhoto = "";
+           loadAllUsers();
+        }
+      } catch(err) {
+        alert("❌ युजर थप्न सकिएन: " + err.message);
+      }
+      
       btn.disabled = false;
       btn.innerHTML = "<span>सुरक्षित गर्नुहोस् (Save User)</span> ➜";
-      loadAllUsers();
     }
 
     async function loadAllUsers() {
       const tbody = document.getElementById("userTableBody");
-      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>`;
-
-      let allUsers = [];
-
-      if (supabaseClient) {
-        try {
-          const { data, error } = await supabaseClient.from('users').select('*').limit(200);
-          if (!error && data && data.length > 0) allUsers = data;
-        } catch(e) {}
-      }
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px;">डाटा लोड हुँदैछ...</td></tr>`;
 
       try {
-        const localList = JSON.parse(localStorage.getItem("system_users") || "[]");
-        localList.forEach(loc => {
-          if (!allUsers.some(au => (au.username || au.user_id || '').toLowerCase() === (loc.username || '').toLowerCase())) {
-            allUsers.push(loc);
-          }
+        const { data, error } = await supabaseClient.from('app_users').select('*').order('id', { ascending: false });
+        if(error) throw error;
+
+        globalUsersList = data || [];
+        tbody.innerHTML = "";
+
+        if(globalUsersList.length === 0) {
+           tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:15px;">कुनै कर्मचारी भेटिएन।</td></tr>`;
+           return;
+        }
+
+        globalUsersList.forEach((usr, idx) => {
+          const uname = usr.username || "-";
+          const pass = usr.password || "••••••••";
+          const name = usr.name || uname;
+          const wardStr = (usr.ward === "palika" || usr.ward === "all" || !usr.ward) ? "गाउँकार्यपालिका / पालिका केन्द्र" : `वडा नं. ${toNepNum(usr.ward)}`;
+          const role = usr.role || "Admin";
+          const isSuper = (role.toLowerCase() === "superadmin");
+          const isPramukh = (role === "कार्यालय प्रमुख");
+          const isWardSec = (role === "Ward Secretary");
+          
+          let roleBadgeClass = 'role-admin';
+          if (isSuper) roleBadgeClass = 'role-super';
+          else if (isPramukh) roleBadgeClass = 'role-pramukh';
+          else if (isWardSec || role.toLowerCase() === "ward") roleBadgeClass = 'role-ward';
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td style="text-align:center; font-weight:bold;">${toNepNum(idx + 1)}</td>
+            <td style="text-align:center;">👤</td>
+            <td><strong>${uname}</strong></td>
+            <td>${name}<br><small style="color:#64748b; font-weight:bold;">(${usr.phone || '-'})</small></td>
+            <td style="font-weight:bold; color:#1e3a8a;">${wardStr}</td>
+            <td>
+              <span id="passSpan_${idx}" style="font-family:monospace; font-weight:bold; color:#1e3a8a;">••••••••</span>
+              <button type="button" class="btn-pass-view" onclick="toggleShowPassword('${idx}', '${pass}')" title="पासवर्ड हेर्नुहोस्">👁️</button>
+            </td>
+            <td style="text-align:center;">
+              <span class="role-badge ${roleBadgeClass}">${role}</span>
+            </td>
+            <td style="text-align:center;">
+              <div class="action-btn-group" style="justify-content:center;">
+                <button type="button" class="btn-edit-all" onclick="openEditModal(${usr.id})" title="सम्पादन गर्नुहोस्">✏️ Edit</button>
+                <button type="button" class="btn-delete-user" onclick="deleteUser(${usr.id}, '${uname}')" title="मेटाउनुहोस्">🗑️</button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
         });
-      } catch(e) {}
-
-      // सुपरएडमिन (तपाईं - कम्प्युटर अपरेटर)
-      const savedSuper = JSON.parse(localStorage.getItem("superadmin_custom_profile") || "null");
-      const superUser = savedSuper || {
-        username: "superadmin",
-        password: "Sarkar@#07",
-        full_name: "सुपर एडमिन",
-        post: "कम्प्युटर अपरेटर",
-        contact: "-",
-        ward: "all",
-        access: "all",
-        role: "Superadmin",
-        photo: localStorage.getItem("superadmin_profile_photo") || ""
-      };
-
-      // कार्यालय प्रमुख (प्रमुख प्रशासकीय अधिकृत)
-      const savedPramukh = JSON.parse(localStorage.getItem("pramukh_custom_profile") || "null");
-      const pramukhUser = savedPramukh || {
-        username: "pramukh",
-        password: "Mayadevi@#07",
-        full_name: "कार्यालय प्रमुख",
-        post: "प्रमुख प्रशासकीय अधिकृत",
-        contact: "-",
-        ward: "all",
-        access: "all",
-        role: "कार्यालय प्रमुख",
-        photo: ""
-      };
-
-      const superIndex = allUsers.findIndex(u => (u.username || u.user_id || '').toLowerCase() === (superUser.username || '').toLowerCase());
-      if (superIndex !== -1) allUsers[superIndex] = { ...allUsers[superIndex], ...superUser };
-      else allUsers.unshift(superUser);
-
-      const pramukhIndex = allUsers.findIndex(u => (u.username || u.user_id || '').toLowerCase() === (pramukhUser.username || '').toLowerCase());
-      if (pramukhIndex !== -1) allUsers[pramukhIndex] = { ...allUsers[pramukhIndex], ...pramukhUser };
-      else allUsers.splice(1, 0, pramukhUser);
-
-      globalUsersList = allUsers;
-      tbody.innerHTML = "";
-
-      allUsers.forEach((usr, idx) => {
-        const uname = usr.username || usr.user_id || usr.name || "-";
-        const pass = usr.password || usr.pass || "••••••••";
-        const name = usr.full_name || usr.name || uname;
-        const post = usr.post || "कर्मचारी";
-        const wardStr = (usr.ward === "all" || !usr.ward) ? "पालिका केन्द्र" : `वडा नं. ${toNepNum(usr.ward)}`;
-        const accessStr = usr.access === "all" ? "सबै" : (usr.access === "english_cert" ? "English Cert" : "नक्सा");
-        const role = usr.role || (uname.toLowerCase() === "superadmin" ? "Superadmin" : "Admin");
-        const isSuper = (role.toLowerCase() === "superadmin");
-        const isPramukh = (role === "कार्यालय प्रमुख");
-        const isWardSec = (role === "Ward Secretary");
-        const photoSrc = usr.photo || usr.avatar_url || "";
-
-        const photoHtml = photoSrc 
-          ? `<img src="${photoSrc}" style="width:34px; height:38px; object-fit:cover; border-radius:3px; border:1px solid #94a3b8; cursor:pointer;" onclick="viewFullPhoto('${photoSrc}')" title="ठूलो फोटो हेर्नुहोस्">` 
-          : `<span style="font-size:10px; color:#94a3b8;">फोटो छैन</span>`;
-
-        let roleBadgeClass = 'role-admin';
-        if (isSuper) roleBadgeClass = 'role-super';
-        else if (isPramukh) roleBadgeClass = 'role-pramukh';
-        else if (isWardSec) roleBadgeClass = 'role-ward';
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td style="text-align:center; font-weight:bold;">${toNepNum(idx + 1)}</td>
-          <td style="text-align:center;">${photoHtml}</td>
-          <td><strong>${uname}</strong></td>
-          <td>${name}<br><small style="color:#64748b; font-weight:bold;">(${post})</small></td>
-          <td style="font-weight:bold; color:#1e3a8a;">${wardStr}</td>
-          <td style="font-size:11px;">${accessStr}</td>
-          <td>
-            <span id="passSpan_${idx}" style="font-family:monospace; font-weight:bold; color:#1e3a8a;">••••••••</span>
-            <button type="button" class="btn-pass-view" onclick="toggleShowPassword('${idx}', '${pass}')" title="पासवर्ड हेर्नुहोस्">👁️</button>
-          </td>
-          <td style="text-align:center;">
-            <span class="role-badge ${roleBadgeClass}">${role}</span>
-          </td>
-          <td style="text-align:center;">
-            <div class="action-btn-group">
-              <button type="button" class="btn-edit-all" onclick="openEditModal('${uname}')" title="सबै विवरण सम्पादन गर्नुहोस्">✏️ Edit</button>
-              ${(!isSuper && !isPramukh) ? `<button type="button" class="btn-delete-user" onclick="deleteUser('${uname}')" title="मेटाउनुहोस्">🗑️</button>` : ''}
-            </div>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
+      } catch(err) {
+        tbody.innerHTML = `<tr><td colspan="8" style="color:red; text-align:center;">Supabase बाट डाटा तान्न समस्या भयो।</td></tr>`;
+      }
     }
 
     function toggleShowPassword(idx, realPass) {
@@ -714,29 +659,21 @@
       el.textContent = (el.textContent === "••••••••") ? realPass : "••••••••";
     }
 
-    function openEditModal(uname) {
-      const user = globalUsersList.find(u => (u.username || u.user_id || u.name || '').toLowerCase() === uname.toLowerCase());
+    function openEditModal(id) {
+      const user = globalUsersList.find(u => u.id === id);
       if (!user) return;
 
-      document.getElementById("edit_original_username").value = uname;
-      document.getElementById("edit_username").value = user.username || user.user_id || uname;
-      document.getElementById("edit_password").value = user.password || user.pass || "";
-      document.getElementById("edit_fullname").value = user.full_name || user.name || "";
-      document.getElementById("edit_post").value = user.post || "";
-      document.getElementById("edit_contact").value = user.contact || user.phone || "";
-      document.getElementById("edit_ward").value = user.ward || "all";
-      document.getElementById("edit_access").value = user.access || "all";
-      document.getElementById("edit_role").value = user.role || "Ward Secretary";
+      document.getElementById("edit_original_id").value = user.id;
+      document.getElementById("edit_original_username").value = user.username;
+      document.getElementById("edit_username").value = user.username;
+      document.getElementById("edit_password").value = user.password;
+      document.getElementById("edit_fullname").value = user.name || "";
+      document.getElementById("edit_post").value = "कर्मचारी"; // Default mapping if not stored
+      document.getElementById("edit_contact").value = user.phone || "";
+      document.getElementById("edit_ward").value = user.ward || "palika";
+      document.getElementById("edit_role").value = user.role || "Ward";
 
-      base64EditPhoto = user.photo || user.avatar_url || "";
-      const prevImg = document.getElementById("editPreviewPhotoImg");
-      if (base64EditPhoto) {
-        prevImg.src = base64EditPhoto;
-        prevImg.style.display = "block";
-      } else {
-        prevImg.style.display = "none";
-      }
-
+      document.getElementById("editPreviewPhotoImg").style.display = "none";
       document.getElementById("editUserModal").style.display = "flex";
     }
 
@@ -748,120 +685,45 @@
     async function handleSaveEditedUser(e) {
       e.preventDefault();
 
-      const origUname = document.getElementById("edit_original_username").value.trim();
-      const newUname = document.getElementById("edit_username").value.trim();
-      const newPass = document.getElementById("edit_password").value.trim();
-      const newFname = document.getElementById("edit_fullname").value.trim();
-      const newPost = document.getElementById("edit_post").value.trim();
-      const newContact = document.getElementById("edit_contact").value.trim();
-      const newWard = document.getElementById("edit_ward").value;
-      const newAccess = document.getElementById("edit_access").value;
-      const newRole = document.getElementById("edit_role").value;
+      const id = document.getElementById("edit_original_id").value;
       const btn = document.getElementById("btnUpdateUser");
-
       btn.disabled = true;
       btn.innerHTML = "⏳ अद्यावधिक हुँदैछ...";
 
       const updatedObj = {
-        username: newUname,
-        password: newPass,
-        full_name: newFname,
-        post: newPost,
-        contact: newContact,
-        ward: newWard,
-        access: newAccess,
-        role: newRole,
-        photo: base64EditPhoto || ""
+        username: document.getElementById("edit_username").value.trim(),
+        password: document.getElementById("edit_password").value.trim(),
+        name: document.getElementById("edit_fullname").value.trim(),
+        phone: document.getElementById("edit_contact").value.trim(),
+        ward: document.getElementById("edit_ward").value,
+        role: document.getElementById("edit_role").value
       };
 
-      if (origUname.toLowerCase() === "superadmin" || newRole === "Superadmin") {
-        localStorage.setItem("superadmin_custom_profile", JSON.stringify(updatedObj));
-        if (updatedObj.photo) localStorage.setItem("superadmin_profile_photo", updatedObj.photo);
-      }
-      if (origUname.toLowerCase() === "pramukh" || newRole === "कार्यालय प्रमुख") {
-        localStorage.setItem("pramukh_custom_profile", JSON.stringify(updatedObj));
-      }
-
-      if (supabaseClient) {
-        try {
-          await supabaseClient.from('users').update(updatedObj).eq('username', origUname);
-          await supabaseClient.from('admin_users').update(updatedObj).eq('username', origUname);
-        } catch(err) {}
-      }
-
       try {
-        let localList = JSON.parse(localStorage.getItem("system_users") || "[]");
-        const idx = localList.findIndex(item => (item.username || '').toLowerCase() === origUname.toLowerCase());
-        if (idx !== -1) localList[idx] = updatedObj;
-        else localList.push(updatedObj);
-        localStorage.setItem("system_users", JSON.stringify(localList));
-      } catch(e) {}
-
-      alert(`✓ "${newFname}" (${newPost}) को विवरण अद्यावधिक भयो!`);
-      closeEditModal();
+        const { error } = await supabaseClient.from('app_users').update(updatedObj).eq('id', id);
+        if(error) throw error;
+        alert(`✓ विवरण सफलतापूर्वक अद्यावधिक भयो!`);
+        closeEditModal();
+        loadAllUsers();
+      } catch(err) {
+        alert("❌ सम्पादन गर्न सकिएन: " + err.message);
+      }
+      
       btn.disabled = false;
       btn.innerHTML = "<span>💾 सम्पादन सुरक्षित गर्नुहोस्</span>";
-      loadAllUsers();
     }
 
-    async function deleteUser(uname) {
-      if (!confirm(`के तपाईं कर्मचारी "${uname}" लाई पूर्ण रूपमा हटाउन निश्चित हुनुहुन्छ?`)) return;
-
-      if (supabaseClient) {
-        try {
-          await supabaseClient.from('users').delete().eq('username', uname);
-          await supabaseClient.from('admin_users').delete().eq('username', uname);
-        } catch(e) {}
-      }
+    async function deleteUser(id, uname) {
+      if (!confirm(`के तपाईं कर्मचारी "${uname}" लाई हटाउन निश्चित हुनुहुन्छ?`)) return;
 
       try {
-        let localList = JSON.parse(localStorage.getItem("system_users") || "[]");
-        localList = localList.filter(item => (item.username || '').toLowerCase() !== uname.toLowerCase());
-        localStorage.setItem("system_users", JSON.stringify(localList));
-      } catch(e) {}
-
-      alert(`कर्मचारी "${uname}" सफलतापूर्वक हटाइयो!`);
-      loadAllUsers();
-    }
-
-    function viewFullPhoto(src) {
-      const win = window.open("");
-      win.document.write(`<img src="${src}" style="max-width:100%; height:auto; display:block; margin:auto; border-radius:8px;">`);
-    }
-
-    function toggleTheme() {
-      document.body.classList.toggle("dark-mode");
-      const isDark = document.body.classList.contains("dark-mode");
-      localStorage.setItem("mayadevi_naksa_theme", isDark ? "dark" : "light");
-      document.getElementById("themeToggleBtn").textContent = isDark ? "☀" : "☾";
-    }
-
-    function applySavedTheme() {
-      const saved = localStorage.getItem("mayadevi_naksa_theme") || "light";
-      if (saved === "dark") {
-        document.body.classList.add("dark-mode");
-        document.getElementById("themeToggleBtn").textContent = "☀";
+        const { error } = await supabaseClient.from('app_users').delete().eq('id', id);
+        if(error) throw error;
+        alert(`कर्मचारी "${uname}" हटाइयो!`);
+        loadAllUsers();
+      } catch(e) {
+        alert("डिलिट गर्न सकिएन: " + e.message);
       }
-    }
-
-    function updateClock() {
-      try {
-        const now = new Date();
-        const nepDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहीबार", "शुक्रबार", "शनिबार"];
-        let h = now.getHours();
-        const m = String(now.getMinutes()).padStart(2, "0");
-        const s = String(now.getSeconds()).padStart(2, "0");
-        let nepPeriod = (h >= 12 && h < 17) ? "दिउँसो" : (h >= 17 && h < 20) ? "साँझ" : (h >= 20 || h < 4) ? "राती" : "विहान";
-        document.getElementById("liveNepaliHeaderDate").textContent = `मिति: २०८३ असोज १२ (${nepDays[now.getDay()]})`;
-        document.getElementById("liveNepaliHeaderTime").textContent = `समय: ${nepPeriod} ${toNepNum(String(h % 12 || 12).padStart(2, "0"))}:${toNepNum(m)}:${toNepNum(s)}`;
-      } catch(e) {}
-    }
-
-    function handleSafeLogout() {
-      sessionStorage.clear();
-      localStorage.removeItem("user");
-      alert("सफलतापूर्वक लगआउट भयो!");
-      window.location.href = "login.html";
     }
 
     document.addEventListener("DOMContentLoaded", () => {
