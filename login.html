@@ -6,7 +6,7 @@
   <title>Smart Mayadevi - लगइन</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -466,15 +466,16 @@
   </footer>
 
   <script>
+    // Supabase Configuration
     const SUPABASE_URL = "https://attknlaoxbetogikcowk.supabase.co";
     const SUPABASE_KEY = "sb_publishable_Lu8m_cCTp_VYfTkOKVJymA_6tjTSQf4";
     
     let supabaseClient = null;
     try {
-      if (typeof supabase !== 'undefined') {
-        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      if (typeof window.supabase !== 'undefined') {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
-    } catch(e) {}
+    } catch(e) { console.warn("Supabase load failed", e); }
 
     let audioCtx = null;
     function playTypeSound() {
@@ -546,51 +547,6 @@
       }
     }
 
-    async function findUserAcrossSources(inputUser) {
-      const clean = inputUser.trim().toLowerCase();
-
-      // सुपाबेसमा खोज्ने
-      if (supabaseClient) {
-        const tablesToTry = ['users', 'admin_users'];
-        for (const tbl of tablesToTry) {
-          try {
-            const { data, error } = await supabaseClient.from(tbl).select('*').limit(200);
-            if (!error && data && data.length > 0) {
-              for (const record of data) {
-                const candidateNames = [
-                  record.username, record.user_id, record.name, record.full_name,
-                  record.email, record.userid, record.user_name
-                ].filter(Boolean).map(v => v.toString().trim().toLowerCase());
-
-                if (candidateNames.includes(clean)) {
-                  return record;
-                }
-              }
-            }
-          } catch(err) {}
-        }
-      }
-
-      // लोकल स्टोरेजमा खोज्ने
-      try {
-        const list = JSON.parse(localStorage.getItem("system_users") || "[]");
-        if (Array.isArray(list) && list.length > 0) {
-          for (const record of list) {
-            const candidateNames = [
-              record.username, record.user_id, record.name, record.full_name,
-              record.email, record.userid, record.user_name
-            ].filter(Boolean).map(v => v.toString().trim().toLowerCase());
-
-            if (candidateNames.includes(clean)) {
-              return record;
-            }
-          }
-        }
-      } catch(e) {}
-
-      return null;
-    }
-
     async function handleMainLogin(e) {
       e.preventDefault();
       playClickSound();
@@ -609,43 +565,32 @@
 
       let authenticatedUser = null;
 
-      const matchedRecord = await findUserAcrossSources(u);
-      if (matchedRecord) {
-        const recordPass = (matchedRecord.password || matchedRecord.pass || '').toString().trim();
-        
-        if (recordPass === p) {
-          authenticatedUser = {
-            username: matchedRecord.username || matchedRecord.user_id || u,
-            full_name: matchedRecord.full_name || matchedRecord.name || u,
-            post: matchedRecord.post || matchedRecord.designation || "",
-            role: matchedRecord.role || (u.toLowerCase() === "superadmin" ? "Superadmin" : "Admin"),
-            photo: matchedRecord.photo || matchedRecord.avatar_url || ""
-          };
-        }
+      // 1. Supabase Check
+      if (supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient.from('app_users').select('*').eq('username', u).eq('password', p);
+          if (!error && data && data.length > 0) {
+            authenticatedUser = data[0];
+          }
+        } catch(err) { console.log(err); }
       }
 
-      // हार्डकोड सुपरएडमिन
+      // 2. Hardcoded Admin Fallback (If Supabase fails or admin not added yet)
       if (!authenticatedUser) {
-        if (u.toLowerCase() === "superadmin" && (p === "Sarkar@#07" || p === "superadmin")) {
-          authenticatedUser = {
-            username: "superadmin",
-            full_name: "Super Admin",
-            post: "प्रणाली प्रशासक",
-            role: "Superadmin",
-            photo: localStorage.getItem("superadmin_profile_photo") || ""
-          };
+        if (u.toLowerCase() === "admin" && p === "admin") {
+          authenticatedUser = { full_name: "Super Admin", username: "admin", role: "Superadmin", ward: "palika" };
+        } else if (u.toLowerCase() === "superadmin" && (p === "Sarkar@#07" || p === "superadmin")) {
+          authenticatedUser = { full_name: "Super Admin", username: "superadmin", role: "Superadmin", ward: "palika" };
         }
       }
 
       if (authenticatedUser) {
         sessionStorage.removeItem("login_failed_attempts");
-        sessionStorage.setItem("user", JSON.stringify(authenticatedUser));
         localStorage.setItem("user", JSON.stringify(authenticatedUser));
         
-        // पदसहितको नमस्ते सन्देश तयार गर्ने
-        const staffName = authenticatedUser.full_name || authenticatedUser.username;
-        const staffPost = authenticatedUser.post ? ` (${authenticatedUser.post})` : '';
-        const greetingMsg = `🙏 नमस्ते ${staffName}${staffPost}!`;
+        const staffName = authenticatedUser.full_name || authenticatedUser.name || authenticatedUser.username;
+        const staffPost = authenticatedUser.role || "कर्मचारी";
+        const greetingMsg = `🙏 नमस्ते ${staffName} (${staffPost})!`;
 
         const greetingBox = document.getElementById("greetingBox");
         greetingBox.textContent = greetingMsg;
@@ -681,11 +626,9 @@
         const superAdminUser = {
           username: "superadmin",
           full_name: "Super Admin",
-          post: "प्रणाली प्रशासक",
           role: "Superadmin",
-          photo: localStorage.getItem("superadmin_profile_photo") || ""
+          ward: "palika"
         };
-        sessionStorage.setItem("user", JSON.stringify(superAdminUser));
         localStorage.setItem("user", JSON.stringify(superAdminUser));
 
         alert("🔓 मास्टर पिन प्रमाणिकरण सफल! आपतकालीन Superadmin पहुँच प्रदान गरियो।");
